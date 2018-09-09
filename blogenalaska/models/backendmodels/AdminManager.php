@@ -34,20 +34,84 @@ class AdminManager extends Manager {
     }
     
     //liste des setters
-      public function setSurname($surname)
-  {
-    $surname = $surname;
-  }
-        public function setPassword($password)
-  {
-    spassword = $password;
+    public function setSurname($surname)
+    {
+        //On vérifie qu'il s'agit bien d'une chaine de caractéres
+        if(is_string($surname))
+        {
+            //L'attribut de l'admin manager sera = a $surname. 
+            //Il aura la valeur de la variable $surname
+            $this->_surname = $surname;
+        }
+    }
     
-  }
-          public function setUsername($username)
-  {
-    susername = $username;
+    public function setPassword($password)
+    {
+        if(is_string($password))
+        {
+           $this->_password = $password;
+        } 
+    }
     
-  }
+    public function setUsername($username)
+    {
+        if(is_string($username))
+        {
+            $this->_username = $username;
+        }
+    }
+    
+        public function setFirstname($firstname)
+    {
+        if(is_string($firstname))
+        {
+            $this->_firstname = $firstname;
+        }
+    }
+    
+    
+    //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
+    //Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
+    public function hydrate(array $donnees)
+    {
+     /*   if (isset($donnees['surname']))
+        {
+            $this->setSurname($donnees['surname']);
+        }
+
+            if (isset($donnees['password']))
+        {
+            $this->setPassword($donnees['password']);
+        }
+
+            if (isset($donnees['username']))
+        {
+            $this->setUsername($donnees['username']);
+        }
+
+            if (isset($donnees['firstname']))
+        {
+            $this->setFirstname($donnees['firstname']);
+        }*/
+        
+        foreach($donnees as $key => $value)
+        {
+            //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
+            //On va donner une valeur à la clé grace à la fonction
+            $method = 'set'.ucfirst($key);
+            
+            //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
+            //Si le setter correspondant existe
+            if(method_exists($this, $method))
+            {
+                //On appelle le setter
+                //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
+                $this->$method($value);
+            }
+        }
+    }
+    
+    
     public function sendDatasBlogAdmin()
     {
         $bdd = $this->dbConnect();
