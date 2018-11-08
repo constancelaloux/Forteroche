@@ -4,7 +4,7 @@ namespace Forteroche\blogenalaska\models\backendmodels; // La classe AdminManage
 
 require_once("Manager.php");
 
-class AdminManager extends Manager {
+class AuthorManager extends Manager {
     //attributs
     private $_password;
     private $_username;
@@ -32,6 +32,7 @@ class AdminManager extends Manager {
     {
       return $this->_firstname;
     }
+    
     
     //liste des setters
     public function setSurname($surname)
@@ -112,7 +113,7 @@ class AdminManager extends Manager {
     }
     
     
-    public function sendDatasBlogAdmin()
+   /* public function sendDatasBlogAdmin()
     {
         $bdd = $this->dbConnect();
         
@@ -133,14 +134,14 @@ class AdminManager extends Manager {
         $sendAdminDatas->execute();
         echo $password . "admin user had been created";
         return $sendAdminDatas;
-    }
+    }*/
     
     /**
      * On récupére les données en bdd
      * @param type $usernamevar
      * @return type
      */
-    public function getDataLog($usernamevar)
+    /*public function getDataLog($usernamevar)
     {
         $bdd = $this->dbConnect();
 
@@ -150,7 +151,7 @@ class AdminManager extends Manager {
         $donnees = $get->fetch();
 
         return $donnees; 
-    }
+    }*/
     
 
 }

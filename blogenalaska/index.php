@@ -1,7 +1,7 @@
 <?php
 
 // On appel le controleur
-require('controllers/backendcontrollers/formaccesscontroler.php');
+require('controllers/backendcontrollers/formAccessControler.php');
 
 // addAdmin(); // Appel test de la fonction pour créer un nouvel admin
 

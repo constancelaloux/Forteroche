@@ -20,7 +20,14 @@ class Manager
     {
         //Preparation de la requéte d'insertion.
         //Assignation des valeurs pour le password, surname, username et firstname.
-        //Execution de la requéte
+        //Execution de la requéte`
+        $sendAdminDatas = $db->prepare('INSERT INTO articles_author (surname, firstname, username, password)'
+                          . 'VALUES(:surname, :firstname, :username, :password)');
+        $sendAdminDatas->bindValue(':surname', $admin->surname());
+        $sendAdminDatas->bindValue(':firstname', $admin->firstname());
+        $sendAdminDatas->bindValue(':username', $admin->username());
+        $sendAdminDatas->bindValue(':password', $admin->password());
+        $sendAdminDatas->execute();
     }
     
         public function delete(AdminManager $admin)
@@ -36,6 +43,13 @@ class Manager
         public function getList()
     {
         //retourne la liste de tous les AdminManager
+        //$admin = [];
+        $get = $this->$db->prepare('SELECT password FROM articles_author WHERE username = :username');
+        $get->bindValue(':username', $usernamevar);
+        $get->execute();
+        $donnees = $get->fetch();
+
+        return $donnees; 
     }
     
     public function update(AdminManager $admin)

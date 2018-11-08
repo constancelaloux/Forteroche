@@ -21,7 +21,9 @@
         </div>
         </p>
     </form>
-<?php $content = ob_get_clean(); ?>
+
+<?php //$content = ob_get_clean(); ?>
+
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/template.php');
 
 
