@@ -6,20 +6,22 @@
 //namespace Forteroche\blogenalaska;
 //use PDO;
 //$db = \Forteroche\blogenalaska\models\backendModels\setDb();
-require("PdoConnection.php");
+//require("PdoConnection.php");
+namespace Forteroche\blogenalaska\models\backendModels; 
+require("Author.php");
 
 /**
  * Description of Manager
  *
  * @author constancelaloux
  */
-class AuthorManager extends PdoConnection
+class AuthorManager //extends PdoConnection
 {
     
 
     //Cette gestion sera le rôle d'une autre classe, communément appelée manager. Dans notre cas, notre gestionnaire de personnage sera tout simplement nomméePersonnagesManager.
     private $_db; //instance de PDO
-    private $db;
+    //private $db;
    
     //  n'oubliez pas d'ajouter un setter pour notre manager afin de pouvoir modifier l'attribut$_db. 
     //La création d'un constructeur sera aussi indispensable si nous voulons assigner à cet attribut un objet PDO dès l'instanciation du manager.
@@ -33,6 +35,7 @@ class AuthorManager extends PdoConnection
     
     public function add(Author $author)
     {
+        print_r("je rentre dans la fonction add");
            // print_r("authormanager");
         //Preparation de la requéte d'insertion.
         //Assignation des valeurs pour le password, surname, username et firstname.
@@ -92,12 +95,10 @@ class AuthorManager extends PdoConnection
     // Exécution de la requête.
     }
     
-/*    public function setDb($db)
+   public function setDb(PDO $db)
     {
         $this->_db = $db;
     }
- 
- */
 }
     
     

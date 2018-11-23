@@ -7,7 +7,7 @@
 
 class PdoConnection
 {
-  function setDb($db)
+  function connect($db)
     {
          //On créé un objet db
         $db = new PDO('mysql:host=localhost;dbname=blogalaska;charset=utf8', 'root', 'root');

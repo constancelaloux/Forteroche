@@ -3,7 +3,7 @@
 // Son rôle est d'aller récupérer les informations « brutes » dans la base de données, 
 // de les organiser et de les assembler pour qu'elles puissent ensuite être traitées par le contrôleur. 
 // On y trouve donc entre autres les requêtes SQL.
-namespace Forteroche\blogenalaska\models\backendModels; // La classe AuthorManager sera dans ce namespace
+//namespace Forteroche\blogenalaska\models\backendModels; // La classe AuthorManager sera dans ce namespace
 
 //require("AuthorManager.php");
 
