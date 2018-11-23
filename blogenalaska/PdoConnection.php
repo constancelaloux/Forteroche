@@ -14,7 +14,7 @@ class PdoConnection
         //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // On émet une alerte à chaque fois qu'une requête a échoué.
         print_r("ma connexion est ok");
-       // return $db; 
+        return $db; 
     }  
 }
 

@@ -14,7 +14,7 @@ class Author{
      */
     // La classePersonnagea pour rôle de représenter un personnage présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
     //attributs
-   // private $_id;
+    private $_id;
     private $_password;
     private $_username;
     private $_surname;
@@ -64,11 +64,11 @@ class Author{
     //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
     // Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
     // un getter est une méthode chargée de renvoyer la valeur d'un attribut
-   /* public function id()
+    public function id()
     {
     return $this->_id;
     }
-    */
+    
     
     public function password()
     {
@@ -93,7 +93,7 @@ class Author{
     
     //liste des setters 
     //un setter est une méthode chargée d'assigner une valeur à un attribut en vérifiant son intégrité (si vous assignez la valeur sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le principe d'encapsulation).
-   /* public function setId($id)
+    public function setId($id)
     {
         $id = (int) $id;
     
@@ -101,7 +101,7 @@ class Author{
         {
             $this->_id = $id;
         }
-    }*/
+    }
   
     public function setSurname($surname)
     {
