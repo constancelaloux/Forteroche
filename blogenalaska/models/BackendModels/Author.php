@@ -1,18 +1,75 @@
 <?php
+//Modèle : cette partie gère les données de votre site.
+// Son rôle est d'aller récupérer les informations « brutes » dans la base de données, 
+// de les organiser et de les assembler pour qu'elles puissent ensuite être traitées par le contrôleur. 
+// On y trouve donc entre autres les requêtes SQL.
+namespace Forteroche\blogenalaska\models\backendModels; // La classe AuthorManager sera dans ce namespace
 
-namespace Forteroche\blogenalaska\models\backendmodels; // La classe AdminManager sera dans ce namespace
+//require("AuthorManager.php");
 
-require_once("Manager.php");
+class Author{
 
-class AuthorManager extends Manager {
+    /**
+     * @var array
+     */
+    // La classePersonnagea pour rôle de représenter un personnage présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
     //attributs
+   // private $_id;
     private $_password;
     private $_username;
     private $_surname;
     private $_firstname;
     
-    // Liste des getters. Je pourrais réutiliser les fonctions par la suite
-  
+    //ci, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
+    //Il faudra donc lui spécifier en paramétre dans pdoConnection.
+    //Il ne manque plus qu'à implémenter le constructeur pour qu'on puisse directement hydrater notre objet lors de l'instanciation de la classe.
+    //Pour cela, ajoutez un paramètre :$donnees. Appelez ensuite directement la méthodehydrate().
+    
+    public function __construct(array $donnees)
+    {
+ 
+    $this->hydrate($donnees);
+            print_r("je suis dans le manager");
+            print_r($donnees);
+    //print_r($donnees);
+    }
+    
+    //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
+    //Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
+    //celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
+    public function hydrate(array $donnees)
+    {  
+        foreach($donnees as $key => $value)
+        {
+            //print_r($key);
+            //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
+            //On va donner une valeur à la clé grace à la fonction
+            //On récupére les setters
+            $method = 'set'.ucfirst($key);
+            //print_r($method);
+            
+            //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
+            //Si le setter correspondant existe
+            if(method_exists($this, $method))
+            {
+                //print_r("test");
+                //On appelle le setter
+                //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
+                //On récupére au sein du $this toutes les données de notre personnage
+                $this->$method($value);
+            }
+        }
+    }
+    //Actuellement, les attributs de nos objets sont inaccessibles. 
+    //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
+    // Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
+    // un getter est une méthode chargée de renvoyer la valeur d'un attribut
+   /* public function id()
+    {
+    return $this->_id;
+    }
+    */
+    
     public function password()
     {
       return $this->_password;
@@ -34,7 +91,18 @@ class AuthorManager extends Manager {
     }
     
     
-    //liste des setters
+    //liste des setters 
+    //un setter est une méthode chargée d'assigner une valeur à un attribut en vérifiant son intégrité (si vous assignez la valeur sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le principe d'encapsulation).
+   /* public function setId($id)
+    {
+        $id = (int) $id;
+    
+        if ($id > 0)
+        {
+            $this->_id = $id;
+        }
+    }*/
+  
     public function setSurname($surname)
     {
         //On vérifie qu'il s'agit bien d'une chaine de caractéres
@@ -43,6 +111,7 @@ class AuthorManager extends Manager {
             //L'attribut de l'admin manager sera = a $surname. 
             //Il aura la valeur de la variable $surname
             $this->_surname = $surname;
+            //print_r($surname);
         }
     }
     
@@ -51,7 +120,7 @@ class AuthorManager extends Manager {
         if(is_string($password))
         {
            $this->_password = $password;
-        } 
+        }
     }
     
     public function setUsername($username)
@@ -62,7 +131,7 @@ class AuthorManager extends Manager {
         }
     }
     
-        public function setFirstname($firstname)
+     public function setFirstname($firstname)
     {
         if(is_string($firstname))
         {
@@ -71,46 +140,7 @@ class AuthorManager extends Manager {
     }
     
     
-    //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
-    //Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
-    public function hydrate(array $donnees)
-    {
-     /*   if (isset($donnees['surname']))
-        {
-            $this->setSurname($donnees['surname']);
-        }
 
-            if (isset($donnees['password']))
-        {
-            $this->setPassword($donnees['password']);
-        }
-
-            if (isset($donnees['username']))
-        {
-            $this->setUsername($donnees['username']);
-        }
-
-            if (isset($donnees['firstname']))
-        {
-            $this->setFirstname($donnees['firstname']);
-        }*/
-        
-        foreach($donnees as $key => $value)
-        {
-            //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
-            //On va donner une valeur à la clé grace à la fonction
-            $method = 'set'.ucfirst($key);
-            
-            //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
-            //Si le setter correspondant existe
-            if(method_exists($this, $method))
-            {
-                //On appelle le setter
-                //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
-                $this->$method($value);
-            }
-        }
-    }
     
     
    /* public function sendDatasBlogAdmin()
