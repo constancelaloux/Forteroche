@@ -13,9 +13,10 @@
 
 //$OCFramLoader = new SplClassLoader('models', '/lib');
 //$OCFramLoader->register();
-require("models/backendModels/Author.php");
-require("models/backendModels/AuthorManager.php");
-require("PdoConnection.php");
+require 'models/backendModels/Author.php';
+require '/controllers/PdoConnection.php';
+require 'models/backendModels/AuthorManager.php';
+
 //test
 
 
@@ -26,14 +27,18 @@ require("PdoConnection.php");
 function transferDatatoModel($usernameVar,$passwordVar)
 {
     print_r("je suis dans le controler");
-    $db = \Forteroche\blogenalaska\PdoConnection\connect();
+
+    $db = \Forteroche\blogenalaska\controllers\PdoConnection\connect();
+
     $author = new Forteroche\blogenalaska\models\backendModels\Author(
             [
             'password' => $passwordVar,
             'username' => $usernameVar
             ]); //Création d'un objet
-    
-    $manager = new AuthorManager($db);
+
+
+               // exit("je m'arréte la");
+    $manager = new Forteroche\blogenalaska\models\backendModels\AuthorManager($db);
     $manager->verify($author); // Appel d'une fonction de cet objet 
 
             

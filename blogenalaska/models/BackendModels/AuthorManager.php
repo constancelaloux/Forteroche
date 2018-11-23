@@ -7,8 +7,8 @@
 //use PDO;
 //$db = \Forteroche\blogenalaska\models\backendModels\setDb();
 //require("PdoConnection.php");
-//namespace Forteroche\blogenalaska\models\backendModels; 
-require("Author.php");
+namespace Forteroche\blogenalaska\models\backendModels; 
+require 'Author.php';
 
 /**
  * Description of Manager

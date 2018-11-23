@@ -1,6 +1,7 @@
 <?php
-//namespace Forteroche\blogenalaska;
+namespace Forteroche\blogenalaska\controllers;
 //namespace Forteroche\blogenalaska\models\backendModels;
+//require 'controllers/backendcontrollers/FormAuthorAccessControler.php';
 
 //use PDO;
 //require("AuthorManager.php");
