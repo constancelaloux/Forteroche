@@ -7,8 +7,10 @@
 //use PDO;
 //$db = \Forteroche\blogenalaska\models\backendModels\setDb();
 //require("PdoConnection.php");
-namespace Forteroche\blogenalaska\models\backendModels; 
-//require 'Author.php';
+namespace Forteroche\blogenalaska\Models\BackendModels; 
+use Author;
+
+//require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Author.php';
 
 /**
  * Description of Manager
@@ -88,14 +90,14 @@ class AuthorManager //extends PdoConnection
         //retourne la liste de tous les AdminManager
     }
     
-    public function update(FormAuthorAccessControler $donnees)
+    public function update(\Forteroche\blogenalaska\models\backendmodels\Author $author)
     {
             // Prépare une requête de type UPDATE.
     // Assignation des valeurs à la requête.
     // Exécution de la requête.
     }
     
-   public function setDb(PDO $db)
+   public function setDb(\PDO $db)
     {
         $this->_db = $db;
     }

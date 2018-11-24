@@ -4,7 +4,7 @@
 // de le faire dans index.php. Il va se charger d'appeler le bon contrôleur.
 //require_once("models/backendModels/AuthorManager.php");
 // On appel le controleur
-require('controllers/BackendControllers/FormAuthorAccessControler.php');
+require'Controllers/BackendControllers/FormAuthorAccessControler.php';
 //test
 //add(); // Appel test de la fonction pour créer un nouvel admin
 
@@ -41,7 +41,7 @@ if (isset($_GET['action']))
 else
 {
     // Si on a pas remplis le formulaire, on reste surle formlaire
-   require('views/backend/AuthorFormAccess/FormAuthorAccessView.php');
+   require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
    //print_r("Tous les champs ne sont pas remplis");
 }
 /*
@@ -55,7 +55,7 @@ else
 // Redirection vers la vue Administrateur
 function redirectionVueAdmin()
     {  
-        header('Location:/views/backend/MainBackendView/backendView.php');
+        header('Location:/Views/Backend/MainBackendView/backendView.php');
         //exit();
     }
 

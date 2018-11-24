@@ -13,32 +13,33 @@
 
 //$OCFramLoader = new SplClassLoader('models', '/lib');
 //$OCFramLoader->register();
-require 'models/backendModels/Author.php';
-require 'controllers/PdoConnection.php';
-require 'models/backendModels/AuthorManager.php';
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
+
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Author.php';
+
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/AuthorManager.php';
 
 //test
-
-
 
 //require_once("Forteroche/blogenalaska/PdoConnection.php");
 //require("controllers/PdoConnection.php");
 //on vérifie que les variables sont bien instanciés pour le formulaire d'entrée du back office
 function transferDatatoModel($usernameVar,$passwordVar)
 {
+    
     print_r("je suis dans le controler");
 
-    $db = Forteroche\blogenalaska\controllers\PdoConnection\connect();
+    //$db = \Forteroche\blogenalaska\Controllers\PdoConnection\connect();
 
-    $author = new Forteroche\blogenalaska\models\backendModels\Author(
+    $author = new Author(
             [
             'password' => $passwordVar,
             'username' => $usernameVar
             ]); //Création d'un objet
 
-
+    $db = Forteroche\blogenalaska\Controllers\PdoConnection::class;
                // exit("je m'arréte la");
-    $manager = new Forteroche\blogenalaska\models\backendModels\AuthorManager($db);
+    $manager = new Forteroche\blogenalaska\Models\BackendModels\AuthorManager($db);
     $manager->verify($author); // Appel d'une fonction de cet objet 
 
             
