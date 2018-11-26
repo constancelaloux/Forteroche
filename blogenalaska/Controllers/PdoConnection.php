@@ -1,5 +1,5 @@
 <?php
-namespace Forteroche\blogenalaska\Controllers;
+//namespace Forteroche\blogenalaska\Controllers;
 //namespace Forteroche\blogenalaska\models\backendModels;
 //require 'controllers/backendcontrollers/FormAuthorAccessControler.php';
 
