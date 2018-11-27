@@ -9,6 +9,7 @@
 //require("PdoConnection.php");
 namespace Forteroche\blogenalaska\Models\BackendModels; 
 use Author;
+//require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/BackendControllers/FormAuthorAccessControler.php';
 
 //require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Author.php';
 
@@ -35,7 +36,7 @@ class AuthorManager //extends PdoConnection
         
     }
     
-    public function add(Author $author)
+    public function add(Author $newAuthor)
     {
         print_r("je rentre dans la fonction add");
            // print_r("authormanager");
@@ -46,10 +47,10 @@ class AuthorManager //extends PdoConnection
         $sendAdminDatas = $this->_db->prepare('INSERT INTO articles_author (surname, firstname, username, password) '
                 . 'VALUES(:surname, :firstname, :username, :password)');
         // Assignation des valeurs pour le nom du personnage.
-        $sendAdminDatas->bindValue(':surname', $author->surname(), PDO::PARAM_STR);
-        $sendAdminDatas->bindValue(':firstname', $author->firstname(), PDO::PARAM_STR);
-        $sendAdminDatas->bindValue(':username', $author->username(), PDO::PARAM_STR );
-        $sendAdminDatas->bindValue(':password', $author->password(), PDO::PARAM_STR);
+        $sendAdminDatas->bindValue(':surname', $author->surname(), \PDO::PARAM_STR);
+        $sendAdminDatas->bindValue(':firstname', $author->firstname(), \PDO::PARAM_STR);
+        $sendAdminDatas->bindValue(':username', $author->username(), \PDO::PARAM_STR );
+        $sendAdminDatas->bindValue(':password', $author->password(), \PDO::PARAM_STR);
         // Exécution de la requête.
         $sendAdminDatas->execute();
         
@@ -75,14 +76,26 @@ class AuthorManager //extends PdoConnection
 
        //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
 
-        $getAuthorLogin = $this->_db->prepare("SELECT * FROM articles_author WHERE username = :username");
-        $getAuthorLogin->bindValue(':username', $author->username(), PDO::PARAM_STR );
-        print_r("je recupere mes donnees");
+        $getAuthorLogin = $this->_db->prepare("SELECT password FROM articles_author WHERE username = :username");
+        $getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
         $getAuthorLogin->execute();
+        //print_r($author->username());
+        print_r("je recupere mes donnees");
+        //exit("je m'arréte la");
+        //$donneesAuthor = $getAuthorLogin->fetch(\PDO::FETCH_ASSOC);
+        //return $getAuthorLogin;
+        
+        return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
+        
 
-       // $donneesAuthor = $getAuthorLogin->fetch(PDO::FETCH_ASSOC);
-
-        return new Author($getAuthorLogin->fetch(PDO::FETCH_ASSOC));
+        //$AuthorLogin = password_verify($password, $donneesAuthor[0]);
+        //print_r($AuthorLogin);
+        
+       // $test = new Forteroche\blogenalaska\Controllers\BackendControllers\FormAuthorAccessControler;
+       // $test->transferDatatoModel($getAuthorLogin);
+        
+        
+        //exit("je m'arréte la");
     }
     
     public function getList()

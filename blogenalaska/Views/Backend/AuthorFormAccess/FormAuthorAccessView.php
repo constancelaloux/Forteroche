@@ -18,7 +18,7 @@ et conditions PHP très simples, pour afficher par exemple une liste de messages
         </div>
         <p>
             <div>Jean_Forteroche</div>
-            <div>jean38</div>
+            <div>passFromUser</div>
         </p>
         <div>
             <input type="submit" value="Valider" />

@@ -27,7 +27,6 @@ class Author{
     
     public function __construct(array $donnees)
     {
- 
     $this->hydrate($donnees);
             print_r("je suis dans le manager");
             print_r($donnees);
@@ -77,6 +76,7 @@ class Author{
     
     public function username()
     {
+      print_r("je suis la");
       return $this->_username;
     }
     
@@ -111,7 +111,8 @@ class Author{
             //L'attribut de l'admin manager sera = a $surname. 
             //Il aura la valeur de la variable $surname
             $this->_surname = $surname;
-            //print_r($surname);
+            //print_r("je suis aussi ici c cool");
+            
         }
     }
     
@@ -128,6 +129,7 @@ class Author{
         if(is_string($username))
         {
             $this->_username = $username;
+            print_r("je suis aussi ici");
         }
     }
     
