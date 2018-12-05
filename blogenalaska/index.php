@@ -45,11 +45,13 @@ else
 // Redirection vers la vue Administrateur
 function redirectionVueAdmin()
     {  
+        print_r("j'y suis");
+        //exit();
     // On récupère nos variables de session
         if (isset($_SESSION['username']))
             {
                 header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
-                    //exit();
+                
             }
     }
 
@@ -81,6 +83,15 @@ if (isset($_GET['action']))
                     }
             }
 
+    }
+
+    // Redirection vers la vue Administrateur
+function test()
+    {  
+        print_r("j'y suis");
+        //exit();
+
+                header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
     }
 
 

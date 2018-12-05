@@ -22,8 +22,23 @@ function transferArticlesToModel($myText, $myTitle)
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
         $sendToTheArticlesManager = new ArticlesManager($db);
+
         $sendToTheArticlesManager->add($newArticles);
+        
+        if ($sendToTheArticlesManager == true)
+            {
+                //header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
+                //print_r("cool");
+                header('Location: /blogenalaska/index.php?action=test');
+                //redirectionVueAdmin(); 
+
+            }
+        else 
+            {
+                print_r("erreur");
+            }
     }
+    
 
 //Récupérer des articles de la base de données
 function getArticles()
