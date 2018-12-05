@@ -32,7 +32,9 @@ class ArticlesManager
                 //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
 
                 $sendArticlesDatas->execute();
-                print_r("fini j'ai inséré les données");
+                
+                //return $sendArticlesDatas;
+                //print_r("fini j'ai inséré les données");
             }
 
         public function delete(Article $articles)

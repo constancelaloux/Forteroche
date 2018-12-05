@@ -25,6 +25,8 @@
                 $('#displayarticles').DataTable
                     (
                         {
+                            "processing": true,
+                            "serverSide": true,
                             ajax: "",
                             columns: 
                                 [
