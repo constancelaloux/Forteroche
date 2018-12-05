@@ -1,23 +1,38 @@
 <?php
 
-//namespace Forteroche\blogenalaska\controllers\backendcontrollers;
+// Chargement des classes
+//require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+//Autoloader::register();
+//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Article.php';
 
-require_once('models/backendmodels/PostsManager.php');
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
 
-  /*  function postscontrol()
+//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/ArticlesManager.php';
+
+
+//Envoyer des articles en base de données
+function transferArticlesToModel($myText, $myTitle)
     {
-    $postsManager = new \Forteroche\blogenalaska\models\backendmodels\PostsManager(); //Création d'un objet
-    //On affiche les articles sur le backoffice
-    $posts= $postsManager->sendPostsBlog();
-    require('/index.php');
+        $newArticles = new Article
+            ([
+                'content' => $myText,
+                'subject' => $myTitle
+            ]);
+
+        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+        $sendToTheArticlesManager = new ArticlesManager($db);
+        $sendToTheArticlesManager->add($newArticles);
     }
-*/
-/*class postscontrollers {
-    
-    public function postscontrol()
+
+//Récupérer des articles de la base de données
+function getArticles()
     {
-    //On affiche les articles sur le backoffice
-    $posts=sendPostsBlog();
-    require('backendview.php');
+        print_r("je suis dans le controller");
+        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+        print_r("je récupére des données");
+        $articlesManager = new ArticlesManager($db);
+        $articlesFromManager = $articlesManager->verify(); // Appel d'une fonction de cet objet
+        //$articlesFromDb = $articlesFromManager->subject();
     }
-}*/
+

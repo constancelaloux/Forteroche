@@ -2,62 +2,92 @@
 //index.php : ce sera le nom de notre routeur.
 // Le routeur étant le premier fichier qu'on appelle en général sur un site, c'est normal 
 // de le faire dans index.php. Il va se charger d'appeler le bon contrôleur.
-//require_once("models/backendModels/AuthorManager.php");
 // On appel le controleur
 require'Controllers/BackendControllers/FormAuthorAccessControler.php';
-//test
-//add(); // Appel test de la fonction pour créer un nouvel admin
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/BackendControllers/PostsControllers.php';
 
+
+//FORMULAIRE
+
+//On vérifie si le mdp et l'identifiant du formulaire de connexion ont bien été envoyés
 //On vérifie si il y a une action qui existe dans la vue
 if (isset($_GET['action']))
-{
-    //Si il y a une action, on appelle la fonction du controller
-    if ($_GET['action'] === 'transferDatatoControler')
     {
-       // On vérifie les variables du formulaire si elles sont présentes et remplies
-       if (isset($_POST['username']) AND isset($_POST['mot_de_passe']))
-       {
-           if (!empty($_POST['username']) && !empty($_POST['mot_de_passe']))
-           {
-               // check if the username and the password has been set
-               $usernameVar = ($_POST['username']);
-               $passwordVar = ($_POST['mot_de_passe']);
-               print_r($usernameVar);
-                              print_r("je vais vers le controller");
-               transferDatatoModel($usernameVar,$passwordVar);
-               //echo 'je vais vers le controller';
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'transferDataFormToControler')
+            {
+                // On vérifie les variables du formulaire si elles sont présentes et remplies
+                if (isset($_POST['username']) AND isset($_POST['mot_de_passe']))
+                    {
+                        if (!empty($_POST['username']) && !empty($_POST['mot_de_passe']))
+                            {
+                                // check if the username and the password has been set
+                                $usernameVar = ($_POST['username']);
+                                $passwordVar = ($_POST['mot_de_passe']);
 
-              // exit();
-
-           }
-           else 
-           {
-               // On fait un écho si les variables sont vides
-               echo('emptyvariables'); 
-           }
-       }   
+                                transferDatatoModel($usernameVar,$passwordVar);
+                            }
+                        else 
+                            {
+                                echo 'Tous les champs ne sont pas remplis';
+                                sendDataToDatabase();
+                            }
+                    }   
+            }
     }
-}
 else
-{
-    // Si on a pas remplis le formulaire, on reste surle formlaire
-   require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
-   //print_r("Tous les champs ne sont pas remplis");
-}
-/*
-else
-{
-    echo 'Erreur: tous les champs ne sont pas remplis';
-}
- */
+    {
+        // Si on a pas remplis le formulaire, on reste surle formlaire
+       require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
+    }
 
-//postscontrol();
+
 // Redirection vers la vue Administrateur
 function redirectionVueAdmin()
     {  
-        header('Location:/Views/Backend/MainBackendView/backendView.php');
-        //exit();
+    // On récupère nos variables de session
+        if (isset($_SESSION['username']))
+            {
+                header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
+                    //exit();
+            }
     }
+
+
+
+//ARTICLES
+
+//Envoi des articles en base de données
+    //On vérifie si il y a une action qui existe dans la vue
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'transferArticlesToController')
+            {
+                if (isset($_POST['content']) AND isset($_POST['title']))
+                    {
+                        if (!empty($_POST['content']) && !empty($_POST['title']))
+                            {
+                                $myText = ($_POST['content']);
+                                $myTitle = ($_POST['title']);
+                                transferArticlesToModel($myText, $myTitle);
+                                // exit();
+                            }
+                        else 
+                            {
+                                // On fait un écho si les variables sont vides
+                                echo('emptyvariables'); 
+                            } 
+                    }
+            }
+
+    }
+
+
+
+
+
+
 
 
 

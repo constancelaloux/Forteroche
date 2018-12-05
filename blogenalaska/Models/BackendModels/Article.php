@@ -1,22 +1,21 @@
 <?php
-//Modèle : cette partie gère les données de votre site.
-// Son rôle est d'aller récupérer les informations « brutes » dans la base de données, 
-// de les organiser et de les assembler pour qu'elles puissent ensuite être traitées par le contrôleur. 
-// On y trouve donc entre autres les requêtes SQL.
-//namespace Forteroche\blogenalaska\Models\BackendModels; // La classe AuthorManager sera dans ce namespace
 
-class Author
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+class Article
     {
         /**
          * @var array
          */
-        // La classePersonnagea pour rôle de représenter un personnage présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
-        //attributs
         private $_id;
-        private $_password;
-        private $_username;
-        private $_surname;
-        private $_firstname;
+        private $_author;
+        private $_subject;
+        private $_content;
+        private $_createdate;
+        private $_updatedate;
 
         //ci, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
         //Il faudra donc lui spécifier en paramétre dans pdoConnection.
@@ -34,22 +33,24 @@ class Author
         public function hydrate(array $donnees)
             {  
                 foreach($donnees as $key => $value)
-                    {
-                        //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
-                        //On va donner une valeur à la clé grace à la fonction
-                        //On récupére les setters
-                        $method = 'set'.ucfirst($key);
+                {
+                    //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
+                    //On va donner une valeur à la clé grace à la fonction
+                    //On récupére les setters
+                    $method = 'set'.ucfirst($key);
+                    //print_r($method);
 
-                        //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
-                        //Si le setter correspondant existe
-                        if(method_exists($this, $method))
-                            {
-                                //On appelle le setter
-                                //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
-                                //On récupére au sein du $this toutes les données de notre personnage
-                                $this->$method($value);
-                            }
+                    //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
+                    //Si le setter correspondant existe
+                    if(method_exists($this, $method))
+                    {
+                        //print_r("test");
+                        //On appelle le setter
+                        //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
+                        //On récupére au sein du $this toutes les données de notre personnage
+                        $this->$method($value);
                     }
+                }
             }
         //Actuellement, les attributs de nos objets sont inaccessibles. 
         //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
@@ -61,24 +62,30 @@ class Author
             }
 
 
-        public function password()
+        public function author()
             {
-                return $this->_password;
+                return $this->_author;
             }
 
-        public function username()
+        public function subject()
             {
-                return $this->_username;
+                //print_r("je suis la");
+                return $this->_subject;
             }
 
-        public function surname()
+        public function content()
             {
-                return $this->_surname;
+                return $this->_content;
             }
 
-        public function firstname()
+        public function createdate()
             {
-                return $this->_firstname;
+                return $this->_createdate;
+            }
+
+        public function updatedate()
+            {
+                return $this->_updatedate;  
             }
 
 
@@ -94,38 +101,48 @@ class Author
                     }
             }
 
-        public function setSurname($surname)
+        public function setAuthor($author)
             {
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
-                if(is_string($surname))
+                if(is_string($author))
                     {
                         //L'attribut de l'admin manager sera = a $surname. 
                         //Il aura la valeur de la variable $surname
-                        $this->_surname = $surname;
+                        $this->_author = $author;
+                        //print_r("je suis aussi ici c cool");
+
                     }
             }
 
-        public function setPassword($password)
+        public function setSubject($subject)
             {
-                if(is_string($password))
+                if(is_string($subject))
+                {
+                    $this->_subject = $subject;
+                }
+            }
+
+        public function setContent($content)
+            {
+                if(is_string($content))
+                {
+                    $this->_content = $content;
+                }
+            }
+
+        public function setCreatedate(DateTime $createdate)
+            {
+                if(is_string($createdate))
                     {
-                        $this->_password = $password;
+                        $this->_createdate = $createdate;
                     }
             }
 
-        public function setUsername($username)
+        public function setUpdatedate($updatedate)
             {
-                if(is_string($username))
+                if(is_string($updatedate))
                     {
-                        $this->_username = $username;
-                    }
-            }
-
-        public function setFirstname($firstname)
-            {
-                if(is_string($firstname))
-                    {
-                        $this->_firstname = $firstname;
+                        $this->_updatedate = $updatedate;
                     }
             }
     }
