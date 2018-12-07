@@ -5,6 +5,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+//namespace Forteroche\blogenalaska\Models\BackendModels; 
+
 class Article
     {
         /**
@@ -38,17 +41,16 @@ class Article
                     //On va donner une valeur à la clé grace à la fonction
                     //On récupére les setters
                     $method = 'set'.ucfirst($key);
-                    //print_r($method);
 
                     //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
                     //Si le setter correspondant existe
                     if(method_exists($this, $method))
                     {
-                        //print_r("test");
                         //On appelle le setter
                         //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
                         //On récupére au sein du $this toutes les données de notre personnage
                         $this->$method($value);
+                        //print_r($this->$method($value));
                     }
                 }
             }
@@ -106,10 +108,7 @@ class Article
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
                 if(is_string($author))
                     {
-                        //L'attribut de l'admin manager sera = a $surname. 
-                        //Il aura la valeur de la variable $surname
                         $this->_author = $author;
-                        //print_r("je suis aussi ici c cool");
 
                     }
             }
@@ -119,6 +118,7 @@ class Article
                 if(is_string($subject))
                 {
                     $this->_subject = $subject;
+                    //print_r($subject);
                 }
             }
 
@@ -127,22 +127,18 @@ class Article
                 if(is_string($content))
                 {
                     $this->_content = $content;
+                    //print_r($content);
                 }
             }
 
         public function setCreatedate(DateTime $createdate)
             {
-                if(is_string($createdate))
-                    {
-                        $this->_createdate = $createdate;
-                    }
+                $this->_createdate = $createdate;
+                //print_r($createdate);
             }
 
         public function setUpdatedate($updatedate)
             {
-                if(is_string($updatedate))
-                    {
-                        $this->_updatedate = $updatedate;
-                    }
+                $this->_updatedate = $updatedate;
             }
     }

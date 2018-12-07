@@ -27,8 +27,6 @@ function transferArticlesToModel($myText, $myTitle)
         
         if ($sendToTheArticlesManager == true)
             {
-                //header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
-                //print_r("cool");
                 header('Location: /blogenalaska/index.php?action=test');
                 //redirectionVueAdmin(); 
 
@@ -42,12 +40,24 @@ function transferArticlesToModel($myText, $myTitle)
 
 //Récupérer des articles de la base de données
 function getArticles()
-    {
-        print_r("je suis dans le controller");
+    {    
+        $articles = new Article
+            ([
+                'content' => "",
+                'subject' => "",
+                'createdate' => new DateTime("")
+            ]); //Création d'un objet
+        
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-        print_r("je récupére des données");
+
         $articlesManager = new ArticlesManager($db);
-        $articlesFromManager = $articlesManager->verify(); // Appel d'une fonction de cet objet
-        //$articlesFromDb = $articlesFromManager->subject();
+        //print_r($articlesManager);
+        $articlesFromManager = $articlesManager->getList($articles);//($articles); // Appel d'une fonction de cet objet
+        //print_r($articlesFromManager);
+        //var_dump($articlesFromManager = $articlesManager->getList($articles));
+        print_r($articlesFromManager);
+        
+        //$subjectArticles = $articlesFromManager->subject();
+        exit();
     }
 

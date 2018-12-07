@@ -36,28 +36,52 @@ class ArticlesManager
                 //return $sendArticlesDatas;
                 //print_r("fini j'ai inséré les données");
             }
-
+        public function count()
+        {
+            //return $this->db->query('SELECT COUNT(*) FROM news')->fetchColumn();
+            /**
+                * Méthode permettant de supprimer une news.
+                * @param $id int L'identifiant de la news à supprimer
+                * @return void
+            */
+        }
+        
         public function delete(Article $articles)
             {
                 //Execeute une requéte de type delete.
             }
 
-        public function verify(Article $articles)
+        public function get()
             {
-
-                //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
+                /*print_r("je récup des données");
+                //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
                 $getArticlesDatas = $this->_db->prepare("SELECT content, subject, create_date FROM articles WHERE content = :content");
                 $getArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR );
                 $getArticlesDatas->execute();
                 print_r("je recupere mes donnees");
 
-                return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
+                return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));*/
             }
 
-        public function getList()
+            
+        public function getList(Article $articles)//$content)
             {
-                //retourne la liste de tous les Articles
+                //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
+
+                $articles = [];
+                
+                $getArticlesDatas = $this->_db->prepare("SELECT content, subject, create_date FROM articles");
+                $getArticlesDatas->execute();
+                
+                while ($donnees = $getArticlesDatas->fetch())
+                    {
+                        //print_r($donnees);
+                        $articles[] = new Article($donnees);
+                    }
+                    //print_r($articles);
+                    //print_r($dateTime);
+                return $articles;
             }
 
         public function update(Article $articles)
