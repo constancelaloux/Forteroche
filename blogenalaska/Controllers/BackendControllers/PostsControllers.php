@@ -41,23 +41,23 @@ function transferArticlesToModel($myText, $myTitle)
 //Récupérer des articles de la base de données
 function getArticles()
     {    
-        $articles = new Article
+     /*   $articles = new Article
             ([
                 'content' => "",
                 'subject' => "",
                 'createdate' => new DateTime("")
-            ]); //Création d'un objet
+            ]); //Création d'un objet*/
         
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
         $articlesManager = new ArticlesManager($db);
         //print_r($articlesManager);
-        $articlesFromManager = $articlesManager->getList($articles);//($articles); // Appel d'une fonction de cet objet
+        $articlesFromManager = $articlesManager->getList();//($articles);// Appel d'une fonction de cet objet
         //print_r($articlesFromManager);
         //var_dump($articlesFromManager = $articlesManager->getList($articles));
-        print_r($articlesFromManager);
+        //var_dump($articlesFromManager);
         
         //$subjectArticles = $articlesFromManager->subject();
-        exit();
+        //exit();
     }
 

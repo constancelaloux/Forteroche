@@ -28,6 +28,9 @@ class Article
         public function __construct(array $donnees)
             {
                 $this->hydrate($donnees);
+                //print_r("- Hydratation Article -");
+                //echo '<br/>';
+                //print_r($this->hydrate($donnees));
             }
 
         //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
@@ -137,7 +140,7 @@ class Article
                 //print_r($createdate);
             }
 
-        public function setUpdatedate($updatedate)
+        public function setUpdatedate(DateTime $updatedate)
             {
                 $this->_updatedate = $updatedate;
             }

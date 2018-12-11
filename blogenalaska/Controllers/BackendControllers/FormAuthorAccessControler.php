@@ -14,9 +14,10 @@
 require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 Autoloader::register();
 
-//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
-
 //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Author.php';
+
+//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
+
 //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/AuthorManager.php';
 
 //test
@@ -30,6 +31,7 @@ function sendDataToDatabase()
                 'surname' => 'Forteroche',
                 'firstname' => 'Jean'
             ]);
+        
             $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
             $sendToTheManager = new AuthorManager($db);
             //$sendToTheManager->connect();
@@ -52,6 +54,7 @@ function transferDatatoModel($usernameVar,$passwordVar)
         // exit("je m'arréte la");
         $manager = new AuthorManager($db);
         $passwordFromManager = $manager->verify($author); // Appel d'une fonction de cet objet
+        
         $passwordFromDb = $passwordFromManager->password();
 
 
@@ -65,9 +68,9 @@ function transferDatatoModel($usernameVar,$passwordVar)
             session_start();
             $_SESSION['username'] = $usernameVar;
             //echo $_SESSION['username'];
-           // $_SESSION['firstName'] = $usernameVar;
-           // $_SESSION['surName'] = $usernameVar;
-            redirectionVueAdmin();      
+            // $_SESSION['firstName'] = $usernameVar;
+            // $_SESSION['surName'] = $usernameVar;
+            redirectionGetArticles();      
          }
       else 
          {

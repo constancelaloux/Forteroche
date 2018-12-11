@@ -50,8 +50,8 @@ function redirectionGetArticles()
         // On récupère nos variables de session
         if (isset($_SESSION['username']))
             {
-                getArticles();
-                //header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
+                //getArticles();
+                header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
                 
             }
     }

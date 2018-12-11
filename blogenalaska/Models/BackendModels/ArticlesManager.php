@@ -65,23 +65,48 @@ class ArticlesManager
             }
 
             
-        public function getList(Article $articles)//$content)
+        public function getList()//Article $articles)//$content)
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
-                $articles = [];
+                //$articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT content, subject, create_date FROM articles");
+                $getArticlesDatas = $this->_db->prepare("SELECT * FROM articles");
                 $getArticlesDatas->execute();
+                $donnees = $getArticlesDatas->fetch();
                 
-                while ($donnees = $getArticlesDatas->fetch())
-                    {
-                        //print_r($donnees);
-                        $articles[] = new Article($donnees);
-                    }
-                    //print_r($articles);
+                //$articles = new Article($donnees);
+                
+                // Date
+                //$articles->setCreatedate(new DateTime($articles->createdate()));
+                //Sprint_r(Article->getCreatedate());
+                
+                //print_r($donnees);
+                //exit();
+                 
+                print_r("yalalalalailou");
+                //$articles->setCreatedate($testDate);
+                //$articles[] = new Article($donnees);
+                $articles = new Article($donnees);
+                // Date
+                $articles->setCreatedate(new DateTime($articles->createdate()));
+                    
+                //exit();
+                //print_r($articles);
                     //print_r($dateTime);
-                return $articles;
+                $data = $articles;
+                echo  json_encode(array(
+                    'data' => $data
+                ));
+                print_r($data);
+                return $data;
+                /*print_r($data);
+                echo  json_encode(array(
+                    'data' => $data
+                return $data;
+                ));
+                print_r($data);
+                return $data;*/
             }
 
         public function update(Article $articles)

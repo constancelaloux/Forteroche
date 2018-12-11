@@ -7,13 +7,14 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <!--Tableau-->
-    <table id="displayarticles" class="display" style="width:100%">
+<!--display-->
+    <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
         <thead>
             <tr>
-                <th>Nom article</th>
-                <th>Auteur</th>
-                <th>Date de création</th>
-                <th>Date de modification</th>
+                <th class="all">Nom article</th>
+                <th class="all">Auteur</th>
+                <th class="all">Date de création</th>
+                <th class="all">Date de modification</th>
             </tr>
         </thead>
     </table>
@@ -27,19 +28,40 @@
                         {
                             "processing": true,
                             "serverSide": true,
-                            ajax: "",
-                            columns: 
+                            "ajax":
+                                {
+                                    url :"http://localhost:8888/blogenalaska/Models/BackendModels/ArticlesManager.php", // json datasource
+                                    type: "post"
+                                },
+                            "columnsDefs":
+                                {
+                                    targets : '_all'
+                                },
+
+                            "columns": 
                                 [
-                                    {data: 'Nom article'},
-                                    {data: 'Auteur'},
-                                    {data: 'Date de création'},
-                                    {data: 'Date de modification'}
-                                ]  
+                                    //{data: 'content'},
+                                    //{data: 'createdate'},
+                                    //{data: 'subject'}
+                                    {data: 'data'}
+                                    //{data: 'Auteur'},
+                                    //{data: 'Date de création'},
+                                    //{data: 'Date de modification'}
+                                ],
+                            "success" : function(response)
+                                {
+                                    console.log('form has been posted successfully');
+                                },
+                            "error" : function(response)
+                                {
+                                    console.log('form has not been posted successfully');
+                                    //console.log();
+				}
                         }
                     );
             } );
     </script>
-    
+        
     
 <!--Datatables-->
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
