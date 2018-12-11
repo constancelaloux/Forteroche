@@ -86,7 +86,18 @@ if (isset($_GET['action']))
 
     }
 
-
+//Action de la requéte ajax du Datatables
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'datatablesArticles')
+            {
+                print_r("je passe dans l'index");
+                //exit("test");
+                getArticles();
+                //print_r($POST[$json_data]);
+            }
+    }
 
 
 

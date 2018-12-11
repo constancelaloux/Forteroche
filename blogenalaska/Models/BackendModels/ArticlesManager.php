@@ -90,15 +90,19 @@ class ArticlesManager
                 $articles = new Article($donnees);
                 // Date
                 $articles->setCreatedate(new DateTime($articles->createdate()));
-                    
+                
+                $data = $articles;
                 //exit();
                 //print_r($articles);
                     //print_r($dateTime);
-                $data = $articles;
+                /*$data[] = $articles;
                 echo  json_encode(array(
                     'data' => $data
                 ));
-                print_r($data);
+                print_r($data);*/
+                print_r("J'ai récup les données");
+                //echo json_encode($data);
+                //print_r($data);
                 return $data;
                 /*print_r($data);
                 echo  json_encode(array(

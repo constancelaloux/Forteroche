@@ -30,36 +30,39 @@
                             "serverSide": true,
                             "ajax":
                                 {
-                                    url :"http://localhost:8888/blogenalaska/Models/BackendModels/ArticlesManager.php", // json datasource
-                                    type: "post"
+                                    url :"/blogenalaska/index.php?action=datatablesArticles", // json datasource
+                                    type:"post"
+                                    //data:"data.json"
                                 },
+                            "dataType": "json",
                             "columnsDefs":
                                 {
                                     targets : '_all'
                                 },
+                            //"data": json_data,
 
                             "columns": 
                                 [
                                     //{data: 'content'},
                                     //{data: 'createdate'},
-                                    //{data: 'subject'}
-                                    {data: 'data'}
+                                    {data: 'subject'},
+                                    {data: 'content'}
                                     //{data: 'Auteur'},
                                     //{data: 'Date de création'},
                                     //{data: 'Date de modification'}
-                                ],
-                            "success" : function(response)
-                                {
-                                    console.log('form has been posted successfully');
-                                },
-                            "error" : function(response)
-                                {
-                                    console.log('form has not been posted successfully');
+                                ]
+                        //    "success" : function(data)
+                        //        {
+                        //            console.log('form has been posted successfully');
+                        //        },
+                        //    "error" : function(data)
+                        //        {
+                        //            console.log('form has not been posted successfully');
                                     //console.log();
-				}
+			//	}
                         }
                     );
-            } );
+            });
     </script>
         
     
