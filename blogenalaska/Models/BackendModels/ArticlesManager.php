@@ -73,25 +73,21 @@ class ArticlesManager
                 
                 $getArticlesDatas = $this->_db->prepare("SELECT * FROM articles");
                 $getArticlesDatas->execute();
-                //$donnees = $getArticlesDatas->fetch();
+
                  while ($donnees = $getArticlesDatas->fetch())
                     {
+                        //print_r($donnees);
                         $tmpArticle =  new Article($donnees);
                         $tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
+                        //print_r($tmpArticle->setCreatedate);
+                        $tmpArticle->setUpdatedate(new DateTime($tmpArticle->updatedate()));
                         $articles[] = $tmpArticle;
                     }
                 
                 $data = $articles;
-                //print_r($data);
+
 
                 return $data;
-                /*print_r($data);
-                echo  json_encode(array(
-                    'data' => $data
-                return $data;
-                ));
-                print_r($data);
-                return $data;*/
             }
 
         public function update(Article $articles)

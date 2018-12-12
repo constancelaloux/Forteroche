@@ -60,63 +60,25 @@ function getArticles()
         foreach ($articlesFromManager as $articles) 
             {
                 $row = array();
+                $row[] = $articles->id();
                 $row[] = $articles->subject();
                 $row[] = $articles->content();
+                
                 $articleDate = $articles->createdate();
                 $row[] =$articleDate->format('Y-m-d');
+                
+                $updateArticleDate = $articles->updatedate();
+                $row[] =$updateArticleDate->format('Y-m-d');
                 
                 $data[] = $row;
             }
         // Structure des données à retourner
-        $json_data = array(
-            "data" => $data
-                /*$date = new DateTime($articles->createdate());
-        $row[] =$date->format('d/m/y');*/
-
-
-        /*$myDate[] = $articles->createdate();
-            //foreach ($myDate as $key=>$value) 
-            foreach ($myDate as $value) 
-                {
-               //print_r($myDate);
-                    $row[] = $value;
-                    //$row[] = $key['date'];
-
-                //print_r($row);
-                }*/
-        );
-        
-        echo json_encode($json_data);
-        /*foreach ($articlesFromManager as $value) 
-            {
-                //var_dump($value);
-                $subjectArticles = $value->subject();
-                $contentArticles = $value->content();
-                //print_r($contentArticles);
-                $json_data = array
-                    (
-                        "data" => [$subjectArticles],
-                       // "data" => [$subjectArticles, $contentArticles],[$subjectArticles, $contentArticles]
-                        "content" => [$contentArticles]
-                        //"date" => $dateArticles    
-                    );
-        
-                echo json_encode($json_data);
-            }*/
-        /*$subjectArticles = $articlesFromManager->subject();
-        $contentArticles = $articlesFromManager->content();
-        //$dateArticles =  $articlesFromManager->createdate();*/
-       
-       /* $json_data = array(
-            "data" => $subjectArticles,
-           // "data" => [$subjectArticles, $contentArticles],[$subjectArticles, $contentArticles]
-            "content" => $contentArticles
-            //"date" => $dateArticles    
+        $json_data = array
+            (
+                "data" => $data
             );
         
-        echo json_encode($json_data);*/
-        //print_r($json_data);
-        //return json_encode($json_data);
+        echo json_encode($json_data);
         return $json_data;
         
     }
