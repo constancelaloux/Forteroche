@@ -69,40 +69,19 @@ class ArticlesManager
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
-                //$articles = [];
+                $articles = [];
                 
                 $getArticlesDatas = $this->_db->prepare("SELECT * FROM articles");
                 $getArticlesDatas->execute();
-                $donnees = $getArticlesDatas->fetch();
-                
-                //$articles = new Article($donnees);
-                
-                // Date
-                //$articles->setCreatedate(new DateTime($articles->createdate()));
-                //Sprint_r(Article->getCreatedate());
-                
-                //print_r($donnees);
-                //exit();
-                 
-                //print_r("yalalalalailou");
-                //$articles->setCreatedate($testDate);
-                //$articles[] = new Article($donnees);
-                $articles = new Article($donnees);
-                // Date
-                $articles->setCreatedate(new DateTime($articles->createdate()));
+                //$donnees = $getArticlesDatas->fetch();
+                 while ($donnees = $getArticlesDatas->fetch())
+                    {
+                        $tmpArticle =  new Article($donnees);
+                        $tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
+                        $articles[] = $tmpArticle;
+                    }
                 
                 $data = $articles;
-                //print_r($data);
-                //exit();
-                //print_r($articles);
-                    //print_r($dateTime);
-                /*$data[] = $articles;
-                echo  json_encode(array(
-                    'data' => $data
-                ));
-                print_r($data);*/
-                //print_r("J'ai récup les données");
-                //echo json_encode($data);
                 //print_r($data);
 
                 return $data;

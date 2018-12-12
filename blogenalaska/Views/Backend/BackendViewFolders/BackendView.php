@@ -27,9 +27,9 @@
                     (
                         {
                             
-                            "processing": true,
-                            "serverSide": true,
-                            "ajax":
+                            processing: true,
+                            serverSide: true,
+                            ajax:
                                 {
                                     url :"/blogenalaska/index.php?action=datatablesArticles", // json datasource
                                     type:"POST",
@@ -37,7 +37,7 @@
                                     //dataSrc: 'json_data'
                                     //data:"data.json",
                                 },
-                            "columnsDefs":
+                            columnsDefs:
                                 [{
                                     //data: null,
                                     "targets" : '_all'
@@ -45,12 +45,12 @@
                                     //defaultContent : "<button>Edit</button>"
                                 }],
                             //"data": "data",
-                            "columns": 
+                            columns: 
                                 [
                                     //{data: 'createdate'},
                                     //{"subject": "subject"},
-                                    {"data": "subject"},
-                                    {"content": "content"}
+                                    {data: "data"},
+                                    {data: "content"}
                                     //{data: 'Auteur'},
                                     //{data: 'Date de création'},
                                     //{data: 'Date de modification'}

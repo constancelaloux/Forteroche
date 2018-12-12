@@ -57,18 +57,34 @@ function getArticles()
         //var_dump($articlesFromManager = $articlesManager->getList($articles));
         //var_dump($articlesFromManager);
         
-        $subjectArticles = $articlesFromManager->subject();
+        foreach ($articlesFromManager as $value) 
+            {
+                //var_dump($value);
+                $subjectArticles = $value->subject();
+                $contentArticles = $value->content();
+                //print_r($contentArticles);
+                $json_data = array
+                    (
+                        "data" => [$subjectArticles],
+                       // "data" => [$subjectArticles, $contentArticles],[$subjectArticles, $contentArticles]
+                        "content" => [$contentArticles]
+                        //"date" => $dateArticles    
+                    );
+        
+                echo json_encode($json_data);
+            }
+        /*$subjectArticles = $articlesFromManager->subject();
         $contentArticles = $articlesFromManager->content();
-        //$dateArticles =  $articlesFromManager->createdate();
+        //$dateArticles =  $articlesFromManager->createdate();*/
        
-        $json_data = array(
-            //"data" => $articlesFromManager,
+       /* $json_data = array(
             "data" => $subjectArticles,
+           // "data" => [$subjectArticles, $contentArticles],[$subjectArticles, $contentArticles]
             "content" => $contentArticles
             //"date" => $dateArticles    
             );
         
-        echo json_encode($json_data);
+        echo json_encode($json_data);*/
         //print_r($json_data);
         //return json_encode($json_data);
         return $json_data;
