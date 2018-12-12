@@ -62,12 +62,36 @@ function getArticles()
                 $row = array();
                 $row[] = $articles->subject();
                 $row[] = $articles->content();
-
+                
+                //$timezone = new DateTimeZone('Europe/Sofia');
+                $articleDate = $articles->createdate();
+                print_r($articleDate);
+                
+                $date = new DateTime($articleDate);
+                
+                prin_r($date);
+                //$date[] = $articles->createdate();
+                $row[] =$date->format('Y-m-d');
+    
                 $data[] = $row;
             }
         // Structure des données à retourner
         $json_data = array(
-                "data" => $data,
+            "data" => $data
+                /*$date = new DateTime($articles->createdate());
+        $row[] =$date->format('d/m/y');*/
+
+
+        /*$myDate[] = $articles->createdate();
+            //foreach ($myDate as $key=>$value) 
+            foreach ($myDate as $value) 
+                {
+               //print_r($myDate);
+                    $row[] = $value;
+                    //$row[] = $key['date'];
+
+                //print_r($row);
+                }*/
         );
         
         echo json_encode($json_data);

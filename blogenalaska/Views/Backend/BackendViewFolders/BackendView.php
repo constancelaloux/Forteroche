@@ -33,7 +33,7 @@
                                 {
                                     url :"/blogenalaska/index.php?action=datatablesArticles", // json datasource
                                     type:"POST",
-                                    dataType: 'json',
+                                    dataType: 'json'
                                     //dataSrc: 'json_data'
                                     //data:"data.json",
                                 },
@@ -50,7 +50,8 @@
                                     //{data: 'createdate'},
                                     //{"subject": "subject"},
                                     {data: "0"},
-                                    {data: "1"}
+                                    {data: "1"},
+                                    {data: "2"}
                                 ]
                         }
                     );
