@@ -62,17 +62,9 @@ function getArticles()
                 $row = array();
                 $row[] = $articles->subject();
                 $row[] = $articles->content();
-                
-                //$timezone = new DateTimeZone('Europe/Sofia');
                 $articleDate = $articles->createdate();
-                print_r($articleDate);
+                $row[] =$articleDate->format('Y-m-d');
                 
-                $date = new DateTime($articleDate);
-                
-                prin_r($date);
-                //$date[] = $articles->createdate();
-                $row[] =$date->format('Y-m-d');
-    
                 $data[] = $row;
             }
         // Structure des données à retourner
