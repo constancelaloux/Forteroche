@@ -57,7 +57,21 @@ function getArticles()
         //var_dump($articlesFromManager = $articlesManager->getList($articles));
         //var_dump($articlesFromManager);
         
-        foreach ($articlesFromManager as $value) 
+        foreach ($articlesFromManager as $articles) 
+            {
+                $row = array();
+                $row[] = $articles->subject();
+                $row[] = $articles->content();
+
+                $data[] = $row;
+            }
+        // Structure des données à retourner
+        $json_data = array(
+                "data" => $data,
+        );
+        
+        echo json_encode($json_data);
+        /*foreach ($articlesFromManager as $value) 
             {
                 //var_dump($value);
                 $subjectArticles = $value->subject();
@@ -72,7 +86,7 @@ function getArticles()
                     );
         
                 echo json_encode($json_data);
-            }
+            }*/
         /*$subjectArticles = $articlesFromManager->subject();
         $contentArticles = $articlesFromManager->content();
         //$dateArticles =  $articlesFromManager->createdate();*/
