@@ -11,8 +11,8 @@
     <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
         <thead>
             <tr>
-                <th class="all">Nom article</th>
-                <th class="all">Auteur</th>
+                <th class="all">Sujet</th>
+                <th class="all">Article</th>
                 <th class="all">Date de création</th>
                 <th class="all">Date de modification</th>
             </tr>
@@ -26,27 +26,31 @@
                 $('#displayarticles').DataTable
                     (
                         {
+                            
                             "processing": true,
                             "serverSide": true,
                             "ajax":
                                 {
                                     url :"/blogenalaska/index.php?action=datatablesArticles", // json datasource
-                                    type:"post"
-                                    //data:"data.json"
+                                    type:"POST",
+                                    dataType: 'json',
+                                    //dataSrc: 'json_data'
+                                    //data:"data.json",
                                 },
-                            "dataType": "json",
                             "columnsDefs":
-                                {
-                                    targets : '_all'
-                                },
-                            //"data": json_data,
-
+                                [{
+                                    //data: null,
+                                    "targets" : '_all'
+                                    //"targets": [ 0 ]
+                                    //defaultContent : "<button>Edit</button>"
+                                }],
+                            //"data": "data",
                             "columns": 
                                 [
-                                    //{data: 'content'},
                                     //{data: 'createdate'},
-                                    {data: 'subject'},
-                                    {data: 'content'}
+                                    //{"subject": "subject"},
+                                    {"data": "subject"},
+                                    {"content": "content"}
                                     //{data: 'Auteur'},
                                     //{data: 'Date de création'},
                                     //{data: 'Date de modification'}

@@ -60,15 +60,17 @@ function getArticles()
         $subjectArticles = $articlesFromManager->subject();
         $contentArticles = $articlesFromManager->content();
         //$dateArticles =  $articlesFromManager->createdate();
-        //exit();
+       
         $json_data = array(
-            "subject" => $subjectArticles,
-            "content" => $contentArticles,
+            //"data" => $articlesFromManager,
+            "data" => $subjectArticles,
+            "content" => $contentArticles
             //"date" => $dateArticles    
             );
         
         echo json_encode($json_data);
-        print_r($json_data);
+        //print_r($json_data);
+        //return json_encode($json_data);
         return $json_data;
         
     }

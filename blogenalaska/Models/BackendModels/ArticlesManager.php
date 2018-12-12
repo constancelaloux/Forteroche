@@ -84,7 +84,7 @@ class ArticlesManager
                 //print_r($donnees);
                 //exit();
                  
-                print_r("yalalalalailou");
+                //print_r("yalalalalailou");
                 //$articles->setCreatedate($testDate);
                 //$articles[] = new Article($donnees);
                 $articles = new Article($donnees);
@@ -92,6 +92,7 @@ class ArticlesManager
                 $articles->setCreatedate(new DateTime($articles->createdate()));
                 
                 $data = $articles;
+                //print_r($data);
                 //exit();
                 //print_r($articles);
                     //print_r($dateTime);
@@ -100,9 +101,10 @@ class ArticlesManager
                     'data' => $data
                 ));
                 print_r($data);*/
-                print_r("J'ai récup les données");
+                //print_r("J'ai récup les données");
                 //echo json_encode($data);
                 //print_r($data);
+
                 return $data;
                 /*print_r($data);
                 echo  json_encode(array(
