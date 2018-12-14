@@ -13,6 +13,7 @@ require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/BackendCon
 //On vérifie si il y a une action qui existe dans la vue
 if (isset($_GET['action']))
     {
+    //exit("je sors");
         //Si il y a une action, on appelle la fonction du controller
         if ($_GET['action'] === 'transferDataFormToControler')
             {
@@ -24,12 +25,14 @@ if (isset($_GET['action']))
                                 // check if the username and the password has been set
                                 $usernameVar = ($_POST['username']);
                                 $passwordVar = ($_POST['mot_de_passe']);
-
+                                //print_r("routeur");
                                 transferDatatoModel($usernameVar,$passwordVar);
+
                             }
                         else 
                             {
                                 echo 'Tous les champs ne sont pas remplis';
+                                require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
                                 sendDataToDatabase();
                             }
                     }   
@@ -37,7 +40,8 @@ if (isset($_GET['action']))
     }
 else
     {
-        // Si on a pas remplis le formulaire, on reste surle formlaire
+        //exit("je suis sorti");
+        // On reste surle formlaire si il n'y a pas d'action
        require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
     }
 
@@ -45,11 +49,13 @@ else
 // Redirection vers la vue Administrateur
 function redirectionGetArticles()
     {   
-        //print_r("j'y suis");
+        //print_r("la redirection peut commencer");
         //exit();
         // On récupère nos variables de session
         if (isset($_SESSION['username']))
             {
+                //print_r($_SESSION['username']);
+                //exit("je sors");
                 //getArticles();
                 header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
                 
@@ -99,8 +105,18 @@ if (isset($_GET['action']))
             }
     }
 
-
-
+//Action suppression données du Datatables 
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'removeDatatablesArticles')
+            {
+                //print_r("je passe dans l'index");
+                //exit("test");
+                deleteArticles();
+                //print_r($POST[$json_data]);
+            }
+    }
 
 
 

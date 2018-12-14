@@ -74,18 +74,27 @@ class ArticlesManager
                 $getArticlesDatas = $this->_db->prepare("SELECT * FROM articles");
                 $getArticlesDatas->execute();
 
-                 while ($donnees = $getArticlesDatas->fetch())
+                while ($donnees = $getArticlesDatas->fetch())
                     {
                         //print_r($donnees);
                         $tmpArticle =  new Article($donnees);
-                        $tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
-                        //print_r($tmpArticle->setCreatedate);
-                        $tmpArticle->setUpdatedate(new DateTime($tmpArticle->updatedate()));
+                        //$tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
+                        //$tmpArticle = DateTime::createFromFormat('d-m-Y H:i:s', $donnees['create_date']);
+        
+                        $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        $tmpArticle->setCreatedate($articleDate);
+
+                        $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+
+                        $tmpArticle->setUpdatedate($articleUpdateDate);
+
+                        
                         $articles[] = $tmpArticle;
                     }
                 
                 $data = $articles;
-
+                //var_dump($data);
+                //die();
 
                 return $data;
             }

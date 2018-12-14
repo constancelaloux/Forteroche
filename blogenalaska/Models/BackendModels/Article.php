@@ -85,12 +85,15 @@ class Article
 
         public function createdate()
             {
+            //print_r("je passe par la");
                 return $this->_createdate;
+                //print_r($this);
             }
 
         public function updatedate()
             {
-                return $this->_updatedate;  
+                return $this->_updatedate;
+                //print_r($this);
             }
 
 
@@ -112,7 +115,6 @@ class Article
                 if(is_string($author))
                     {
                         $this->_author = $author;
-
                     }
             }
 
@@ -136,12 +138,15 @@ class Article
 
         public function setCreatedate(DateTime $createdate)
             {
+                //print_r("jepassepar la");
                 $this->_createdate = $createdate;
                 //print_r($createdate);
             }
 
         public function setUpdatedate(DateTime $updatedate)
             {
+                //print_r("jepassepar la");
                 $this->_updatedate = $updatedate;
+                //print_r($updatedate);
             }
     }

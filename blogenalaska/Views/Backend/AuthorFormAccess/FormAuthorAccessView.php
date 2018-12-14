@@ -4,10 +4,11 @@ pour savoir ce qu'elle doit afficher. On y trouve essentiellement du code HTML m
 et conditions PHP très simples, pour afficher par exemple une liste de messages.-->
 
 <?php $title = 'Les aventures de Jean Forteroche'; ?>
+<?php ob_start(); ?>
 
 <p>Veuillez entrer votre mot de passe et votre identifiant</p>
 
-    <form action="index.php?action=transferDataFormToControler" method="post">
+    <form action="/blogenalaska/index.php?action=transferDataFormToControler" method="post">
 
         <div>
             <label for="username">Identifiant</label>

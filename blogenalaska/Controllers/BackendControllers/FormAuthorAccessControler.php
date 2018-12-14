@@ -43,6 +43,7 @@ function sendDataToDatabase()
 //on vérifie que les variables sont bien instanciés pour le formulaire d'entrée du back office
 function transferDatatoModel($usernameVar,$passwordVar)
     {
+
         $author = new Author(
             [
             'password' => $passwordVar,
@@ -66,6 +67,7 @@ function transferDatatoModel($usernameVar,$passwordVar)
          {  
             // Start the session
             session_start();
+            //print_r("une nouvelle session a commencé");
             $_SESSION['username'] = $usernameVar;
             //echo $_SESSION['username'];
             // $_SESSION['firstName'] = $usernameVar;

@@ -1,7 +1,10 @@
+<?php  session_start(); ?>
+<?php print_r($_SESSION['username']);?>
+  <?php // exit("je sors"); //include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
 <?php $title = 'backend main page'; ?>
-
+<?php ob_start(); ?>
 <!--Include header-->
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Header.php'); ?>
+
 
 <!--Jquery-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
@@ -16,7 +19,7 @@
                 <th class="all">Article</th>
                 <th class="all">Date de création</th>
                 <th class="all">Date de modification</th>
-                <th class="all">Edit / Delete</th>
+                <th class="all">Modifier / Supprimer</th>
             </tr>
         </thead>
     </table>
@@ -59,31 +62,36 @@
                                     {
                                         data: null,
                                         className: "center",
-                                        defaultContent: '<a href="" class="editor_edit">Edit</a> / <a href="" class="editor_remove">Delete</a>'
+                                        defaultContent: '<a href="" class="editor_update">Modifier</a> / <a href="" class="editor_remove">Supprimer</a>'
                                     }
                                 ]
                         }
                     );
-                // Edit record
-                $('#displayarticles').on('click', 'a.editor_edit', function (e) {
+                // Button Edit record
+                $('#displayarticles').on('click', 'a.editor_update', function (e) {
                     e.preventDefault();
 
-                    editor.edit( $(this).closest('tr'), {
+                    editor.update( $(this).closest('tr'), {
                         title: 'Edit record',
-                        buttons: 'Update'
+                        buttons: 'Modifier'
                     } );
                 } );
 
-                // Delete a record
+                // Button Delete a record
                 $('#displayarticles').on('click', 'a.editor_remove', function (e) {
                     e.preventDefault();
 
                     editor.remove( $(this).closest('tr'), {
                         title: 'Delete record',
                         message: 'Are you sure you wish to remove this record?',
-                        buttons: 'Delete'
+                        buttons: 'Supprimer'
                     } );
-                } );
+                    
+                    $.ajax
+                        ({
+                            url :"/blogenalaska/index.php?action=removeDatatablesArticles"
+                        });
+                });
             });
     </script>
         
@@ -94,6 +102,8 @@
 <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 
 <!--Include Footer et template -->
-<?php include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Footer.php"); ?> 
+<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php"); ?> 
 
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');
+
+<?php $backend = ob_get_clean(); ?>
+<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');?>

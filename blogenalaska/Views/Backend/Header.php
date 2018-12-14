@@ -8,14 +8,14 @@
          </div>
          <div class="container-fluid">
            <ul class="nav navbar-nav">
-             <li class="active"> <a href="ForterocheMainFrontPageBlog.php">Site web</a> </li>
+             <li class="active"> <a href="http://localhost:8888/blogenalaska/Views/Frontend/Accueil.php">Site web</a> </li>
              <li class="active"> <a href="BackendView.php">Accueil</a> </li>
              <li class="dropbtn"> <a href="#" class="dropbtn">Articles</a>
                 <div class="dropdown-content">
                     <a href="WriteArticlesView.php">Rédiger un article</a>
                 </div>
             </li>
-             <li class="active"> <a href="ManageCommentsView.php">Articles</a> </li>
+             <li class="active"> <a href="ManageCommentsView.php">Commentaires</a> </li>
            </ul>
          </div>
        </nav>

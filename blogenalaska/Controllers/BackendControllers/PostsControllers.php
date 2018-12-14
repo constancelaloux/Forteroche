@@ -83,3 +83,7 @@ function getArticles()
         
     }
 
+function deleteArticles()
+    {
+        print_r("je vais supprimer les données");
+    }

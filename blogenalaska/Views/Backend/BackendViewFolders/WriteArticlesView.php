@@ -1,9 +1,8 @@
 
 <!--Jquery-->    
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-
 <?php $title = 'backend creation articles'; ?>
-
+<?php ob_start(); ?>
     <h1>Heyhey you are arrived in the building articles page</h1>
 
 
@@ -88,7 +87,7 @@
             });
 
     </script>  -->    
-<?php include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Footer.php"); ?> 
+<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php"); ?> 
 
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');
 
