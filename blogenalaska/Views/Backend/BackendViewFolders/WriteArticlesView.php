@@ -1,13 +1,10 @@
+<?php  session_start(); ?>
+<?php print_r($_SESSION['username']);?>
 
-<!--Jquery-->    
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
 <?php $title = 'backend creation articles'; ?>
 <?php ob_start(); ?>
+
     <h1>Heyhey you are arrived in the building articles page</h1>
-
-
-    <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
-    <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
 
     <script type="text/javascript">
         tinymce.init
@@ -86,9 +83,8 @@
 
             });
 
-    </script>  -->    
-<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php"); ?> 
-
+    </script>  -->     
+<?php $backend = ob_get_clean(); ?>
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');
 
   

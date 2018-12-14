@@ -1,13 +1,9 @@
 <?php  session_start(); ?>
 <?php print_r($_SESSION['username']);?>
-  <?php // exit("je sors"); //include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
+
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
-<!--Include header-->
 
-
-<!--Jquery-->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
 <!--Tableau-->
 <!--display-->
@@ -94,16 +90,6 @@
                 });
             });
     </script>
-        
-    
-<!--Datatables-->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-  
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
-
-<!--Include Footer et template -->
-<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php"); ?> 
-
 
 <?php $backend = ob_get_clean(); ?>
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');?>

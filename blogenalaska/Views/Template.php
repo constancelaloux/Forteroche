@@ -1,5 +1,3 @@
-<?php //ob_start(); ?>
-<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php"); ?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -8,57 +6,43 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
-        <link href="public/css/style.css" rel="stylesheet" />
-
+        <!--<link href="public/css/style.css" rel="stylesheet" />-->
+        <!--Jquery-->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <!--Datatables-->
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+        <!--Tinymce-->
+        <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+        <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
     </head>
     
     <body>
+        <!--Menu-->
+        <?php if (isset($_SESSION['username'])) 
+            { 
+                //Session
+                print_r("im authentificated");
+                //Header
+                include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); 
+        ?>        
+                <!--On affiche le contenu-->
+                <?= $backend ?>
+        <?php 
+                //Footer
+                include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php');
+            }
+        else 
+            {
+        ?> 
+                <!--On affiche le contenu-->
+                <?= $content ?>
+        <?php
+            }
+        ?>
 
-    <!--Menu-->
-    <?php if (isset($_SESSION['username'])) { print_r("im authentificated"); ?>
-        <p>Je suis le header du backend</p>
-        <header class="col-sm-12 col-lg-12 table-responsive">
-             <div class="container">
-               <nav class="navbar navbar-inverse">
-                <div class="navbar-header">
-                  <!--   <a class="navbar-brand" href="#">$_SESSION['userName']</a>-->
-                </div>
-                <div class="container-fluid">
-                    <ul class="nav navbar-nav">
-                        <li class="active"> <a href="http://localhost:8888/blogenalaska/Views/Frontend/Accueil.php">Site web</a> </li>
-                        <li class="active"> <a href="BackendView.php">Accueil</a> </li>
-                        <li class="dropbtn"> <a href="#" class="dropbtn">Articles</a>
-                        <div class="dropdown-content">
-                            <a href="WriteArticlesView.php">Rédiger un article</a>
-                        </div>
-                        </li>
-                        <li class="active"> <a href="ManageCommentsView.php">Commentaires</a> </li>
-                    </ul>
-                </div>
-               </nav>
-             </div>
-        </header>
-            
-        <!--Contenu-->
-            
 
-        
-        <!--Footer-->
-        <p>Je suis le footer</p>
-    <?php }
-    else {
-    ?>        
-        <?= $content ?>
-    <?php
-    }?>
-    <!--Contenu-->
-         <?= $backend ?>
-
-    <!--Footer-->
-    <!--<p>Je suis le footer</p>-->
     </body>
 
 </html>
-<?php //include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php"); ?>
-<?php //$content = ob_get_clean(); ?>
 
