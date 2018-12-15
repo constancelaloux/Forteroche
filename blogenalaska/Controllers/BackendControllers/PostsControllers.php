@@ -18,22 +18,27 @@ function transferArticlesToModel($myText, $myTitle)
                 'content' => $myText,
                 'subject' => $myTitle
             ]);
-
+        
+        //Je me connecte
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-
+        
         $sendToTheArticlesManager = new ArticlesManager($db);
-
+        
+        //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
         $sendToTheArticlesManager->add($newArticles);
         
         if ($sendToTheArticlesManager == true)
             {
-                header('Location: /blogenalaska/index.php?action=test');
-                //redirectionVueAdmin(); 
-
+                //print_r("Je retourne vers la page d'accueil");
+                //header('Location: http://localhost:8888/Forteroche/blogenalaska/index.php?action=redirectionGetArticles');
+                //header('Location: http://localhost:8888/Forteroche/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
+                redirectionGetArticles();
+                //require '/Forteroche/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
             }
         else 
             {
-                print_r("erreur");
+                print_r("erreur, l'article n'a pas pu étre envoyé!");
+                require '/Forteroche/blogenalaska/Views/Backend/BackendViewFolders/WriteArticlesView.php';
             }
     }
     
@@ -83,7 +88,32 @@ function getArticles()
         
     }
 
-function deleteArticles()
+//Supprimer des articles en base de données
+function deleteArticles($myIdArticle)
     {
         print_r("je vais supprimer les données");
+        $idArticle = new Article;
+            ([
+                'id' => $myIdArticle
+            ]);
+        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+        $articlesManager = new ArticlesManager($db);
+        
+        $articlesManager->delete($idArticle);
     }
+
+//Modifier des données en base de données    
+/*function updateArticles($myIdArticle)
+    {
+        print_r("je vais modifier les données");
+        $modifyIdArticle = new Article;
+            ([
+                'id' => $myIdArticle
+            ]);
+        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+        $articlesManager = new ArticlesManager($db);
+        
+        $articlesManager->update($modifyIdArticle);
+    }*/

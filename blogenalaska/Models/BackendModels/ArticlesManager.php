@@ -36,19 +36,20 @@ class ArticlesManager
                 //return $sendArticlesDatas;
                 //print_r("fini j'ai inséré les données");
             }
-        public function count()
-        {
-            //return $this->db->query('SELECT COUNT(*) FROM news')->fetchColumn();
-            /**
-                * Méthode permettant de supprimer une news.
-                * @param $id int L'identifiant de la news à supprimer
-                * @return void
-            */
-        }
+            public function count()
+                {
+                    //return $this->db->query('SELECT COUNT(*) FROM news')->fetchColumn();
+                    /**
+                        * Méthode permettant de supprimer une news.
+                        * @param $id int L'identifiant de la news à supprimer
+                        * @return void
+                    */
+                }
         
         public function delete(Article $articles)
             {
-                //Execeute une requéte de type delete.
+                //Executer une requéte de type delete.
+                $this->_db->exec('DELETE FROM articles WHERE id = '.$articles->id());
             }
 
         public function get()
@@ -65,7 +66,7 @@ class ArticlesManager
             }
 
             
-        public function getList()//Article $articles)//$content)
+        public function getList()
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
@@ -104,9 +105,17 @@ class ArticlesManager
                 // Prépare une requête de type UPDATE.
                 // Assignation des valeurs à la requête.
                 // Exécution de la requête.
+                $dbRequestModifyArticle = $this->dao->prepare('UPDATE articles SET subject = :subject, content = :content, update_date = NOW() WHERE id = :id');
+    
+                $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
+                //$dbRequestModifyArticle->bindValue(':auteur', $articles->auteur());
+                $dbRequestModifyArticle->bindValue(':content', $articles->content());
+                $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
+    
+                $dbRequestModifyArticle->execute();
             }
 
-       public function setDb(\PDO $db)
+        public function setDb(\PDO $db)
             {
                 $this->_db = $db;
             }

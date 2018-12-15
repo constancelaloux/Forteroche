@@ -15,13 +15,15 @@
                 <th class="all">Article</th>
                 <th class="all">Date de création</th>
                 <th class="all">Date de modification</th>
-                <th class="all">Modifier / Supprimer</th>
+                <!--<th class="all">Modifier / Supprimer</th>-->
+                <th class="all">Supprimer/Modifier</th>
             </tr>
         </thead>
     </table>
 
 <!--requéte ajax-->
     <script type="text/javascript">
+        //J'insére les données
         $(document).ready( function () 
             {
                 $('#displayarticles').DataTable
@@ -58,37 +60,73 @@
                                     {
                                         data: null,
                                         className: "center",
-                                        defaultContent: '<a href="" class="editor_update">Modifier</a> / <a href="" class="editor_remove">Supprimer</a>'
+                                        defaultContent: '<button class="btn-delete" type="button" id="button">Supprimer</button><button type="button" id="buttonmodify">Modifier</button>'
                                     }
                                 ]
                         }
                     );
                 // Button Edit record
-                $('#displayarticles').on('click', 'a.editor_update', function (e) {
+                /*$('#displayarticles').on('click', 'a.editor_update', function (e) {
                     e.preventDefault();
 
                     editor.update( $(this).closest('tr'), {
                         title: 'Edit record',
                         buttons: 'Modifier'
                     } );
-                } );
+                } );*/
 
-                // Button Delete a record
-                $('#displayarticles').on('click', 'a.editor_remove', function (e) {
-                    e.preventDefault();
-
-                    editor.remove( $(this).closest('tr'), {
-                        title: 'Delete record',
-                        message: 'Are you sure you wish to remove this record?',
-                        buttons: 'Supprimer'
-                    } );
-                    
-                    $.ajax
-                        ({
-                            url :"/blogenalaska/index.php?action=removeDatatablesArticles"
-                        });
-                });
             });
+                  //table.destroy();  
+            //$('#displayarticles').DataTable().clear();
+        //Je supprime les données
+        $(document).ready( function ()
+            {
+                // Button Delete a record
+                var table = $('#displayarticles').DataTable();
+
+                $('#displayarticles').on('click', 'tr', function (e) 
+                    {
+                        table.row( [1]).data([1]);
+                        console.log(table.row( this ).data());
+                    });
+
+                $(document).on('click','.btn-delete', function (e) 
+                    {
+                        e.preventDefault();
+                        console.log("test");
+                        
+                        $('#displayarticles').DataTable
+                            ({
+                                ajax:
+                                    {
+                                        url :"Location: http://localhost:8888/index.php?action=removeArticles",
+                                        type:"POST",
+                                        dataType: 'json', //This says I'm expecting a response that is json encoded.
+                                        data: 
+                                            {  //Set up your post data as an array of key value pairs.
+                                                'data' : 0
+
+                                            },
+                                        success: function(data){ //data is an json encoded array.
+
+                                                console.log('Data: ' + data); //Going to display whats in data so you can see whats going on.
+
+                                                if(data['success'])
+                                                    {  //You are checking for true/false not yes or no.
+                                                        console.log('You successfully deleted the row.');
+                                                    }
+                                                else
+                                                    {
+                                                        console.log('The row was not deleted.');
+                                                    }
+
+                                            }  
+                                    }
+                            });
+                    });
+            });
+            
+
     </script>
 
 <?php $backend = ob_get_clean(); ?>

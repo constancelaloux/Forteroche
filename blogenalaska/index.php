@@ -50,16 +50,16 @@ else
 function redirectionGetArticles()
     {   
         //print_r("la redirection peut commencer");
-        //exit();
+        //exit("on y est");
         // On récupère nos variables de session
-        if (isset($_SESSION['username']))
-            {
+        //if (isset($_SESSION['username']))
+            //{
                 //print_r($_SESSION['username']);
                 //exit("je sors");
                 //getArticles();
                 header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
                 
-            }
+            //}
     }
 
 
@@ -85,7 +85,8 @@ if (isset($_GET['action']))
                         else 
                             {
                                 // On fait un écho si les variables sont vides
-                                echo('emptyvariables'); 
+                                //echo('Les champs ne sont pas remplis');
+                                require'Views/Backend/BackendViewFolders/WriteArticlesView.php';
                             } 
                     }
             }
@@ -105,19 +106,54 @@ if (isset($_GET['action']))
             }
     }
 
-//Action suppression données du Datatables 
+//Action suppression données 
 if (isset($_GET['action']))
     {
         //Si il y a une action, on appelle la fonction du controller
-        if ($_GET['action'] === 'removeDatatablesArticles')
+        if ($_GET['action'] === 'removeArticles')
             {
-                //print_r("je passe dans l'index");
-                //exit("test");
-                deleteArticles();
-                //print_r($POST[$json_data]);
+                print_r("je passe dans l'index");
+                if (isset($_POST['id']))
+                    {
+                        if (!empty($_POST['id']))
+                            {
+                                // check if the id has been set
+                                $myIdArticle = ($_POST['id']);
+                                //print_r("routeur");
+                                deleteArticles($myIdArticle);
+
+                            }
+                        else 
+                            {
+                                echo 'pas d article séléctionné';
+                                require'Views/Backend/BackendViewFolders/BackendView.php';
+                            }
+                    } 
             }
     }
 
-
-
+//Action modifier des données
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'UpdateArticles')
+            {
+                print_r("je passe dans l'index");
+                if (isset($_POST['id']))
+                    {
+                        if (!empty($_POST['id']))
+                            {
+                                // check if the id has been set
+                                $myIdArticle = ($_POST['id']);
+                                //print_r("routeur");
+                                updateArticles($myIdArticle);
+                            }
+                        else 
+                            {
+                                echo 'pas d article séléctionné';
+                                require'Views/Backend/BackendViewFolders/BackendView.php';
+                            }
+                    } 
+            }
+    }
 
