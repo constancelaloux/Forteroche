@@ -48,7 +48,8 @@ else
 
 // Redirection vers la vue Administrateur
 function redirectionGetArticles()
-    {   
+    {       //print_r("je passe par la");
+            //exit();
         //print_r("la redirection peut commencer");
         //exit("on y est");
         // On récupère nos variables de session
@@ -110,16 +111,17 @@ if (isset($_GET['action']))
 if (isset($_GET['action']))
     {
         //Si il y a une action, on appelle la fonction du controller
-        if ($_GET['action'] === 'removeArticles')
+        if ($_GET['action'] === 'removeArticles?id=id')
             {
-                print_r("je passe dans l'index");
-                if (isset($_POST['id']))
+                //print_r("je passe dans l'index");
+                if (isset($_GET['id']))
                     {
-                        if (!empty($_POST['id']))
+                        //print_r("j'ai un id");
+                        if (!empty($_GET['id']))
                             {
                                 // check if the id has been set
-                                $myIdArticle = ($_POST['id']);
-                                //print_r("routeur");
+                                $myIdArticle = ($_GET['id']);
+                                //print_r("je vais vers le controlleur");
                                 deleteArticles($myIdArticle);
 
                             }
@@ -138,7 +140,7 @@ if (isset($_GET['action']))
         //Si il y a une action, on appelle la fonction du controller
         if ($_GET['action'] === 'UpdateArticles')
             {
-                print_r("je passe dans l'index");
+                //print_r("je passe dans l'index");
                 if (isset($_POST['id']))
                     {
                         if (!empty($_POST['id']))

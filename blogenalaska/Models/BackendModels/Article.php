@@ -27,6 +27,7 @@ class Article
 
         public function __construct(array $donnees)
             {
+                //print_r($donnees);
                 $this->hydrate($donnees);
                 //print_r("- Hydratation Article -");
                 //echo '<br/>';
@@ -43,6 +44,7 @@ class Article
                     //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
                     //On va donner une valeur à la clé grace à la fonction
                     //On récupére les setters
+                    //print_r($donnees);
                     $method = 'set'.ucfirst($key);
 
                     //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 

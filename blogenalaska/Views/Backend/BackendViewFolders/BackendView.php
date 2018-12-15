@@ -26,7 +26,7 @@
         //J'insére les données
         $(document).ready( function () 
             {
-                $('#displayarticles').DataTable
+                var table = $('#displayarticles').DataTable
                     (
                         {
                             
@@ -50,8 +50,6 @@
                             //"data": "data",
                             columns: 
                                 [
-                                    //{data: 'createdate'},
-                                    //{"subject": "subject"},
                                     {data: "0"},
                                     {data: "1"},
                                     {data: "2"},
@@ -60,11 +58,62 @@
                                     {
                                         data: null,
                                         className: "center",
-                                        defaultContent: '<button class="btn-delete" type="button" id="button">Supprimer</button><button type="button" id="buttonmodify">Modifier</button>'
+                                        defaultContent: '<button class="btn-delete" type="button">Supprimer</button></td><td><button type="button">Modifier</button></td>'
                                     }
                                 ]
+                           /* $(document).on('click','.btn-delete', function (e) 
+                            {
+                                console.log('test');
+                            });*/
                         }
                     );
+                    
+                $('#displayarticles').on( 'click', '.btn-delete', function () 
+                    {
+                        //var id = $(this).attr("id");
+                        var datas = table.row( $(this).parents('tr') ).data();
+                        var id = datas[ 0 ];
+                        alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
+                        //console.log(id);
+ 
+                        if(confirm("Are you sure you want to remove this?"))
+                            {
+                                table
+                                    .row( $(this).parents('tr') )
+                                    .remove()
+                                    .draw();
+                                $.ajax
+                                ({
+                                    url:"/blogenalaska/index.php?action=removeArticles?id=id",
+                                    method:"GET",
+                                    data:{id:id},
+                                    dataType: 'html',
+                                    success:function(callback)
+                                        {
+                                            //$('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
+              
+                                            //fetch_data();
+                                            if(callback['success'])
+                                            {  //You are checking for true/false not yes or no.
+                                                console.log(id);
+                                                //table.row( $(this).parents('tr') ).remove().draw();
+                                                //$('#displayarticles').DataTable().destroy();
+                                                console.log('You successfully deleted the row.');
+                                            }
+                                        else
+                                            {
+                                                console.log(id);
+                                                console.log(datas);
+                                                console.log('The row was not deleted.');
+                                                //$('#displayarticles').DataTable().clear();
+                                                //$('#displayarticles').DataTable().draw();
+                                                //draw();
+                                            }
+                                        }
+                                });
+                             };            
+                    } );
+            });
                 // Button Edit record
                 /*$('#displayarticles').on('click', 'a.editor_update', function (e) {
                     e.preventDefault();
@@ -74,58 +123,64 @@
                         buttons: 'Modifier'
                     } );
                 } );*/
+            
 
-            });
                   //table.destroy();  
             //$('#displayarticles').DataTable().clear();
         //Je supprime les données
-        $(document).ready( function ()
-            {
-                // Button Delete a record
-                var table = $('#displayarticles').DataTable();
+        //$(document).ready( function ()
+            //{       
 
-                $('#displayarticles').on('click', 'tr', function (e) 
-                    {
-                        table.row( [1]).data([1]);
-                        console.log(table.row( this ).data());
+                       
+           // });
+          /*  var table = $('#displayarticles').DataTable;
+            $('#displayarticles').on('click', 'tr', function (e) 
+                {
+                    //console.log("test");
+                    
+                    var data = table.row($(this).parents('tr'));
+                    //console.log(table.row( this ).parents('tr'));
+                });
+
+
+
+            // Button Delete a record
+            $(document).on('click','.btn-delete', function (e) 
+                {
+                    //var id = $(this).attr("Id");
+                    e.preventDefault();
+                    console.log("test");
+                    //console.log(id);
+
+                    $('#displayarticles').DataTable({
+                        ajax:
+                            {
+                                url :"Location: http://localhost:8888/index.php?action=removeArticles",
+                                type:"POST",
+                                dataType: 'json', //This says I'm expecting a response that is json encoded.
+                                data: 
+                                    {  //Set up your post data as an array of key value pairs.
+                                        'data' : 0
+
+                                    },
+                                success: function(data)
+                                    { //data is an json encoded array.
+
+                                        console.log('Data: ' + data); //Going to display whats in data so you can see whats going on.
+
+                                        if(data['success'])
+                                            {  //You are checking for true/false not yes or no.
+                                                console.log('You successfully deleted the row.');
+                                            }
+                                        else
+                                            {
+                                                console.log('The row was not deleted.');
+                                            }
+
+                                    }  
+                            }    
                     });
-
-                $(document).on('click','.btn-delete', function (e) 
-                    {
-                        e.preventDefault();
-                        console.log("test");
-                        
-                        $('#displayarticles').DataTable
-                            ({
-                                ajax:
-                                    {
-                                        url :"Location: http://localhost:8888/index.php?action=removeArticles",
-                                        type:"POST",
-                                        dataType: 'json', //This says I'm expecting a response that is json encoded.
-                                        data: 
-                                            {  //Set up your post data as an array of key value pairs.
-                                                'data' : 0
-
-                                            },
-                                        success: function(data){ //data is an json encoded array.
-
-                                                console.log('Data: ' + data); //Going to display whats in data so you can see whats going on.
-
-                                                if(data['success'])
-                                                    {  //You are checking for true/false not yes or no.
-                                                        console.log('You successfully deleted the row.');
-                                                    }
-                                                else
-                                                    {
-                                                        console.log('The row was not deleted.');
-                                                    }
-
-                                            }  
-                                    }
-                            });
-                    });
-            });
-            
+                });*/
 
     </script>
 

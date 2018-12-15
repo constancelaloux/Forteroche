@@ -13,6 +13,7 @@ require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnect
 //Envoyer des articles en base de données
 function transferArticlesToModel($myText, $myTitle)
     {
+        //print_r($myText);
         $newArticles = new Article
             ([
                 'content' => $myText,
@@ -22,6 +23,7 @@ function transferArticlesToModel($myText, $myTitle)
         //Je me connecte
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
         
+
         $sendToTheArticlesManager = new ArticlesManager($db);
         
         //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
@@ -91,16 +93,31 @@ function getArticles()
 //Supprimer des articles en base de données
 function deleteArticles($myIdArticle)
     {
-        print_r("je vais supprimer les données");
-        $idArticle = new Article;
+        //print_r($myIdArticle);
+        //print_r("je vais supprimer les données");
+        //exit("je sors");
+        /*$data = array
+                (
+                    'id' => $myIdArticle
+                );
+        print_r($data);*/
+        
+        $article = new Article
             ([
+                
                 'id' => $myIdArticle
             ]);
+        //print_r("je rentre dans la fonction connect");
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
         $articlesManager = new ArticlesManager($db);
         
-        $articlesManager->delete($idArticle);
+        $articlesManager->delete($article);
+        
+        if ($articlesManager == true)
+        {
+            redirectionGetArticles();
+        }
     }
 
 //Modifier des données en base de données    
