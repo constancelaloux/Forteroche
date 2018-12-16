@@ -1,9 +1,17 @@
 <?php  session_start(); ?>
-<?php print_r($_SESSION['username']);?>
+<?php // print_r($_SESSION['username']);?>
 
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
 
+<h1>Articles</h1>
+
+<!--Compter les articles existants en base-->
+<!--Compter les articles publiés-->
+<div class="numberOfArticles">
+    <p>Tous<a href="#"><span class="numberGlobalOfArticles">28</span></a></p>
+    <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles">18</span></a></p>
+</div>
 
 <!--Tableau-->
 <!--display-->
@@ -75,7 +83,8 @@
                         var id = datas[ 0 ];
                         alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
                         //console.log(id);
-                        var $tr = $(this).closest('tr');
+                        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
+                        var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
                         if(confirm("Are you sure you want to remove this?"))
                             {
                                 //table

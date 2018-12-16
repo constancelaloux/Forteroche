@@ -7,10 +7,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         
         <!--CSS-->
-        <!--<link href="public/css/style.css" rel="stylesheet" />-->
+        <link href="/blogenalaska/public/css/style.css" rel="stylesheet" />
         
         <!--Jquery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         
         <!--Datatables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
@@ -19,14 +19,30 @@
         <!--Tinymce-->
         <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
+        
+        <!--Bootstrap-->
+        <script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
+        <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">
     </head>
     
     <body>
         <!--Menu-->
-        <?php if (isset($_SESSION['username'])) 
+        <?php if (isset($_SESSION['username'])) //AND isset($_GET['repeter'])) 
             { 
+                //1 : On force la conversion en nombre entier
+                //$_GET['repeter'] = (int) $_GET['repeter'];
+
+                // 2 : Le nombre doit être compris entre 1 et 100
+                //if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100) 
+                 //   {	
+                 //       for ($i = 0 ; $i < $_GET['repeter'] ; $i++)
+                 //           {
+                //                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
+                //            }
+                //    }
                 //Session
-                print_r("im authentificated");
+                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
+                //print_r("im authentificated");
                 //Header
                 include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); 
         ?>        
