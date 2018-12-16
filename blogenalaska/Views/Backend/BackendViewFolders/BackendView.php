@@ -75,25 +75,32 @@
                         var id = datas[ 0 ];
                         alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
                         //console.log(id);
- 
+                        var $tr = $(this).closest('tr');
                         if(confirm("Are you sure you want to remove this?"))
                             {
-                                table
-                                    .row( $(this).parents('tr') )
-                                    .remove()
-                                    .draw();
+                                //table
+                                //    .row( $(this).parents('tr') )
+                                //    .remove()
+                                //    .draw();
                                 $.ajax
                                 ({
                                     url:"/blogenalaska/index.php?action=removeArticles?id=id",
                                     method:"GET",
                                     data:{id:id},
                                     dataType: 'html',
-                                    success:function(callback)
+                                    success:function(response)
                                         {
+                                            console.log('c cool');
+
+                                            $tr.find('td').fadeOut(1000,function()
+                                                { 
+                                                    $tr.remove();
+                                                });
+
                                             //$('#alert_message').html('<div class="alert alert-success">'+data+'</div>');
               
                                             //fetch_data();
-                                            if(callback['success'])
+                                           /* if(callback['success'])
                                             {  //You are checking for true/false not yes or no.
                                                 console.log(id);
                                                 //table.row( $(this).parents('tr') ).remove().draw();
@@ -108,7 +115,11 @@
                                                 //$('#displayarticles').DataTable().clear();
                                                 //$('#displayarticles').DataTable().draw();
                                                 //draw();
-                                            }
+                                            }*/
+                                        },
+                                    error:function(response)
+                                        {
+                                            console.log('ca ne fonctionne pas');
                                         }
                                 });
                              };            
