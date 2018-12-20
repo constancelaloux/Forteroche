@@ -20,7 +20,7 @@ Autoloader::register();
 
 //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/AuthorManager.php';
 
-//test
+
 function sendDataToDatabase()
     {
         //Connexion à la base de données et création des identifiants de Jean Forteroche
@@ -52,7 +52,6 @@ function transferDatatoModel($usernameVar,$passwordVar)
 
         $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-        // exit("je m'arréte la");
         $manager = new AuthorManager($db);
         $passwordFromManager = $manager->verify($author); // Appel d'une fonction de cet objet
         
@@ -72,7 +71,7 @@ function transferDatatoModel($usernameVar,$passwordVar)
             //echo $_SESSION['username'];
             // $_SESSION['firstName'] = $usernameVar;
             // $_SESSION['surName'] = $usernameVar;
-            redirectionGetArticles();      
+            //redirectionGetArticles();      
          }
       else 
          {

@@ -4,7 +4,7 @@
         <meta charset="utf-8" />
         <title><?= $title ?></title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
         <!--CSS-->
         <link href="/blogenalaska/public/css/style.css" rel="stylesheet" />
@@ -21,8 +21,16 @@
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
         
         <!--Bootstrap-->
-        <script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
-        <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  crossorigin="anonymous">
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+
+
+        <!--<script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
+        <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">-->
+
+        
     </head>
     
     <body>
@@ -40,14 +48,16 @@
                 //                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
                 //            }
                 //    }
-                //Session
-                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
+
                 //print_r("im authentificated");
                 //Header
                 include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); 
         ?>        
                 <!--On affiche le contenu-->
-                <?= $backend ?>
+                <div class="content">
+                    <?= $backend ?>    
+                </div>
+
         <?php 
                 //Footer
                 include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php');

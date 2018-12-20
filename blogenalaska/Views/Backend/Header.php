@@ -1,55 +1,78 @@
 <!--Menu-->
 
-<!--<header class="col-lg-12 table-responsive">-->
+<header class="navbar">
 
     <div class="container">
-        <nav class="navbar navbar-default" role="navigation">
-            <div class="nav navbar-collapse">
-                <!--Le menu de navigation-->
-                <ul class="nav navbar-nav">
-                    <li><img src="/blogenalaska/public/images/logoforteroche.png" alt="logo"></li>
-                    <li> <a href="http://localhost:8888/blogenalaska/Views/Frontend/Accueil.php">Site web</a> </li>
-                    <li> <a href="BackendView.php">Accueil</a> </li>
-                    <li class="dropdownArticles">
-                        <a data-toggle="dropdown" href="#">Articles<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="WriteArticlesView.php">Rédiger un article</a></li>
-                        </ul>
+        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: rgba(70, 156, 214, 0.9);">
+            
+<!--icon-->
+            <a class="navbar-brand" href="#">
+                <img src="/blogenalaska/public/images/logoforteroche.png" alt="logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+<!--fin icon-->
+            
+<!--Le menu de navigation--> 
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php?action=goToTheBlog">Site web <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="dropdownComments">
-                        <a data-toggle="dropdown" href="#">Commentaires<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="ManageCommentsView.php">Commentaires</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php?action=mainBackendPage">Accueil</a>
+                    </li>
+
+<!--dropdown-->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Articles</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="index.php?action=writeAnArticle">Rédiger un article</a>
+                            </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Commentaires<b class="caret"></b></a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="index.php?action=seeArticleView">Commentaires</a>
+                            </div>
                     </li> 
                 </ul>
-                <!--Click sur image pour déconnecter-->
-                <form class="navbar-form navbar-right inline-form" role="form">
-                    <div class="form-group">
-                        <ul>
-                            <li class="dropdown">
-                                <button class="btn btn-default dropdown-toggle" type="button" id="buttonDisconnect" data-toggle="dropdown">
-                                    <img src="/blogenalaska/public/images/disconnect.jpg">
-                                    <span class="caret"></span>
-                                </button>
-                        <ul class="dropdown-menu">
-                            <li>
-                                <a href="#">Déconnexion</a>
-                            </li>
-                        </ul>
-                    </li> 
-                        </ul>
-                    </div>
-                </form>
-            </div>    
-  
+
+<!--Click sur image pour déconnecter-->
+                <div class="d-flex">
+                    <div class="dropdown mr-1">
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                     
+                                <?php
+                                //Session 
+                                    echo 'Bonjour ' . $_SESSION['username'] . ' !<br />'
+                                ;?>
+                                <img src="/blogenalaska/public/images/disconnect.png">
+                            </button>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                                <div>
+                                    <a class="dropdown-item" href="#">Déconnexion</a>
+                                </div>
+                            </div>
+                    </div> 
+                </div>
+            </div>
+<!
         </nav>
     </div>
-<!--</header> -->
-<!--<div class="logoDisconnectBackend">
-    <img src="/blogenalaska/public/images/deconnexion.jpg" alt="logo">
-</div>-->
-<!--Affiche Bonjour Forteroche-->        
-<!-- Image avec click menu déroulant Se déconnecter->       
+    
+</header> 
+
+<!--script permettant le hover sur les dropdown-->
+<script>
+    $('ul.navbar-nav li.nav-item').hover(function() 
+        {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeIn(500);
+        }, function() 
+        {
+            $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
+        });
+</script>
 
 

@@ -1,9 +1,10 @@
 <?php  session_start(); ?>
 
-<?php $title = 'backend creation articles'; ?>
+<?php $title = 'modification des articles'; ?>
 <?php ob_start(); ?>
 
-    <h1>Ajouter un nouvel article</h1>
+<?php echo"je suis dans ma vue de modif articles"?>
+    <h1>Modifier votre article</h1>
 
     <script type="text/javascript">
         tinymce.init
@@ -35,9 +36,9 @@
     </script>
 
 
-    <form action="/blogenalaska/index.php?action=transferArticlesToController" method="post"> 
-        <textarea id="mytitle" name="title"><h1><?php //echo $articleSubject?></h1></textarea>
-        <textarea id="mytextarea" name="content"><?php //echo $articleSubject?></textarea>
+    <form action="/blogenalaska/index.php?action=articleUpdated" method="post"> 
+        <textarea id="mytitle" name="title"><h1><?php echo $articleSubject?></h1></textarea>
+        <textarea id="mytextarea" name="content"><?php echo $articleSubject?></textarea>
         
         <input type = "submit" value="Valider"/>
     </form>
@@ -85,9 +86,3 @@
     </script>  -->     
 <?php $backend = ob_get_clean(); ?>
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');
-
-  
-
-
-
-

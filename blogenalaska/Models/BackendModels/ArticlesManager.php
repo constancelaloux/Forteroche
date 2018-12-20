@@ -32,19 +32,29 @@ class ArticlesManager
                 //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
 
                 $sendArticlesDatas->execute();
-                
-                //return $sendArticlesDatas;
-                //print_r("fini j'ai inséré les données");
             }
-            public function count()
-                {
-                    //return $this->db->query('SELECT COUNT(*) FROM news')->fetchColumn();
-                    /**
-                        * Méthode permettant de supprimer une news.
-                        * @param $id int L'identifiant de la news à supprimer
-                        * @return void
-                    */
-                }
+            
+        public function save(Article $articles)
+            {
+                /*if ($articles->isValid())
+                    {
+                        $articles->isNew() ? $this->add($articles) : $this->modify($articles);
+                    }
+                else
+                    {
+                        throw new \RuntimeException('La news doit être validée pour être enregistrée');
+                    }*/
+            }
+  
+        public function count()
+            {
+                /**
+                    * Méthode permettant de supprimer une news.
+                    * @param $id int L'identifiant de la news à supprimer
+                    * @return void
+                */
+                return $this->_db->query('SELECT COUNT(*) FROM articles')->fetchColumn();
+            }
         
         public function delete(Article $articles)
             {
@@ -52,17 +62,21 @@ class ArticlesManager
                 $this->_db->exec('DELETE FROM articles WHERE id = '.$articles->id());
             }
 
-        public function get()
+        public function get(Article $articles)
             {
-                /*print_r("je récup des données");
+                //Je récupére mes articles en fonction de l'id
+                //print_r("je récup des données");
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
-                $getArticlesDatas = $this->_db->prepare("SELECT content, subject, create_date FROM articles WHERE content = :content");
-                $getArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR );
-                $getArticlesDatas->execute();
-                print_r("je recupere mes donnees");
+                $getArticlesDatasFromId = $this->_db->prepare("SELECT * FROM articles WHERE id = :id");
 
-                return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));*/
+                $getArticlesDatasFromId->bindValue(':id', $articles->id(), \PDO::PARAM_STR );
+                $getArticlesDatasFromId->execute();
+                //print_r("je recupere mes donnees");
+                //print_r($getArticlesDatasFromId->execute());
+                //exit("je sors");
+
+                return new Article($getArticlesDatasFromId->fetch(\PDO::FETCH_ASSOC));
             }
 
             
@@ -94,8 +108,6 @@ class ArticlesManager
                     }
                 
                 $data = $articles;
-                //var_dump($data);
-                //die();
 
                 return $data;
             }

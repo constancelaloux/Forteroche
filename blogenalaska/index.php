@@ -6,14 +6,13 @@
 require'Controllers/BackendControllers/FormAuthorAccessControler.php';
 require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/BackendControllers/PostsControllers.php';
 
-
+//$PostControllers = new PostControllers();
 //FORMULAIRE
 
 //On vérifie si le mdp et l'identifiant du formulaire de connexion ont bien été envoyés
 //On vérifie si il y a une action qui existe dans la vue
 if (isset($_GET['action']))
     {
-    //exit("je sors");
         //Si il y a une action, on appelle la fonction du controller
         if ($_GET['action'] === 'transferDataFormToControler')
             {
@@ -25,9 +24,12 @@ if (isset($_GET['action']))
                                 // check if the username and the password has been set
                                 $usernameVar = ($_POST['username']);
                                 $passwordVar = ($_POST['mot_de_passe']);
-                                //print_r("routeur");
-                                transferDatatoModel($usernameVar,$passwordVar);
 
+                                transferDatatoModel($usernameVar,$passwordVar);
+                                //Je compte mes articles
+                                $Articles = countArticles();
+                                //Je vais dans mon backend
+                                require 'Views/Backend/BackendViewFolders/BackendView.php';
                             }
                         else 
                             {
@@ -40,35 +42,55 @@ if (isset($_GET['action']))
     }
 else
     {
-        //exit("je suis sorti");
         // On reste surle formlaire si il n'y a pas d'action
        require'Views/Backend/AuthorFormAccess/FormAuthorAccessView.php';
     }
 
+//MENU
+//Accueil
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'mainBackendPage')
+            {
+                require 'Views/Backend/BackendViewFolders/BackendView.php';
+            }
+    }   
 
-// Redirection vers la vue Administrateur
-function redirectionGetArticles()
-    {       //print_r("je passe par la");
-            //exit();
-        //print_r("la redirection peut commencer");
-        //exit("on y est");
-        // On récupère nos variables de session
-        //if (isset($_SESSION['username']))
-            //{
-                //print_r($_SESSION['username']);
-                //exit("je sors");
-                //getArticles();
-                header('Location: http://localhost:8888/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php');
-                
-            //}
+//Action du lien menu pour aller écrire un article
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'writeAnArticle')
+            {
+                require 'Views/Backend/BackendViewFolders/WriteArticlesView.php';
+            }
     }
-
-
-
+    
+//Action pour aller sur le blog
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'goToTheBlog')
+            {
+                require 'Views/Frontend/Accueil.php';
+            }
+    }
+    
 //ARTICLES
 
-//Envoi des articles en base de données
-    //On vérifie si il y a une action qui existe dans la vue
+//Action de la requéte ajax du Datatables
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'datatablesArticles')
+            {
+                getArticles();
+            }
+    }
+
+//Action envoi des articles en base de données
+//On vérifie si il y a une action qui existe dans la vue
 if (isset($_GET['action']))
     {
         //Si il y a une action, on appelle la fonction du controller
@@ -81,31 +103,19 @@ if (isset($_GET['action']))
                                 $myText = ($_POST['content']);
                                 $myTitle = ($_POST['title']);
                                 transferArticlesToModel($myText, $myTitle);
-                                // exit();
+                                require 'Views/Backend/BackendViewFolders/BackendView.php';
                             }
                         else 
                             {
                                 // On fait un écho si les variables sont vides
-                                //echo('Les champs ne sont pas remplis');
+                                echo('Les champs ne sont pas remplis');
                                 require'Views/Backend/BackendViewFolders/WriteArticlesView.php';
                             } 
                     }
             }
 
     }
-
-//Action de la requéte ajax du Datatables
-if (isset($_GET['action']))
-    {
-        //Si il y a une action, on appelle la fonction du controller
-        if ($_GET['action'] === 'datatablesArticles')
-            {
-                //print_r("je passe dans l'index");
-                //exit("test");
-                getArticles();
-                //print_r($POST[$json_data]);
-            }
-    }
+    
 
 //Action suppression données 
 if (isset($_GET['action']))
@@ -116,14 +126,12 @@ if (isset($_GET['action']))
                 //print_r("je passe dans l'index");
                 if (isset($_GET['id']))
                     {
-                        //print_r("j'ai un id");
                         if (!empty($_GET['id']))
                             {
                                 // check if the id has been set
                                 $myIdArticle = ($_GET['id']);
-                                //print_r("je vais vers le controlleur");
                                 deleteArticles($myIdArticle);
-
+                                require'Views/Backend/BackendViewFolders/BackendView.php';
                             }
                         else 
                             {
@@ -135,20 +143,26 @@ if (isset($_GET['action']))
     }
 
 //Action modifier des données
+
+//Je récup l'action de mon datatables et je vais récup les données en fonction de l'id en base
 if (isset($_GET['action']))
     {
         //Si il y a une action, on appelle la fonction du controller
-        if ($_GET['action'] === 'UpdateArticles')
+        if ($_GET['action'] === 'updateArticles?id=id')
             {
-                //print_r("je passe dans l'index");
-                if (isset($_POST['id']))
+                if (isset($_GET['id']))
                     {
-                        if (!empty($_POST['id']))
+                        if (!empty($_GET['id']))
                             {
                                 // check if the id has been set
-                                $myIdArticle = ($_POST['id']);
-                                //print_r("routeur");
-                                updateArticles($myIdArticle);
+                                $myIdArticle = ($_GET['id']);
+
+                                $articleSubject = getArticlesFromId($myIdArticle);
+                               
+                                //print_r($articleSubject);
+                                //exit("je sors");
+                                //('Location: index.php?action=post');
+                                require'Views/Backend/BackendViewFolders/ModifyArticlesView.php';
                             }
                         else 
                             {
@@ -158,4 +172,46 @@ if (isset($_GET['action']))
                     } 
             }
     }
+
+
+//J'ai une action dans mon formulaire quand je valide qui va aller modifier l'article en base en fonction de l'id
+if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'articleUpdated')
+            {
+                //print_r("je passe dans l'index");
+                if (isset($_POST['subject']) and ($_POST['content']) and ($_POST['id']))
+                    {
+                        if (!empty($_POST['subject']) and ($_POST['content']) and ($_POST['id']))
+                            {
+                                $myText = ($_POST['content']);
+                                $myTitle = ($_POST['title']);
+                                $myId =  ($_POST['id']);
+                                update($myText, $myTitle, $myId);
+                            }
+                        else 
+                            {
+                                echo 'pas de données dans le formulaire';
+                                //On reste sur le formulaire
+                                //require'Views/Backend/BackendViewFolders/BackendView.php';
+                            }
+                    } 
+            }
+    }
+
+//BLOG
+
+//Action compter les news
+
+/*if (isset($_GET['action']))
+    {
+        //Si il y a une action, on appelle la fonction du controller
+        if ($_GET['action'] === 'CountArticles')
+            {
+                countArticles();
+                //print_r();
+                print_r($articlesCount);
+            }
+    }*/
 
