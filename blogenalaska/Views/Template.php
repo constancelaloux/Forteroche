@@ -25,53 +25,13 @@
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-
-
         <!--<script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
         <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">-->
-
         
     </head>
     
     <body>
-        <!--Menu-->
-        <?php if (isset($_SESSION['username'])) //AND isset($_GET['repeter'])) 
-            { 
-                //1 : On force la conversion en nombre entier
-                //$_GET['repeter'] = (int) $_GET['repeter'];
-
-                // 2 : Le nombre doit être compris entre 1 et 100
-                //if ($_GET['repeter'] >= 1 AND $_GET['repeter'] <= 100) 
-                 //   {	
-                 //       for ($i = 0 ; $i < $_GET['repeter'] ; $i++)
-                 //           {
-                //                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
-                //            }
-                //    }
-
-                //print_r("im authentificated");
-                //Header
-                include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); 
-        ?>        
-                <!--On affiche le contenu-->
-                <div class="content">
-                    <?= $backend ?>    
-                </div>
-
-        <?php 
-                //Footer
-                include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Footer.php');
-            }
-        else 
-            {
-        ?> 
-                <!--On affiche le contenu-->
-                <?= $content ?>
-        <?php
-            }
-        ?>
-
-
+        <?= $content ?>        
     </body>
 
 </html>

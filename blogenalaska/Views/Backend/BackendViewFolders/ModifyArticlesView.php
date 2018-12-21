@@ -1,6 +1,8 @@
 <?php  session_start(); ?>
 
 <?php $title = 'modification des articles'; ?>
+<?php $title = 'ManageCommentsView'; ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
 <?php ob_start(); ?>
 
 <?php echo"je suis dans ma vue de modif articles"?>
@@ -84,5 +86,5 @@
             });
 
     </script>  -->     
-<?php $backend = ob_get_clean(); ?>
+<?php $content = ob_get_clean(); ?>
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');

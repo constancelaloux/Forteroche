@@ -3,139 +3,141 @@
 // Chargement des classes
 //require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 //Autoloader::register();
-//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Article.php';
 
-require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/Article.php';
 
-//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/ArticlesManager.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Controllers/PdoConnection.php';
 
+require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Models/BackendModels/ArticlesManager.php';
 
-//Envoyer des articles en base de données
-function transferArticlesToModel($myText, $myTitle)
+class PostsControllers
     {
-        $newArticles = new Article
-            ([
-                'content' => $myText,
-                'subject' => $myTitle
-            ]);
-        
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-        
-
-        $sendToTheArticlesManager = new ArticlesManager($db);
-        
-        //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
-        $sendToTheArticlesManager->add($newArticles);
-        
-    }
-    
-//Fonction qui compte les articles
-function countArticles()
-    {
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-
-        $articlesManager = new ArticlesManager($db);
-
-        $articlesCount = $articlesManager->count();
-
-        return $articlesCount;
-    }
-    
-//Récupérer des articles de la base de données
-function getArticles()
-    {    
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-
-        $articlesManager = new ArticlesManager($db); 
-        //ALler chercher les articles en bdd
-        $articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet
-        
-        foreach ($articlesFromManager as $articles) 
+        //Envoyer des articles en base de données
+        function transferArticlesToModel($myText, $myTitle)
             {
-                $row = array();
-                $row[] = $articles->id();
-                $row[] = $articles->subject();
-                $row[] = $articles->content();
-                
-                $articleDate = $articles->createdate();
-                $row[] =$articleDate->format('Y-m-d');
-                
-                $updateArticleDate = $articles->updatedate();
-                $row[] =$updateArticleDate->format('Y-m-d');
-                
-                $data[] = $row;
+                $newArticles = new Article
+                    ([
+                        'content' => $myText,
+                        'subject' => $myTitle
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+
+                $sendToTheArticlesManager = new ArticlesManager($db);
+
+                //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
+                $sendToTheArticlesManager->add($newArticles);
+
             }
-                // Structure des données à retourner
-                $json_data = array
-                    (
-                        "data" => $data
-                    );
 
-                echo json_encode($json_data);
-    }
+        //Fonction qui compte les articles
+        function countArticles()
+            {
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-//Supprimer des articles en base de données
-function deleteArticles($myIdArticle)
-    {
-        
-        $article = new Article
-            ([
-                
-                'id' => $myIdArticle
-            ]);
+                $articlesManager = new ArticlesManager($db);
 
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $articlesCount = $articlesManager->count();
+                //print_r("je vais dans la function articlescount");
+                return $articlesCount;
+            }
 
-        $articlesManager = new ArticlesManager($db);
-        
-        $articlesManager->delete($article);
-        
-    }
+        //Récupérer des articles de la base de données
+        function getArticles()
+            {    
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-//Modifier des données en base de données    
-function getArticlesFromId($myIdArticle)
-    {
-        $article = new Article
-            ([
-                'id' => $myIdArticle
-            ]);
+                $articlesManager = new ArticlesManager($db); 
+                //ALler chercher les articles en bdd
+                $articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet
 
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                foreach ($articlesFromManager as $articles) 
+                    {
+                        $row = array();
+                        $row[] = $articles->id();
+                        $row[] = $articles->subject();
+                        $row[] = $articles->content();
 
-        $articlesManager = new ArticlesManager($db);
+                        $articleDate = $articles->createdate();
+                        $row[] =$articleDate->format('Y-m-d');
 
-        $myArticlesToModify = $articlesManager->get($article);
+                        $updateArticleDate = $articles->updatedate();
+                        $row[] =$updateArticleDate->format('Y-m-d');
 
-        $articleSubject = $myArticlesToModify->subject();
-        $articleContent = $myArticlesToModify->content();
-        return $articleContent;
-        //return $articleSubject;
-    }
+                        $data[] = $row;
+                    }
+                        // Structure des données à retourner
+                        $json_data = array
+                            (
+                                "data" => $data
+                            );
 
-function update($myText, $myTitle)
-    {
-        $article = new Article
-            ([
-                'content' => $myText,
-                'subject' => $myTitle,
-                'id' => $id
-            ]);
-            
-        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-        
-        $articlesManager = new ArticlesManager($db);
-        $articlesManager->update($article);
-    }
+                        echo json_encode($json_data);
+            }
 
-//Sauvegarder des données en base de données sans les afficher dans une vue   
-function saveArticlesIntoDatabase()
-    {
-        //A REDIGER
-    }
-    /*   $articles = new Article
-            ([
-                'content' => "",
-                'subject' => "",
-                'createdate' => new DateTime("")
-            ]); //Création d'un objet*/
-        
+        //Supprimer des articles en base de données
+        function deleteArticles($myIdArticle)
+            {
+
+                $article = new Article
+                    ([
+
+                        'id' => $myIdArticle
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $articlesManager = new ArticlesManager($db);
+
+                $articlesManager->delete($article);
+
+            }
+
+        //Modifier des données en base de données    
+        function getArticlesFromId($myIdArticle)
+            {
+                $article = new Article
+                    ([
+                        'id' => $myIdArticle
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $articlesManager = new ArticlesManager($db);
+
+                $myArticlesToModify = $articlesManager->get($article);
+
+                $articleSubject = $myArticlesToModify->subject();
+                $articleContent = $myArticlesToModify->content();
+                return $articleContent;
+                //return $articleSubject;
+            }
+
+        function update($myText, $myTitle)
+            {
+                $article = new Article
+                    ([
+                        'content' => $myText,
+                        'subject' => $myTitle,
+                        'id' => $id
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $articlesManager = new ArticlesManager($db);
+                $articlesManager->update($article);
+            }
+
+        //Sauvegarder des données en base de données sans les afficher dans une vue   
+        function saveArticlesIntoDatabase()
+            {
+                //A REDIGER
+            }
+            /*   $articles = new Article
+                    ([
+                        'content' => "",
+                        'subject' => "",
+                        'createdate' => new DateTime("")
+                    ]); //Création d'un objet*/
+    }       

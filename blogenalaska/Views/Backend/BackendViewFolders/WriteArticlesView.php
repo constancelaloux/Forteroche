@@ -1,6 +1,8 @@
 <?php  session_start(); ?>
 
 <?php $title = 'backend creation articles'; ?>
+<?php $title = 'ManageCommentsView'; ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
 <?php ob_start(); ?>
 
     <h1>Ajouter un nouvel article</h1>

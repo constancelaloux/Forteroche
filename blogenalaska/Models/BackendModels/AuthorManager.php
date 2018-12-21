@@ -48,9 +48,7 @@ class AuthorManager// extends Manager
 
         public function verify(Author $author)
             {
-
                 //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
-
                 $getAuthorLogin = $this->_db->prepare("SELECT password FROM articles_author WHERE username = :username");
                 $getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
                 $getAuthorLogin->execute();

@@ -1,7 +1,7 @@
 <?php  session_start(); ?>
-
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
 
 <div class="articles">
     <div id="titlePageArticles">
@@ -12,7 +12,7 @@
     <!--Compter les articles publiés-->
         <div class="numberOfArticles">
 
-            <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?= $Articles;?></span></a></p>
+            <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?= $articlesCount;?></span></a></p>
             <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles"></span></a></p>
         </div>
 
@@ -98,7 +98,7 @@
                                 //    .draw();
                                 $.ajax
                                 ({
-                                    url:"/blogenalaska/index.php?action=removeArticles?id=id",
+                                    url:"/blogenalaska/index.php?action=removeArticles&id=id",
                                     method:"GET",
                                     data:{id:id},
                                     dataType: 'html',
@@ -223,5 +223,6 @@
 
     </script>
 
-<?php $backend = ob_get_clean(); ?>
+<?php $content = ob_get_clean(); ?>
+
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');?>
