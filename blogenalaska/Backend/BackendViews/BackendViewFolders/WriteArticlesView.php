@@ -1,12 +1,9 @@
 <?php  session_start(); ?>
-
-<?php $title = 'modification des articles'; ?>
-<?php $title = 'ManageCommentsView'; ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
+<?php $title = 'backend creation articles'; ?>
+ <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 <?php ob_start(); ?>
 
-<?php echo"je suis dans ma vue de modif articles"?>
-    <h1>Modifier votre article</h1>
+    <h1>Ajouter un nouvel article</h1>
 
     <script type="text/javascript">
         tinymce.init
@@ -38,9 +35,9 @@
     </script>
 
 
-    <form action="/blogenalaska/index.php?action=articleUpdated" method="post"> 
-        <textarea id="mytitle" name="title"><h1><?php echo $articleSubject?></h1></textarea>
-        <textarea id="mytextarea" name="content"><?php echo $articleSubject?></textarea>
+    <form action="/blogenalaska/index.php?action=saveNewArticle" method="post"> 
+        <textarea id="mytitle" name="title"><h1><?php //echo $articleSubject?></h1></textarea>
+        <textarea id="mytextarea" name="content"><?php //echo $articleSubject?></textarea>
         
         <input type = "submit" value="Valider"/>
     </form>
@@ -87,4 +84,10 @@
 
     </script>  -->     
 <?php $content = ob_get_clean(); ?>
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');
+<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');
+
+  
+
+
+
+

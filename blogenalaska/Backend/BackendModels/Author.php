@@ -26,6 +26,7 @@ class Author
         public function __construct(array $donnees)
             {
                 $this->hydrate($donnees);
+                //print_r($donnees);
             }
 
         //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
@@ -35,6 +36,7 @@ class Author
             {  
                 foreach($donnees as $key => $value)
                     {
+                    //print_r($donnees);
                         //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
                         //On va donner une valeur à la clé grace à la fonction
                         //On récupére les setters
@@ -48,6 +50,7 @@ class Author
                                 //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
                                 //On récupére au sein du $this toutes les données de notre personnage
                                 $this->$method($value);
+                                //print_r($this);
                             }
                     }
             }
@@ -63,11 +66,14 @@ class Author
 
         public function password()
             {
+                //print_r($this->_password);
                 return $this->_password;
+
             }
 
         public function username()
             {
+                //print_r($this->_username);
                 return $this->_username;
             }
 

@@ -18,24 +18,24 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php?action=goToTheBlog">Site web <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog">Site web <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php?action=mainBackendPage">Accueil</a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=mainBackendPage">Accueil</a>
                     </li>
 
 <!--dropdown-->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Articles</a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="index.php?action=writeAnArticle">Rédiger un article</a>
+                                <a class="dropdown-item" href="/blogenalaska/index.php?action=writeAnArticle">Rédiger un article</a>
                             </div>
                     </li>
 
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" >Commentaires<b class="caret"></b></a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="index.php?action=seeArticleView">Commentaires</a>
+                                <a class="dropdown-item" href="/blogenalaska/index.php?action=seeArticleView">Commentaires</a>
                             </div>
                     </li> 
                 </ul>

@@ -1,7 +1,7 @@
 <?php  session_start(); ?>
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Backend/Header.php'); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 
 <div class="articles">
     <div id="titlePageArticles">
@@ -12,7 +12,7 @@
     <!--Compter les articles publiés-->
         <div class="numberOfArticles">
 
-            <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?= $articlesCount;?></span></a></p>
+            <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?php echo $articlesCount ?></span></a></p>
             <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles"></span></a></p>
         </div>
 
@@ -45,7 +45,7 @@
                             //serverSide: true,
                             ajax:
                                 {
-                                    url :"/blogenalaska/index.php?action=datatablesArticles", // json datasource
+                                    url :"/blogenalaska/index.php?action=getArticlesIntoDatatables", // json datasource
                                     type:"POST",
                                     dataType: 'json'
                                     //dataSrc: 'json_data'
@@ -89,7 +89,7 @@
                         alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
                         //console.log(id);
                         //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
-                        var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
+                        //var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
                         if(confirm("Are you sure you want to remove this?"))
                             {
                                 //table
@@ -98,18 +98,19 @@
                                 //    .draw();
                                 $.ajax
                                 ({
-                                    url:"/blogenalaska/index.php?action=removeArticles&id=id",
-                                    method:"GET",
+                                    url:"/blogenalaska/index.php?action=removeArticles",
+                                    method:"POST",
                                     data:{id:id},
                                     dataType: 'html',
-                                    success:function(response)
+                                    success:function(data)
                                         {
                                             console.log('c cool');
-
-                                            $tr.find('td').fadeOut(1000,function()
+                                            console.log(data);
+                                            table.ajax.reload();
+                                            /*$tr.find('td').fadeOut(1000,function()
                                                 { 
                                                     $tr.remove();
-                                                });
+                                                });*/
                                         },
                                     error:function(response)
                                         {
@@ -120,8 +121,9 @@
                     } );
                 
                 //Modifier des articles
-                $('#displayarticles').on( 'click', '.btn-update', function () 
+                $('#displayarticles').on( 'click', '.btn-update', function (e) 
                     {
+                        //e.preventDefault();
                         //var id = $(this).attr("id");
                         var datas = table.row( $(this).parents('tr') ).data();
                         var id = datas[ 0 ];
@@ -131,21 +133,33 @@
                         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
                         if(confirm("Are you sure you want to update this?"))
                             {
+                        //var NestId = $(this).data('id');
+                        /*var url = "/blogenalaska/index.php?action=updateArticles" + id; 
+                        /*window.location.href = url;
                                 //table
                                 //    .row( $(this).parents('tr') )
                                 //    .remove()
-                                //    .draw();
+                                //    .draw();*/
                                 $.ajax
                                 ({
-                                    url:"/blogenalaska/index.php?action=updateArticles?id=id",
-                                    method:"GET",
+                                    processing: true,
+                                    serverSide: true,
+                                    url:"/blogenalaska/index.php?action=updateArticles",
+                                    method:"POST",
                                     data:{id:id},
                                     dataType: 'html',
-                                    success:function(response)
+                                    success:function(data)
                                         {
+                                            console.log('datatables');
+                                            //data = JSON.parse(data);
+                                            //if(data['login_status']) {
+                                            //location.replace("index.php")
+                                            //}
+                                            //table.ajax.reload();
+                                            //window.location.href = "/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php";
                                             //console.log('c cool je vais modifier les données');
                                         },
-                                    error:function(response)
+                                    error:function(data)
                                         {
                                             console.log('ca ne fonctionne pas');
                                         }
@@ -225,4 +239,4 @@
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Template.php');?>
+<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');?>
