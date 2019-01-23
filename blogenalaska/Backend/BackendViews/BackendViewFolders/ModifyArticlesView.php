@@ -36,10 +36,12 @@
     </script>
 
 
-    <form action="/blogenalaska/index.php?action=articleUpdated" method="post"> 
+    <form action="/blogenalaska/index.php?action=articleUpdated" method="post">
+
         <textarea id="mytitle" name="title"><h1><?php echo $articleSubject?></h1></textarea>
         <textarea id="mytextarea" name="content"><?php echo $articleContent?></textarea>
         
+        <input type="hidden" name="id" value="<?= $id ?>" />
         <input type = "submit" value="Valider"/>
     </form>
        

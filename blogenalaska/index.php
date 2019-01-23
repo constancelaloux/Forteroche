@@ -89,7 +89,11 @@ require_once'Backend/BackendControllers/PostsControllers.php';
                             $postsController = new PostsControllers();
                             $postsController->getArticlesFromId();
                             //$articleContent = $postsController->getArticlesFromId();
-   
+                        break;
+                    
+                        case 'articleUpdated':
+                            $postsController = new PostsControllers();
+                            $postsController->update();    
                         /*case 'actionGoToTheForm':
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->getTheFormConnexion();*/

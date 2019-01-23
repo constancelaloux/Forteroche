@@ -23,7 +23,7 @@
                 <tr>
                     <th class="all">Id</th>
                     <th class="all">Sujet</th>
-                    <th class="all">Article</th>
+                    <!--<th class="all">Article</th>-->
                     <th class="all">Date de création</th>
                     <th class="all">Date de modification</th>
                     <!--<th class="all">Modifier / Supprimer</th>-->
@@ -64,7 +64,7 @@
                                 [
                                     {data: "0"},
                                     {data: "1"},
-                                    {data: "2"},
+                                    //{data: "2"},
                                     {data: "3"},
                                     {data: "4"},
                                     {
@@ -133,14 +133,15 @@
                         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
                         if(confirm("Are you sure you want to update this?"))
                             {
+                                console.log('test');
                         //var NestId = $(this).data('id');
-                        /*var url = "/blogenalaska/index.php?action=updateArticles" + id; 
-                        /*window.location.href = url;
+                        var url = "/blogenalaska/index.php?action=updateArticles&id="+id; 
+                        window.location.href = url;
                                 //table
                                 //    .row( $(this).parents('tr') )
                                 //    .remove()
                                 //    .draw();*/
-                                $.ajax
+                                /*$.ajax
                                 ({
                                     processing: true,
                                     serverSide: true,
@@ -148,8 +149,8 @@
                                     method:"POST",
                                     data:{id:id},
                                     dataType: 'html',
-                                    success:function(data)
-                                        {
+                                    success:function(data)*/
+                                    /*    {
                                             console.log('datatables');
                                             //data = JSON.parse(data);
                                             //if(data['login_status']) {
@@ -163,7 +164,8 @@
                                         {
                                             console.log('ca ne fonctionne pas');
                                         }
-                                });
+                                });*/
+                                
                              };            
                     } );
             });

@@ -26,3 +26,6 @@ and open the template in the editor.
     {
         height: 20px;
     }
+
+/*selecteur d'image de l'éditeur wisywig */
+.hidden{display:none;}

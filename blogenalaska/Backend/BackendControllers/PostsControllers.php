@@ -167,15 +167,15 @@ class PostsControllers
 
             }
 
-        //Modifier des données en base de données    
+        //Aller réupérer le titre et l'article en base de données    
         function getArticlesFromId()
             {
-                if (isset($_POST['id']))
+                if (isset($_GET['id']))
                     {
-                        if (!empty($_POST['id']))
+                        if (!empty($_GET['id']))
                             {
                                 // check if the id has been set
-                                $myIdArticle = ($_POST['id']);
+                                $myIdArticle = ($_GET['id']);
 
                                 //$articleSubject = getArticlesFromId($myIdArticle);
                                
@@ -204,10 +204,11 @@ class PostsControllers
 
                 $articleSubject = $myArticlesToModify->subject();
                 $articleContent = $myArticlesToModify->content();
+                $id = $myArticlesToModify->id();
                 //require '/Backend/BackendViews/BackendViewFolders/.php';
-                
-                echo json_encode($articleSubject);
-                //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
+                //header('Location:/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
+                //echo json_encode($articleSubject);
+                require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
                 //print_r('j\'y suis');
                 //exit("je sors");
                 //header('Location:/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php');
@@ -216,17 +217,24 @@ class PostsControllers
                 //return $articleSubject;
             }
         
-
-        function update($myText, $myTitle)
+        //Modifier les données de l'article en base de données apres validation
+        function update()
             {
-                if (isset($_GET['id']))
-                        {
-                            if (!empty($_GET['id']))
-                                {
-                                    // check if the id has been set
-                                    $myIdArticle = ($_GET['id']);
+                //print_r(($_POST['content']));
+                //print_r(($_POST['id']));
 
-                                    $articleSubject = getArticlesFromId($myIdArticle);
+                //exit("je sors");
+                if (isset($_POST['id']))
+                        {
+                            if (!empty($_POST['id']))
+                                {
+
+                                    // check if the id has been set
+                                    $id = ($_POST['id']);
+                                    $myContentOfArticle = ($_POST['content']);
+                                    $myTitleOfArticle = ($_POST['title']);
+
+                                    //$articleSubject = getArticlesFromId($myIdArticle);
 
                                     //print_r($articleSubject);
                                     //exit("je sors");
@@ -242,8 +250,8 @@ class PostsControllers
                         
                     $article = new Article
                         ([
-                            'content' => $myText,
-                            'subject' => $myTitle,
+                            'content' => $myContentOfArticle,
+                            'subject' => $myTitleOfArticle,
                             'id' => $id
                         ]);
 
@@ -251,6 +259,7 @@ class PostsControllers
 
                     $articlesManager = new ArticlesManager($db);
                     $articlesManager->update($article);
+                    header('Location: /blogenalaska/index.php?action=mainBackendPage');
             }
 
         //Sauvegarder des données en base de données sans les afficher dans une vue   

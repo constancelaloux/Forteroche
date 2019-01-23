@@ -86,7 +86,7 @@ class ArticlesManager
 
                 $articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT * FROM articles");
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject FROM articles");
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())
@@ -100,7 +100,6 @@ class ArticlesManager
                         $tmpArticle->setCreatedate($articleDate);
 
                         $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
-
                         $tmpArticle->setUpdatedate($articleUpdateDate);
 
                         
@@ -117,7 +116,7 @@ class ArticlesManager
                 // Prépare une requête de type UPDATE.
                 // Assignation des valeurs à la requête.
                 // Exécution de la requête.
-                $dbRequestModifyArticle = $this->dao->prepare('UPDATE articles SET subject = :subject, content = :content, update_date = NOW() WHERE id = :id');
+                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, update_date = NOW() WHERE id = :id');
     
                 $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
                 //$dbRequestModifyArticle->bindValue(':auteur', $articles->auteur());
