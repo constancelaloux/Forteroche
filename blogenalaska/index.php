@@ -10,6 +10,8 @@
 //Autoloader::register();
 require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
+require_once'Backend/BackendControllers/doLogout.php';
+//require_once 'Backend/BackendControllers/upload.php';
 
 //Si j'ai une action ou sinon action par default
 
@@ -18,7 +20,7 @@ require_once'Backend/BackendControllers/PostsControllers.php';
                 switch ($action)
                     {
                         //Je vais vers le formulaire qui permet de créer un admin
-                        case 'actionGoToTheAdminForm':
+                        case 'createNewAdminForm':
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->getFormToCreateNewAdmin();    
                         break;
@@ -93,7 +95,20 @@ require_once'Backend/BackendControllers/PostsControllers.php';
                     
                         case 'articleUpdated':
                             $postsController = new PostsControllers();
-                            $postsController->update();    
+                            $postsController->update(); 
+                        break;
+                        
+                        //Bouton de déconnexion
+                        case 'disconnectTheAdmin':
+                            $sessionController = new FormAuthorAccessControler();
+                            $sessionController->disconnect();
+                        break;
+                        /*case 'goToLogOut';
+                            $logoutController = new doLogout();
+                            $logoutController->logout();*/
+                        /*case 'untestdelupload':
+                            $uploadController = new upload();
+                            $uploadController->upload(); */
                         /*case 'actionGoToTheForm':
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->getTheFormConnexion();*/

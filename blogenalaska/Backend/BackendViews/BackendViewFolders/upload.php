@@ -5,10 +5,12 @@
 $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
 // Images upload path
 //$imageFolder = "../Public/../../images/";
-$imageFolder = "../../images/";
+$imageFolder = "../../../Public/images/";
+//$imageFolder = "../../blogenalaska/Public/images/";
 
 reset($_FILES);
 $temp = current($_FILES);
+//print_r($temp);
 if(is_uploaded_file($temp['tmp_name'])){
     if(isset($_SERVER['HTTP_ORIGIN'])){
         // Same-origin requests won't set an origin. If the origin is set, it must be valid.
@@ -31,17 +33,22 @@ if(is_uploaded_file($temp['tmp_name'])){
         header("HTTP/1.1 400 Invalid extension.");
         return;
     }
-  
+   
     // Accept upload if there was no origin, or if it is an accepted origin
     $filetowrite = $imageFolder . $temp['name'];
+    //print_r($filetowrite);
+    //$rename = "/blogenalaska/Public/images/"  . $temp['name'];
+    //rename($filetowrite, $rename);
+    
     move_uploaded_file($temp['tmp_name'], $filetowrite);
-  
     // Respond to the successful upload with JSON.
     echo json_encode(array('location' => $filetowrite));
 } else {
     // Notify editor that the upload failed
     header("HTTP/1.1 500 Server Error");
 }
+
+
 /*******************************************************
    * Only these origins will be allowed to upload images *
    ******************************************************/

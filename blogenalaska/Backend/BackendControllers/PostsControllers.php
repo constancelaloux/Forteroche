@@ -34,6 +34,7 @@ class PostsControllers
                         if (!empty($_POST['content']) && !empty($_POST['title']))
                             {
                                 $myText = ($_POST['content']);
+                                
                                 $myTitle = ($_POST['title']);
                                 //require '/blogenalaska/Backend/BackendViewFolders/BackendView.php';
                                 //header('Location: /blogenalaska/index.php?action=mainBackendPage');
@@ -47,8 +48,9 @@ class PostsControllers
                     }
                 $newArticles = new Article
                     ([
-                        'content' => $myText,
-                        'subject' => $myTitle
+                        'subject' => $myTitle,
+                        'content' => $myText
+                        
                     ]);
 
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
@@ -204,6 +206,8 @@ class PostsControllers
 
                 $articleSubject = $myArticlesToModify->subject();
                 $articleContent = $myArticlesToModify->content();
+                
+                //print_r($articleContent);
                 $id = $myArticlesToModify->id();
                 //require '/Backend/BackendViews/BackendViewFolders/.php';
                 //header('Location:/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');

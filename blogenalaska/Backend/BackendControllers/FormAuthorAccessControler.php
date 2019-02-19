@@ -123,6 +123,60 @@ class FormAuthorAccessControler
                                         session_start();
                                         $_SESSION['username'] = $usernameVar;
                                         $_SESSION['password'] = $passwordVar;
+                                        
+                                        //session timeout
+ 
+                                        //Expire the session if user is inactive for 30
+                                        //minutes or more.
+                                        //$expireAfter = 1;
+
+                                        //Check to see if our "last action" session
+                                        //variable has been set.
+                                        /*if(isset($_SESSION['last_action']))
+                                            {
+
+                                                //Figure out how many seconds have passed
+                                                //since the user was last active.
+                                                $secondsInactive = time() - $_SESSION['last_action'];
+
+                                                //Convert our minutes into seconds.
+                                                $expireAfterSeconds = $expireAfter * 60;
+
+                                                //Check to see if they have been inactive for too long.
+                                                if($secondsInactive >= $expireAfterSeconds)
+                                                    {
+                                                        //User has been inactive for too long.
+                                                        //Kill their session.
+                                                        print_r("ma session est inactive");
+                                                        session_unset();
+                                                        session_destroy();
+                                                    }
+                                            }*/
+
+                                        //Assign the current timestamp as the user's
+                                        //latest activity
+                                        //$_SESSION['last_action'] = time();
+                                        //session_set_cookie_params(24*3600);
+                                        /*if (isset($_SESSION))
+                                            {*/
+                                                /*$inactive = 10;
+                                                //print_r($inactive);
+                                                
+                                                $_SESSION['timeout']=time();
+                                                //print_r($_SESSION['timeout']);
+                                                $session_life = time() - $_SESSION['timeout'];                                               
+                                                //print_r($session_life);
+                                                //print_r($session_life);
+                                                    
+                                                if($session_life > $inactive) 
+                                                    {
+                                                    print_r('la session est inactive');
+                                                        session_destroy(); 
+                                                        header("Location: /Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php"); 
+                                                    }*/
+                                            //}
+
+                                        //print_r(ini_set("session.gc_maxlifetime", 60));
                                        // header('Location: Backend/BackendViews/BackendViewFolders/BackendView.php');      
                                         header('Location: /blogenalaska/index.php?action=countArticles');
                                         
@@ -142,6 +196,20 @@ class FormAuthorAccessControler
                             }
                     }
 
+            }
+//DECONNEXION DU BACKEND PAR L'UTILISATEUR            
+        function disconnect()
+            {
+                session_start();
+                // Suppression des variables de session et de la session
+                // Réinitialisation du tableau de session
+                // On le vide intégralement
+                $_SESSION = array();
+                // On détruit les variables de notre session
+                session_unset ();
+                session_destroy();
+                
+                header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
             }
             
         //Je suis rentré dans la session et je vais vers la page principale de mon backend        

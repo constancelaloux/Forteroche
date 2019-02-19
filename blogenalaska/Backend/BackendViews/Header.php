@@ -52,7 +52,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                 <div>
-                                    <a class="dropdown-item" href="#">Déconnexion</a>
+                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheAdmin">Déconnexion</a>
                                 </div>
                             </div>
                     </div> 

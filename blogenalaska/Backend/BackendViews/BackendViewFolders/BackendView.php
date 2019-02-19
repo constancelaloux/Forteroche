@@ -1,4 +1,43 @@
-<?php  session_start(); ?>
+<?php  session_start(); 
+if (isset($_SESSION['username']))
+    {
+        $expireAfter = 30;
+
+        //Check to see if our "last action" session
+        //variable has been set.
+        if(isset($_SESSION['last_action']))
+            {
+
+                //Figure out how many seconds have passed
+                //since the user was last active.
+                $secondsInactive = time() - $_SESSION['last_action'];
+
+                //Convert our minutes into seconds.
+                $expireAfterSeconds = $expireAfter * 60;
+
+                //Check to see if they have been inactive for too long.
+                if($secondsInactive >= $expireAfterSeconds)
+                    {
+                        //print_r("ma session est inactive");
+                        //User has been inactive for too long.
+                        //Kill their session.
+                        session_unset();
+                        session_destroy();
+
+                        header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                    }
+            }
+
+        //Assign the current timestamp as the user's
+        //latest activity
+        $_SESSION['last_action'] = time();
+    }
+else 
+    {
+        header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+    }
+    
+?>
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
@@ -54,8 +93,10 @@
                             columnsDefs:
                                 [{
                                     //data: null,
-                                    "targets" : '_all',
-                                    "className": 'dt-center'
+                                    //"targets" : '_all',
+                                    "className": 'dt-center',
+                                    "targets": [ 0 ],
+                                    "visible": false
                                     //"targets": [ 0 ]
                                     //defaultContent : "<button>Edit</button>"
                                 }],
