@@ -27,7 +27,7 @@ class ArticlesManager
 
                 $sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
-               // $sendArticlesDatas->bindValue('NOW()', $articles->createdate(), \PDO::PARAM_STR);
+                //$sendArticlesDatas->bindValue('NOW()', $articles->createdate(), \PDO::PARAM_STR);
                 //print_r($sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR));
                 //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
 
@@ -91,16 +91,27 @@ class ArticlesManager
 
                 while ($donnees = $getArticlesDatas->fetch())
                     {
-                        //print_r($donnees);
                         $tmpArticle =  new Article($donnees);
                         //$tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
                         //$tmpArticle = DateTime::createFromFormat('d-m-Y H:i:s', $donnees['create_date']);
         
                         $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         $tmpArticle->setCreatedate($articleDate);
+                        
+                        //Je vérifie si j'ai Null ou une date d'enregistré en bdd
+                        if (is_null($donnees['update_date']))
+                            {
+                                //echo '<td>0000-00-00 00:00:00 </td>';
 
-                        $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
-                        $tmpArticle->setUpdatedate($articleUpdateDate);
+                                //print_r($articleUpdateDate); 
+                            }
+                        else
+                            {
+                                $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+                                $tmpArticle->setUpdatedate($articleUpdateDate);
+                            }
+
+                        //print_r($articleUpdateDate);
 
                         
                         $articles[] = $tmpArticle;

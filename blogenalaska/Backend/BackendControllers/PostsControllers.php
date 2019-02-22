@@ -36,6 +36,7 @@ class PostsControllers
                                 $myText = ($_POST['content']);
                                 
                                 $myTitle = ($_POST['title']);
+                                //$date = NULL;
                                 //require '/blogenalaska/Backend/BackendViewFolders/BackendView.php';
                                 //header('Location: /blogenalaska/index.php?action=mainBackendPage');
                             }
@@ -50,6 +51,7 @@ class PostsControllers
                     ([
                         'subject' => $myTitle,
                         'content' => $myText
+                        //'updatedate' => $date
                         
                     ]);
 
@@ -111,7 +113,17 @@ class PostsControllers
                         $row[] =$articleDate->format('Y-m-d');
 
                         $updateArticleDate = $articles->updatedate();
-                        $row[] =$updateArticleDate->format('Y-m-d');
+                        //print_r($updateArticleDate);
+                        if (is_null($updateArticleDate))
+                            {
+                            $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
+                                //echo"on y est";
+                            }
+                        else 
+                            {
+                                $row[] = $updateArticleDate->format('Y-m-d');
+                            }
+
 
                         $data[] = $row;
                     }

@@ -60,6 +60,7 @@ else
         <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
             <thead>
                 <tr>
+                    <th class="all">Numéro</th>
                     <th class="all">Id</th>
                     <th class="all">Sujet</th>
                     <!--<th class="all">Article</th>-->
@@ -90,6 +91,10 @@ else
                                     //dataSrc: 'json_data'
                                     //data:"data.json",
                                 },
+                            "language": 
+                                {
+                                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+                                },
                             columnsDefs:
                                 [{
                                     //data: null,
@@ -103,7 +108,8 @@ else
                             //"data": "data",
                             columns: 
                                 [
-                                    {data: "0"},
+                            {data: null},
+                                    {data: "0", visible: false},
                                     {data: "1"},
                                     //{data: "2"},
                                     {data: "3"},
@@ -120,6 +126,13 @@ else
                             });*/
                         }
                     );
+                    // La liste des articles dans le tableau est numéroté
+                    //  create index for table at columns zero
+                    table.on('order.dt search.dt', function () {
+                        table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                            cell.innerHTML = i + 1;
+                        });
+                    }).draw();
                 
                 //Supprimer des articles
                 $('#displayarticles').on( 'click', '.btn-delete', function () 

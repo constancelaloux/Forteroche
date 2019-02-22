@@ -60,55 +60,56 @@ else
     <script type="text/javascript">
         tinymce.init
             ({ 
-                selector:'#mytextarea',
-                relative_urls: false,
-     plugins: 'image code',
-    toolbar: 'undo redo | image code',
-    
-    // without images_upload_url set, Upload tab won't show up
-    images_upload_url: 'upload.php',
-    
-    // override default upload handler to simulate successful upload
-    images_upload_handler: function (blobInfo, success, failure) {
-        var xhr, formData;
-      
-        xhr = new XMLHttpRequest();
-        xhr.withCredentials = false;
-        xhr.open('POST', 'upload.php');
-      
-        xhr.onload = function() {
-            var json;
-        
-            if (xhr.status != 200) {
-                failure('HTTP Error: ' + xhr.status);
-                return;
-            }
-        
-            json = JSON.parse(xhr.responseText);
-        
-            if (!json || typeof json.location != 'string') {
-                failure('Invalid JSON: ' + xhr.responseText);
-                return;
-            }
-        
-            success(json.location);
-        };
-      
-        formData = new FormData();
-        formData.append('file', blobInfo.blob(), blobInfo.filename());
+                    selector:'#mytextarea',
+                    relative_urls: false,
+                    plugins: 'image code',
+                    toolbar: 'undo redo | image code',
 
-        xhr.send(formData);
-    },
-        // langue
-    language : "fr_FR",
-                //language: 'fr_FR',
-                font_formats: 'Arial=arial',
-                //toolbar: ['fontsizeselect', 'image'],
-                //plugins: "image imagetools",
-                fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-                height : 300,
-                max_height: 300,
-                min_height: 300
+                    // without images_upload_url set, Upload tab won't show up
+                    images_upload_url: 'upload.php',
+
+                    // override default upload handler to simulate successful upload
+                    images_upload_handler: function (blobInfo, success, failure) {
+                    var xhr, formData;
+
+                    xhr = new XMLHttpRequest();
+                    xhr.withCredentials = false;
+                    //xhr.open('POST', 'upload.php');
+                    xhr.open('POST', '/blogenalaska/index.php?action=uploadImage');
+
+                    xhr.onload = function() {
+                    var json;
+
+                    if (xhr.status != 200) {
+                    failure('HTTP Error: ' + xhr.status);
+                    return;
+                    }
+
+                    json = JSON.parse(xhr.responseText);
+
+                    if (!json || typeof json.location != 'string') {
+                    failure('Invalid JSON: ' + xhr.responseText);
+                    return;
+                    }
+
+                    success(json.location);
+                    };
+
+                    formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                    xhr.send(formData);
+                },
+                    // langue
+                    language : "fr_FR",
+                    //language: 'fr_FR',
+                    font_formats: 'Arial=arial',
+                    //toolbar: ['fontsizeselect', 'image'],
+                    //plugins: "image imagetools",
+                    fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+                    height : 300,
+                    max_height: 300,
+                    min_height: 300
             });
 
     </script>

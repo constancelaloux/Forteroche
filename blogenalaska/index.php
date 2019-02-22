@@ -10,8 +10,8 @@
 //Autoloader::register();
 require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
-require_once'Backend/BackendControllers/doLogout.php';
-//require_once 'Backend/BackendControllers/upload.php';
+//require_once'Backend/BackendControllers/doLogout.php';
+require_once 'Backend/BackendControllers/upload.php';
 
 //Si j'ai une action ou sinon action par default
 
@@ -102,6 +102,11 @@ require_once'Backend/BackendControllers/doLogout.php';
                         case 'disconnectTheAdmin':
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->disconnect();
+                        break;
+                    
+                        case 'uploadImage':
+                            $uploadController = new UploadControler();
+                            $uploadController->upload();
                         break;
                         /*case 'goToLogOut';
                             $logoutController = new doLogout();

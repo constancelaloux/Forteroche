@@ -29,3 +29,9 @@ and open the template in the editor.
 
 /*selecteur d'image de l'éditeur wisywig */
 .hidden{display:none;}
+
+/*La publicité de Tinymce est cachée*/
+    .mce-notification.mce-has-close
+    {
+        display: none;
+    }

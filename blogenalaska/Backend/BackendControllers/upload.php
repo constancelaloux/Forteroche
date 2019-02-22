@@ -1,52 +1,64 @@
 <?php
 
-// Allowed origins to upload images
-//$accepted_origins = array("http://localhost", "http://107.161.82.130", "http://codexworld.com");
-$accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
-// Images upload path
-//$imageFolder = "../Public/../../images/";
-$imageFolder = "../../../Public/images/";
-//$imageFolder = "../../blogenalaska/Public/images/";
+class UploadControler
+{
+   function upload()
+        {
 
-reset($_FILES);
-$temp = current($_FILES);
-//print_r($temp);
-if(is_uploaded_file($temp['tmp_name'])){
-    if(isset($_SERVER['HTTP_ORIGIN'])){
-        // Same-origin requests won't set an origin. If the origin is set, it must be valid.
-        if(in_array($_SERVER['HTTP_ORIGIN'], $accepted_origins)){
-            header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
-        }else{
-            header("HTTP/1.1 403 Origin Denied");
-            return;
+           // Allowed origins to upload images
+           //$accepted_origins = array("http://localhost", "http://107.161.82.130", "http://codexworld.com");
+           $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
+           // Images upload path
+           //$imageFolder = "../Public/../../images/";
+           //$imageFolder = "../../../Public/images/";
+           $imageFolder = "Public/images/";
+           //$imageFolder = "../../blogenalaska/Public/images/";
+
+           reset($_FILES);
+           $temp = current($_FILES);
+           //print_r($temp);
+           if(is_uploaded_file($temp['tmp_name'])){
+               if(isset($_SERVER['HTTP_ORIGIN'])){
+                   // Same-origin requests won't set an origin. If the origin is set, it must be valid.
+                   if(in_array($_SERVER['HTTP_ORIGIN'], $accepted_origins)){
+                       header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+                   }else{
+                       header("HTTP/1.1 403 Origin Denied");
+                       return;
+                   }
+               }
+
+               // Sanitize input
+               if(preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name'])){
+                   header("HTTP/1.1 400 Invalid file name.");
+                   return;
+               }
+
+               // Verify extension
+               if(!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png"))){
+                   header("HTTP/1.1 400 Invalid extension.");
+                   return;
+               }
+
+               // Accept upload if there was no origin, or if it is an accepted origin
+               $filetowrite = $imageFolder . $temp['name'];
+               $filetowrite1 = "/blogenalaska/" . $imageFolder . $temp['name'];
+               //print_r($filetowrite);
+               //$rename = "/blogenalaska/Public/images/"  . $temp['name'];
+               //rename($filetowrite, $rename);
+
+               move_uploaded_file($temp['tmp_name'], $filetowrite);
+               // Respond to the successful upload with JSON.
+               
+               //echo json_encode(array('location' => $filetowrite));
+               echo json_encode(array('location' => $filetowrite1));
+           } else {
+               // Notify editor that the upload failed
+               header("HTTP/1.1 500 Server Error");
+           }  
         }
-    }
-  
-    // Sanitize input
-    if(preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name'])){
-        header("HTTP/1.1 400 Invalid file name.");
-        return;
-    }
-  
-    // Verify extension
-    if(!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png"))){
-        header("HTTP/1.1 400 Invalid extension.");
-        return;
-    }
-   
-    // Accept upload if there was no origin, or if it is an accepted origin
-    $filetowrite = $imageFolder . $temp['name'];
-    //print_r($filetowrite);
-    //$rename = "/blogenalaska/Public/images/"  . $temp['name'];
-    //rename($filetowrite, $rename);
-    
-    move_uploaded_file($temp['tmp_name'], $filetowrite);
-    // Respond to the successful upload with JSON.
-    echo json_encode(array('location' => $filetowrite));
-} else {
-    // Notify editor that the upload failed
-    header("HTTP/1.1 500 Server Error");
 }
+
 
 
 /*******************************************************
