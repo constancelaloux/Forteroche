@@ -107,7 +107,7 @@ class PostsControllers
                         $row = array();
                         $row[] = $articles->id();
                         $row[] = $articles->subject();
-                        $row[] = $articles->content();
+                        //$row[] = $articles->content();
 
                         $articleDate = $articles->createdate();
                         $row[] =$articleDate->format('Y-m-d');
@@ -116,7 +116,7 @@ class PostsControllers
                         //print_r($updateArticleDate);
                         if (is_null($updateArticleDate))
                             {
-                            $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
+                                $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
                                 //echo"on y est";
                             }
                         else 

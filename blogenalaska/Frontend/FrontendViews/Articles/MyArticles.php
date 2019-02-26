@@ -1,4 +1,10 @@
 <!--Include Footer et template -->
-<?php include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Frontend/Header.php"); ?>
-<?php include("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Views/Frontend/Footer.php"); ?>
+<?php $title = 'Frontend main page'; ?>
+<?php ob_start(); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
+
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');?>
 

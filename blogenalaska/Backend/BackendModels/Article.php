@@ -134,7 +134,6 @@ class Article
                 if(is_string($content))
                 {
                     $this->_content = $content;
-                    //print_r($content);
                 }
             }
 

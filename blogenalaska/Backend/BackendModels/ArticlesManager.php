@@ -86,7 +86,7 @@ class ArticlesManager
 
                 $articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject FROM articles");
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content FROM articles");
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())

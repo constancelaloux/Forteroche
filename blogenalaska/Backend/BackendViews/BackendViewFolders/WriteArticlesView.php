@@ -39,7 +39,7 @@ else
     
 ?>
 <?php $title = 'backend creation articles'; ?>
- <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 <?php ob_start(); ?>
 
     <h1>Ajouter un nouvel article</h1>
@@ -49,6 +49,7 @@ else
             ({
                 selector: '#mytitle',
                 //language: 'fr_FR',
+                language_url: '/blogenalaska/Public/js/fr_FR.js',
                 font_formats: 'Arial=arial',
                 toolbar: 'fontsizeselect',
                 fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
@@ -69,40 +70,45 @@ else
                     images_upload_url: 'upload.php',
 
                     // override default upload handler to simulate successful upload
-                    images_upload_handler: function (blobInfo, success, failure) {
-                    var xhr, formData;
+                    images_upload_handler: function (blobInfo, success, failure) 
+                        {
+                            var xhr, formData;
 
-                    xhr = new XMLHttpRequest();
-                    xhr.withCredentials = false;
-                    //xhr.open('POST', 'upload.php');
-                    xhr.open('POST', '/blogenalaska/index.php?action=uploadImage');
+                            xhr = new XMLHttpRequest();
+                            xhr.withCredentials = false;
+                            //xhr.open('POST', 'upload.php');
+                            xhr.open('POST', '/blogenalaska/index.php?action=uploadImage');
 
-                    xhr.onload = function() {
-                    var json;
+                            xhr.onload = function() 
+                                {
+                                    var json;
 
-                    if (xhr.status != 200) {
-                    failure('HTTP Error: ' + xhr.status);
-                    return;
-                    }
+                                    if (xhr.status != 200) 
+                                        {
+                                            failure('HTTP Error: ' + xhr.status);
+                                            return;
+                                        }
 
-                    json = JSON.parse(xhr.responseText);
+                                    json = JSON.parse(xhr.responseText);
 
-                    if (!json || typeof json.location != 'string') {
-                    failure('Invalid JSON: ' + xhr.responseText);
-                    return;
-                    }
+                                    if (!json || typeof json.location != 'string') 
+                                        {
+                                            failure('Invalid JSON: ' + xhr.responseText);
+                                            return;
+                                        }
 
-                    success(json.location);
-                    };
+                                    success(json.location);
+                                };
 
-                    formData = new FormData();
-                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+                            formData = new FormData();
+                            formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-                    xhr.send(formData);
-                },
+                            xhr.send(formData);
+                        },
                     // langue
-                    language : "fr_FR",
+                    //language : "fr_FR",
                     //language: 'fr_FR',
+                    language_url: '/blogenalaska/Public/js/fr_FR.js',
                     font_formats: 'Arial=arial',
                     //toolbar: ['fontsizeselect', 'image'],
                     //plugins: "image imagetools",

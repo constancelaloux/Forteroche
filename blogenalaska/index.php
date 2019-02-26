@@ -8,10 +8,14 @@
 // Chargement des classes
 //require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 //Autoloader::register();
+//Backend
 require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
 //require_once'Backend/BackendControllers/doLogout.php';
 require_once 'Backend/BackendControllers/upload.php';
+
+//Frontend
+require_once 'Frontend/FrontendControllers/BlogController.php';
 
 //Si j'ai une action ou sinon action par default
 
@@ -103,11 +107,38 @@ require_once 'Backend/BackendControllers/upload.php';
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->disconnect();
                         break;
-                    
+                        
+                        // Je télécharge une image pour l'insérer dans mon article
                         case 'uploadImage':
                             $uploadController = new UploadControler();
                             $uploadController->upload();
                         break;
+                                            
+                        //J'affiche les articles sur la premiére page du blo
+                        case 'iGetArticlesToshowInTheBlogPage':
+                            //print_r("j y suis");
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getArticles();
+                        break;
+                    
+                        //Je vais vers la page d'accueil de mon blog
+                        case 'goToFrontPageOfTheBlog':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getTheMainFrontendBlogPage();
+                        break;
+                    
+                        //Je vais vers la vue ou s'affiche mes articles de mon blog
+                        case 'myArticlesViewPage':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getTheArticleBlogPage();
+                        break;
+                        
+                        //Je vais vers la vue contact ou s'affiche le formulaire de contact
+                        case 'myContactViewPage':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getTheContactBlogPage();
+                        break;
+
                         /*case 'goToLogOut';
                             $logoutController = new doLogout();
                             $logoutController->logout();*/
