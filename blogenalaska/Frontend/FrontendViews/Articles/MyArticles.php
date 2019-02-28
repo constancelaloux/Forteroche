@@ -3,7 +3,13 @@
 <?php ob_start(); ?>
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
 
+<?php
 
+    echo $titleToDisplay;
+
+    echo $articlesToDisplay;
+
+?>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');?>

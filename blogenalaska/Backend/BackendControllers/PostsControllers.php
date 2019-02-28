@@ -141,7 +141,7 @@ class PostsControllers
         //Supprimer des articles en base de données
         function deleteArticles()
             {
-                print_r("je vais dans le controller");
+                //print_r("je vais dans le controller");
                // exit("je sors");
                 //if ($_GET['action'] === 'removeArticles?id=id')
                 //{
@@ -152,10 +152,10 @@ class PostsControllers
                     {
                         if (!empty($_POST['id']))
                             {
-                            print_r("j'y suis");
+                            //print_r("j'y suis");
                                 // check if the id has been set
                                 $myIdArticle = ($_POST['id']);
-                                print_r($myIdArticle);
+                                //print_r($myIdArticle);
                                 //deleteArticles($myIdArticle);
                                 //require'Views/Backend/BackendViewFolders/BackendView.php';
                             }

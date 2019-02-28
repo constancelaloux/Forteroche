@@ -19,7 +19,8 @@ class ArticlesManager
             { 
                 $this->setDb($db);
             }
-
+        
+        //J'ajoute un article en bdd
         public function add(Article $articles)
             {
                 $sendArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date) '
@@ -45,7 +46,8 @@ class ArticlesManager
                         throw new \RuntimeException('La news doit être validée pour être enregistrée');
                     }*/
             }
-  
+        
+        //Je compte mes articles
         public function count()
             {
                 /**
@@ -53,15 +55,17 @@ class ArticlesManager
                     * @param $id int L'identifiant de la news à supprimer
                     * @return void
                 */
-                return $this->_db->query('SELECT COUNT(*) FROM articles')->fetchColumn();
+                return $this->_db->query('SELECT COUNT(*) as nbArt FROM articles')->fetchColumn();
             }
-        
+            
+        //Je supprime un article 
         public function delete(Article $articles)
             {
                 //Executer une requéte de type delete.
                 $this->_db->exec('DELETE FROM articles WHERE id = '.$articles->id());
             }
-
+        
+        //Je récupére mon article en fonction de l'id
         public function get(Article $articles)
             {
                 //Je récupére mes articles en fonction de l'id
@@ -79,7 +83,7 @@ class ArticlesManager
                 return new Article($getArticlesDatasFromId->fetch(\PDO::FETCH_ASSOC));
             }
 
-            
+        //Je récupére la liste compléte de mes articles   
         public function getList()
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
@@ -121,7 +125,8 @@ class ArticlesManager
 
                 return $data;
             }
-
+        
+        //Je met a jour les articles dans la base de données
         public function update(Article $articles)
             {
                 // Prépare une requête de type UPDATE.
@@ -136,7 +141,32 @@ class ArticlesManager
     
                 $dbRequestModifyArticle->execute();
             }
+        
+        //Je récupére le dernier article
+        public function getUnique()
+            {
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT 0, 1"); 
+                $getLastArticle->execute();
+                $donnees = $getLastArticle->fetch();
+                $article =  new Article($donnees);
+                $data = $article;
 
+                return $data;
+            }
+        
+        //Je récupére 5 articles
+        public function getListOfFiveArticles($page,$nbrArticlesPerPage)
+            {
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage "); 
+                $getLastArticle->execute(); 
+                while ($donnees = $getLastArticle->fetch())
+                    {
+                        $article =  new Article($donnees);
+                        $data[] = $article;
+                    }
+
+            return $data;
+            }
         public function setDb(\PDO $db)
             {
                 $this->_db = $db;

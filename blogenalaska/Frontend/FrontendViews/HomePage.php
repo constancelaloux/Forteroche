@@ -19,20 +19,16 @@
 
 <section id="articles">
     <div class="listArticlesContainer">
-
-
+        <div class="listOfArticles">
             <?php
                 foreach ($articlesFromManager as $articles) 
                     {
                         if (strlen($articles->content()) <= 200)
                             {
-                            //print_r("j y suis");
                                 $articlesToDisplay = $articles->content();
-                                //print_r($articlesToDisplay);
                             }
                         else
                             {
-                            //print_r("ou la");
                             //Returns the portion of string specified by the start and length parameters.
                                 $debut = substr($articles->content(), 0, 200);
                                 $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
@@ -41,70 +37,121 @@
                             }
                             
                         $titlesToDisplay = $articles->subject();
-                        //$articlesToDisplay = $articles->content();
+                        $idArticles = $articles->id();
                         
                         echo '<h2>', $titlesToDisplay , '</h2>', "\n",
-                        '<p>', $articlesToDisplay, '</p>', "\n", '<p>lire la suite </p>' ;
-                        //$row = array();
-                        
-                        //$row[] = $articles->content();
-                        //$row[] = $articles->id();
-                       /* if ($articles->content())
-                            {
-                            //print_r($articles->content());
-                                $row[] = $articles->content();
-                                //exit();
-                            }*/
+                        '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>';
+
                     }
-            ?>
-            <?php
-                /*foreach ($titlesToDisplay as $valueTitleArticles) 
+                
+                //Pagination
+                /*for ($i=1;$i<=$numberOfPages;$i++)
                     {
-                        echo '<h2>', $valueTitleArticles ,'</h2>';
-                    }*/
+                        echo "<a href=\"/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=",$i,"\"> $i </a>/ ";
+                    } */
             ?>
-                                
-            <?php
-                /*foreach ($articlesToDisplay as $valueArticles) 
-                    {
-                        echo $valueArticles;
-                    }*/
-            ?>
-            <div id="navArticles">
-                <nav aria-label="...">
-                    <ul class="pagination">
-                        <li class="page-item disabled">
-                            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">1</a>
-                        </li>
-                        <li class="page-item" aria-current="page">
-                            <a class="page-link" href="#">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">3</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#">Next</a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
+
+        </div>
+  
+        <div id="navArticles">
+            <nav aria-label="...">
+   
+                <ul class="pagination">
+                    <li class="page-item">
+                        <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=<?php echo $prevpage?>">Previous</a>
+                    </li
+                    <li class="page-item">
+                        <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=1">1</a>
+                    </li>
+                    <li class="page-item" aria-current="page">
+                        <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=2>">2</a>
+                        <!--<a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=2">2</a>-->
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=3">3</a>
+                    </li>
+                    <li class="page-item">
+                        <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=<?php echo $nextpage?>">Next</a>
+                    </li>
+                </ul>
+
+
+
+                
+            </nav>
+        </div>
         
-            <aside id="whyThisBlog">
-                <h2>
-                    Bienvenu sur Billet Simple Pour l'Alaska
-                </h2>
-                <p>
-                    Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages. 
-                </p>
-            </aside>
-            <aside id="LastArticle">
-                <p>
-                    Derniers articles
-                </p>
-            </aside>
+        <!--Code javascript pour la pagination -->
+        <script> 
+
+            var show_per_page = 3; 
+            var current_page = 0;
+
+            function set_display(first, last)
+                {
+                    $('#content').children().css('display', 'none');
+                    $('#content').children().slice(first, last).css('display', 'block');
+                }
+
+            function previous()
+                {
+                    if($('.active').prev('.page_link').length) go_to_page(current_page - 1);
+                }
+
+            function next()
+                {
+                    if($('.active').next('.page_link').length) go_to_page(current_page + 1);
+                }
+
+            function go_to_page(page_num)
+                {
+                    current_page = page_num;
+                    start_from = current_page * show_per_page;
+                    end_on = start_from + show_per_page;
+                    set_display(start_from, end_on);
+                    $('.active').removeClass('active');
+                    $('#id' + page_num).addClass('active');
+                }  
+
+            $(document).ready(function() 
+                {
+                    var number_of_pages = Math.ceil($('#content').children().length / show_per_page);
+      
+                    var nav = '<ul class="pagination"><li><a href="javascript:previous();">&laquo;</a>';
+
+                    var i = -1;
+                    while(number_of_pages > ++i)
+                        {
+                            nav += '<li class="page_link'
+                            if(!i) nav += ' active';
+                            nav += '" id="id' + i +'">';
+                            nav += '<a href="javascript:go_to_page(' + i +')">'+ (i + 1) +'</a>';
+                        }
+                    nav += '<li><a href="javascript:next();">&raquo;</a></ul>';
+
+                    $('#page_navigation').html(nav);
+                    set_display(0, show_per_page);
+                });
+
+        </script>
+        
+        <aside id="whyThisBlog">
+            <h2>
+                Bienvenu sur Billet Simple Pour l'Alaska
+            </h2>
+            <p>
+                Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages. 
+            </p>
+        </aside>
+        <aside id="LastArticle">
+            <p>
+                Derniers articles
+                <?php    
+                    echo $titleLastArticle;
+                    echo $contentLastArticle;
+                ?>
+            </p>
+        </aside>
     </div> 
 </section>
 

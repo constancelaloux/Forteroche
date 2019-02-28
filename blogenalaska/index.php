@@ -23,6 +23,7 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
 
                 switch ($action)
                     {
+//BACKEND
                         //Je vais vers le formulaire qui permet de créer un admin
                         case 'createNewAdminForm':
                             $sessionController = new FormAuthorAccessControler();
@@ -113,14 +114,8 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
                             $uploadController = new UploadControler();
                             $uploadController->upload();
                         break;
-                                            
-                        //J'affiche les articles sur la premiére page du blo
-                        case 'iGetArticlesToshowInTheBlogPage':
-                            //print_r("j y suis");
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getArticles();
-                        break;
-                    
+                        
+//FRONTEND
                         //Je vais vers la page d'accueil de mon blog
                         case 'goToFrontPageOfTheBlog':
                             $blogFrontendController = new BlogController();
@@ -138,7 +133,27 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getTheContactBlogPage();
                         break;
-
+                        
+                        //J'affiche les articles sur la premiére page du blo
+                        case 'iGetArticlesToshowInTheBlogPage':
+                            //print_r("j y suis");
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getArticles();
+                        break;
+                    
+                        //Je récupére le dernier article pour l'afficher sur le blog    
+                        /*case 'getLastArticle':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getUniqueArticle();
+                        break;*/
+                    
+                        //J'ai récupéré l'id de l'article et je vais afficher l'article en entier
+                        case 'getArticleFromId':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getTheArticleFromId();
+                        break;
+                        
+                        //Je récupére le dernier article pour l'afficher sur le blog
                         /*case 'goToLogOut';
                             $logoutController = new doLogout();
                             $logoutController->logout();*/
