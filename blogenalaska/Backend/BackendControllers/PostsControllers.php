@@ -28,29 +28,40 @@ class PostsControllers
             
         //Envoyer des articles en base de données
         function createNewArticle()
-            {
-            if (isset($_POST['content']) AND isset($_POST['title']))
-                    {
-                        if (!empty($_POST['content']) && !empty($_POST['title']))
-                            {
-                                $myText = ($_POST['content']);
-                                
-                                $myTitle = ($_POST['title']);
-                                //$date = NULL;
-                                //require '/blogenalaska/Backend/BackendViewFolders/BackendView.php';
-                                //header('Location: /blogenalaska/index.php?action=mainBackendPage');
-                            }
-                        else 
-                            {
-                                // On fait un écho si les variables sont vides
-                                echo('Les champs ne sont pas remplis');
-                                require'/blogenalaska/Backend/BackendViewFolders/BackendViews/WriteArticlesView.php';
-                            } 
-                    }
+            {       
+            print_r($_POST['content']);
+            print_r($_POST['title']);
+            print_r($_POST['image']);
+            exit("je sors");
+                if (isset($_POST['content']) AND isset($_POST['title']) AND isset($_POST['img']))
+                        {
+                            if (!empty($_POST['content']) && !empty($_POST['title']) && !empty($_POST['img']))
+                                {
+                                    $myText = ($_POST['content']);
+                 
+
+                                    $myTitle = ($_POST['title']);
+
+                                    $myImg = ($_POST['img']);
+                                    //$date = NULL;
+                                    //require '/blogenalaska/Backend/BackendViewFolders/BackendView.php';
+                                    //header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                                }
+                            else 
+                                {
+                                    // On fait un écho si les variables sont vides
+                                    //echo('Les champs ne sont pas remplis');
+                                    require'/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php';
+                                //header('Location: /blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
+                                    
+                                } 
+                        }
+                    
                 $newArticles = new Article
                     ([
                         'subject' => $myTitle,
-                        'content' => $myText
+                        'content' => $myText,
+                        'image' => $myImg
                         //'updatedate' => $date
                         
                     ]);

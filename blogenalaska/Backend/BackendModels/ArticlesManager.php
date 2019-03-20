@@ -23,11 +23,12 @@ class ArticlesManager
         //J'ajoute un article en bdd
         public function add(Article $articles)
             {
-                $sendArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date) '
-                        . 'VALUES(:content, :subject, NOW())');
+                $sendArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date, image) '
+                        . 'VALUES(:content, :subject, NOW(), :image)');
 
                 $sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
+                $sendArticlesDatas->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
                 //$sendArticlesDatas->bindValue('NOW()', $articles->createdate(), \PDO::PARAM_STR);
                 //print_r($sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR));
                 //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
@@ -162,6 +163,8 @@ class ArticlesManager
                 while ($donnees = $getLastArticle->fetch())
                     {
                         $article =  new Article($donnees);
+                        $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        $article->setCreatedate($articleDate);
                         $data[] = $article;
                     }
 

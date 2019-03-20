@@ -39,9 +39,10 @@ class UploadControler
                    header("HTTP/1.1 400 Invalid extension.");
                    return;
                }
-
+               
                // Accept upload if there was no origin, or if it is an accepted origin
                $filetowrite = $imageFolder . $temp['name'];
+
                $filetowrite1 = "/blogenalaska/" . $imageFolder . $temp['name'];
                //print_r($filetowrite);
                //$rename = "/blogenalaska/Public/images/"  . $temp['name'];
@@ -51,11 +52,30 @@ class UploadControler
                // Respond to the successful upload with JSON.
                
                //echo json_encode(array('location' => $filetowrite));
-               echo json_encode(array('location' => $filetowrite1));
+               //echo json_encode(array('location' => $filetowrite1));
+               //echo $filetowrite1;
+               echo "$filetowrite1";
+               //echo "<img src='$filetowrite1' />";
            } else {
                // Notify editor that the upload failed
                header("HTTP/1.1 500 Server Error");
            }  
+        }
+        
+    function upload2()
+        {
+        print_r($_GET['form_data']);
+            if (isset($_POST['form_data']))
+                {
+                    if (!empty($_POST['form_data']))
+                        {
+                            $filetowrite1 = $_POST['form_data'];
+                            //$file = "<img src='$filetowrite1' />";
+                            echo "<img src='$filetowrite1' />";
+                        }
+
+                }
+
         }
 }
 

@@ -6,7 +6,9 @@
 <?php
 
     echo $titleToDisplay;
-
+    
+    echo $imageToDisplay;
+    
     echo $articlesToDisplay;
 
 ?>

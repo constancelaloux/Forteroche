@@ -1,2 +1,5 @@
-<p>Je suis le footer</p>
+<div class="footer">
+    <p>Follow me</p>
+</div>
+
 

@@ -80,6 +80,7 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
                         
                         //J'envoi mon article en base de donnée
                         case 'saveNewArticle':
+                            //exit('je sors');
                             $postsController = new PostsControllers();     
                             $postsController->createNewArticle();
                         break;
@@ -114,8 +115,14 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
                             $uploadController = new UploadControler();
                             $uploadController->upload();
                         break;
-                        
-//FRONTEND
+                    
+                        case 'iGetImageIntoFormFromUploadPath':
+                            print_r("je suis dans le routeur");
+                            $uploadController = new UploadControler();
+                            $uploadController->upload2();
+                        break;   
+
+//FRONTEND              
                         //Je vais vers la page d'accueil de mon blog
                         case 'goToFrontPageOfTheBlog':
                             $blogFrontendController = new BlogController();

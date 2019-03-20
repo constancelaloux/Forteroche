@@ -61,6 +61,7 @@ class BlogController
                     }
                 
                 $articlesFromManager = $articlesManager->getListOfFiveArticles($page,$nbrArticlesPerPage);
+     
                 //ALler chercher les articles en bdd
                 //$articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet 
    
@@ -70,6 +71,7 @@ class BlogController
                 
                 $titleLastArticle = $lastArticle->subject();
                 $contentLastArticle = $lastArticle->content();
+                $imageLastArticle = $lastArticle->image();
                 require 'Frontend/FrontendViews/HomePage.php';
             }
             
@@ -103,6 +105,7 @@ class BlogController
                 $myArticle = $articlesManager->get($article);
                 $titleToDisplay = $myArticle->subject();
                 $articlesToDisplay = $myArticle->content();
+                $imageToDisplay = $myArticle->image();
                 //print_r($articlesToDisplay);
             //print_r($articlesToDisplay);
                 require 'Frontend/FrontendViews/Articles/MyArticles.php';

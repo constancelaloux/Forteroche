@@ -16,6 +16,7 @@ class Article
         private $_id;
         private $_author;
         private $_subject;
+        private $_image;
         private $_content;
         private $_createdate;
         private $_updatedate;
@@ -79,7 +80,13 @@ class Article
                 //print_r("je suis la");
                 return $this->_subject;
             }
-
+            
+        public function image()
+            {
+                //print_r("je suis la");
+                return $this->_image;
+            }
+            
         public function content()
             {
                 return $this->_content;
@@ -125,6 +132,15 @@ class Article
                 if(is_string($subject))
                 {
                     $this->_subject = $subject;
+                    //print_r($subject);
+                }
+            }
+            
+        public function setImage($image)
+            {
+                if(is_string($image))
+                {
+                    $this->_image = $image;
                     //print_r($subject);
                 }
             }

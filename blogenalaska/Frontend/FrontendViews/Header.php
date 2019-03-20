@@ -1,8 +1,8 @@
 <!--Menu-->
-<header class="navbar">
+<header class="nav">
 
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: rgba(70, 156, 214, 0.9);">
+        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: black;">
             
 <!--icon-->
             <a class="navbar-brand" href="#">
@@ -17,22 +17,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog">Accueil</a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: rgba(70, 156, 214, 0.9);">Accueil</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=myArticlesViewPage">Articles</a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=myArticlesViewPage" style="color: rgba(70, 156, 214, 0.9);">Articles</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog">Contact</a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
                     </li>
                 </ul>
 
 <!--Click sur image pour se connecter au backend-->
                 <div class="d-flex">
                     <div class="dropdown mr-1">
-                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                             
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: white;">                                             
                                 <img src="/blogenalaska/public/images/disconnect.png">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
