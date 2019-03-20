@@ -96,7 +96,15 @@ else
             <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
             
         </div>
-            <!-- Modal -->
+        <!--<input type="image" class="preview">-->
+        <div class="preview"><img id="image" src="/blogenalaska/public/images/upload.png" /> </div>
+        <input type="hidden" class="valueHidden" name="image" value=""/>
+        <div>         
+            <input type = "submit" value="Valider"/>
+        </div>
+    </form>
+    
+                <!-- Modal -->
         <div id="uploadModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -121,11 +129,6 @@ else
 
             </div>
         </div>
-<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>
-        <div>         
-            <input type = "submit" value="Valider"/>
-        </div>
-    </form>
     
 
         
@@ -216,6 +219,7 @@ else
                     //alert(response);
                     //message = $("#image").attr("value",output);
                     $('.preview').html(response);
+                    $('.valueHidden').attr("value",response);
                     //$('.preview').find("img").attr(output);
                     //$('#preview').find("img").attr(output);
                     //alert(output);

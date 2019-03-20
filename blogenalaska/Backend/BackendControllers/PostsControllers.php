@@ -29,20 +29,20 @@ class PostsControllers
         //Envoyer des articles en base de données
         function createNewArticle()
             {       
-            print_r($_POST['content']);
-            print_r($_POST['title']);
-            print_r($_POST['image']);
-            exit("je sors");
-                if (isset($_POST['content']) AND isset($_POST['title']) AND isset($_POST['img']))
+            //print_r($_POST['content']);
+            //print_r($_POST['title']);
+            //print_r($_POST['image']);
+            //exit("je sors");
+                if (isset($_POST['content']) AND isset($_POST['title']) AND isset($_POST['image']))
                         {
-                            if (!empty($_POST['content']) && !empty($_POST['title']) && !empty($_POST['img']))
+                            if (!empty($_POST['content']) && !empty($_POST['title']) && !empty($_POST['image']))
                                 {
                                     $myText = ($_POST['content']);
                  
 
                                     $myTitle = ($_POST['title']);
 
-                                    $myImg = ($_POST['img']);
+                                    $myImg = ($_POST['image']);
                                     //$date = NULL;
                                     //require '/blogenalaska/Backend/BackendViewFolders/BackendView.php';
                                     //header('Location: /blogenalaska/index.php?action=mainBackendPage');
