@@ -64,14 +64,16 @@ class UploadControler
         
     function upload2()
         {
-        print_r($_GET['form_data']);
-            if (isset($_POST['form_data']))
+        //print_r($_GET['data']);
+            if (isset($_GET['data']))
                 {
-                    if (!empty($_POST['form_data']))
+                    if (!empty($_GET['data']))
                         {
-                            $filetowrite1 = $_POST['form_data'];
+                            $filetowrite1 = $_GET['data'];
+                            //print_r($filetowrite1);
                             //$file = "<img src='$filetowrite1' />";
                             echo "<img src='$filetowrite1' />";
+                            //echo $filetowrite1;
                         }
 
                 }

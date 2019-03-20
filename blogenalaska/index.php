@@ -117,7 +117,7 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
                         break;
                     
                         case 'iGetImageIntoFormFromUploadPath':
-                            print_r("je suis dans le routeur");
+                            //print_r("je suis dans le routeur");
                             $uploadController = new UploadControler();
                             $uploadController->upload2();
                         break;   

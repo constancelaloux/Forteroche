@@ -42,6 +42,7 @@ else
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 <?php ob_start(); ?>
 
+
      <!--<script type="text/javascript">
         tinymce.init
             ({
@@ -92,16 +93,10 @@ else
         
         <div  class="imageOfArticle">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
-            <!--<div id="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
-            <div id='preview'> <?php echo $file; ?></div>
+            <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
+            
         </div>
-        
-        <div>         
-            <input type = "submit" value="Valider"/>
-        </div>
-    </form>
-    
-    <!-- Modal -->
+            <!-- Modal -->
         <div id="uploadModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -118,7 +113,7 @@ else
                             Select file : <input type='file' name='file' id='file' class='form-control' onchange="fileSelected(this)" ><br>
                             <input type="text" id="newFile" name="newFile" value="">
                             <!--<input type='submit' class='btn btn-info' value='Envoyer !' id='upload'>-->
-                             <button id="upload">Upload</button>
+                             <button id="upload"  data-dismiss="modal">Upload</button>
                         </form>
                     </div>
 
@@ -126,13 +121,20 @@ else
 
             </div>
         </div>
+<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>
+        <div>         
+            <input type = "submit" value="Valider"/>
+        </div>
+    </form>
+    
+
         
         
         
         <script>
               function fileSelected(input)
                 {
-                    console.log("yeahhhh");
+                    //console.log("yeahhhh");
                     var file_data = $('#file').prop('files')[0];
                     var form_data = new FormData();
                     form_data.append('file', file_data);
@@ -160,7 +162,7 @@ else
                             //$("#preview").html(output).fadeIn();
  
 
-                            console.log('upload successful!\n' + output);
+                            //console.log('upload successful!\n' + output);
                                  //alert(output);
                                  //$('#pic').find("img").attr(output);
                                  //alert(output);
@@ -182,16 +184,17 @@ else
         <script>
             $('#upload').on('click', function(e){
                 e.preventDefault();
+
                 console.log("test");
                 var form_data = $("#newFile").val();
-                console.log(form_data);
+                //console.log(form_data);
                 //var file_data = $('#newFile').prop('files')[0];
                 //var form_data = new FormData();
                 //form_data.append('newFile', file_data);
 
                 //var dataString = $('.btn').serialize();
                 $.ajax({
-                url         : '/blogenalaska/index.php?action=iGetImageIntoFormFromUploadPath&data=form_data',     // point to server-side PHP script 
+                url         : '/blogenalaska/index.php?action=iGetImageIntoFormFromUploadPath&data='+form_data,     // point to server-side PHP script 
                 //dataType    : 'text',           // what to expect back from the PHP script, if anything
                 method      :"GET",
                 dataType: 'html',
@@ -203,14 +206,18 @@ else
                 //type        : 'post',
     
                 //dataType    : 'json', // what type of data do we expect back from the server
-                success     : function(output){
+                success     : function(response){
+                    //var message;
                     //$('#file').html(output).fadeIn();
                     //$("#preview").html(output).fadeIn();
                     //$("#formArticle")[0].reset(); 
                     
                     //console.log('upload successful!\n' + output);
-                    //alert(output);
-                    //$('#pic').find("img").attr(output);
+                    //alert(response);
+                    //message = $("#image").attr("value",output);
+                    $('.preview').html(response);
+                    //$('.preview').find("img").attr(output);
+                    //$('#preview').find("img").attr(output);
                     //alert(output);
                          // view uploaded file.
 
