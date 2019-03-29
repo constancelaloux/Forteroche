@@ -10,16 +10,16 @@ class BlogController
             }
         
         //Fonction qui va vers la page des articles du blog
-        function getTheArticleBlogPage()
+        /*function getTheArticleBlogPage()
             {
                 header('Location: /blogenalaska/Frontend/frontendViews/Articles/MyArticles.php');
-            }
+            }*/
         
         //Fonction qui va vers  la page contact du blog
-        function myContactViewPage()
+        /*function myContactViewPage()
             {
                 header('Location: /blogenalaska/Frontend/frontendViews/Contact.php');
-            }
+            }*/
         
         //Fonction qui permet de récupérer les articles et de les afficher en premiére page du blog
         function getArticles()

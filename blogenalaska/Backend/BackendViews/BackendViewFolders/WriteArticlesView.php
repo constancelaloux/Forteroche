@@ -119,7 +119,8 @@ else
                         <!--<form action='/blogenalaska/index.php?action=iGetImageIntoFormFromUploadPath' method='post'>-->
                         <form>
                             Select file : <input type='file' name='file' id='file' class='form-control' onchange="fileSelected(this)" ><br>
-                            <input type="text" id="newFile" name="newFile" value="">
+                            <!--<input type="text" id="newFile" name="newFile" value="">-->
+                            <input type="hidden" id="newFile" name="newFile" value=""/>
                             <!--<input type='submit' class='btn btn-info' value='Envoyer !' id='upload'>-->
                              <button id="upload"  data-dismiss="modal">Upload</button>
                         </form>
@@ -242,7 +243,7 @@ else
             
 
         <!--<div class="form-group">
-           <!-- <input type="file" name="fileToUpload" id="fileToUpload">-->
+           <!--<input type="file" name="fileToUpload" id="fileToUpload">-->
             <!--<input class="btn" type="submit" value="Upload Image" name="submit" >-->
         <!--</div>-->
         <!--<div>

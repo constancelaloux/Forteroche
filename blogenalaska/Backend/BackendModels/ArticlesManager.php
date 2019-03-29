@@ -168,8 +168,9 @@ class ArticlesManager
                         $data[] = $article;
                     }
 
-            return $data;
+                return $data;
             }
+            
         public function setDb(\PDO $db)
             {
                 $this->_db = $db;
