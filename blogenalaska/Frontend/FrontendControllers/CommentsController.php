@@ -13,14 +13,15 @@ class CommentsController
     {
         function createNewComment()
             {
-            print_r($_GET['id']);
+                //print_r($_GET['id']);
                 if (isset($_POST['comments']) AND isset ($_GET['id']))
                     {
+
                         if (!empty($_POST['comments']) AND (!empty($_GET['id'])))
+
                             {
                                 $comment = $_POST['comments'];
-                                $id = $_GET['id'];
-                                
+                                $id = $_GET['id'];                    
                             }
                     }
                  $newComment = new Comment
@@ -37,61 +38,43 @@ class CommentsController
 
                 //Je vais vers la fonction add de CommentsManager pour ajouter les données en base
                 $sendToTheCommentManager->add($newComment);
+                header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$id");
+                //require 'Frontend/FrontendViews/Articles/MyArticles.php';
                 
-                header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             }
             
-        function getFiveComments()
+        function getListOfComments()
             {
-                //Je récupére mes commentaires
+            //print_r($_GET['id']);
+                if (isset($_GET['id']))
+                        {
+                    //print_r("meuhh");
+                            if (!empty($_GET['id']))
+                                {
+                                    $myIdComment = ($_GET['id']);
+                                }
+                            else 
+                                {
+                                    echo 'pas d article séléctionné';
+                                }
+                        }
+
+                $comment = new Comment
+                        ([
+
+                            'idFromArticle' => $myIdComment
+
+                        ]);
+            //print_r($comment);
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-                $sendToTheCommentManager = new CommentsManager($db);
+                $commentManager = new CommentsManager($db);
+                $listOfComments = $commentManager->getListOfComments($comment);
                 
-                //On récupére le nombre de commentaires total en bdd
-                $countCommentsFromManager = $sendToTheCommentManager->count();
-                $nbrComments = $countCommentsFromManager;
-                
-                //Combien de commentaires souhaite t'on afficher par page
-                $nbrCommentsPerPage = 5;
-                //$numeroPageCourante = 1;
-
-                $numberOfPages = ceil($nbrComments/$nbrCommentsPerPage);
-                
-                if (isset($_GET['p']))
-                    {
-                        $page = $_GET['p'];
-                        $nextpage = $page + 1;
-                        $prevpage = $page - 1;
-                        
-                        if($prevpage  < 1)
-                            {
-                                $prevpage = $numberOfPages;
-                            }
-                        
-                        if($nextpage > $numberOfPages)
-                            {
-                                $nextpage = 1;
-                            }
-                    } 
-                else
-                    {
-                        $page = 1;
-                    }
-                
-                $listOfCommentsFromManager = $sendToTheCommentManager->getListOfFiveComments($page,$nbrCommentsPerPage);
-
-                //ALler chercher les articles en bdd
-                //$articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet 
-   
-                //Je récupére mon dernier article en bdd
-                //$lastComment = $articlesManager->getUnique();//Appel d'une fonction de cet objet
-                //print_r($articlesFromManager);
-                
-                //$titleLastArticle = $lastArticle->subject();
-                //$contentLastArticle = $lastArticle->content();
-                //$imageLastArticle = $lastArticle->image();
-                require 'Frontend/FrontendViews/Articles/MyArticles.php';
-                //header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+                return $listOfComments;
+                //print_r($listOfComments);
+                //require 'Frontend/FrontendViews/Articles/MyArticles.php';
+                //print_r($listOfCommentsFromManager);
+                //include 'Frontend/FrontendViews/Articles/MyArticles.php';
             }
-}
+    }

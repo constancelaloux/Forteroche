@@ -41,7 +41,7 @@ class CommentsManager
             
             
         //Je récupére 5 commentaires
-        public function getListOfFiveComments($page,$nbrCommentsPerPage)
+        /*public function getListOfFiveComments($page,$nbrCommentsPerPage)
             {
                 $getComments = $this->_db->prepare("SELECT * FROM comments ORDER BY ID DESC LIMIT ".(($page-1)*$$nbrCommentsPerPage).", $nbrCommentsPerPage "); 
                 $getComments->execute(); 
@@ -54,7 +54,30 @@ class CommentsManager
                     }
 
                 return $data;
-            }
+            }*/
+            public function getListOfComments(Comment $comment)
+                {
+                    $getComments = $this->_db->prepare("SELECT * FROM comments  WHERE id_From_Article = :idFromArticle");
+                    
+                    $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
+                    $getComments->execute();
+                    while ($donnees = $getComments->fetch())
+                    {
+                        $article =  new Article($donnees);
+                        $data[] = $article;
+                        
+                    }
+                    //return new Comment($getComments->fetch(\PDO::FETCH_ASSOC));
+                    /*while ($donnees = $getComments->fetch())
+                        {
+                            $comment =  new Comment($donnees);
+                            $commentDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                            $comment->setCreatedate($commentDate);
+                            $data[] = $comment;
+                        }*/
+
+                    return $data;
+                }
             
         public function setDb(\PDO $db)
             {

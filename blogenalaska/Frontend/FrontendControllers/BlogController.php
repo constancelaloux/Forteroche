@@ -5,6 +5,7 @@ class BlogController
         //On va vers la premiére page du blog front
         function getTheMainFrontendBlogPage()
             {
+                
                 header('Location: /blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage');
                 //require 'Frontend/FrontendViews/HomePage.php';
             }
@@ -106,6 +107,10 @@ class BlogController
                 $titleToDisplay = $myArticle->subject();
                 $articlesToDisplay = $myArticle->content();
                 $imageToDisplay = $myArticle->image();
+                
+                $comment = new CommentsController();
+                $myComment = $comment->getListOfComments();
+                //print_r($myComment);
                 //print_r($articlesToDisplay);
             //print_r($articlesToDisplay);
                 require 'Frontend/FrontendViews/Articles/MyArticles.php';

@@ -129,6 +129,39 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getTheMainFrontendBlogPage();
                         break;
+                      
+                        //J'affiche les articles sur la premiére page du blo
+                        case 'iGetArticlesToshowInTheBlogPage':
+                            //print_r("j y suis");
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getArticles();
+                        break;
+                    
+                        //J'ai récupéré l'id de l'article et je vais afficher l'article en entier et les commentaires de cet article
+                        case 'getArticleFromId':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getTheArticleFromId();
+                            //$commentsController = new CommentsController();
+                            //$commentsController->getListOfComments();
+                        break;
+                        
+                        //Je récupére les commentaires pour les afficher sur la page
+                        /*case 'iGetCommentsToshowInTheBlogPage':
+                            $commentsController = new CommentsController();
+                            $commentsController->getListOfComments(); 
+                        break;*/
+                    
+                        //J'envoi des commentaires
+                        case 'sendCommentsFromId':
+                            $commentsController = new CommentsController();
+                            $commentsController->createNewComment();
+                        break;
+                        
+                        //Je récupére le dernier article pour l'afficher sur le blog    
+                        /*case 'getLastArticle':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController->getUniqueArticle();
+                        break;*/
                     
                         //Je vais vers la vue ou s'affiche mes articles de mon blog
                         /*case 'myArticlesViewPage':
@@ -141,37 +174,6 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getTheContactBlogPage();
                         break;*/
-                        
-                        //J'affiche les articles sur la premiére page du blo
-                        case 'iGetArticlesToshowInTheBlogPage':
-                            //print_r("j y suis");
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getArticles();
-                        break;
-                    
-                        //Je récupére le dernier article pour l'afficher sur le blog    
-                        /*case 'getLastArticle':
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getUniqueArticle();
-                        break;*/
-                    
-                        //J'ai récupéré l'id de l'article et je vais afficher l'article en entier
-                        case 'getArticleFromId':
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getTheArticleFromId();
-                        break;
-                    
-                        //J'envoi des commentaires
-                        case 'sendCommentsFromId':
-                            $commentsController = new CommentsController();
-                            $commentsController->createNewComment();
-                        break;
-                      
-                        //Je récupére les commentaires pour les afficher sur la page
-                        case 'iGetCommentsToshowInTheBlogPage':
-                            $commentsController = new CommentsController();
-                            $commentsController->getFiveComments(); 
-                        break;
                         //Je récupére le dernier article pour l'afficher sur le blog
                         /*case 'goToLogOut';
                             $logoutController = new doLogout();

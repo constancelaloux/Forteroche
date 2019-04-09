@@ -33,7 +33,7 @@
                 <div class="d-flex">
                     <div class="dropdown mr-1">
                             <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: white;">                                             
-                                <img src="/blogenalaska/public/images/disconnect.png">
+                                <img src="/blogenalaska/public/images/connect.png">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                 <div>
@@ -49,7 +49,7 @@
     
 </header> 
 
-<!--script permettant le hover sur les dropdown-->
+
 <!--script permettant le hover sur les dropdown-->
 <script>
     $('ul.navbar-nav li.nav-item').hover(function() 

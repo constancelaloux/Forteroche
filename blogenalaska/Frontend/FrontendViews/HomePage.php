@@ -2,11 +2,12 @@
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
-
+<?php session_destroy(); ?>
+<!--Le carousel-->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="/blogenalaska/public/images/alaska1.jpeg" class="d-block w-100" alt="image1">
+            <img src="/blogenalaska/public/images/alaska1.png" class="d-block w-100" alt="image1">
         </div>
         <div class="carousel-item">
             <img src="/blogenalaska/public/images/alaska2.jpg" class="d-block w-100" alt="image2">
@@ -22,7 +23,7 @@
 </div>
 
 
-
+<!--Affichage des articles-->
 <section id="articles">
     <div class="container">
         <div class="row">
@@ -90,11 +91,12 @@
                 </div>
             </div>
             
+            <!--Affichage du dernier article-->
             <div class="col-lg-4">
                 <aside id="whyThisBlog">
                     <!--icon-->
                     <p>
-                        <img src="/blogenalaska/public/images/logo.png" alt="logo">
+                        <img src="/blogenalaska/public/images/jeanforteroche.jpeg" alt="logo">
                     </p>
                     <h3>
                         Bienvenu sur Billet Simple Pour l'Alaska
@@ -120,8 +122,55 @@
     </div>
 </section>
 
+<!--Frmulaire de contact-->
 <section id="contact">
     <div class="contactForm">
+        <div class="row">
+        <section class="col-sm-8">
+          <form class="well">
+            <legend>Si vous voulez me laisser un message</legend>
+            <h4>Comment m'avez-vous trouvé ?</h4>
+            <fieldset>
+              <div class="radio">
+                <label for="ami" class="radio">
+                  <input type="radio" name="origine" value="ami" id="ami">
+                  Par un ami 
+                </label>
+              </div>
+              <div class="radio">
+                <label for="web" class="radio">
+                  <input type="radio" name="origine" value="web" id="web">
+                  Sur le web 
+                </label>
+              </div>
+              <div class="radio">
+                <label for="hasard" class="radio">
+                  <input type="radio" name="origine" value="hasard" id="hasard">
+                  Par hasard 
+                </label>
+              </div>
+              <div class="radio">
+                <label for="autre" class="radio">
+                  <input type="radio" name="origine" value="autre" id="autre">
+                  Autre... 
+                </label>
+              </div>
+              <label for="textarea">Votre message :</label>
+                <textarea id="textarea" class="form-control" rows="4"></textarea>
+                <p class="help-block">Vous pouvez agrandir la fenêtre</p>
+                <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok-sign"></span> Envoyer</button>
+            </fieldset>
+          </form>
+        </section>
+        <section class="col-sm-4">
+            <address>
+                <p>Vous pouvez également me contacter à cette adresse :</p>
+                <strong>Jean Forteroche</strong><br>
+                    Allée des pingouins<br>
+                    Alaska<br>
+            </address>
+        </section>
+      </div>
         
     </div>
 </section>
