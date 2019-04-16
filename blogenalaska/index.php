@@ -1,10 +1,5 @@
 <?php
 
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 // Chargement des classes
 //require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 //Autoloader::register();
@@ -20,7 +15,7 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
 
 //Si j'ai une action ou sinon action par default
 
-    (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "getTheFormAdminConnexionBackend";
+    (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
 
                 switch ($action)
                     {
@@ -50,21 +45,15 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                         break;
                     
                         //Je compte les articles
-                        case 'countArticles':
-                            //print_r("je suis dans le router");
-                            //$postsController = new PostsControllers();
-                            //$articles = $postsController->countArticles();  
+                        case 'countArticles':  
                             $postsController = new PostsControllers();
-                            //$articlesCount = $postsController->countArticles();
                             $articlesCount = $postsController->countArticles();
-                            //print_r($articlesCount);
                         break;
                     
                         //Je récupére les articles au sein du datatables
                         case 'getArticlesIntoDatatables':
                             $postsController = new PostsControllers();
                             $postsController->getArticles();
-                            //print_r("je suis dans le router");
                        break; 
                    
                         //Je suuprime un article
@@ -97,7 +86,6 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                         case 'updateArticles':
                             $postsController = new PostsControllers();
                             $postsController->getArticlesFromId();
-                            //$articleContent = $postsController->getArticlesFromId();
                         break;
                     
                         case 'articleUpdated':
@@ -118,7 +106,6 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                         break;
                     
                         case 'iGetImageIntoFormFromUploadPath':
-                            //print_r("je suis dans le routeur");
                             $uploadController = new UploadControler();
                             $uploadController->upload2();
                         break;   
@@ -130,9 +117,8 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                             $blogFrontendController->getTheMainFrontendBlogPage();
                         break;
                       
-                        //J'affiche les articles sur la premiére page du blo
+                        //J'affiche les articles sur la premiére page du blog
                         case 'iGetArticlesToshowInTheBlogPage':
-                            //print_r("j y suis");
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getArticles();
                         break;
@@ -141,15 +127,7 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                         case 'getArticleFromId':
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getTheArticleFromId();
-                            //$commentsController = new CommentsController();
-                            //$commentsController->getListOfComments();
                         break;
-                        
-                        //Je récupére les commentaires pour les afficher sur la page
-                        /*case 'iGetCommentsToshowInTheBlogPage':
-                            $commentsController = new CommentsController();
-                            $commentsController->getListOfComments(); 
-                        break;*/
                     
                         //J'envoi des commentaires
                         case 'sendCommentsFromId':
@@ -157,6 +135,42 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                             $commentsController->createNewComment();
                         break;
                         
+                        //Je vais vers le formulaire de connexion client
+                        case 'getTheFormClientsConnexion':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->getClientFormConnexion();
+                        break;
+                    
+                        //Je vais vers le formulaire pour créer un client
+                        case 'createNewClientForm':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->getFormToCreateNewClient();
+                        break;
+                    
+                        //Je vais inserer en base les données du client
+                        case 'createNewClientPasswordAndUsername':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->createNewClientInDatabase();
+                        break;
+                        
+                        //Je vérifie les données mot de passe et identifiant du client pour accéder au blog
+                        case 'checkThePassAndUsernameOfClient':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->checkClientUsernameAndPassword();
+                        break;
+                    
+                        //bouton pour déconnecter le client
+                        case 'disconnectTheClient':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->disconnectTheClient();
+                        break;
+                    
+                        //Je récupére les commentaires pour les afficher sur la page
+                        /*case 'iGetCommentsToshowInTheBlogPage':
+                            $commentsController = new CommentsController();
+                            $commentsController->getListOfComments(); 
+                        break;*/
+                    
                         //Je récupére le dernier article pour l'afficher sur le blog    
                         /*case 'getLastArticle':
                             $blogFrontendController = new BlogController();

@@ -82,28 +82,28 @@
 
                 </div>
   
-                <!--<div id="navComments">
+                <div id="navComments">
                     <nav aria-label="...">
 
                         <ul class="pagination">
                             <li class="page-item">
-                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=<?php echo $prevpage?>">Previous</a>
+                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=<?php echo $prevpage ?>&id=<?php echo $commentId ?>">Previous</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=1">1</a>
+                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=1&id=<?php echo $commentId ?>">1</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=2">2</a>
+                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=2&id=<?php echo $commentId ?>">2</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=3">3</a>
+                                <a class="page-link" href="/blogenalaska/index.php?action=getArticleFromId&p=3&id=<?php echo $commentId ?>">3</a>
                             </li>
                             <li class="page-item">
-                                <a class="page-link" href="/blogenalaska/index.php?action=iGetCommentsToshowInTheBlogPage&p=<?php echo $nextpage?>">Next</a>
+                                <a class="page-link" href="/blogenalaska/index.php?action=iGetCommentsToshowInTheBlogPage&p=<?php echo $nextpage ?>&id=<?php echo $commentId ?>">Next</a>
                             </li>
                         </ul>
                     </nav>
-                </div>-->
+                </div>
             </div>
 
 

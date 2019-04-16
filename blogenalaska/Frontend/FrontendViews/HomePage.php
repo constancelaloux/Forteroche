@@ -1,8 +1,43 @@
+<?php session_start(); ?>
 <!--Include Footer et template -->
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
-<?php session_destroy(); ?>
+<?php 
+    if(isset($_SESSION['username']))
+        {
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php');
+            $expireAfter = 30;
+
+            //Check to see if our "last action" session
+            //variable has been set.
+            if(isset($_SESSION['last_action']))
+                {
+                    //Figure out how many seconds have passed
+                    //since the user was last active.
+                    $secondsInactive = time() - $_SESSION['last_action'];
+
+                    //Convert our minutes into seconds.
+                    $expireAfterSeconds = $expireAfter * 60;
+
+                    //Check to see if they have been inactive for too long.
+                    if($secondsInactive >= $expireAfterSeconds)
+                        {
+                            //print_r("ma session est inactive");
+                            //User has been inactive for too long.
+                            //Kill their session.
+                            session_unset();
+                            session_destroy();
+
+                            header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                        }
+                }
+        }
+    else 
+        {
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/ClientsHeader.php');       
+        }
+?>
+
 <!--Le carousel-->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
@@ -53,8 +88,8 @@
                                 
                                 $image = $articles->image();
 
-                                echo '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<p>', $image, '</p>', "\n",
-                                '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>';
+                                echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<p>', $image, '</p>', "\n",
+                                '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>' , '</div>';
 
                             }
 

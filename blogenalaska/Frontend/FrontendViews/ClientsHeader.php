@@ -27,43 +27,51 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
                     </li>
-                    
-                    <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=mainBackendPage" style="color: rgba(70, 156, 214, 0.9);">Retour vers le backend</a>
-                    </li>
                 </ul>
-                
-                <!--Click sur image pour déconnecter-->
-                <div class="d-flex">
-                    <div class="dropdown mr-1">
-                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                     
-                                <?php
-                                //Session 
-                                    echo 'Bonjour ' . $_SESSION['username'] . ' !<br />'
-                                ;?>
-                                <img src="/blogenalaska/public/images/disconnect.png">
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
-                                <div>
-                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheAdmin">Déconnexion</a>
-                                </div>
-                            </div>
-                    </div> 
-                </div>
 
-<!--Click sur image pour se connecter au backend-->
-                <!--<div class="d-flex">
+            <?php 
+                if(isset($_SESSION['clientUsername'])) 
+                    {
+            ?>
+                        <div class="d-flex">
+                            <div class="dropdown mr-1">
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                     
+                                        <?php
+                                        //Session 
+                                            echo 'Bonjour ' . $_SESSION['clientUsername'] . ' !<br />'
+                                        ;?>
+                                        <img src="/blogenalaska/public/images/disconnect.png">
+                                    </button>
+                                    <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
+                                        <div>
+                                            <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheClient">Déconnexion</a>
+                                        </div>
+                                    </div>
+                            </div> 
+                        </div>
+
+            <?php
+                    }
+                else 
+                    {
+            ?>
+              <!--Click sur image pour se connecter au backend-->
+                <div class="d-flex">
                     <div class="dropdown mr-1">
                             <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: white;">                                             
                                 <img src="/blogenalaska/public/images/connect.png">
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                 <div>
-                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=getTheFormAdminConnexionBackend">Connexion</a>
+                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=getTheFormClientsConnexion">Connexion</a>
                                 </div>
                             </div>
                     </div> 
-                </div>-->
+                </div  
+            <?php                  
+                    }
+            ?>
+
             </div>
 
         </nav>
@@ -82,4 +90,3 @@
             $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
         });
 </script>
-

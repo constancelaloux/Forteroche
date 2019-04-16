@@ -55,9 +55,9 @@ class CommentsManager
 
                 return $data;
             }*/
-            public function getListOfComments(Comment $comment)
+            public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
                 {
-                    $getComments = $this->_db->prepare("SELECT * FROM comments  WHERE id_From_Article = :idFromArticle");
+                    $getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
                     
                     $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
                     $getComments->execute();

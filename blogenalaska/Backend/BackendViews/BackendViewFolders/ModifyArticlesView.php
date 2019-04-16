@@ -45,89 +45,198 @@ else
 
     <h1>Modifier votre article</h1>
 
-    <script type="text/javascript">
-        tinymce.init
-            ({
-                selector: '#mytitle',
-                //language: 'fr_FR',
-                language_url: '/blogenalaska/Public/js/fr_FR.js',
-                font_formats: 'Arial=arial',
-                toolbar: 'fontsizeselect',
-                fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-                height : 30,
-                max_height: 30
-            });
-    </script>
+        <script type="text/javascript">
+            tinymce.init
+                ({ 
+                        selector:'#mytextarea',
 
-    <script type="text/javascript">
-        tinymce.init
-            ({ 
-                selector:'#mytextarea',
-                //convert_urls : false,
-                relative_urls: false,
-                language_url: '/blogenalaska/Public/js/fr_FR.js',
-                //language: 'fr_FR',
-                plugins: 'image code',
-                toolbar: 'undo redo | image code',
-                // without images_upload_url set, Upload tab won't show up
-                images_upload_url: 'upload.php',
+                        // langue
+                        //language : "fr_FR",
+                        //language: 'fr_FR',
+                        language_url: '/blogenalaska/Public/js/fr_FR.js',
+                        font_formats: 'Arial=arial',
+                        //toolbar: ['fontsizeselect', 'image'],
+                        //plugins: "image imagetools",
+                        fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
+                        height : 300,
+                        max_height: 300,
+                        min_height: 300
+                });
 
-                // override default upload handler to simulate successful upload
-                images_upload_handler: function (blobInfo, success, failure) 
-                    {
-                        var xhr, formData;
+        </script>
 
-                        xhr = new XMLHttpRequest();
-                        xhr.withCredentials = false;
-                        //xhr.open('POST', 'upload.php');
-                        xhr.open('POST', '/blogenalaska/index.php?action=uploadImage');
-
-                        xhr.onload = function() 
-                            {
-                                var json;
-
-                                if (xhr.status != 200) 
-                                    {
-                                        failure('HTTP Error: ' + xhr.status);
-                                        return;
-                                    }
-
-                                json = JSON.parse(xhr.responseText);
-
-                                if (!json || typeof json.location != 'string') 
-                                    {
-                                        failure('Invalid JSON: ' + xhr.responseText);
-                                        return;
-                                    }
-
-                                success(json.location);
-                            };
-
-                        formData = new FormData();
-                        formData.append('file', blobInfo.blob(), blobInfo.filename());
-
-                        xhr.send(formData);
-                    },
-                font_formats: 'Arial=arial',
-                toolbar: ['fontsizeselect', 'image'],
-                plugins: "image imagetools",
-                fontsize_formats: '8pt 10pt 12pt 14pt 18pt 24pt 36pt',
-                height : 300,
-                max_height: 300,
-                min_height: 300
-            });
-
-    </script>
-
-
-    <form action="/blogenalaska/index.php?action=articleUpdated" method="post">
-
-        <textarea id="mytitle" name="title"><h1><?php echo $articleSubject?></h1></textarea>
-        <textarea id="mytextarea" name="content"><?php echo $articleContent?></textarea>
+   
+    <form action="/blogenalaska/index.php?action=articleUpdated" id="formArticle" method="post">
+        <h1>Ajouter un nouvel article</h1>
+        <div class="titleOfArticle">
+            <label for="titleArticle">Titre de l'article</label>
+            <input type="text" id="titleArticle" name="title" value ='<?php echo $articleSubject?>' />
+        </div>
         
+        <div class="contentOfArticle">
+            <label for="contentArticle">Contenu de l'article</label>
+            <textarea id="mytextarea" name="content"> <?php echo $articleContent?></textarea>
+        </div>
+        
+        
+        <div  class="imageOfArticle">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
+            <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->       
+        </div>
+        <!--<input type="image" class="preview">-->
+
+        <div class="preview"><img id="image" src="<?php echo $articleImage; ?>"/> </div>
+
+            <input type="hidden" class="valueHidden" name="image" value="<?php echo $articleImage ?>"/>
+        <div>
         <input type="hidden" name="id" value="<?= $id ?>" />
-        <input type = "submit" value="Valider"/>
+        <div>
+            <input type = "submit" value="Valider"/>
+        </div>
     </form>
+    
+                <!-- Modal -->
+        <div id="uploadModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">File upload form</h4>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form -->
+                        <!--<form action='/blogenalaska/index.php?action=iGetImageIntoFormFromUploadPath' method='post'>-->
+                        <form>
+                            Select file : <input type='file' name='file' id='file' class='form-control' onchange="fileSelected(this)" ><br>
+                            <!--<input type="text" id="newFile" name="newFile" value="">-->
+                            <input type="hidden" id="newFile" name="newFile" value=""/>
+                            <!--<input type='submit' class='btn btn-info' value='Envoyer !' id='upload'>-->
+                             <button id="upload"  data-dismiss="modal">Upload</button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    
+
+        
+        
+        
+        <script>
+              function fileSelected(input)
+                {
+                    //console.log("yeahhhh");
+                    var file_data = $('#file').prop('files')[0];
+                    var form_data = new FormData();
+                    form_data.append('file', file_data);
+                    //e.preventDefault();
+                    //var dataString = $('.btn').serialize();
+                    $.ajax({
+                        url         : '/blogenalaska/index.php?action=uploadImage',     // point to server-side PHP script 
+                        dataType    : 'text',           // what to expect back from the PHP script, if anything
+                        cache       : false,
+                        contentType : false,
+                        processData : false,
+                        data        : form_data,                         
+                        type        : 'post',
+
+                        //dataType    : 'json', // what type of data do we expect back from the server
+                        success     : function(output){
+                            //$("#formArticle")[0].reset();
+                            var message;
+                            //$("#custId").val(output);
+                            //message = $("#newFile").show();
+                            message = $("#newFile").attr("value",output);
+                            
+                            //$("p").html($("p").html() + "<br>" + message);
+                            //$('#custId').html(output).fadeIn();
+                            //$("#preview").html(output).fadeIn();
+ 
+
+                            //console.log('upload successful!\n' + output);
+                                 //alert(output);
+                                 //$('#pic').find("img").attr(output);
+                                 //alert(output);
+                                      // view uploaded file.
+
+                                 //console.log(output);
+                                     // display response from the PHP script, if any
+                        },
+                        error: function(xhr, ajaxOptions, thrownError) {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }
+
+                    });
+                               //$('#pic').val("");
+
+                }
+        </script>
+        
+        <script>
+            $('#upload').on('click', function(e){
+                e.preventDefault();
+
+                console.log("test");
+                var form_data = $("#newFile").val();
+                //console.log(form_data);
+                //var file_data = $('#newFile').prop('files')[0];
+                //var form_data = new FormData();
+                //form_data.append('newFile', file_data);
+
+                //var dataString = $('.btn').serialize();
+                $.ajax({
+                url         : '/blogenalaska/index.php?action=iGetImageIntoFormFromUploadPath&data='+form_data,     // point to server-side PHP script 
+                //dataType    : 'text',           // what to expect back from the PHP script, if anything
+                method      :"GET",
+                dataType: 'html',
+                //cache       : false,
+                //contentType : false,
+                //processData : false,
+                data        : form_data,
+
+                //type        : 'post',
+    
+                //dataType    : 'json', // what type of data do we expect back from the server
+                success     : function(response){
+                    //var message;
+                    //$('#file').html(output).fadeIn();
+                    //$("#preview").html(output).fadeIn();
+                    //$("#formArticle")[0].reset(); 
+                    
+                    //console.log('upload successful!\n' + output);
+                    //alert(response);
+                    //message = $("#image").attr("value",output);
+                    $('.preview').html(response);
+                    $('.valueHidden').attr("value",response);
+                    //$('.preview').find("img").attr(output);
+                    //$('#preview').find("img").attr(output);
+                    //alert(output);
+                         // view uploaded file.
+
+                    //console.log(output);
+                        // display response from the PHP script, if any
+                },
+        error: function(xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+                
+         });
+                
+            });    
+        </script>
+        
+    <!--<form action="/blogenalaska/index.php?action=articleUpdated" method="post">
+
+        <textarea id="mytitle" name="title"><h1><?php //echo $articleSubject?></h1></textarea>
+        <textarea id="mytextarea" name="content"><?php //echo $articleContent?></textarea>
+        
+        <input type="hidden" name="id" value="" />
+        <input type = "submit" value="Valider"/>
+    </form>-->
        
   <!-- <div id="resultat">-->
         <!-- Nous allons afficher un retour en jQuery au visiteur -->

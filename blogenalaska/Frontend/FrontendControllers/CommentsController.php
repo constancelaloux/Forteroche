@@ -65,11 +65,49 @@ class CommentsController
                             'idFromArticle' => $myIdComment
 
                         ]);
+                
+                
             //print_r($comment);
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
                 $commentManager = new CommentsManager($db);
-                $listOfComments = $commentManager->getListOfComments($comment);
+                
+                //Je vais compter mes articles
+                
+               //On récupére le nombre d'articles total en bdd
+                $countArticlesFromManager = $commentManager->count();
+                $nbrComments = $countArticlesFromManager;
+                //print_r($nbrComments);
+                
+                //Combien d'articles souhaite t'on par page
+                $nbrCommentsPerPage = 5;
+                //$numeroPageCourante = 1;
+
+                $numberOfPages = ceil($nbrComments/$nbrCommentsPerPage);
+                
+                if (isset($_GET['p']))
+                    {
+                    //print_r($_GET['p']);
+                        $page = $_GET['p'];
+                        //print_r($page);
+                        $nextpage = $page + 1;
+                        $prevpage = $page - 1;
+                        
+                        if($prevpage  < 1)
+                            {
+                                $prevpage = $numberOfPages;
+                            }
+                        
+                        if($nextpage > $numberOfPages)
+                            {
+                                $nextpage = 1;
+                            }
+                    } 
+                else
+                    {
+                        $page = 1;
+                    }
+                $listOfComments = $commentManager->getListOfComments($comment,$page,$nbrCommentsPerPage);
                 
                 return $listOfComments;
                 //print_r($listOfComments);

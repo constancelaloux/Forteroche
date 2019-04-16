@@ -229,6 +229,9 @@ class PostsControllers
 
                 $articleSubject = $myArticlesToModify->subject();
                 $articleContent = $myArticlesToModify->content();
+                $articleImage = $myArticlesToModify->image();
+
+                
                 
                 //print_r($articleContent);
                 $id = $myArticlesToModify->id();

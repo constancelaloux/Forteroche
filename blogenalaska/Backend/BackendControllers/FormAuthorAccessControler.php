@@ -26,7 +26,7 @@ class FormAuthorAccessControler
         //Je récupére le formulaire pour envoyer des données administrateur en bdd
         function getFormToCreateNewAdmin()
             {
-            require 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                require 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
             }
             
         //Fonction qui permet d'nvoyer les identifiants de l'utilisateur du backend en base

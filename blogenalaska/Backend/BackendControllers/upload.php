@@ -1,85 +1,134 @@
 <?php
 
 class UploadControler
-{
-   function upload()
-        {
+    {
+        function upload()
+            {
 
-           // Allowed origins to upload images
-           //$accepted_origins = array("http://localhost", "http://107.161.82.130", "http://codexworld.com");
-           $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
-           // Images upload path
-           //$imageFolder = "../Public/../../images/";
-           //$imageFolder = "../../../Public/images/";
-           $imageFolder = "Public/images/";
-           //$imageFolder = "../../blogenalaska/Public/images/";
-
-           reset($_FILES);
-           $temp = current($_FILES);
-           //print_r($temp);
-           if(is_uploaded_file($temp['tmp_name'])){
-               if(isset($_SERVER['HTTP_ORIGIN'])){
-                   // Same-origin requests won't set an origin. If the origin is set, it must be valid.
-                   if(in_array($_SERVER['HTTP_ORIGIN'], $accepted_origins)){
-                       header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
-                   }else{
-                       header("HTTP/1.1 403 Origin Denied");
-                       return;
-                   }
-               }
-
-               // Sanitize input
-               if(preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name'])){
-                   header("HTTP/1.1 400 Invalid file name.");
-                   return;
-               }
-
-               // Verify extension
-               if(!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png"))){
-                   header("HTTP/1.1 400 Invalid extension.");
-                   return;
-               }
+                // Allowed origins to upload images
+                $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
                
-               // Accept upload if there was no origin, or if it is an accepted origin
-               $filetowrite = $imageFolder . $temp['name'];
+                // Images upload path
+                $imageFolder = "Public/images/";
+                
+                reset($_FILES);
+                $temp = current($_FILES);
+                
+                if(is_uploaded_file($temp['tmp_name']))
+                    {
+                        if(isset($_SERVER['HTTP_ORIGIN']))
+                            {
+                                // Same-origin requests won't set an origin. If the origin is set, it must be valid.
+                                if(in_array($_SERVER['HTTP_ORIGIN'], $accepted_origins))
+                                    {
+                                        header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
+                                    }
+                                else
+                                    {
+                                        header("HTTP/1.1 403 Origin Denied");
+                                        return;
+                                    }
+                            }
 
-               $filetowrite1 = "/blogenalaska/" . $imageFolder . $temp['name'];
-               //print_r($filetowrite);
-               //$rename = "/blogenalaska/Public/images/"  . $temp['name'];
-               //rename($filetowrite, $rename);
+                        // Sanitize input
+                        if(preg_match("/([^\w\s\d\-_~,;:\[\]\(\).])|([\.]{2,})/", $temp['name']))
+                            {
+                               header("HTTP/1.1 400 Invalid file name.");
+                               return;
+                            }
 
-               move_uploaded_file($temp['tmp_name'], $filetowrite);
-               // Respond to the successful upload with JSON.
-               
-               //echo json_encode(array('location' => $filetowrite));
-               //echo json_encode(array('location' => $filetowrite1));
-               //echo $filetowrite1;
-               echo "$filetowrite1";
-               //echo "<img src='$filetowrite1' />";
-           } else {
-               // Notify editor that the upload failed
-               header("HTTP/1.1 500 Server Error");
-           }  
-        }
-        
-    function upload2()
-        {
-        //print_r($_GET['data']);
-            if (isset($_GET['data']))
-                {
-                    if (!empty($_GET['data']))
-                        {
-                            $filetowrite1 = $_GET['data'];
-                            //print_r($filetowrite1);
-                            //$file = "<img src='$filetowrite1' />";
-                            echo "<img src='$filetowrite1' />";
-                            //echo $filetowrite1;
-                        }
+                        // Verify extension
+                        if(!in_array(strtolower(pathinfo($temp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png")))
+                            {
+                                header("HTTP/1.1 400 Invalid extension.");
+                                return;
+                            }
 
-                }
+                        // Accept upload if there was no origin, or if it is an accepted origin
 
-        }
-}
+                        $filetowrite1 = "/blogenalaska/" . $imageFolder . 'thumb_' . $temp['name'];
+
+                        if (move_uploaded_file($temp['tmp_name'], $imageFolder . $temp['name']))
+                            {
+                        
+                                //Je vais chercher la taille de mon image
+                                $size = getimagesize($imageFolder. $temp['name']);
+
+                                $uploadImageType = $size[2];
+                                
+                                //Je récupére dans les variables la largeur et la hauteur de mon image
+                                $width = $size[0];
+                                $height = $size[1];
+
+                                //Je propose une hauteur et une largeur à ma nouvelle image
+                                $dest_h = 500;
+                                $dest_w = 500;
+                                
+                                //Je créé une image miniature vide
+                                $miniature = ImageCreateTrueColor( $dest_w, $dest_h);
+                                
+                                switch ($uploadImageType) 
+                                    {
+                                        case IMAGETYPE_JPEG:
+                                            
+                                        //La photo est la source
+                                        $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
+
+                                        //Je créé la miniature
+                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                        
+                                        //J'upload l'image dans le fichier
+                                        ImageJpeg($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+
+                                        break;
+                                    
+                                        case IMAGETYPE_GIF:
+                                                                                        //La photo est la source
+                                        $image = imagecreatefromgif($imageFolder .$temp['name']);
+
+                                        //Je créé la miniature
+                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+
+                                        imageGif($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                        break;
+                                    
+                                        case IMAGETYPE_PNG:
+                                        $image = imagecreatefrompng($imageFolder .$temp['name']);
+
+                                        //Je créé la miniature
+                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+
+                                        imagePng($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                        break;           
+                                    }       
+                            }
+//END of resize
+
+                        // Respond to the successful upload with JSON.
+                        echo "$filetowrite1";
+                    } 
+                else 
+                    {
+                        // Notify editor that the upload failed
+                        header("HTTP/1.1 500 Server Error");
+                    }  
+            }
+
+        function upload2()
+            {
+                if (isset($_GET['data']))
+                    {
+                        if (!empty($_GET['data']))
+                            {
+                                $filetowrite1 = $_GET['data'];
+
+                                echo "<img src='$filetowrite1' />";
+                            }
+
+                    }
+
+            }
+    }
 
 
 
