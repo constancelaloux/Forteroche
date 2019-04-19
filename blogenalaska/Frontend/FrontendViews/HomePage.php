@@ -42,13 +42,13 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="/blogenalaska/public/images/alaska1.png" class="d-block w-100" alt="image1">
+            <img src="/blogenalaska/public/images/alaska1.png" class="d-block w-100" alt="image1" width="100%">
         </div>
         <div class="carousel-item">
-            <img src="/blogenalaska/public/images/alaska2.jpg" class="d-block w-100" alt="image2">
+            <img src="/blogenalaska/public/images/alaska2.jpg" class="d-block w-100" alt="image2" width="100%">
         </div>
         <div class="carousel-item">
-            <img src="/blogenalaska/public/images/alaska3.jpg" class="d-block w-100" alt="image3">
+            <img src="/blogenalaska/public/images/alaska3.jpg" class="d-block w-100" alt="image3" width="100%">
         </div>
     </div>
     
@@ -88,7 +88,7 @@
                                 
                                 $image = $articles->image();
 
-                                echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<p>', $image, '</p>', "\n",
+                                echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<div id="image">','<p>', $image, '</p>',  '</div',"\n",
                                 '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>' , '</div>';
 
                             }
@@ -148,8 +148,20 @@
                         <?php    
                             echo $titleLastArticle;
                             echo $contentLastArticle;
-                            echo $imageLastArticle;
                         ?>
+                        <section class="row">
+                            <!--<div class="col-xs-7 col-sm-5 col-md-3 ">-->
+                                <!--<a href="#" class="thumbnail">-->
+                                    <?php echo $imageLastArticle ; ?>
+                                <!--</a>-->
+                            <!--</div-->
+                        </section>
+
+                                <!--<img src="<?php //echo $imageLastArticle ; ?>" alt="article image" class="img-rounded">-->
+
+
+                            <!--echo $imageLastArticle;-->
+
                     </p>
                 </aside>    
             </div>

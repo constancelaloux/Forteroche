@@ -4,7 +4,6 @@ class UploadControler
     {
         function upload()
             {
-
                 // Allowed origins to upload images
                 $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
                
@@ -46,10 +45,11 @@ class UploadControler
 
                         // Accept upload if there was no origin, or if it is an accepted origin
 
-                        $filetowrite1 = "/blogenalaska/" . $imageFolder . 'thumb_' . $temp['name'];
+                        $filetowrite1 = "/blogenalaska/" . $imageFolder . $temp['name'];
 
                         if (move_uploaded_file($temp['tmp_name'], $imageFolder . $temp['name']))
                             {
+                            //exit("je sors");
                         
                                 //Je vais chercher la taille de mon image
                                 $size = getimagesize($imageFolder. $temp['name']);
@@ -61,35 +61,60 @@ class UploadControler
                                 $height = $size[1];
 
                                 //Je propose une hauteur et une largeur à ma nouvelle image
-                                $dest_h = 500;
-                                $dest_w = 500;
+                                //$dest_h = 500;
+                                //$dest_w = 500;
+                                //$newwidth=500;
+                                //$newheight=($height/$width)*$newwidth;
+                                //$ratio = $width/$height; // width/height
+                 
+                                $newwidth = 550;
+                                //$newheight = $ratio*$newwidth;
+                                $Reduction = ( ($newwidth * 100)/$width);
+                                $newheight= ( ($height * $Reduction)/100 );
+                   
+                                //$newwidth1=25;
+                                //$newheight1=($height/$width)*$newwidth1;
                                 
                                 //Je créé une image miniature vide
-                                $miniature = ImageCreateTrueColor( $dest_w, $dest_h);
+                                //imagecreatetruecolor crée une nouvelle image en couleurs vraies, autrement dit une image noire dont il faudra préciser la largeur et la hauteur.
+                                //$miniature = ImageCreateTrueColor( $dest_w, $dest_h);
+                                $miniature = imagecreatetruecolor($newwidth,$newheight);
+                                
+                                //$miniature1 = imagecreatetruecolor($newwidth1,$newheight1);
                                 
                                 switch ($uploadImageType) 
                                     {
                                         case IMAGETYPE_JPEG:
-                                            
+                                            //print_r("je passe ici");
                                         //La photo est la source
                                         $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
 
                                         //Je créé la miniature
-                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
-                                        
-                                        //J'upload l'image dans le fichier
-                                        ImageJpeg($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                        //ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+                                        //ImageCopyResampled($miniature1, $image, 0, 0, 0, 0, $newwidth1, $newheight1, $width, $height );
 
+                                        ////J'upload l'image dans le fichier
+                                        //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
+                                        //non seulement de sauvegarder notre nouvelle image dans un fichier, 
+                                        //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                                        ImageJpeg($miniature, $imageFolder . $temp['name'], 100 );
+                                        //ImageJpeg($miniature1, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                        imagedestroy($miniature);
+                                        imagedestroy($image);
+              
                                         break;
                                     
                                         case IMAGETYPE_GIF:
-                                                                                        //La photo est la source
+                                            //print_r("je passe ici");
+                                        //La photo est la source
                                         $image = imagecreatefromgif($imageFolder .$temp['name']);
 
                                         //Je créé la miniature
-                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height);
 
                                         imageGif($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+  
                                         break;
                                     
                                         case IMAGETYPE_PNG:
