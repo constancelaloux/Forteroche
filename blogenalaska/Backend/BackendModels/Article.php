@@ -28,11 +28,7 @@ class Article
 
         public function __construct(array $donnees)
             {
-                //print_r($donnees);
                 $this->hydrate($donnees);
-                //print_r("- Hydratation Article -");
-                //echo '<br/>';
-                //print_r($this->hydrate($donnees));
             }
 
         //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
@@ -45,7 +41,6 @@ class Article
                     //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
                     //On va donner une valeur à la clé grace à la fonction
                     //On récupére les setters
-                    //print_r($donnees);
                     $method = 'set'.ucfirst($key);
 
                     //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
@@ -56,7 +51,6 @@ class Article
                         //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
                         //On récupére au sein du $this toutes les données de notre personnage
                         $this->$method($value);
-                        //print_r($this->$method($value));
                     }
                 }
             }
@@ -77,13 +71,11 @@ class Article
 
         public function subject()
             {
-                //print_r("je suis la");
                 return $this->_subject;
             }
             
         public function image()
             {
-                //print_r("je suis la");
                 return $this->_image;
             }
             
@@ -94,15 +86,12 @@ class Article
 
         public function createdate()
             {
-            //print_r("je passe par la");
                 return $this->_createdate;
-                //print_r($this);
             }
 
         public function updatedate()
             {
                 return $this->_updatedate;
-                //print_r($this);
             }
 
 
@@ -130,40 +119,34 @@ class Article
         public function setSubject($subject)
             {
                 if(is_string($subject))
-                {
-                    $this->_subject = $subject;
-                    //print_r($subject);
-                }
+                    {
+                        $this->_subject = $subject;
+                    }
             }
             
         public function setImage($image)
             {
                 if(is_string($image))
-                {
-                    $this->_image = $image;
-                    //print_r($subject);
-                }
+                    {
+                        $this->_image = $image;
+                    }
             }
 
         public function setContent($content)
             {
                 if(is_string($content))
-                {
-                    $this->_content = $content;
-                }
+                    {
+                        $this->_content = $content;
+                    }
             }
 
         public function setCreatedate(DateTime $createdate)
             {
-                //print_r("jepassepar la");
                 $this->_createdate = $createdate;
-                //print_r($createdate);
             }
 
         public function setUpdatedate(DateTime $updatedate)
             {
-                //print_r("jepassepar la");
                 $this->_updatedate = $updatedate;
-                //print_r($updatedate);
             }
     }

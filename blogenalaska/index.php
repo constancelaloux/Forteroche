@@ -8,11 +8,12 @@ require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
 //require_once'Backend/BackendControllers/doLogout.php';
 require_once 'Backend/BackendControllers/upload.php';
+require_once 'Backend/BackendControllers/commentsAdminControler.php';
 
 //Frontend
 require_once 'Frontend/FrontendControllers/BlogController.php';
 require_once 'Frontend/FrontendControllers/CommentsController.php';
-
+require_once 'Frontend/FrontendControllers/ClientController.php';
 //Si j'ai une action ou sinon action par default
 
     (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
@@ -108,7 +109,26 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                         case 'iGetImageIntoFormFromUploadPath':
                             $uploadController = new UploadControler();
                             $uploadController->upload2();
-                        break;   
+                        break;
+                    
+                        //Je vais vers la vue ou il y a mon tableau dans lesquel s'affiche les commentaires
+                    
+                        case 'getCommentsViewDatatables':
+                            $commentsAdminController = new CommentsAdminControler();
+                            $commentsAdminController -> getCommentsView();   
+                        break;  
+                        
+                        //Je vais récupérer les commentaires pour les afficher dans le tableau datatables
+                        case 'getCommentsIntoDatatables':
+                            $commentsAdminController = new CommentsAdminControler();
+                            $commentsAdminController ->getCommentsIntoDatatables();
+                        break;
+                        
+                        //Je vais supprimer les commentaires
+                        case 'removeComments':
+                            $commentsAdminController = new CommentsAdminControler();
+                            $commentsAdminController -> removeComments(); 
+                        break;
 
 //FRONTEND              
                         //Je vais vers la page d'accueil de mon blog
@@ -164,7 +184,8 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->disconnectTheClient();
                         break;
-                    
+                        
+                        
                         //Je récupére les commentaires pour les afficher sur la page
                         /*case 'iGetCommentsToshowInTheBlogPage':
                             $commentsController = new CommentsController();

@@ -57,7 +57,6 @@ class FormAuthorAccessControler
 
                                     $manager = new AuthorManager($db);
                                     $sendToTheManager = $manager->add($newAuthor);
-                                    //echo '<p>Ligne à copier dans le .htpasswd :<br />' . $usernameVar . ':' . $passwordVar . '</p>';
                                 }
                             else
                                 {
@@ -90,32 +89,22 @@ class FormAuthorAccessControler
                                 $usernameVar = ($_POST['username']);
                                 $passwordVar = ($_POST['password']);
  
-                                //transferDatatoModel($usernameVar,$passwordVar);
-                                //Je compte mes articles
-                                //$Articles = countArticles();
                                 $author = new Author(
                                     [
                                         'username' => $usernameVar,
                                         'password' => $passwordVar
                                         
                                     ]); //Création d'un objet
-                                    //print_r($author);
                                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
                                 $manager = new AuthorManager($db);
                                 $passwordFromManager = $manager->verify($author); // Appel d'une fonction de cet objet
-                                //print_r("je reviens dans le controler");
-                                //print_r($manager->verify($author));
+
                                 $passwordFromDb = $passwordFromManager->password();
-                                //print_r($passwordFromDb);
-                                //$usernameFromDb = $passwordFromManager->username();
-                                //print_r($usernameFromDb);
 
                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
                                 $AuthorPassword = password_verify($passwordVar, $passwordFromDb);
-                                //print_r($AuthorPassword);
-                                //$AuthorLogin = password_verify($usernameVar, $usernameFromDb);
-                                //print_r($AuthorLogin);
+
 
                                 if ($AuthorPassword)
                                     { 
@@ -123,61 +112,7 @@ class FormAuthorAccessControler
                                         session_start();
                                         $_SESSION['username'] = $usernameVar;
                                         $_SESSION['password'] = $passwordVar;
-                                        
-                                        //session timeout
- 
-                                        //Expire the session if user is inactive for 30
-                                        //minutes or more.
-                                        //$expireAfter = 1;
-
-                                        //Check to see if our "last action" session
-                                        //variable has been set.
-                                        /*if(isset($_SESSION['last_action']))
-                                            {
-
-                                                //Figure out how many seconds have passed
-                                                //since the user was last active.
-                                                $secondsInactive = time() - $_SESSION['last_action'];
-
-                                                //Convert our minutes into seconds.
-                                                $expireAfterSeconds = $expireAfter * 60;
-
-                                                //Check to see if they have been inactive for too long.
-                                                if($secondsInactive >= $expireAfterSeconds)
-                                                    {
-                                                        //User has been inactive for too long.
-                                                        //Kill their session.
-                                                        print_r("ma session est inactive");
-                                                        session_unset();
-                                                        session_destroy();
-                                                    }
-                                            }*/
-
-                                        //Assign the current timestamp as the user's
-                                        //latest activity
-                                        //$_SESSION['last_action'] = time();
-                                        //session_set_cookie_params(24*3600);
-                                        /*if (isset($_SESSION))
-                                            {*/
-                                                /*$inactive = 10;
-                                                //print_r($inactive);
-                                                
-                                                $_SESSION['timeout']=time();
-                                                //print_r($_SESSION['timeout']);
-                                                $session_life = time() - $_SESSION['timeout'];                                               
-                                                //print_r($session_life);
-                                                //print_r($session_life);
-                                                    
-                                                if($session_life > $inactive) 
-                                                    {
-                                                    print_r('la session est inactive');
-                                                        session_destroy(); 
-                                                        header("Location: /Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php"); 
-                                                    }*/
-                                            //}
-
-                                        //print_r(ini_set("session.gc_maxlifetime", 60));
-                                       // header('Location: Backend/BackendViews/BackendViewFolders/BackendView.php');      
+     
                                         header('Location: /blogenalaska/index.php?action=countArticles');
                                         
                                     }
@@ -211,12 +146,5 @@ class FormAuthorAccessControler
                 
                 header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
             }
-            
-        //Je suis rentré dans la session et je vais vers la page principale de mon backend        
-        /*function getMainPage()
-            {
-                require 'Views/Backend/BackendViewFolders/BackendView.php';
-                //header('Location: Views/Backend/BackendViewFolders/BackendView.php');
-            }*/
             
     }

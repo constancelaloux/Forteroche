@@ -32,9 +32,6 @@ class AuthorManager// extends Manager
                 // Préparation de la requête d'insertion.
                 $sendAdminDatas = $this->_db->prepare('INSERT INTO articles_author (surname, firstname, username, password) '
                         . 'VALUES(:surname, :firstname, :username, :password)');
-                //$sendAdminDatas = $this->_db->prepare('INSERT INTO articles_author (username, password) '
-                //        . 'VALUES(:username, :password)');
-                // Assignation des valeurs pour le nom du personnage.
                 $sendAdminDatas->bindValue(':surname', $author->surname(), \PDO::PARAM_STR);
                 $sendAdminDatas->bindValue(':firstname', $author->firstname(), \PDO::PARAM_STR);
                 $sendAdminDatas->bindValue(':username', $author->username(), \PDO::PARAM_STR );
@@ -55,8 +52,7 @@ class AuthorManager// extends Manager
                 $getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
                 //$getAuthorLogin->bindValue(':password', $author->password(), \PDO::PARAM_STR );
                 $getAuthorLogin->execute();
-                //print_r($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
-                //exit();
+
                 return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
             }
 

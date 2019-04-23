@@ -29,9 +29,6 @@ class ArticlesManager
                 $sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
-                //$sendArticlesDatas->bindValue('NOW()', $articles->createdate(), \PDO::PARAM_STR);
-                //print_r($sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR));
-                //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
 
                 $sendArticlesDatas->execute();
             }
@@ -77,9 +74,6 @@ class ArticlesManager
 
                 $getArticlesDatasFromId->bindValue(':id', $articles->id(), \PDO::PARAM_STR );
                 $getArticlesDatasFromId->execute();
-                //print_r("je recupere mes donnees");
-                //print_r($getArticlesDatasFromId->execute());
-                //exit("je sors");
 
                 return new Article($getArticlesDatasFromId->fetch(\PDO::FETCH_ASSOC));
             }
@@ -97,8 +91,7 @@ class ArticlesManager
                 while ($donnees = $getArticlesDatas->fetch())
                     {
                         $tmpArticle =  new Article($donnees);
-                        //$tmpArticle->setCreatedate(new DateTime($tmpArticle->createdate()));
-                        //$tmpArticle = DateTime::createFromFormat('d-m-Y H:i:s', $donnees['create_date']);
+
         
                         $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         $tmpArticle->setCreatedate($articleDate);
@@ -115,9 +108,6 @@ class ArticlesManager
                                 $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
                                 $tmpArticle->setUpdatedate($articleUpdateDate);
                             }
-
-                        //print_r($articleUpdateDate);
-
                         
                         $articles[] = $tmpArticle;
                     }

@@ -49,7 +49,6 @@ class UploadControler
 
                         if (move_uploaded_file($temp['tmp_name'], $imageFolder . $temp['name']))
                             {
-                            //exit("je sors");
                         
                                 //Je vais chercher la taille de mon image
                                 $size = getimagesize($imageFolder. $temp['name']);
@@ -85,45 +84,42 @@ class UploadControler
                                 switch ($uploadImageType) 
                                     {
                                         case IMAGETYPE_JPEG:
-                                            //print_r("je passe ici");
-                                        //La photo est la source
-                                        $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
+                                            //La photo est la source
+                                            $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
 
-                                        //Je créé la miniature
-                                        //ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
-                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
-                                        //ImageCopyResampled($miniature1, $image, 0, 0, 0, 0, $newwidth1, $newheight1, $width, $height );
+                                            //Je créé la miniature
+                                            //ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+                                            //ImageCopyResampled($miniature1, $image, 0, 0, 0, 0, $newwidth1, $newheight1, $width, $height );
 
-                                        ////J'upload l'image dans le fichier
-                                        //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
-                                        //non seulement de sauvegarder notre nouvelle image dans un fichier, 
-                                        //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
-                                        ImageJpeg($miniature, $imageFolder . $temp['name'], 100 );
-                                        //ImageJpeg($miniature1, $imageFolder . 'thumb_' . $temp['name'], 100 );
-                                        imagedestroy($miniature);
-                                        imagedestroy($image);
-              
+                                            ////J'upload l'image dans le fichier
+                                            //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
+                                            //non seulement de sauvegarder notre nouvelle image dans un fichier, 
+                                            //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                                            ImageJpeg($miniature, $imageFolder . $temp['name'], 100 );
+                                            //ImageJpeg($miniature1, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                            imagedestroy($miniature);
+                                            imagedestroy($image);
                                         break;
                                     
                                         case IMAGETYPE_GIF:
-                                            //print_r("je passe ici");
-                                        //La photo est la source
-                                        $image = imagecreatefromgif($imageFolder .$temp['name']);
+                                            //La photo est la source
+                                            $image = imagecreatefromgif($imageFolder .$temp['name']);
 
-                                        //Je créé la miniature
-                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height);
+                                            //Je créé la miniature
+                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height);
 
-                                        imageGif($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                            imageGif($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
   
                                         break;
                                     
                                         case IMAGETYPE_PNG:
-                                        $image = imagecreatefrompng($imageFolder .$temp['name']);
+                                            $image = imagecreatefrompng($imageFolder .$temp['name']);
 
-                                        //Je créé la miniature
-                                        ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                            //Je créé la miniature
+                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
 
-                                        imagePng($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                            imagePng($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
                                         break;           
                                     }       
                             }
