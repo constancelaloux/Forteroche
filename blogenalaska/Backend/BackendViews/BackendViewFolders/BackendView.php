@@ -63,10 +63,8 @@ else
                     <th class="all">Numéro</th>
                     <th class="all">Id</th>
                     <th class="all">Sujet</th>
-                    <!--<th class="all">Article</th>-->
                     <th class="all">Date de création</th>
                     <th class="all">Date de modification</th>
-                    <!--<th class="all">Modifier / Supprimer</th>-->
                     <th class="all">Supprimer/Modifier</th>
                 </tr>
             </thead>
@@ -111,9 +109,10 @@ else
                             {data: null},
                                     {data: "0", visible: false},
                                     {data: "1"},
-                                    //{data: "2"},
+                                    {data: "2"},
                                     {data: "3"},
-                                    {data: "4"},
+                                    //{data: "4"},
+                                    //{data: "5"},
                                     {
                                         data: null,
                                         className: "center",

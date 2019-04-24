@@ -97,23 +97,5 @@ class BlogController
                 
                 require 'Frontend/FrontendViews/Articles/MyArticles.php';
             }
-        
-
-        
-        //Je récupére le dernier article pour l'afficher sur le blog
-        /*function getUniqueArticle()
-            {
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-
-                $articlesManager = new ArticlesManager($db); 
-                //ALler chercher les articles en bdd
-                $articlesFromManager = $articlesManager->getUnique();//Appel d'une fonction de cet objet
-                //print_r($articlesFromManager);
-                
-                $title = $articlesFromManager->subject();
-                $content = $articlesFromManager->content();
-                
-                require 'Frontend/FrontendViews/HomePage.php';
-            }*/
             
     }

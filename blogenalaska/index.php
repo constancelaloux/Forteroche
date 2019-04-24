@@ -21,6 +21,7 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                 switch ($action)
                     {
 //BACKEND
+                //ADMIN
                         //Je vais vers le formulaire qui permet de créer un admin
                         case 'createNewAdminForm':
                             $sessionController = new FormAuthorAccessControler();
@@ -44,7 +45,14 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $sessionController = new FormAuthorAccessControler();
                             $sessionController->checkThePassAndUsername();
                         break;
+                                            
+                        //Bouton de déconnexion
+                        case 'disconnectTheAdmin':
+                            $sessionController = new FormAuthorAccessControler();
+                            $sessionController->disconnect();
+                        break;
                     
+                //ARTICLES                
                         //Je compte les articles
                         case 'countArticles':  
                             $postsController = new PostsControllers();
@@ -55,7 +63,7 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                         case 'getArticlesIntoDatatables':
                             $postsController = new PostsControllers();
                             $postsController->getArticles();
-                       break; 
+                        break; 
                    
                         //Je suuprime un article
                         case 'removeArticles':
@@ -94,12 +102,6 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $postsController->update(); 
                         break;
                         
-                        //Bouton de déconnexion
-                        case 'disconnectTheAdmin':
-                            $sessionController = new FormAuthorAccessControler();
-                            $sessionController->disconnect();
-                        break;
-                        
                         // Je télécharge une image pour l'insérer dans mon article
                         case 'uploadImage':
                             $uploadController = new UploadControler();
@@ -111,6 +113,7 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $uploadController->upload2();
                         break;
                     
+                //COMMENTAIRES                
                         //Je vais vers la vue ou il y a mon tableau dans lesquel s'affiche les commentaires
                     
                         case 'getCommentsViewDatatables':
@@ -136,7 +139,8 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $blogFrontendController = new BlogController();
                             $blogFrontendController->getTheMainFrontendBlogPage();
                         break;
-                      
+                    
+                //ARTICLES                  
                         //J'affiche les articles sur la premiére page du blog
                         case 'iGetArticlesToshowInTheBlogPage':
                             $blogFrontendController = new BlogController();
@@ -149,12 +153,14 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $blogFrontendController->getTheArticleFromId();
                         break;
                     
+                //COMMENTAIRES                
                         //J'envoi des commentaires
                         case 'sendCommentsFromId':
                             $commentsController = new CommentsController();
                             $commentsController->createNewComment();
                         break;
-                        
+                    
+                //CLIENT                    
                         //Je vais vers le formulaire de connexion client
                         case 'getTheFormClientsConnexion':
                             $clientFrontendController = new ClientController();

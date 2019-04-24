@@ -22,13 +22,12 @@
                     //Check to see if they have been inactive for too long.
                     if($secondsInactive >= $expireAfterSeconds)
                         {
-                            //print_r("ma session est inactive");
                             //User has been inactive for too long.
                             //Kill their session.
                             session_unset();
                             session_destroy();
 
-                            header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                            //header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
                         }
                 }
         }
@@ -60,44 +59,48 @@
 
 <!--Affichage des articles-->
 <section id="articles">
+    <div id="ancre_articles"></div>
     <div class="container">
         <div class="row">
             <div class="col-lg-8">
                 <div class="listOfArticles">
                     <?php
-                        foreach ($articlesFromManager as $articles) 
+                        if (empty($articlesFromManager))
                             {
-                                if (strlen($articles->content()) <= 400)
-                                    {
-                                        $articlesToDisplay = $articles->content();
-                                    }
-                                else
-                                    {
-                                    //Returns the portion of string specified by the start and length parameters.
-                                        $debut = substr($articles->content(), 0, 400);
-                                        $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
-
-                                        $articlesToDisplay = $debut;
-                                    }
-
-                                $titlesToDisplay = $articles->subject();
-                                $idArticles = $articles->id();
-
-                                $dateCreate = $articles->createdate();
-                                $articleDateCreate = $dateCreate->format('Y-m-d');
-                                
-                                $image = $articles->image();
-
-                                echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<div id="image">','<p>', $image, '</p>',  '</div',"\n",
-                                '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>' , '</div>';
-
+                    ?>
+                                <p>pas d'articles encore de créés</p>
+                    <?php
                             }
-
-                        //Pagination
-                        /*for ($i=1;$i<=$numberOfPages;$i++)
+                        else
                             {
-                                echo "<a href=\"/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=",$i,"\"> $i </a>/ ";
-                            } */
+                                foreach ($articlesFromManager as $articles) 
+                                    {
+                                        if (strlen($articles->content()) <= 400)
+                                            {
+                                                $articlesToDisplay = $articles->content();
+                                            }
+                                        else
+                                            {
+                                            //Returns the portion of string specified by the start and length parameters.
+                                                $debut = substr($articles->content(), 0, 400);
+                                                $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+
+                                                $articlesToDisplay = $debut;
+                                            }
+
+                                        $titlesToDisplay = $articles->subject();
+                                        $idArticles = $articles->id();
+
+                                        $dateCreate = $articles->createdate();
+                                        $articleDateCreate = $dateCreate->format('Y-m-d');
+
+                                        $image = $articles->image();
+
+                                        echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div',"\n",
+                                        '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>' , '</div>';
+
+                                    }
+                            }
                     ?>
 
                 </div>
@@ -140,6 +143,7 @@
                         Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages. 
                     </p>
                 </aside>
+                
                 <aside id="LastArticle">
                     <h3>
                         DERNIERS ARTICLES
@@ -149,19 +153,9 @@
                             echo $titleLastArticle;
                             echo $contentLastArticle;
                         ?>
-                        <section class="row">
-                            <!--<div class="col-xs-7 col-sm-5 col-md-3 ">-->
-                                <!--<a href="#" class="thumbnail">-->
+                            <div class="imageFromLastArticle">
                                     <?php echo $imageLastArticle ; ?>
-                                <!--</a>-->
-                            <!--</div-->
-                        </section>
-
-                                <!--<img src="<?php //echo $imageLastArticle ; ?>" alt="article image" class="img-rounded">-->
-
-
-                            <!--echo $imageLastArticle;-->
-
+                            </div>
                     </p>
                 </aside>    
             </div>
@@ -171,6 +165,7 @@
 
 <!--Frmulaire de contact-->
 <section id="contact">
+    <div id="ancre_contact"></div>
     <div class="contactForm">
         <div class="row">
         <section class="col-sm-8">

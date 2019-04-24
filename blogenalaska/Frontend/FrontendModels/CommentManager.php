@@ -26,9 +26,6 @@ class CommentsManager
 
                 $sendCommentDatas->bindValue(':content', $comment->content(), \PDO::PARAM_STR);
                 $sendCommentDatas->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR);
-                //$sendArticlesDatas->bindValue('NOW()', $articles->createdate(), \PDO::PARAM_STR);
-                //print_r($sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR));
-                //print_r($sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR));
 
                 $sendCommentDatas->execute();
             }
@@ -55,29 +52,68 @@ class CommentsManager
 
                 return $data;
             }*/
-            public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
-                {
-                    $getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
-                    
-                    $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
-                    $getComments->execute();
-                    while ($donnees = $getComments->fetch())
-                    {
-                        $article =  new Article($donnees);
-                        $data[] = $article;
-                        
-                    }
-                    //return new Comment($getComments->fetch(\PDO::FETCH_ASSOC));
-                    /*while ($donnees = $getComments->fetch())
-                        {
-                            $comment =  new Comment($donnees);
-                            $commentDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
-                            $comment->setCreatedate($commentDate);
-                            $data[] = $comment;
-                        }*/
+        //Je récupére les commentaire en base de données pour les afficher en fonction de l'article
+        public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
+            {
+                $getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
 
-                    return $data;
-                }
+                $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
+                $getComments->execute();
+                while ($donnees = $getComments->fetch())
+                    {
+                        $comment =  new Comment($donnees);
+                        $data[] = $comment;
+
+                    }
+
+                return $data;
+            }
+        
+        //Je récupére les commentaires pour les afficher dans le tableau datatables
+        public function getComments()
+            {
+                //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
+
+                $articles = [];
+                
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, content FROM comments");
+                $getArticlesDatas->execute();
+
+                while ($donnees = $getArticlesDatas->fetch())
+                    {
+                        $tmpArticle =  new Comment($donnees);
+
+        
+                        $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        $tmpArticle->setCreatedate($articleDate);
+                        
+                        //Je vérifie si j'ai Null ou une date d'enregistré en bdd
+                        /*if (is_null($donnees['update_date']))
+                            {
+                                //echo '<td>0000-00-00 00:00:00 </td>';
+
+                                //print_r($articleUpdateDate); 
+                            }
+                        else
+                            {
+                                $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+                                $tmpArticle->setUpdatedate($articleUpdateDate);
+                            }*/
+                        
+                        $articles[] = $tmpArticle;
+                    }
+                
+                $data = $articles;
+
+                return $data;
+            }
+            
+        //Je vais supprimer les commentaires en base de données  
+        public function removeComment(Comment $comment)
+            {
+                //Executer une requéte de type delete.
+                $this->_db->exec('DELETE FROM comments WHERE id = '.$comment->id());
+            }
             
         public function setDb(\PDO $db)
             {

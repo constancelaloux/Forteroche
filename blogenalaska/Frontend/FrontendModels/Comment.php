@@ -24,11 +24,7 @@ class Comment
 
         public function __construct(array $donnees)
             {
-                //print_r($donnees);
                 $this->hydrate($donnees);
-                //print_r("- Hydratation Article -");
-                //echo '<br/>';
-                //print_r($this->hydrate($donnees));
             }
 
         //Hydratation = assigner des valeurs aux attributs passées en paramétres. 
@@ -41,19 +37,17 @@ class Comment
                     //On va chercher la fonction du setter (on la reconnait grace à la maj apres le setter).
                     //On va donner une valeur à la clé grace à la fonction
                     //On récupére les setters
-                    //print_r($donnees);
                     $method = 'set'.ucfirst($key);
 
                     //Il faut maintenant vérifier que cette méthode existe. Le this = le nom de la classe. 
                     //Si le setter correspondant existe
                     if(method_exists($this, $method))
-                    {
-                        //On appelle le setter
-                        //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
-                        //On récupére au sein du $this toutes les données de notre personnage
-                        $this->$method($value);
-                        //print_r($this->$method($value));
-                    }
+                        {
+                            //On appelle le setter
+                            //La clé aura bien une valeur et donc notre personnage de la classe représenté par this.
+                            //On récupére au sein du $this toutes les données de notre personnage
+                            $this->$method($value);
+                        }
                 }
             }
         //Actuellement, les attributs de nos objets sont inaccessibles. 
@@ -83,15 +77,12 @@ class Comment
 
         public function createdate()
             {
-            //print_r("je passe par la");
                 return $this->_createdate;
-                //print_r($this);
             }
 
         public function updatedate()
             {
                 return $this->_updatedate;
-                //print_r($this);
             }
 
 
@@ -129,22 +120,18 @@ class Comment
         public function setContent($content)
             {
                 if(is_string($content))
-                {
-                    $this->_content = $content;
-                }
+                    {
+                        $this->_content = $content;
+                    }
             }
 
         public function setCreatedate(DateTime $createdate)
             {
-                //print_r("jepassepar la");
                 $this->_createdate = $createdate;
-                //print_r($createdate);
             }
 
         public function setUpdatedate(DateTime $updatedate)
             {
-                //print_r("jepassepar la");
                 $this->_updatedate = $updatedate;
-                //print_r($updatedate);
             }
     }

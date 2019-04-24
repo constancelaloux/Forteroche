@@ -21,11 +21,11 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=myArticlesViewPage" style="color: rgba(70, 156, 214, 0.9);">Articles</a>
+                        <a class="nav-link" href="#ancre_articles" style="color: rgba(70, 156, 214, 0.9);">Articles</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
+                        <a class="nav-link" href="#ancre_contact" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
                     </li>
                 </ul>
 

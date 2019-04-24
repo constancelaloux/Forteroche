@@ -33,11 +33,10 @@ class commentsAdminControler
                     {
                         $row = array();
                         $row[] = $comments->id();
-                        $row[] = $comments->content();
 
                         $commentDate = $comments->createdate();
-                        $row[] =$commentDate->format('Y-m-d');
-
+                        $row[] = $commentDate->format('Y-m-d');
+                        $row[] = $comments->content();
                         //$updateCommentDate = $comments->updatedate();
                         
                         /*if (is_null($updateCommentDate))
@@ -58,11 +57,34 @@ class commentsAdminControler
                             (
                                 "data" => $data
                             );
-
+                            //print_r($json_data);
                         echo json_encode($json_data);
             }
         function removeComments()
             {
+                if (isset($_POST['id']))
+                    {
+                        if (!empty($_POST['id']))
+                            {
+                                // check if the id has been set
+                                $myIdComment = ($_POST['id']);
+                            }
+                        else 
+                            {
+                                echo 'pas d article séléctionné';
+                                require'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                            }
+                    }  
+                    $comment = new Comment
+                        ([
 
+                            'id' => $myIdComment
+                        ]);
+
+                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                    $commentsManager = new CommentsManager($db);
+
+                    $commentsManager->removeComment($comment);
             }
     }

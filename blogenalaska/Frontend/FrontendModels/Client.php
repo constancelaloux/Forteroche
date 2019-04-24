@@ -73,7 +73,6 @@ class Client
 
         public function username()
             {
-                //print_r($this->_username);
                 return $this->_username;
             }
 

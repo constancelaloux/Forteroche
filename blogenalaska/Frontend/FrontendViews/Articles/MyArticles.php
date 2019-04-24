@@ -1,21 +1,63 @@
+<?php session_start(); ?>
 <!--Include Footer et template -->
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
+<?php 
+    if(isset($_SESSION['username']))
+        {
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php');
+            $expireAfter = 30;
 
-<?php
+            //Check to see if our "last action" session
+            //variable has been set.
+            if(isset($_SESSION['last_action']))
+                {
+                    //Figure out how many seconds have passed
+                    //since the user was last active.
+                    $secondsInactive = time() - $_SESSION['last_action'];
 
-    echo $titleToDisplay;
-    
-    echo $imageToDisplay;
-    
-    echo $articlesToDisplay;
-    
-    //echo $myComment;
+                    //Convert our minutes into seconds.
+                    $expireAfterSeconds = $expireAfter * 60;
+
+                    //Check to see if they have been inactive for too long.
+                    if($secondsInactive >= $expireAfterSeconds)
+                        {
+                            //User has been inactive for too long.
+                            //Kill their session.
+                            session_unset();
+                            session_destroy();
+
+                            header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                        }
+                }
+        }
+    else 
+        {
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/ClientsHeader.php');       
+        }
 ?>
+
+<!--J'affiche le contenu de mon article en fonction de l'id -->
+<div class="myArticleById">
+    <p>
+    <?php
+        echo $titleToDisplay;
+    ?>
+    </p>
+    <?php
+        echo $imageToDisplay;
+    ?>
+    <p>
+    <?php
+        echo $articlesToDisplay;
+    ?>
+    </p>
+</div>
+
+<!--L'id de l'article, devient l'id des commentaires-->
         <?php
             $commentId = $_GET['id'];
-            //print_r($commentId);
         ?>
 
 <!--Formulaire pour envoyer des commentaires-->
@@ -47,39 +89,22 @@
                             }
                          else
                             {
-                                //print_r($listOfComments);
-
-                                    //echo '<p>', $contentSubjectToDisplay , '</p>';
                                 foreach ($myComment as $comments) 
                                     {
-                                    //print_r("j y suis");
                                         $commentsToDisplay = $comments->content();
                                         echo '<p>', $commentsToDisplay, '</p>';
                                     }
-
-                                /*foreach ($listOfCommentsFromManager as $comments) 
-                                    {
-
-                                        $commentsToDisplay = $comments->content();
-
-                                        //$idComments = $comments->id();
-
-                                        $dateCreate = $comments->createdate();
-                                        $commentsDateCreate = $dateCreate->format('Y-m-d');
-
-                                        echo '<p>', $commentsDateCreate , '</p>' , "\n",
-                                        '<p>', $commentsToDisplay, '</p>';
-
-                                    }*/
-
-                                //Pagination
-                                /*for ($i=1;$i<=$numberOfPages;$i++)
-                                    {
-                                        echo "<a href=\"/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=",$i,"\"> $i </a>/ ";
-                                    } */
                             } 
                     ?>
-
+                    <?php
+                        if(isset($_SESSION['clientUsername']))
+                            {
+                    ?>
+                                <button id="modifyComment" > Modifier Commentaire</button>
+                    <?php
+                            }
+                    ?>
+                    
                 </div>
   
                 <div id="navComments">

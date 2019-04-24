@@ -60,14 +60,10 @@ else
         <table id="displayComments" class="cell-border compact stripe" style="width:100%">
             <thead>
                 <tr>
-                    <!--<th class="all">Numéro</th>-->
+                    <th class="all">Numéro</th>
                     <th class="all">Id</th>
-                    <!--<th class="all">Sujet</th>-->
-                    <!--<th class="all">Article</th>-->
                     <th class="all">Date de création</th>
                     <th class="all">Contenu</th>
-                    <!--<th class="all">Date de modification</th>-->
-                    <!--<th class="all">Modifier / Supprimer</th>-->
                     <th class="all">Supprimer</th>
                 </tr>
             </thead>
@@ -80,8 +76,7 @@ else
             {
                 var table = $('#displayComments').DataTable
                     (
-                        {
-                            
+                        {   
                             processing: true,
                             //serverSide: true,
                             ajax:
@@ -98,31 +93,65 @@ else
                                 },
                             columnsDefs:
                                 [{
-                                    //data: null,
-                                    //"targets" : '_all',
                                     "className": 'dt-center',
-                                    "targets": [ 0 ]
-                                    //"visible": false
                                     //"targets": [ 0 ]
-                                    //defaultContent : "<button>Edit</button>"
+                                    //"visible": false
                                 }],
                             //"data": "data",
                             columns: 
                                 [
-                            //{data: null},
-                                    {data: "0"},
+                                    {data: null},
+                                    {data: "0", visible: false},
                                     {data: "1"},
                                     {data: "2"},
-                                    //{data: "3"},
-                                    //{data: "4"},
                                     {
-                                        //data: null,
+                                       // data: null,
                                         className: "center",
                                         defaultContent: '<button class="btn-delete" type="button">Supprimer</button></td><td></td>'
                                     }
                                 ]
                         }
                     );
+                                       // La liste des articles dans le tableau est numéroté
+                    //  create index for table at columns zero
+                    table.on('order.dt search.dt', function () 
+                        {
+                            table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                                cell.innerHTML = i + 1;
+                            });
+                        }).draw();
+                    
+                    //Supprimer des articles
+                $('#displayComments').on( 'click', '.btn-delete', function () 
+                    {
+                        //var id = $(this).attr("id");
+                        var datas = table.row( $(this).parents('tr') ).data();
+                        var id = datas[ 0 ];
+                        alert(datas[0] +"'le numero en : base est"+ datas[ 0 ] );
+                        //console.log(id);
+                        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
+                        //var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
+                        if(confirm("Voulez vous supprimer ce commentaire?"))
+                            {
+                                $.ajax
+                                    ({
+                                        url:"/blogenalaska/index.php?action=removeComments",
+                                        method:"POST",
+                                        data:{id:id},
+                                        dataType: 'html',
+                                        success:function(data)
+                                            {
+                                                console.log('c cool');
+                                                console.log(data);
+                                                table.ajax.reload();
+                                            },
+                                        error:function(response)
+                                            {
+                                                console.log('ca ne fonctionne pas');
+                                            }
+                                    });
+                             };            
+                    } );
                     
                 
             });
