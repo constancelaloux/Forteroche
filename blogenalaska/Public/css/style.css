@@ -168,8 +168,8 @@ and open the template in the editor.
 /*image du dernier article*/
 #LastArticle .imageFromLastArticle
     {
-        width: 100%;
-        height: 300px;
+        width: 50%;
+        height: 100px;
         overflow: hidden;
         margin: 10px;
         position: relative;      
@@ -189,3 +189,16 @@ and open the template in the editor.
         display: flex;
         flex-direction: column;       
     }
+    
+/*le background du formulaire de contact*/
+#contact
+    {
+        background-color: #f7f7f7;
+    }
+
+/*Mes articles ont chacun un background et une marge entre eux*/    
+#myarticles
+{
+           background-color: #f7f7f7;
+           border: 10px solid white;
+}

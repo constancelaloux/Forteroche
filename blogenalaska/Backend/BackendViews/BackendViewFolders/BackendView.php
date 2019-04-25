@@ -111,14 +111,13 @@ else
                                     {data: "1"},
                                     {data: "2"},
                                     {data: "3"},
-                                    //{data: "4"},
-                                    //{data: "5"},
                                     {
                                         data: null,
                                         className: "center",
                                         defaultContent: '<button class="btn-delete" type="button">Supprimer</button></td><td><button  class="btn-update" type="button">Modifier</button></td>'
                                     }
                                 ]
+                               
                            /* $(document).on('click','.btn-delete', function (e) 
                             {
                                 console.log('test');

@@ -60,20 +60,6 @@
             $commentId = $_GET['id'];
         ?>
 
-<!--Formulaire pour envoyer des commentaires-->
-<form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>" method="post">
-        <p>Envoyer ici votre commentaire</p>
-
-        <div>
-            <label for="comments">Commentaire</label>
-            <textarea id="comments" name="comments"></textarea>
-        </div>
-
-        <div>
-            <input type="submit" value="Envoyer" />
-        </div>
-</form>
-
 <!--J'affiche les commentaires-->
 <section id="listOfComments">
     <div class="container">
@@ -96,11 +82,30 @@
                                     }
                             } 
                     ?>
+                    
                     <?php
                         if(isset($_SESSION['clientUsername']))
                             {
                     ?>
+                                <!--Formulaire pour envoyer des commentaires-->
+                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>" method="post">
+                                        <p>Envoyer ici votre commentaire</p>
+
+                                        <div>
+                                            <label for="comments">Commentaire</label>
+                                            <textarea id="comments" name="comments"></textarea>
+                                        </div>
+
+                                        <div>
+                                            <input type="submit" value="Envoyer" />
+                                        </div>
+                                </form>
+                                
+                                <!--Bouton modifier 1 commentaire-->
                                 <button id="modifyComment" > Modifier Commentaire</button>
+                                
+                                <!--Bouton signaler 1 commentaire-->
+                                <button id="reportComment">Signaler</button>
                     <?php
                             }
                     ?>

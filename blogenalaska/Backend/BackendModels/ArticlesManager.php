@@ -136,18 +136,22 @@ class ArticlesManager
         //Je récupére le dernier article
         public function getUnique()
             {
-                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT 0, 1"); 
+                $data = array();
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT 0, 2"); 
                 $getLastArticle->execute();
-                $donnees = $getLastArticle->fetch();
-                $article =  new Article($donnees);
-                $data = $article;
-
+                 while ($donnees = $getLastArticle->fetch())
+                    {
+                       $article =  new Article($donnees);
+                       $data[] = $article;
+                    }
+                 
                 return $data;
             }
         
         //Je récupére 5 articles
         public function getListOfFiveArticles($page,$nbrArticlesPerPage)
             {
+                $data = array();
                 $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage "); 
                 $getLastArticle->execute(); 
                 while ($donnees = $getLastArticle->fetch())
@@ -156,7 +160,7 @@ class ArticlesManager
                         $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         $article->setCreatedate($articleDate);
                         $data[] = $article;
-                    }
+                    } 
 
                 return $data;
             }
