@@ -2,7 +2,7 @@
 <header class="nav">
 
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: black;">
+        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: white;">
             
 <!--icon-->
             <a class="navbar-brand" href="#">
@@ -17,18 +17,20 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: rgba(70, 156, 214, 0.9);">Accueil</a>
+                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog"  style="color: rgba(0,0,0,.5);">Accueil</a> <!-- style="color: rgba(70, 156, 214, 0.9);">Accueil</a>-->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#ancre_articles" style="color: rgba(70, 156, 214, 0.9);">Articles</a>
+                        <a class="nav-link" href="#ancre_articles" style="color: rgba(0,0,0,.5);">Articles</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="#ancre_contact" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
+                        <a class="nav-link" href="#ancre_contact" style="color: rgba(0,0,0,.5);">Contact</a>
                     </li>
                 </ul>
-
+                <div id="buttonSubmit">
+                    <button type="submit"><i class="fas fa-search"></i></button>
+                </div>
             <?php 
                 if(isset($_SESSION['clientUsername'])) 
                     {

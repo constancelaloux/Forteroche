@@ -136,95 +136,118 @@
 
                 <div class="col-lg-4  col-md-4 col-sm-4">
                     <aside id="whyThisBlog">
-                        <!--icon-->
-                        <p>
-                            <img src="/blogenalaska/public/images/jeanforteroche.jpeg" alt="logo">
-                        </p>
-                        <h3>
-                            Bienvenu sur Billet Simple Pour l'Alaska
-                        </h3>
-                        <p>
-                            Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages.
-                        </p>
-                        <p>
-                            Il y a un pays où les montagnes sont sans nom,
-                            Et toutes les rivières s’y écoulent
-                            Dieu sait où ;
-                            Il y a des vies errantes et sans but,
-                            Et la mort qui tient juste à un fil ;
-                            Il y a des épreuves indicibles ;
-                            Il y a des vallées désertes et figées ;
-                            C’est le Pays – oh ! il m’appelle et m’appelle,
-                            Je veux y retourner – et je le ferai.
-                        </p>
-                        
-                        <p>FOLLOW ME</p>
-                            <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-                            <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
+                        <div id="logoAndExplanation">
+                            <!--icon-->
+                            <div id="logo">
+                                <!--<p>-->
+                                    <img src="/blogenalaska/public/images/jeanforteroche.jpeg" alt="logo">
+                                <!--</p>-->
+                            </div>
+                            
+                            <div id="titleOfBlogExplanation">
+                                <h3>
+                                    Bienvenu sur Billet Simple Pour l'Alaska
+                                </h3>
+                            </div>
+                            <p>
+                                Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages.
+                            </p>
+                                <div id="textHomePage">
+         <p>
+            Il y a un pays où les montagnes sont sans nom,
+            Et toutes les rivières s’y écoulent
+            Dieu sait où ;
+            Il y a des vies errantes et sans but,
+            Et la mort qui tient juste à un fil ;
+            Il y a des épreuves indicibles ;
+            Il y a des vallées désertes et figées ;
+            C’est le Pays – oh ! il m’appelle et m’appelle,
+            Je veux y retourner – et je le ferai.
+        </p>
+    </div>
+                           
+                        </div>
+                        <div id="logoFollowME">
+
+                            <p>FOLLOW ME</p>
+                            <!--Twitter-->
+                            <!--<a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>-->
+                            <a class="logoTwitter" href="#">
+                                <img src="/blogenalaska/public/images/twitter.png" alt="logo">
+                            </a>
+                            <!--Facebook-->
+                            <a class="logoFacebook" href="#">
+                                <img src="/blogenalaska/public/images/facebook.png" alt="logo">
+                            </a>
+                           <!-- <div class="fb-like" data-href="https://developers.facebook.com/docs/plugins/" data-width="" data-layout="standard" data-action="like" data-size="small" data-show-faces="true" data-share="true"></div>
                             <div id="fb-root"></div>
-                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.2"></script>
-                            <a class="logoInstagramm" href="#">
+                            <script async defer crossorigin="anonymous" src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v3.2"></script>-->
+                            
+                            <!--Instagram-->
+                            <a class="logoInstagram" href="#">
                                 <img src="/blogenalaska/public/images/instagram.png" alt="logo">
                             </a>
+                        </div>
                     </aside>
 
                     <aside id="LastArticle">
                         <h3>
                             DERNIERS ARTICLES
                         </h3>
-                        <p>
-                            
-                            <?php 
-                                if (empty($articlesFromManager))
-                                    {
-                            ?>
-                                        <p>Pas de dernier épisode pour l'instant</p>
-                            <?php
-                                    }
-                                else
-                                    {
-                                        foreach ($lastArticle as $articles)
-                                            {
-                                                $titleLastArticle = $articles->subject();
 
-                                                $idLastArticle = $articles->id();
+                        <?php 
+                            if (empty($articlesFromManager))
+                                {
+                        ?>
+                                    <p>Pas de dernier épisode pour l'instant</p>
+                        <?php
+                                }
+                            else
+                                {
+                                    foreach ($lastArticle as $articles)
+                                        {
+                                            $titleLastArticle = $articles->subject();
 
-                                                $contentLastArticle = $articles->content();
-                                                
-                                                if (strlen($contentLastArticle) <= 100)
-                                                    {
-                                                        $contentArticleToDisplay = $contentLastArticle;
-                                                    }
-                                                else
-                                                    {
-                                                        //Returns the portion of string specified by the start and length parameters.
-                                                        $debut = substr($contentLastArticle, 0, 100);
-                                                        $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+                                            $idLastArticle = $articles->id();
 
-                                                        $contentArticleToDisplay = $debut;
-                                                    }
+                                            $contentLastArticle = $articles->content();
 
-                                                $imageLastArticle = $articles->image(); 
-                                                ?>
-                                        <?php
-        
-                                                //echo $titleLastArticle;
-                            ?>
+                                            if (strlen($contentLastArticle) <= 90)
+                                                {
+                                                    $contentArticleToDisplay = $contentLastArticle;
+                                                }
+                                            else
+                                                {
+                                                    //Returns the portion of string specified by the start and length parameters.
+                                                    $debut = substr($contentLastArticle, 0, 100);
+                                                    $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+
+                                                    $contentArticleToDisplay = $debut;
+                                                }
+
+                                            $imageLastArticle = $articles->image(); 
+                        ?> 
                                         <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo $titleLastArticle?></a></p>
                                         
-                                                <div class="imageFromLastArticle">
+                                        <div id="imageAndContentfromLastArticles">
+                                            <div class="imageFromLastArticle">
+                                                <div class="col-lg-12  col-md-12 col-sm-12">
                                                     <?php echo $imageLastArticle ; ?>
                                                 </div>
-                            <?php
-                                
-                                                echo $contentArticleToDisplay; //, "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idLastArticle, '">lire la suite', '</a></p>';//$contentLastArticle;
-                                                echo $idLastArticle;
-                                                
-                                            }
-                                    }
-                            ?>
+                                            </div>
 
-                        </p>
+                                            <div class="contentFromLastArticle">
+                                                <!--<div class="col-lg-12  col-md-12 col-sm-12">-->
+                        <?php                        
+                                                    echo $contentArticleToDisplay; //, "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idLastArticle, '">lire la suite', '</a></p>';//$contentLastArticle;                
+                        ?>
+                                               <!--</div>-->
+                                            </div>
+                                        </div>
+                        <?php
+                                        }
+                                }
+                        ?>
                     </aside>
                 </div>
             </div>
