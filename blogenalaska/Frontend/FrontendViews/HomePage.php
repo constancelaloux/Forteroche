@@ -42,13 +42,13 @@
     <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="/blogenalaska/public/images/alaska1.png" class="d-block w-100" alt="image1">
+                <img src="/blogenalaska/public/images/alaska1.png" style="width:100%" alt="image1"> <!--class="d-block w-100"-->
             </div>
             <div class="carousel-item">
-                <img src="/blogenalaska/public/images/alaska2.jpg" class="d-block w-100" alt="image2">
+                <img src="/blogenalaska/public/images/alaska2.jpg" style="width:100%" alt="image2">
             </div>
             <div class="carousel-item">
-                <img src="/blogenalaska/public/images/alaska3.jpg" class="d-block w-100" alt="image3">
+                <img src="/blogenalaska/public/images/alaska3.jpg" style="width:100%" alt="image3">
             </div>
         </div>
 
@@ -98,10 +98,10 @@
                                             $articleDateCreate = $dateCreate->format('Y-m-d');
 
                                             $image = $articles->image();
-
-                                            echo '<div id="myarticles">', '<h2>', $titlesToDisplay , '</h2>', "\n", '<p>', $articleDateCreate , '</p>' , "\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div',"\n",
-                                            '<p>', $articlesToDisplay, '</p>', "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>' , '</div>';
-
+                                            
+                                    
+                                            echo '<div id="myarticles">', '<h3>', $titlesToDisplay , '</h3>', "\n", '<p>', $articleDateCreate , '</p>' , "\n",'<div id="textAndImage">',"\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div>',"\n",
+                                            '<p>', $articlesToDisplay, '</p>', "\n", '<div id="next">', '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>',  '</div>', '</div>' , '</div>';
                                         }
                                 }
                         ?>
@@ -152,19 +152,19 @@
                             <p>
                                 Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages.
                             </p>
-                                <div id="textHomePage">
-         <p>
-            Il y a un pays où les montagnes sont sans nom,
-            Et toutes les rivières s’y écoulent
-            Dieu sait où ;
-            Il y a des vies errantes et sans but,
-            Et la mort qui tient juste à un fil ;
-            Il y a des épreuves indicibles ;
-            Il y a des vallées désertes et figées ;
-            C’est le Pays – oh ! il m’appelle et m’appelle,
-            Je veux y retourner – et je le ferai.
-        </p>
-    </div>
+                            <div id="textHomePage">
+                                <p>
+                                   Il y a un pays où les montagnes sont sans nom,
+                                   Et toutes les rivières s’y écoulent
+                                   Dieu sait où ;
+                                   Il y a des vies errantes et sans but,
+                                   Et la mort qui tient juste à un fil ;
+                                   Il y a des épreuves indicibles ;
+                                   Il y a des vallées désertes et figées ;
+                                   C’est le Pays – oh ! il m’appelle et m’appelle,
+                                   Je veux y retourner – et je le ferai.
+                               </p>
+                            </div>
                            
                         </div>
                         <div id="logoFollowME">
@@ -227,19 +227,21 @@
 
                                             $imageLastArticle = $articles->image(); 
                         ?> 
-                                        <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo $titleLastArticle?></a></p>
                                         
-                                        <div id="imageAndContentfromLastArticles">
+                                        
+                                        <div id="imageAndTitlefromLastArticles">
                                             <div class="imageFromLastArticle">
                                                 <div class="col-lg-12  col-md-12 col-sm-12">
                                                     <?php echo $imageLastArticle ; ?>
                                                 </div>
                                             </div>
 
-                                            <div class="contentFromLastArticle">
+                                            <div class="titleFromLastArticle">
+                                                <!--<div class="col-lg-12  col-md-12 col-sm-12">-->
+                                                    <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo $titleLastArticle?></a></p>
                                                 <!--<div class="col-lg-12  col-md-12 col-sm-12">-->
                         <?php                        
-                                                    echo $contentArticleToDisplay; //, "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idLastArticle, '">lire la suite', '</a></p>';//$contentLastArticle;                
+                                                    //echo $contentArticleToDisplay; //, "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idLastArticle, '">lire la suite', '</a></p>';//$contentLastArticle;                
                         ?>
                                                <!--</div>-->
                                             </div>
@@ -254,7 +256,7 @@
         </div>
 </section>
 
-<!--Frmulaire de contact-->
+<!--Formulaire de contact-->
 <section id="contact">
     <div id="ancre_contact"></div>
     <div class="contactForm">
@@ -305,6 +307,22 @@
                             Alaska<br>
                     </address>
                 </div>
+</section
+
+<!--Mes derniers ouvrages-->
+<section id="myLastBooks">
+    <p>MES DERNIERS OUVRAGES</p>
+    <div id="books">
+        <a class="livre1" href="#">
+            <img src="/blogenalaska/public/images/livre1.png" alt="logo">
+        </a>
+        <a class="livre2" href="#">
+            <img src="/blogenalaska/public/images/livre2.jpg" alt="logo">
+        </a>
+        <a class="livre3" href="#">
+            <img src="/blogenalaska/public/images/livre3.png" alt="logo">
+        </a>
+    </div>
 </section>
 
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Footer.php'); ?>

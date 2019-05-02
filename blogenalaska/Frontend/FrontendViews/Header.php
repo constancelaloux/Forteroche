@@ -17,15 +17,15 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: grey;">Accueil</a> <!--style="color: rgba(70, 156, 214, 0.9);">Accueil</a>-->
+                        <a class="nav-link" href="/blogenalaska/index.php?action=goToFrontPageOfTheBlog" style="color: grey;">ACCUEIL</a> <!--style="color: rgba(70, 156, 214, 0.9);">Accueil</a>-->
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="#ancre_articles" style="color: rgba(70, 156, 214, 0.9);">Articles</a>
+                        <a class="nav-link" href="#ancre_articles" style="color: rgba(70, 156, 214, 0.9);">ARTICLES</a>
                     </li>
                     
                     <li class="nav-item">
-                        <a class="nav-link" href="#ancre_contact" style="color: rgba(70, 156, 214, 0.9);">Contact</a>
+                        <a class="nav-link" href="#ancre_contact" style="color: rgba(70, 156, 214, 0.9);">CONTACT</a>
                     </li>
                     
                     <li class="nav-item">
@@ -45,7 +45,7 @@
                             </button>
                             <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                 <div>
-                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheAdmin">Déconnexion</a>
+                                    <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheAdmin">DECONNEXION</a>
                                 </div>
                             </div>
                     </div> 

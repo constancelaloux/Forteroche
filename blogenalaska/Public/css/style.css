@@ -9,10 +9,10 @@ and open the template in the editor.
 */
 
 /*Le contenu s'affiche en dessous de la barre de menu*/
-.content
+/*.content
     {
         padding-top: 100px;
-    }
+    }*/
 
 /*Le bouton déconnexion se met en ligne*/
 .btn:not(:disabled):not(.disabled)
@@ -28,17 +28,9 @@ and open the template in the editor.
         text-align: center;
     }
 
-/*selecteur d'image de l'éditeur wisywig */
-.hidden{display:none;}
-
-/*La publicité de Tinymce est cachée*/
-.mce-notification.mce-has-close
-    {
-        display: none;
-    }
 
 /*Page d'accueil du blog*/
-.container 
+/*.container 
     {
       padding-right: 15px;
       padding-left: 15px;
@@ -55,49 +47,49 @@ and open the template in the editor.
 .listOfArticles
     {
         display: flex;
-        flex-direction: column;
+        flex-direction: column;*/
         /*justify-content: center;*/
         /*text-align: center;*/
         /*border: 2px solid green;*/
-    }
+    /*}*/
     
-#navArticles
+/*#navArticles
     {
         display: flex;
         justify-content: center;
-    }
+    }*/
 
-.listOfArticles a
+/*.listOfArticles a
     {
         color: black;
         border: solid 1px black;
         padding: 3px;
         display: flex;
-        justify-content: center;
+        justify-content: center;*/
         /*text-decoration: none; */ /*enlever le soulignage*/
-    }
+   /* }
     
     
 
 .listOfArticles a:hover 
     {
         color: black;
-        text-decoration: none; /*enlever le soulignage*/
-        background: #80808038;
+        text-decoration: none;*/ /*enlever le soulignage*/
+     /*   background: #80808038;
     }
     
 .listOfArticles p
-    {
+    {*/
         /*border: 2px solid red;*/
-    }
+    /*}*/
     
-.carousel-inner
+/*.carousel-inner
     {
         height: 100%;
         width: 100%
-    }
+    }*/
     
-.dropdown-toggle::after
+/*.dropdown-toggle::after
     {
         color: black;
     }
@@ -112,45 +104,25 @@ and open the template in the editor.
         color: black!important;
         border-color: black!important;
         background-color: black!important;
-    }
+    }*/
 
 
- /*HEADER de HOMEPAGE.php*/
-/*barre header*/
-.navbar-expand-lg .navbar-nav
+
+
+/*BACKEND*/
+/*selecteur d'image de l'éditeur wisywig */
+.hidden
     {
-        border-right: 1px solid #e9ecef;
-        margin-left: 60%;
+        display:none;
     }
 
-/*Bouton de recherche*/    
-#buttonSubmit button
+/*La publicité de Tinymce est cachée*/
+.mce-notification.mce-has-close
     {
-        border: transparent;
-        font-size: x-large;
+        display: none;
     }
-
     
-    
-/*HOMEPAGE.php: La page de mes articles du frontend*/
-
-/*Le titre sur le carousel*/
-#title
-    {
-        color: white;
-        position: absolute;
-        bottom: 40%;
-        text-align: center;
-    }
-
-/*Le carousel*/
-.carousel
-    {
-        display: flex;
-        justify-content: center;
-    }
-
-/*Ecrire un article*/
+ /*Ecrire un article*/
 .titleOfArticle
     {
         display: flex;
@@ -166,7 +138,75 @@ and open the template in the editor.
 #formArticle
     {
         margin-top: 50px;
+    }   
+    
+    
+    
+  
+    
+    
+    
+    
+    
+/*FRONTEND*/ 
+
+ /*HEADER de HOMEPAGE.php*/
+/*barre header*/
+/*Le menu a une petite bordure grise a droite*/
+.navbar-expand-lg .navbar-nav
+    {
+        border-right: 1px solid #e9ecef;
+        margin-left: 60%;
     }
+
+/*La police du menu*/    
+.nav-item
+    {
+        font-family: 'Roboto';
+    }
+    
+/*Bouton de recherche*/    
+#buttonSubmit button
+    {
+        border: transparent;
+        font-size: x-large;
+    }
+
+/*J'enléve les bordures autour du bouton*/
+#dropdownMenuOffset
+    {
+        border: none;
+    }
+
+/*HOMEPAGE.php: La page de mes articles du frontend*/
+
+/*CAROUSEL*/
+/*Le titre sur le carousel*/
+#title
+    {
+        color: white;
+        position: absolute;
+        bottom: 40%;
+        text-align: center;
+        font-family: 'Roboto';
+    }
+
+/*Le titre se centre par rapport au carousel*/
+.carousel 
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+/*Le carousel a une marge de 120px par rapport au header donc il passe en dessous*/
+#caroussel
+    {
+        margin-top: 120px;
+    }
+
+    
+    
+/*LES ARTICLES*/
 
 /*Je resize les images du listing de mes articles*/
 #myarticles #imageFromListing
@@ -184,8 +224,112 @@ and open the template in the editor.
         max-width: 100%;
         position: absolute;
         margin: auto;
+        border-radius: 4px 4px;
+    }
+    
+/*Mes articles ont chacun un border et une marge entre eux*/    
+#myarticles
+    {
+        /*background-color: #f7f7f7;*/
+        border-bottom: 1px solid #DCDCBE;
+        /*padding: 20px 0px 20px 0px;*/
+    }
+#myarticles h3
+    {
+        font-family: 'Roboto';
     }
 
+#myarticles p
+    {
+        font-family: 'Roboto';
+    }
+
+#myarticles a
+    {
+        font-family: 'Roboto';
+        color: #16447d;
+    }
+    
+#next p
+    {
+        text-align: center;
+        border: 1px solid #6c757d   
+    }
+
+    
+.page-item 
+    {
+        font-family: 'Roboto';
+    }
+    
+    
+/*LOGO ET EXPLICATIF DU BLOG*/
+/*Explication du blog*/
+#logoAndExplanation
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+#titleOfBlogExplanation h3
+    {
+        font-family: 'Roboto';
+    }
+    
+#logoAndExplanation p
+    {
+        font-family: 'Roboto';
+    }
+/*Logo*/
+#logo
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+#logo img
+    {
+        border-radius: 90px 90px;
+    }
+#logoFollowME p
+    {
+        font-family: 'Roboto';
+    }
+#logoFollowME
+    {
+        text-align: center;
+    }
+/*Titre en dessous du logo*/
+#titleOfBlogExplanation h3
+    {
+        text-align: center;
+    }
+    
+ /*texte en dessous du logo*/
+#textHomePage p
+    {
+        text-align: center;
+        /*font-family: 'Roboto';*/
+        font-family:  'Bad Script', cursive;
+    }
+    
+/*bordure en dessous du logo follow me*/
+#logoFollowME
+    {
+        border-bottom: 1px solid black;
+        padding: 0px 0px 10px 0px;
+    }
+
+    
+    
+    
+/*DERNIER ARTICLE*/
+/*dernier article marge du dessus*/
+#LastArticle
+    {
+        padding: 10px 0px 0px 0px;  
+    }
+    
 /*image du dernier article*/
 #LastArticle .imageFromLastArticle
     {
@@ -204,58 +348,73 @@ and open the template in the editor.
         margin: auto;
     }
 
-#imageAndContentfromLastArticles
+#imageAndTitlefromLastArticles
     {
         display:flex;
         flex-direction: row;
     }
     
+#LastArticle h3
+    {
+        font-family: 'Roboto';
+    }
+ 
+#LastArticle p
+    {
+        font-family: 'Roboto';
+        width: 200px;
+    }
+    
+#LastArticle p a
+    {
+        font-family: 'Roboto';
+        color: black;
+    } 
+    
+    
+    
+/*CONTACT*/    
 /*le background du formulaire de contact*/
 #contact
     {
         background-color: #f7f7f7;
+    } 
+    
+#contact
+    {
+        font-family: 'Roboto';
     }
 
-/*Mes articles ont chacun un background et une marge entre eux*/    
-#myarticles
-    {
-        background-color: #f7f7f7;
-        border: 10px solid white;
-    }
 
-/*Explication du blog*/
-#logoAndExplanation
+/*MES DERNIERS OUVRAGES*/
+#myLastBooks
     {
-        display: flex;
-        flex-direction: column;
+        background-color: black;
     }
- 
-/*Logo*/
-#logo
+    
+#myLastBooks p
     {
-        /*text-align: center;*/
+        color: white;
+        font-family: 'Roboto';
+        text-align: center;
+    }
+    
+#books
+{
         display: flex;
+        /*flex-direction: row;*/
         justify-content: center;
-    }
+}
 
-/*Titre en dessous du logo*/
-#titleOfBlogExplanation h3
+/*FOOTER*/
+.footer
     {
-        text-align: center;
+        font-family: 'Roboto';
     }
 
-/*texte en dessous du slider*/
-#textHomePage p
-    {
-        text-align: center;
-        /*font-family: 'Roboto';*/
-        font-family:  'Bad Script', cursive;
-    }
-    
 
-    
-    
-    
+
+ 
     
 /*MYARTICLES.php La page qui montre que un seul article en fonction de l'id*/
     
