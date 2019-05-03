@@ -35,6 +35,8 @@
         <!--Police-->
         <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,900" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Bad+Script&amp;subset=cyrillic" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+       <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
         <!--<script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
         <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">-->

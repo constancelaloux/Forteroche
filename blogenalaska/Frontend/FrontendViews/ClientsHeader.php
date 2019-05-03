@@ -11,6 +11,8 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+
 <!--fin icon-->
             
 <!--Le menu de navigation--> 
@@ -69,7 +71,7 @@
                                 </div>
                             </div>
                     </div> 
-                </div  
+                </div>  
             <?php                  
                     }
             ?>

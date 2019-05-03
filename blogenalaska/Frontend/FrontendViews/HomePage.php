@@ -3,6 +3,7 @@
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
 <?php 
+
     if(isset($_SESSION['username']))
         {
             include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php');
@@ -53,7 +54,7 @@
         </div>
 
         <div id="title">
-            <h2>Billet simple pour l'Alaska</h2>
+            <h2>BILLET SIMPLE POUR L' ALASKA</h2>
         </div>
     </div>   
 </section>
@@ -114,7 +115,7 @@
                             <ul class="pagination">
                                 <li class="page-item">
                                     <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=<?php echo $prevpage?>">Previous</a>
-                                </li
+                                </li>
                                 <li class="page-item">
                                     <a class="page-link" href="/blogenalaska/index.php?action=iGetArticlesToshowInTheBlogPage&p=1">1</a>
                                 </li>
@@ -152,7 +153,7 @@
                             <p>
                                 Je partage sur ce blog mes coups de coeur et découvertes ainsi que mes carnets de voyages.
                             </p>
-                            <div id="textHomePage">
+                            <!--<div id="textHomePage">
                                 <p>
                                    Il y a un pays où les montagnes sont sans nom,
                                    Et toutes les rivières s’y écoulent
@@ -164,7 +165,7 @@
                                    C’est le Pays – oh ! il m’appelle et m’appelle,
                                    Je veux y retourner – et je le ferai.
                                </p>
-                            </div>
+                            </div>-->
                            
                         </div>
                         <div id="logoFollowME">
@@ -256,15 +257,39 @@
         </div>
 </section>
 
+<!--Mes derniers ouvrages-->
+<section id="myLastBooks">
+    <p>MES DERNIERS OUVRAGES</p>
+    <!--<div id="books">-->
+      <div class="container">
+        <section class="row">
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                    <img src="/blogenalaska/public/images/livre1.png" alt="logo" style="width:100%">
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                    <img src="/blogenalaska/public/images/livre2.jpg" alt="logo" style="width:100%">
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4">
+                    <img src="/blogenalaska/public/images/livre3.png" alt="logo" style="width:100%">  
+            </div>
+        </section>
+      </div>
+    <!--</div>-->
+</section>
+
 <!--Formulaire de contact-->
 <section id="contact">
     <div id="ancre_contact"></div>
     <div class="contactForm">
         <div class="container">
             <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <legend>CONTACTEZ NOUS</legend>                   
+                </div>
+
                 <div class="col-sm-8 col-md-8 col-lg-8">
-                    <form class="well">
-                        <legend>Si vous voulez me laisser un message</legend>
+                    <form class="well" action="/blogenalaska/index.php?action=sendEmail" method="post">
+
                         <h4>Comment m'avez-vous trouvé ?</h4>
                         <fieldset>
                             <div class="radio">
@@ -291,8 +316,14 @@
                                     Autre... 
                                 </label>
                             </div>
+                            <label for="email">Votre email</label>
+                            <input type="email" id="email" name="email" />
+                            
+                            <label for="titleMessage">Titre du Message</label>
+                            <input type="text" id="titleMessage" name="title" />
+                            
                             <label for="textarea">Votre message :</label>
-                            <textarea id="textarea" class="form-control" rows="4"></textarea>
+                            <textarea id="textarea" name="content" class="form-control" rows="4"></textarea>
                             <p class="help-block">Vous pouvez agrandir la fenêtre</p>
                             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok-sign"></span> Envoyer</button>
                         </fieldset>
@@ -307,22 +338,6 @@
                             Alaska<br>
                     </address>
                 </div>
-</section
-
-<!--Mes derniers ouvrages-->
-<section id="myLastBooks">
-    <p>MES DERNIERS OUVRAGES</p>
-    <div id="books">
-        <a class="livre1" href="#">
-            <img src="/blogenalaska/public/images/livre1.png" alt="logo">
-        </a>
-        <a class="livre2" href="#">
-            <img src="/blogenalaska/public/images/livre2.jpg" alt="logo">
-        </a>
-        <a class="livre3" href="#">
-            <img src="/blogenalaska/public/images/livre3.png" alt="logo">
-        </a>
-    </div>
 </section>
 
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Footer.php'); ?>

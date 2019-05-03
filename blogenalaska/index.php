@@ -14,6 +14,7 @@ require_once 'Backend/BackendControllers/commentsAdminControler.php';
 require_once 'Frontend/FrontendControllers/BlogController.php';
 require_once 'Frontend/FrontendControllers/CommentsController.php';
 require_once 'Frontend/FrontendControllers/ClientController.php';
+require_once 'Frontend/FrontendControllers/EmailController.php';
 //Si j'ai une action ou sinon action par default
 
     (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
@@ -190,7 +191,12 @@ require_once 'Frontend/FrontendControllers/ClientController.php';
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->disconnectTheClient();
                         break;
-                        
+                    
+                //EMAIL
+                        case 'sendEmail':
+                            $EmailFrontendController = new EmailController();
+                            $EmailFrontendController->sendEmail();
+                        break;   
                         
                         //Je récupére les commentaires pour les afficher sur la page
                         /*case 'iGetCommentsToshowInTheBlogPage':

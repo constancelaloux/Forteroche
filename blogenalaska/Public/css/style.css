@@ -162,7 +162,10 @@ and open the template in the editor.
 /*La police du menu*/    
 .nav-item
     {
-        font-family: 'Roboto';
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        color: rgba(0,0,0,.5);
+        font-size: .85rem;
     }
     
 /*Bouton de recherche*/    
@@ -184,18 +187,29 @@ and open the template in the editor.
 /*Le titre sur le carousel*/
 #title
     {
-        color: white;
         position: absolute;
         bottom: 40%;
-        text-align: center;
-        font-family: 'Roboto';
+        /*text-align: center;*/
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        border-left: 3px solid yellow;
+        /*width: 200px;*/
+        width: 410px;
+        margin-left: 20px;
+        padding-left: 3rem;
+    }
+
+#title h2
+    {
+        font-size: 3.4rem;
+        color: white;
     }
 
 /*Le titre se centre par rapport au carousel*/
 .carousel 
     {
-        display: flex;
-        justify-content: center;
+        /*display: flex;
+        justify-content: center;*/
     }
 
 /*Le carousel a une marge de 120px par rapport au header donc il passe en dessous*/
@@ -208,6 +222,10 @@ and open the template in the editor.
     
 /*LES ARTICLES*/
 
+#articles
+    {
+        padding-top: 5%;
+    }
 /*Je resize les images du listing de mes articles*/
 #myarticles #imageFromListing
     {
@@ -227,41 +245,72 @@ and open the template in the editor.
         border-radius: 4px 4px;
     }
     
-/*Mes articles ont chacun un border et une marge entre eux*/    
+/*Mes articles ont chacun une marge entre eux*/    
 #myarticles
     {
         /*background-color: #f7f7f7;*/
-        border-bottom: 1px solid #DCDCBE;
-        /*padding: 20px 0px 20px 0px;*/
+        /*border-bottom: 1px solid #DCDCBE;*/
+        padding-bottom: 7%;
     }
+    
 #myarticles h3
     {
-        font-family: 'Roboto';
+        /*font-family: 'Roboto', sans-serif;*/
+        /*font-family: 'Montserrat', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        font-size: 27px;
+        text-transform: uppercase;
+        color: #2F2E2E;
     }
 
 #myarticles p
     {
-        font-family: 'Roboto';
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        font-size: 14px;
+        color: #2F2E2E;
     }
 
 #myarticles a
     {
-        font-family: 'Roboto';
+        /*font-family: 'Roboto', sans-serif;*/
         color: #16447d;
+        text-transform: uppercase;
     }
     
 #next p
     {
         text-align: center;
-        border: 1px solid #6c757d   
+        border: 1px solid #6c757d;
+        padding: 7px;
     }
 
     
 .page-item 
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
+        padding: 0px 15px 0px 0px;    
     }
     
+#navArticles
+    {
+        display: flex;
+        justify-content: center;
+        margin-top: -7%;
+    }
+    
+.page-item a
+    {
+        color: black;
+    }
+
+a.page-link
+    {
+            border: 1px solid rgba(47, 46, 46, 1);
+            padding: 5px 10px;
+            color: #2F2E2E;
+            font-size: 14px;
+    }
     
 /*LOGO ET EXPLICATIF DU BLOG*/
 /*Explication du blog*/
@@ -273,36 +322,50 @@ and open the template in the editor.
     
 #titleOfBlogExplanation h3
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
+        font-size: 15px;
+        color: #2F2E2E;
     }
     
 #logoAndExplanation p
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
+        font-size: 15px;
+        color: #2F2E2E;
+        padding-bottom: 7%;
     }
+    
 /*Logo*/
 #logo
     {
         display: flex;
         justify-content: center;
+        padding-bottom: 10%;
     }
 
 #logo img
     {
         border-radius: 90px 90px;
     }
+    
 #logoFollowME p
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
+        font-size: 18px;
+        color: #2F2E2E;
     }
+    
 #logoFollowME
     {
         text-align: center;
     }
+    
 /*Titre en dessous du logo*/
 #titleOfBlogExplanation h3
     {
         text-align: center;
+        font-size: 15px;
+        color: #2F2E2E;
     }
     
  /*texte en dessous du logo*/
@@ -316,7 +379,7 @@ and open the template in the editor.
 /*bordure en dessous du logo follow me*/
 #logoFollowME
     {
-        border-bottom: 1px solid black;
+        border-bottom: 1px solid rgba(204, 204, 204, 1);;
         padding: 0px 0px 10px 0px;
     }
 
@@ -356,18 +419,22 @@ and open the template in the editor.
     
 #LastArticle h3
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
+        font-size: 18px;
+        color: #2F2E2E;
     }
  
 #LastArticle p
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
         width: 200px;
+        font-size: 14px;
+        text-transform: uppercase;
     }
     
 #LastArticle p a
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
         color: black;
     } 
     
@@ -382,7 +449,7 @@ and open the template in the editor.
     
 #contact
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
     }
 
 
@@ -390,26 +457,29 @@ and open the template in the editor.
 #myLastBooks
     {
         background-color: black;
+        padding-bottom: 30px;
     }
     
 #myLastBooks p
     {
         color: white;
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
         text-align: center;
+        font-size: 22px;
     }
     
-#books
-{
-        display: flex;
-        /*flex-direction: row;*/
-        justify-content: center;
-}
+/*#books
+    {
+            display: flex;*/
+            /*flex-direction: row;*/
+            /*justify-content: center;
+            margin-bottom: 5px;
+    }*/
 
 /*FOOTER*/
 .footer
     {
-        font-family: 'Roboto';
+        font-family: 'News Cycle', sans-serif;
     }
 
 
