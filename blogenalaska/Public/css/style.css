@@ -21,12 +21,7 @@ and open the template in the editor.
         flex-direction: row;
     }
 
-/*Hauteur du footer*/
-.footer
-    {
-        height: 20px;
-        text-align: center;
-    }
+
 
 
 /*Page d'accueil du blog*/
@@ -88,28 +83,14 @@ and open the template in the editor.
         height: 100%;
         width: 100%
     }*/
-    
-/*.dropdown-toggle::after
-    {
-        color: black;
-    }
 
-.btn-secondary
-    {
-        border-color: white!important;
-    }
 
-.navbar-dark .navbar-toggler 
-    {
-        color: black!important;
-        border-color: black!important;
-        background-color: black!important;
-    }*/
 
 
 
 
 /*BACKEND*/
+/*ECRIRE UN ARTICLE*/
 /*selecteur d'image de l'éditeur wisywig */
 .hidden
     {
@@ -139,12 +120,53 @@ and open the template in the editor.
     {
         margin-top: 50px;
     }   
+      
+/*FORMULAIRE DE CONNEXION D'UN AUTEUR*/
+.connectAuthor
+    {
+        margin: 10%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'News Cycle', sans-serif;
+        /*justify-content: center;*/
+        text-align: center;
+        font-size: 32px;
+    }
+
+/*HEADER DU BACKEND*/
+/*Je met une marge entre la barre de menu et le contenu*/
+.articles
+    {
+        padding-top: 10%;
+    }
     
+.articles #titlePageArticles
+    {
+        text-align: center;
+    }
+
+.navbarAuthor .fixed-top
+    {
+        background: #23282d;
+    }
+
+.navbarAuthor .nav-link
+    {
+        width: 70px;
+    }
     
-    
-  
-    
-    
+.navAuthor .navbar-expand-lg .navbar-collapse
+    {
+        margin-right: 30%;
+    }
+/*@media (min-width: 992px)
+    {
+        .navbar
+            {
+                height: 32px;  
+            }
+    }*/
+
     
     
     
@@ -180,7 +202,31 @@ and open the template in the editor.
     {
         border: none;
     }
+    
+/*Menu Burger*/
+.dropdown-toggle::after
+    {
+        color: black;
+    }
 
+.btn-secondary
+    {
+        border-color: white!important;
+    }
+
+.navbar-dark .navbar-toggler 
+    {
+        color: black!important;
+        border-color: black!important;
+        background-color: black!important;
+    }
+
+/*Le bouton dropdown se centre par rapport au bouton dropdown*/
+.dropdown-menu.show
+    {
+        transform: translate(-60%, 0) !important;
+    }
+    
 /*HOMEPAGE.php: La page de mes articles du frontend*/
 
 /*CAROUSEL*/
@@ -226,6 +272,7 @@ and open the template in the editor.
     {
         padding-top: 5%;
     }
+    
 /*Je resize les images du listing de mes articles*/
 #myarticles #imageFromListing
     {
@@ -476,16 +523,8 @@ a.page-link
             margin-bottom: 5px;
     }*/
 
-/*FOOTER*/
-.footer
-    {
-        font-family: 'News Cycle', sans-serif;
-    }
 
-
-
- 
-    
+  
 /*MYARTICLES.php La page qui montre que un seul article en fonction de l'id*/
     
 /*mon article*/
@@ -493,4 +532,80 @@ a.page-link
     {
         display: flex;
         flex-direction: column;       
+    }
+
+.myArticleById img
+    {
+        min-width: 100%;
+        height: auto;
+    }
+    
+.myArticleById
+    {
+        margin-top: 120px;
+    }
+    
+.myArticleById p
+    {
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+    }
+/*Les commentaires ont une bordure*/ 
+.listOfComments
+    {
+        border: 1px solid #EBEBEB;
+    }
+    
+.listOfComments p
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+.numberOfComments p
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+.formComment
+    {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+    }
+
+/*Je met la navigation de commentaires en logne et je la centre*/
+#navComments
+    {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-family: 'News Cycle', sans-serif;
+    }
+    
+/*FORMULAIRE DE CONNEXION CLIENT*/
+.connectClient
+    {
+        margin: 10%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'News Cycle', sans-serif;
+        /*justify-content: center;*/
+        text-align: center;
+        font-size: 22px;
+    }
+    
+/*BACKEND AND FRONTEND*/
+
+/*FOOTER*/
+.footer
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+    
+/*Hauteur du footer*/
+.footer
+    {
+        height: 20px;
+        text-align: center;
     }

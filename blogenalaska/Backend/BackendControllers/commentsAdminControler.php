@@ -22,7 +22,6 @@ class commentsAdminControler
         //Je vais récupérer les commentaires en base de données
         function getCommentsIntoDatatables()
             {
-                //print_r("j y suis");
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db); 
@@ -60,6 +59,7 @@ class commentsAdminControler
                             //print_r($json_data);
                         echo json_encode($json_data);
             }
+            
         function removeComments()
             {
                 if (isset($_POST['id']))

@@ -103,6 +103,7 @@ class BlogController
                 $imageToDisplay = $myArticle->image();
                 
                 $comment = new CommentsController();
+                $numberOfComments = $comment->countComments();
                 $myComment = $comment->getListOfComments();
                 
                 require 'Frontend/FrontendViews/Articles/MyArticles.php';

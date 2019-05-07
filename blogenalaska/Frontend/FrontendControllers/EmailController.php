@@ -31,20 +31,20 @@ class EmailController
                                 $email = ($_POST['email']);
                             }
                     }
-                    print_r($title);
-                     print_r($email);
-                      print_r($origine);
-                       print_r($content);
+                $to = "constancelaloux@gmail.com";
+
                 // Send
-                $sent = mail('constancelaloux@gmail.com', $title, $email, $origine , $content);
-                
+                $sent = mail($to, $title, $email, $origine, $content);
+
                 if ($sent)
                     {
-                        echo 'Email sent correctly';
+                        header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+                        //echo 'Email sent correctly';
                     }
                 else
                     {
-                        echo 'Error in sending the email';
+                        header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+                        //echo 'Error in sending the email';
                     }
             }
     }

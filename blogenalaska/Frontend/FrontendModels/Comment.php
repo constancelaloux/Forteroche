@@ -13,6 +13,7 @@ class Comment
         private $_id;
         private $_idFromArticle;
         private $_author;
+        private $_title;
         private $_content;
         private $_createdate;
         private $_updatedate;
@@ -70,6 +71,11 @@ class Comment
                 return $this->_author;
             }
             
+        public function title()
+            {
+                return $this->_title;
+            } 
+            
         public function content()
             {
                 return $this->_content;
@@ -116,7 +122,15 @@ class Comment
                         $this->_author = $author;
                     }
             }
-
+            
+        public function setTitle($title)
+            {
+                if(is_string($title))
+                    {
+                        $this->_title = $title;
+                    }
+            }
+            
         public function setContent($content)
             {
                 if(is_string($content))

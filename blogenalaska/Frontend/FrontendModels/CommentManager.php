@@ -36,6 +36,17 @@ class CommentsManager
                 return $this->_db->query('SELECT COUNT(*) as nbCmt FROM comments')->fetchColumn();
             }
             
+        //Je compte les commentaires en bases de données
+        public function countChapterComments(Comment $comment)
+            {
+                $getNumberOfArticles = $this->_db->prepare('SELECT COUNT(*) as nbCmt FROM comments WHERE id_From_Article = :idFromArticle');
+                //print_r($getNumberOfArticles);
+                $getNumberOfArticles->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR);
+                $getNumberOfArticles->execute();
+                $count = $getNumberOfArticles->fetchColumn();
+                return $count;   
+            }
+            
             
         //Je récupére 5 commentaires
         /*public function getListOfFiveComments($page,$nbrCommentsPerPage)
@@ -59,13 +70,30 @@ class CommentsManager
 
                 $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
                 $getComments->execute();
+                
                 while ($donnees = $getComments->fetch())
                     {
                         $comment =  new Comment($donnees);
-                        $data[] = $comment;
+                        
+                        $commentDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        $comment->setCreatedate($commentDate);
+                        
+                        //Je vérifie si j'ai Null ou une date d'enregistré en bdd
+                        if (is_null($donnees['update_date']))
+                            {
+                                //echo '<td>0000-00-00 00:00:00 </td>';
+
+                                //print_r($articleUpdateDate); 
+                            }
+                        else
+                            {
+                                $commentUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+                                $comment->setUpdatedate($commentUpdateDate);
+                            }
+                        $datas[] = $comment;
 
                     }
-
+                $data = $datas;
                 return $data;
             }
         

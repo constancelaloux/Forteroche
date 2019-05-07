@@ -101,4 +101,36 @@ class CommentsController
                 return $listOfComments;
 
             }
+            
+        //Fonction qui compte les commentaires en fonction de l'id de l'article
+        function countComments()
+            {
+                if (isset($_GET['id']))
+                    {
+                        if (!empty($_GET['id']))
+                            {
+                                $myIdComment = ($_GET['id']);
+                            }
+                        else 
+                            {
+                                echo 'pas d article séléctionné';
+                            }
+                    }
+
+                $comment = new Comment
+                        ([
+
+                            'idFromArticle' => $myIdComment
+
+                        ]);
+               $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $commentManager = new CommentsManager($db);
+
+                $commentsCount = $commentManager->countChapterComments($comment);
+                //print_r($commentsCount);
+                
+                return $commentsCount;
+                //require 'Backend/BackendViews/BackendViewFolders/BackendView.php';
+            }
     }

@@ -1,13 +1,14 @@
 <!--Menu-->
 
-<header class="navbar">
+<header class="navbarAuthor">
 
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: rgba(70, 156, 214, 0.9);">
+        <div class="navAuthor">
+        <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top">
             
 <!--icon-->
             <a class="navbar-brand" href="#">
-                <img src="/blogenalaska/public/images/logoforteroche.png" alt="logo">
+                <img src="/blogenalaska/public/images/logoBackend.png" alt="logo">
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -43,7 +44,7 @@
 <!--Click sur image pour déconnecter-->
                 <div class="d-flex">
                     <div class="dropdown mr-1">
-                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                     
+                            <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: #23282d;">                                     
                                 <?php
                                 //Session 
                                     echo 'Bonjour ' . $_SESSION['username'] . ' !<br />'
@@ -59,6 +60,7 @@
                 </div>
             </div>
         </nav>
+        </div>
     </div>
     
 </header> 

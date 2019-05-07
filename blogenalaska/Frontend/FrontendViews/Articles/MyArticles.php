@@ -2,7 +2,7 @@
 <!--Include Footer et template -->
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php'); ?>
+
 <?php 
     if(isset($_SESSION['username']))
         {
@@ -39,21 +39,27 @@
 ?>
 
 <!--J'affiche le contenu de mon article en fonction de l'id -->
-<div class="myArticleById">
-    <p>
-    <?php
-        echo $titleToDisplay;
-    ?>
-    </p>
-    <?php
-        echo $imageToDisplay;
-    ?>
-    <p>
-    <?php
-        echo $articlesToDisplay;
-    ?>
-    </p>
-</div>
+<section class="myArticleById">
+    <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <p>
+                    <?php
+                        echo $titleToDisplay;
+                    ?>
+                    </p>
+                    <?php
+                        echo $imageToDisplay;
+                    ?>
+                    <p>
+                    <?php
+                        echo $articlesToDisplay;
+                    ?>
+                    </p>   
+                </div>
+            </div>
+    </div>
+</section>
 
 <!--L'id de l'article, devient l'id des commentaires-->
         <?php
@@ -62,9 +68,14 @@
 
 <!--J'affiche les commentaires-->
 <section id="listOfComments">
+
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
+                <div class="numberOfComments">
+                    <p><?php echo $numberOfComments ?>commentaires</p>
+                </div>
+                
                 <div class="listOfComments">
                     <?php
                         if (empty($myComment))
@@ -77,41 +88,16 @@
                             {
                                 foreach ($myComment as $comments) 
                                     {
+                                        $titleToDisplay = $comments->title();
                                         $commentsToDisplay = $comments->content();
-                                        echo '<p>', $commentsToDisplay, '</p>';
+                                        $commentsDate = $comments->createdate();
+                                        $commentsDateToDisplay=$commentsDate->format('Y-m-d');
+                                        echo '<div id="myComments">','<p>' , $titleToDisplay , '</p>' , "\n",'<p>', $commentsToDisplay, '</p>', "\n", '<p>' ,$commentsDateToDisplay, '</p>', '</div>';
                                     }
                             } 
                     ?>
-                    
-                    <?php
-                        if(isset($_SESSION['clientUsername']))
-                            {
-                    ?>
-                                <!--Formulaire pour envoyer des commentaires-->
-                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>" method="post">
-                                        <p>Envoyer ici votre commentaire</p>
+                </div>           
 
-                                        <div>
-                                            <label for="comments">Commentaire</label>
-                                            <textarea id="comments" name="comments"></textarea>
-                                        </div>
-
-                                        <div>
-                                            <input type="submit" value="Envoyer" />
-                                        </div>
-                                </form>
-                                
-                                <!--Bouton modifier 1 commentaire-->
-                                <button id="modifyComment" > Modifier Commentaire</button>
-                                
-                                <!--Bouton signaler 1 commentaire-->
-                                <button id="reportComment">Signaler</button>
-                    <?php
-                            }
-                    ?>
-                    
-                </div>
-  
                 <div id="navComments">
                     <nav aria-label="...">
 
@@ -134,9 +120,44 @@
                         </ul>
                     </nav>
                 </div>
+                
+                <?php
+                    if(isset($_SESSION['clientUsername']))
+                        {
+                ?>
+                            <div class="formComment">
+                                <!--Formulaire pour envoyer des commentaires-->
+                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>" method="post">
+                                    <p>Envoyer ici votre commentaire</p>
+                                    <div class="titleOfComment">
+                                        <label for="titleComment">Titre</label>
+                                        <input type="text" id="titleComment" name="title" />
+                                    </div>
+                                    <div>
+                                        <label for="comments">Commentaire</label>
+                                        <textarea id="comments" name="comments"></textarea>
+                                    </div>
+
+                                    <div>
+                                        <input type="submit" value="Envoyer" />
+                                    </div>
+                                </form>
+
+                                <!--Bouton modifier 1 commentaire-->
+                                <button id="modifyComment" > Modifier Commentaire</button>
+
+                                <!--Bouton signaler 1 commentaire-->
+                                <button id="reportComment">Signaler</button>
+                    <?php
+                        }
+                    ?>
+                            </div>
+  
             </div>
-
-
+        </div>
+    </div>
+</section>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Footer.php'); ?>
 <?php $content = ob_get_clean(); ?>
 
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');?>

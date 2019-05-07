@@ -1,5 +1,5 @@
 <!--Menu-->
-<header class="nav">
+<header class="navbarFrontend">
 
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-dark col-lg-12 fixed-top" style="background-color: white;">

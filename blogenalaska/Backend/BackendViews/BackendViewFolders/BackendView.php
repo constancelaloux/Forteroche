@@ -42,34 +42,40 @@ else
 <?php ob_start(); ?>
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 
-<div class="articles">
-    <div id="titlePageArticles">
-        <h1>Articles</h1> 
-    </div>
+<section class="articles">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="titlePageArticles">
+                    <h1>Articles</h1> 
+                </div>
 
-    <!--Compter les articles existants en base-->
-    <!--Compter les articles publiés-->
-        <div class="numberOfArticles">
+                <!--Compter les articles existants en base-->
+                <!--Compter les articles publiés-->
+                <div class="numberOfArticles">
+                    <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?php echo $articlesCount ?></span></a></p>
+                    <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles"></span></a></p>
+                </div>
 
-            <p>Tous<a href="#"><span class="numberGlobalOfArticles"><?php echo $articlesCount ?></span></a></p>
-            <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles"></span></a></p>
+                <!--Tableau-->
+                <!--display-->
+                <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="all">Numéro</th>
+                            <th class="all">Id</th>
+                            <th class="all">Sujet</th>
+                            <th class="all">Date de création</th>
+                            <th class="all">Date de modification</th>
+                            <th class="all">Supprimer/Modifier</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
+    </div>
+</section>
 
-    <!--Tableau-->
-    <!--display-->
-        <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
-            <thead>
-                <tr>
-                    <th class="all">Numéro</th>
-                    <th class="all">Id</th>
-                    <th class="all">Sujet</th>
-                    <th class="all">Date de création</th>
-                    <th class="all">Date de modification</th>
-                    <th class="all">Supprimer/Modifier</th>
-                </tr>
-            </thead>
-        </table>
-</div>
 <!--requéte ajax-->
     <script type="text/javascript">
         //J'insére les données
