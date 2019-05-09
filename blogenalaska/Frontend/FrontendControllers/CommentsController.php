@@ -19,18 +19,18 @@ class CommentsController
                         if (!empty($_POST['comments']) AND (!empty($_GET['id'])))
 
                             {
-                                $title = $_POST['title'];
+                                //$title = $_POST['title'];
                                 $comment = $_POST['comments'];
                                 $id = $_GET['id']; 
-                                $myImg = ($_POST['image']);
+                                //$myImg = ($_POST['image']);
                             }
                     }
                  $newComment = new Comment
                     ([
-                        'title' => $title,
+                        //'title' => $title,
                         'content' => $comment,
                         'idFromArticle' =>$id,
-                        'image' => $myImg
+                        //'image' => $myImg
                     ]);
 
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();

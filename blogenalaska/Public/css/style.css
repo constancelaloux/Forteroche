@@ -23,7 +23,6 @@ and open the template in the editor.
 
 
 
-
 /*Page d'accueil du blog*/
 /*.container 
     {
@@ -556,12 +555,18 @@ a.page-link
     {
         text-align: center;
         font-family: 'News Cycle', sans-serif;
+        font-weight: bold;
     }
-/*Les commentaires ont une bordure*/ 
+    
+/*Les commentaires ont une bordure et se mettent en ligne, le fond est en blanc*/ 
 #myComments
     {
         border: 1px solid #EBEBEB;
         margin: 20px;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
     }
 
 /*#listOfComments
@@ -590,10 +595,10 @@ a.page-link
 /*Je met la navigation de commentaires en logne et je la centre*/
 #navComments
     {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    font-family: 'News Cycle', sans-serif;
+        /*display: flex;
+        flex-direction: row;
+        justify-content: center;*/
+        font-family: 'News Cycle', sans-serif;
     }
     
 /*.btn:not(:disabled):not(.disabled)
@@ -614,11 +619,11 @@ a.page-link
     }
 
 /*Je met en column le champ titre*/
-.titleOfComment
+/*.titleOfComment
     {
         display: flex;
         flex-direction: column;
-    }
+    }*/
  
 .contentOfComment
     {
@@ -627,13 +632,76 @@ a.page-link
     }
 
 /*Lorsque mon commentaire s'affiche l'image se met sous cette taille*/
-#myComments img
+#myComments .image img
     {
         width:auto;
         height:75px;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+        border: 5px solid #FFF;
+    }
+
+#Name
+    {
+        display: flex;
+        flex-direction: row;
+        color:#ef4347;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+#Date
+    {
+        color: #9b9b9b;
+        font-size: 14px;
     }
     
+.image
+    {
+        margin-right: 5px;
+    }
+
+/*le fond de la section commentaires est en gris*/
+#listOfComments
+    {
+        background-color: #f9f9f9;
+    }
+
+.formComment p
+    {
+        background-color: #fff;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+        font-size: 22px;
+        padding:15px 15px 18px;
+    }
+
+/*Le fond du textarea est en gris*/
+#comments
+    {
+        background-color: #f9f9f9;
+        height: 150px;
+        border: 1px solid rgba(0,0,0,.1);
+    }
     
+/*Le bouton submit du formulaire est en rouge*/
+.buttonComments input
+    {
+        border-color: #ef4347;
+        background-color: #ef4347;
+        color: white;
+    }
+
+/*Bouton modifier le commentaire*/
+#modifyComment
+    {
+        border: 1px solid #ef4347;
+        padding: 2px 10px;
+        color:#ef4347;
+        font-size: 12px;
+        border-radius: 4px;
+        width: 75px;
+    }
+
 /*FORMULAIRE DE CONNEXION CLIENT*/
 .connectClient
     {
@@ -643,9 +711,23 @@ a.page-link
         font-family: 'News Cycle', sans-serif;
         /*justify-content: center;*/
         text-align: center;
-        font-size: 22px;
+        /*font-size: 22px;*/
+        padding: 26px 24px 46px;
+        color: #72777c;
+        font-size: 14px;
     }
     
+#usernameFormClient
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+#passwordFormClient
+    {
+        display: flex;
+        flex-direction: column;
+    }
 /*BACKEND AND FRONTEND*/
 
 /*FOOTER*/

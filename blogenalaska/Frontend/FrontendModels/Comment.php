@@ -14,7 +14,7 @@ class Comment
         private $_idFromArticle;
         private $_image;
         private $_firstname;
-        private $_title;
+        //private $_title;
         private $_content;
         private $_createdate;
         private $_updatedate;
@@ -77,10 +77,10 @@ class Comment
                 return $this->_image;
             }
             
-        public function title()
+        /*public function title()
             {
                 return $this->_title;
-            } 
+            } */
             
         public function content()
             {
@@ -138,13 +138,13 @@ class Comment
                     }
             }
             
-        public function setTitle($title)
+        /*public function setTitle($title)
             {
                 if(is_string($title))
                     {
                         $this->_title = $title;
                     }
-            }
+            }*/
             
         public function setContent($content)
             {

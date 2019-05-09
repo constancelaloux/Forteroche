@@ -8,12 +8,12 @@
 
                     <form action="/blogenalaska/index.php?action=checkThePassAndUsernameOfClient" method="post">
 
-                        <div>
+                        <div id="usernameFormClient">
                             <label for="username">Identifiant</label>
                             <input type="text" id="username" name="username" />
                         </div>
 
-                        <div>
+                        <div id="passwordFormClient">
                             <label for="password">Mot de passe</label>
                             <input type="password" id="password" name="password" />
                         </div>
