@@ -66,15 +66,16 @@ class CommentsManager
         //Je récupére les commentaire en base de données pour les afficher en fonction de l'article
         public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
             {
-                $getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
-
+                //$getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
+                $getComments = $this->_db->prepare("SELECT  a.firstname firstname , c.title title , c.create_date create_date, c.update_date update_date, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author  WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
                 $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
                 $getComments->execute();
                 
                 while ($donnees = $getComments->fetch())
                     {
+                    //print_r($donnees);
                         $comment =  new Comment($donnees);
-                        
+
                         $commentDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         $comment->setCreatedate($commentDate);
                         

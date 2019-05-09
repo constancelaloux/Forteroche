@@ -551,10 +551,16 @@ a.page-link
         font-family: 'News Cycle', sans-serif;
     }
 /*Les commentaires ont une bordure*/ 
-.listOfComments
+#myComments
     {
         border: 1px solid #EBEBEB;
+        margin: 20px;
     }
+
+/*#listOfComments
+    {
+        background-color: #e4e0e0
+    }*/
     
 .listOfComments p
     {

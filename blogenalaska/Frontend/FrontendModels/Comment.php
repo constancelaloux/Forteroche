@@ -12,7 +12,7 @@ class Comment
          */
         private $_id;
         private $_idFromArticle;
-        private $_author;
+        private $_firstname;
         private $_title;
         private $_content;
         private $_createdate;
@@ -66,9 +66,9 @@ class Comment
             }
 
 
-        public function author()
+        public function firstname()
             {
-                return $this->_author;
+                return $this->_firstname;
             }
             
         public function title()
@@ -114,12 +114,13 @@ class Comment
                     }
             }
 
-        public function setAuthor($author)
+        public function setfirstname($firstname)
             {
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
-                if(is_string($author))
+                if(is_string($firstname))
                     {
-                        $this->_author = $author;
+                    //print_r($this->_id_comments_author = $id_comments_author);
+                        $this->_firstname = $firstname;
                     }
             }
             

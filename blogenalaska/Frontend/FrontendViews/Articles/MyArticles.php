@@ -87,12 +87,14 @@
                          else
                             {
                                 foreach ($myComment as $comments) 
-                                    {
+                                    {   
+                                        $nameToDisplay = $comments->firstname();
+                                        print_r($nameToDisplay);
                                         $titleToDisplay = $comments->title();
                                         $commentsToDisplay = $comments->content();
                                         $commentsDate = $comments->createdate();
                                         $commentsDateToDisplay=$commentsDate->format('Y-m-d');
-                                        echo '<div id="myComments">','<p>' , $titleToDisplay , '</p>' , "\n",'<p>', $commentsToDisplay, '</p>', "\n", '<p>' ,$commentsDateToDisplay, '</p>', '</div>';
+                                        echo '<div id="myComments">','<p>', $nameToDisplay, '</p>', "\n",'<p>' , $titleToDisplay , '</p>' , "\n",'<p>', $commentsToDisplay, '</p>', "\n", '<p>' ,$commentsDateToDisplay, '</p>', '</div>';
                                     }
                             } 
                     ?>
