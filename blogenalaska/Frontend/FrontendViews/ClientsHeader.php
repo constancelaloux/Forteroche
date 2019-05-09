@@ -39,7 +39,7 @@
             ?>
                         <div class="d-flex">
                             <div class="dropdown mr-1">
-                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: rgba(70, 156, 214, 0.9);">                                     
+                                    <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20">                                     
                                         <?php
                                         //Session 
                                             echo 'Bonjour ' . $_SESSION['clientUsername'] . ' !<br />'

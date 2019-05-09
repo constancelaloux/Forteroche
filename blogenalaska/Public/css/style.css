@@ -226,7 +226,14 @@ and open the template in the editor.
     {
         transform: translate(-60%, 0) !important;
     }
-    
+
+/*Le bouton bonjour et deconnexion*/
+#dropdownMenuOffset
+    {
+         background-color: white; 
+         color: rgba(0,0,0,.5);
+         font-family: 'News Cycle', sans-serif;
+    }   
 /*HOMEPAGE.php: La page de mes articles du frontend*/
 
 /*CAROUSEL*/
@@ -588,6 +595,44 @@ a.page-link
     justify-content: center;
     font-family: 'News Cycle', sans-serif;
     }
+    
+/*.btn:not(:disabled):not(.disabled)
+    {
+        width: 10%;
+    }*/
+
+.imageOfArticle
+    {
+        align-items: center;
+    }
+  
+/*L'image prend une taille défini*/
+ .preview img
+    {
+        width:auto;
+        height:75px;
+    }
+
+/*Je met en column le champ titre*/
+.titleOfComment
+    {
+        display: flex;
+        flex-direction: column;
+    }
+ 
+.contentOfComment
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+/*Lorsque mon commentaire s'affiche l'image se met sous cette taille*/
+#myComments img
+    {
+        width:auto;
+        height:75px;
+    }
+    
     
 /*FORMULAIRE DE CONNEXION CLIENT*/
 .connectClient

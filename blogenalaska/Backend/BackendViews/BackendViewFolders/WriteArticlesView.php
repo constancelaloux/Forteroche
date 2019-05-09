@@ -89,8 +89,7 @@ else
             <label for="contentArticle">Contenu de l'article</label>
             <textarea id="mytextarea" name="content"> <p></textarea>
         </div>
-        
-        
+          
         <div  class="imageOfArticle">
             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
             <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
@@ -104,7 +103,7 @@ else
         </div>
     </form>
     
-                <!-- Modal -->
+        <!-- Modal -->
         <div id="uploadModal" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -189,7 +188,6 @@ else
             $('#upload').on('click', function(e){
                 e.preventDefault();
 
-                console.log("test");
                 var form_data = $("#newFile").val();
                 //console.log(form_data);
                 //var file_data = $('#newFile').prop('files')[0];

@@ -12,6 +12,7 @@ class Comment
          */
         private $_id;
         private $_idFromArticle;
+        private $_image;
         private $_firstname;
         private $_title;
         private $_content;
@@ -71,6 +72,11 @@ class Comment
                 return $this->_firstname;
             }
             
+        public function imageComment()
+            {
+                return $this->_image;
+            }
+            
         public function title()
             {
                 return $this->_title;
@@ -113,7 +119,15 @@ class Comment
                         $this->_idFromArticle = $idFromArticle;
                     }
             }
-
+            
+        public function setImage($image)
+            {
+                if(is_string($image))
+                    {
+                        $this->_image = $image;
+                    }
+            }
+            
         public function setfirstname($firstname)
             {
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
