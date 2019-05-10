@@ -1,26 +1,43 @@
 <?php $title = 'new Client'; ?>
 <?php ob_start(); ?>
 
-<p>Entrez votre login et votre mot de passe.</p>
+<section class="newClient">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="textFormNewClient">
+                    <p>Entrez votre login et votre mot de passe.</p>
+                </div>
+                <form action="/blogenalaska/index.php?action=createNewClientPasswordAndUsername" method="post">
+                    <p>
+                        Prenom: <input type="text" name="firstname"><br />
+                        Nom : <input type="text" name="surname"><br />
+                        Identifiant : <input type="text" name="login"><br />
+                        Mot de passe : <input type="text" name="pass"><br /><br />
+                    </p>
+                    
+                    <!--J'upload une image-->
+                    <div id="newClientImageUpload">
+                        <div  class="imageOfClient">
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Télécharger une image</button>         
+                        </div>
 
-<form action="/blogenalaska/index.php?action=createNewClientPasswordAndUsername" method="post">
-    <p>
-        Prenom: <input type="text" name="firstname"><br />
-        Nom : <input type="text" name="surname"><br />
-        Identifiant : <input type="text" name="login"><br />
-        Mot de passe : <input type="text" name="pass"><br /><br />
-    </p>
-    
-    <div  class="imageOfArticle">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Télécharger une image</button>         
+                        <div class="preview">                                           
+                            <img id="image" src="/blogenalaska/public/images/upload.png" /> 
+                        </div>
+                        <input type="hidden" class="valueHidden" name="image" value=""/>
+                    </div>
+                    
+                    <!--Je soumet le formuaire-->
+                    <div id="submitNewClient">
+                        <input type="submit" value="Envoyer !">
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-                                    
-    <div class="preview">                                           
-        <img id="image" src="/blogenalaska/public/images/upload.png" /> 
-    </div>
-    <input type="hidden" class="valueHidden" name="image" value=""/>
-    <input type="submit" value="Envoyer !">
-</form>
+</section>
+
 
 <!-- Modal -->
 <div id="uploadModal" class="modal fade" role="dialog">
