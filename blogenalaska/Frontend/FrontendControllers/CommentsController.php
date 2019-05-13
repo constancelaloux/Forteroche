@@ -13,23 +13,30 @@ class CommentsController
     {
         function createNewComment()
             {
-                if (isset($_POST['comments']) AND isset ($_GET['id']))
+                //print_r($_GET['idClient']);
+                 //print_r($_GET['id']);
+                 //print_r($_POST['comments']);
+                //die();
+                if (isset($_POST['comments']) AND isset ($_GET['id']) AND isset ($_GET['idClient']))
                     {
 
-                        if (!empty($_POST['comments']) AND (!empty($_GET['id'])))
+                        if (!empty($_POST['comments']) AND (!empty($_GET['id'])) AND (!empty($_GET['idClient'])))
 
                             {
                                 //$title = $_POST['title'];
                                 $comment = $_POST['comments'];
                                 $id = $_GET['id']; 
+                                $idClient = $_GET['idClient'];
                                 //$myImg = ($_POST['image']);
                             }
                     }
+                    
                  $newComment = new Comment
                     ([
                         //'title' => $title,
                         'content' => $comment,
                         'idFromArticle' =>$id,
+                        'id_comments_author' => $idClient
                         //'image' => $myImg
                     ]);
 
@@ -101,7 +108,8 @@ class CommentsController
                         $page = 1;
                     }
                 $listOfComments = $commentManager->getListOfComments($comment,$page,$nbrCommentsPerPage);
-                
+                //print_r($listOfComments);
+                //die();
                 return $listOfComments;
 
             }

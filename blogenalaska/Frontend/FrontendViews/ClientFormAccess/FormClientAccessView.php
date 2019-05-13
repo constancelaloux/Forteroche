@@ -4,29 +4,36 @@
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                <p>Veuillez entrer votre mot de passe et votre identifiant</p>
+                
+                <div id="logoAndTextClientForm">
+                    <a class="navbar-brand" href="#">
+                        <img src="/blogenalaska/public/images/logoforteroche.png" alt="logo">
+                    </a>
 
-                    <form action="/blogenalaska/index.php?action=checkThePassAndUsernameOfClient" method="post">
+                    <p>Veuillez entrer votre mot de passe et votre identifiant</p>
+                </div>
+                
+                <form action="/blogenalaska/index.php?action=checkThePassAndUsernameOfClient" method="post">
 
-                        <div id="usernameFormClient">
-                            <label for="username">Identifiant</label>
-                            <input type="text" id="username" name="username" />
-                        </div>
+                    <div id="usernameFormClient">
+                        <label for="username">Identifiant</label>
+                        <input type="text" id="username" name="username" />
+                    </div>
 
-                        <div id="passwordFormClient">
-                            <label for="password">Mot de passe</label>
-                            <input type="password" id="password" name="password" />
-                        </div>
+                    <div id="passwordFormClient">
+                        <label for="password">Mot de passe</label>
+                        <input type="password" id="password" name="password" />
+                    </div>
 
-                        <div>Pascal</div>
+                    <div>Pascal</div>
 
-                        <div>lemotdepasseduclient</div>
+                    <div>lemotdepasseduclient</div>
 
-                        <div>
-                            <input type="submit" value="Se connecter" />
-                        </div>
-                    </form>
-                    <a class="dropdown-item" href="/blogenalaska/index.php?action=createNewClientForm">Créer un compte</a>
+                    <div id="submitClientForm">
+                        <input type="submit" value="Se connecter" />
+                    </div>
+                </form>
+                <a class="dropdown-item" href="/blogenalaska/index.php?action=createNewClientForm">Créer un compte</a>
             </div>
         </div>
     </div>

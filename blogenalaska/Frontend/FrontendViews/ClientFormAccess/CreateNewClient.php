@@ -6,6 +6,9 @@
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
                 <div id="textFormNewClient">
+                    <a class="navbar-brand" href="#">
+                        <img src="/blogenalaska/public/images/logoforteroche.png" alt="logo">
+                    </a>
                     <p>Entrez votre login et votre mot de passe.</p>
                 </div>
                 <form action="/blogenalaska/index.php?action=createNewClientPasswordAndUsername" method="post">

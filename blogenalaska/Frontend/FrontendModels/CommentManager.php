@@ -21,12 +21,12 @@ class CommentsManager
         //J'ajoute un article en bdd
         public function add(Comment $comment)
             {
-                $sendCommentDatas = $this->_db->prepare('INSERT INTO comments (content, id_From_Article, create_date) '
-                        . 'VALUES(:content, :idFromArticle, NOW())');
+                $sendCommentDatas = $this->_db->prepare('INSERT INTO comments (content, id_From_Article, create_date, id_comments_author) '
+                        . 'VALUES(:content, :idFromArticle, NOW(), :id_comments_author)');
                 //$sendCommentDatas->bindValue(':title', $comment->title(), \PDO::PARAM_STR);
                 $sendCommentDatas->bindValue(':content', $comment->content(), \PDO::PARAM_STR);
                 $sendCommentDatas->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR);
-                //$sendCommentDatas->bindValue(':image', $comment->imageComment(), \PDO::PARAM_STR);
+                $sendCommentDatas->bindValue(':id_comments_author', $comment->id_comments_author(), \PDO::PARAM_STR);
                 $sendCommentDatas->execute();
             }
             
@@ -67,13 +67,12 @@ class CommentsManager
         public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
             {
                 //$getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
-                $getComments = $this->_db->prepare("SELECT  a.firstname firstname , c.image image , c.create_date create_date, c.update_date update_date, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author  WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
+                $getComments = $this->_db->prepare("SELECT  a.firstname firstname , a.imageComment imageComment, c.create_date create_date, c.update_date update_date, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author  WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
                 $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
                 $getComments->execute();
                 
                 while ($donnees = $getComments->fetch())
                     {
-                    //print_r($donnees);
                         $comment =  new Comment($donnees);
 
                         $commentDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);

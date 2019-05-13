@@ -12,7 +12,8 @@ class Comment
          */
         private $_id;
         private $_idFromArticle;
-        private $_image;
+        private $_id_comments_author;
+        private $_imageComment;
         private $_firstname;
         //private $_title;
         private $_content;
@@ -74,13 +75,13 @@ class Comment
             
         public function imageComment()
             {
-                return $this->_image;
+                return $this->_imageComment;
             }
             
-        /*public function title()
+        public function id_comments_author()
             {
-                return $this->_title;
-            } */
+                return $this->_id_comments_author;
+            }
             
         public function content()
             {
@@ -120,11 +121,12 @@ class Comment
                     }
             }
             
-        public function setImage($image)
+        public function setImageComment($imageComment)
             {
-                if(is_string($image))
+                if(is_string($imageComment))
                     {
-                        $this->_image = $image;
+                        $this->_imageComment = $imageComment;
+                        //print_r($this->_imageComment = $imageComment);
                     }
             }
             
@@ -138,13 +140,13 @@ class Comment
                     }
             }
             
-        /*public function setTitle($title)
+        public function setId_comments_author($id_comments_author)
             {
-                if(is_string($title))
+                if(is_string($id_comments_author))
                     {
-                        $this->_title = $title;
+                        $this->_id_comments_author = $id_comments_author;
                     }
-            }*/
+            }
             
         public function setContent($content)
             {

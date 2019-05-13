@@ -131,7 +131,7 @@
                 ?>
                             <div class="formComment">
                                 <!--Formulaire pour envoyer des commentaires-->
-                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>" method="post">
+                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>&idClient=<?php echo $_SESSION['ClientId'] ?>" method="post">
                                     <p>Laissez votre commentaire</p>
                                     
                                     <!--<div class="titleOfComment">

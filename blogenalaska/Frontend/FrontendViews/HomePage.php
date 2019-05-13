@@ -7,6 +7,7 @@
     if(isset($_SESSION['username']))
         {
             include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php');
+
             $expireAfter = 30;
 
             //Check to see if our "last action" session
@@ -32,9 +33,9 @@
                         }
                 }
         }
-    else 
+    else
         {
-            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/ClientsHeader.php');       
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/ClientsHeader.php');           
         }
 ?>
 

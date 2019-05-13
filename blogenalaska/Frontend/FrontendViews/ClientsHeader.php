@@ -44,7 +44,8 @@
                                         //Session 
                                             echo 'Bonjour ' . $_SESSION['clientUsername'] . ' !<br />'
                                         ;?>
-                                        <img src="/blogenalaska/public/images/disconnect.png">
+                                        <!--<img src="/blogenalaska/public/images/disconnect.png">-->
+                                        <?php echo $_SESSION['imageComment']; ?>
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                         <div>

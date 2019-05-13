@@ -604,6 +604,7 @@ a.page-link
         flex-direction: column;
         text-align: center;
         font-family: 'News Cycle', sans-serif;
+        margin: 20px;
     }
 
 /*Je met la navigation de commentaires en logne et je la centre*/
@@ -615,6 +616,11 @@ a.page-link
         font-family: 'News Cycle', sans-serif;
     }
     
+#navComments .pagination
+    {
+        margin: 20px;
+    }
+
 /*.btn:not(:disabled):not(.disabled)
     {
         width: 10%;
@@ -745,6 +751,38 @@ a.page-link
         flex-direction: column;
     }
     
+#logoAndTextClientForm p
+    {
+        border-left: 4px solid #00a0d2;
+        padding: 12px;       
+    }
+    
+#usernameFormClient input
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+
+#passwordFormClient input
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }   
+
+#submitClientForm input
+    {
+        background: #0085ba;
+        border-color: #0073aa #006799 #006799;
+        box-shadow: 0 1px 0 #006799;
+        color: #fff;
+        text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    }
+    
+    
     
     
 /*FORMULAIRE D'INSCRIPTION CLIENT*/
@@ -766,12 +804,26 @@ a.page-link
         color: #72777c;
         display:flex;
         flex-direction: column;
+        margin-bottom: 0;
     }
     
 #textFormNewClient p
     {
         border-left: 4px solid #00a0d2;
         padding: 12px;
+        margin-bottom: 10px;
+    }
+    
+#textFormNewClient
+    {
+        display:flex;
+        flex-direction: column;
+    }
+    
+#textFormNewClient a
+    {
+        justify-content: center;
+        display: flex;
     }
 
 .newClient input
@@ -811,6 +863,8 @@ a.page-link
         flex-direction: row; 
         align-items: center;
         justify-content: center;
+        margin-bottom: 30px;
+        border: 1px solid #ddd
     }
     
 /*L'image prend une taille défini*/
@@ -832,6 +886,7 @@ a.page-link
         flex-direction: column;
         justify-content: center;
     }*/
+
 .imageOfClient .btn-info:hover 
     {
         color: #fff;

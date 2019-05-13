@@ -28,9 +28,9 @@ class ClientController
         function createNewClientInDatabase()
             {
                 //Connexion à la base de données et création des identifiants du client
-                if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname']))
+                if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname'])AND isset($_POST['image']))
                     {
-                        if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['firstname']) && !empty($_POST['surname']))
+                        if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['image']))
                             {
                                 // check if the username and the password has been set
                                 $firstnameVar = ($_POST['firstname']);
@@ -38,6 +38,8 @@ class ClientController
                                 $surnameVar = ($_POST['surname']);
 
                                 $usernameVar = ($_POST['login']);
+                                
+                                $imageVar = ($_POST['image']);
 
                                 $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
@@ -46,7 +48,8 @@ class ClientController
                                         'firstname' => $firstnameVar,
                                         'surname' => $surnameVar,
                                         'password' => $passwordVar,
-                                        'username' => $usernameVar
+                                        'username' => $usernameVar,
+                                        'imageComment' => $imageVar
                                     ]);
                                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
@@ -86,8 +89,12 @@ class ClientController
 
                                 $manager = new ClientManager($db);
                                 $passwordFromManager = $manager->verify($client); // Appel d'une fonction de cet objet
-
+                               // print_r($passwordFromManager);
                                 $passwordFromDb = $passwordFromManager->password();
+                                $idOfClientVar = $passwordFromManager->id();
+                                $imageOfClientVar = $passwordFromManager->imageClient();
+                               // print_r($imageOfClientVar);
+                                //die();
 
                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
                                 $AuthorPassword = password_verify($clientPasswordVar, $passwordFromDb);
@@ -98,6 +105,9 @@ class ClientController
                                         session_start();
                                         $_SESSION['clientUsername'] = $clientUsernameVar;
                                         $_SESSION['clientPassword'] = $clientPasswordVar;
+                                        $_SESSION['ClientId'] = $idOfClientVar;
+                                        $_SESSION['imageComment'] = $imageOfClientVar;
+
                                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             
                                                                     }

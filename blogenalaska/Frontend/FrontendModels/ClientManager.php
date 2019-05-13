@@ -25,8 +25,8 @@ class ClientManager// extends Manager
                 //Assignation des valeurs pour le password, surname, username et firstname.
                 //Execution de la requéte`
                 // Préparation de la requête d'insertion.
-                $sendClientDatas = $this->_db->prepare('INSERT INTO comments_author (surname, firstname, username, password) '
-                        . 'VALUES(:surname, :firstname, :username, :password)');
+                $sendClientDatas = $this->_db->prepare('INSERT INTO comments_author (surname, firstname, username, password, imageComment) '
+                        . 'VALUES(:surname, :firstname, :username, :password, :imageComment)');
                 //$sendAdminDatas = $this->_db->prepare('INSERT INTO articles_author (username, password) '
                 //        . 'VALUES(:username, :password)');
                 // Assignation des valeurs pour le nom du personnage.
@@ -34,6 +34,7 @@ class ClientManager// extends Manager
                 $sendClientDatas->bindValue(':firstname', $client->firstname(), \PDO::PARAM_STR);
                 $sendClientDatas->bindValue(':username', $client->username(), \PDO::PARAM_STR );
                 $sendClientDatas->bindValue(':password', $client->password(), \PDO::PARAM_STR);
+                $sendClientDatas->bindValue(':imageComment', $client->imageComment(), \PDO::PARAM_STR);
                 // Exécution de la requête.
                 $sendClientDatas->execute();    
             }
@@ -46,7 +47,7 @@ class ClientManager// extends Manager
         public function verify(Client $client)
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
-                $getClientLogin = $this->_db->prepare("SELECT password, username FROM comments_author WHERE username = :username");//AND password = :password");
+                $getClientLogin = $this->_db->prepare("SELECT password, username, imageComment, id FROM comments_author WHERE username = :username");//AND password = :password");
                 $getClientLogin->bindValue(':username', $client->username(), \PDO::PARAM_STR );
                 //$getAuthorLogin->bindValue(':password', $author->password(), \PDO::PARAM_STR );
                 $getClientLogin->execute();

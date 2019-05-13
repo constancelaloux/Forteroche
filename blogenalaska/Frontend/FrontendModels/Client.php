@@ -17,6 +17,7 @@ class Client
         private $_username;
         private $_surname;
         private $_firstname;
+        private $_imageComment;
 
         //ci, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
         //Il faudra donc lui spécifier en paramétre dans pdoConnection.
@@ -86,7 +87,11 @@ class Client
                 return $this->_firstname;
             }
 
-
+        public function imageComment()
+            {
+                return $this->_imageComment;
+            }
+            
         //liste des setters 
         //un setter est une méthode chargée d'assigner une valeur à un attribut en vérifiant son intégrité (si vous assignez la valeur sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le principe d'encapsulation).
         public function setId($id)
@@ -131,6 +136,14 @@ class Client
                 if(is_string($firstname))
                     {
                         $this->_firstname = $firstname;
+                    }
+            }
+            
+        public function setImageComment($imageComment)
+            {
+                if(is_string($imageComment))
+                    {
+                        $this->_imageComment = $imageComment;
                     }
             }
     }
