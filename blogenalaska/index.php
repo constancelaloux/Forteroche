@@ -7,8 +7,8 @@
 require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
 //require_once'Backend/BackendControllers/doLogout.php';
-require_once 'Backend/BackendControllers/upload.php';
-require_once 'Backend/BackendControllers/commentsAdminControler.php';
+require_once 'Backend/BackendControllers/Upload.php';
+require_once 'Backend/BackendControllers/CommentsAdminControler.php';
 
 //Frontend
 require_once 'Frontend/FrontendControllers/BlogController.php';
@@ -159,6 +159,12 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'sendCommentsFromId':
                             $commentsController = new CommentsController();
                             $commentsController->createNewComment();
+                        break;
+                    
+                        //Modérer les comentaires
+                        case 'moderateComments':
+                            $commentsController = new CommentsController();
+                            $commentsController->moderateComment();
                         break;
                     
                 //CLIENT                    

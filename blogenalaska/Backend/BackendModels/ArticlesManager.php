@@ -123,11 +123,12 @@ class ArticlesManager
                 // Prépare une requête de type UPDATE.
                 // Assignation des valeurs à la requête.
                 // Exécution de la requête.
-                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, update_date = NOW() WHERE id = :id');
+                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW() WHERE id = :id');
     
                 $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
                 //$dbRequestModifyArticle->bindValue(':auteur', $articles->auteur());
                 $dbRequestModifyArticle->bindValue(':content', $articles->content());
+                $dbRequestModifyArticle->bindValue(':image', $articles->image());
                 $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
     
                 $dbRequestModifyArticle->execute();

@@ -31,11 +31,24 @@ class commentsAdminControler
                 foreach ($commentsFromManager as $comments) 
                     {
                         $row = array();
+
                         $row[] = $comments->id();
 
                         $commentDate = $comments->createdate();
                         $row[] = $commentDate->format('Y-m-d');
-                        $row[] = $comments->content();
+                        if (strlen($comments->content()) <= 400)
+                            {
+                                 $row[] = $comments->content();
+                            }
+                        else
+                            {
+                            //Returns the portion of string specified by the start and length parameters.
+                                $debut = substr($comments->content(), 0, 400);
+                                $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+
+                                 $row[] = $debut;
+                            }
+                        //$row[] = $comments->content();
                         //$updateCommentDate = $comments->updatedate();
                         
                         /*if (is_null($updateCommentDate))

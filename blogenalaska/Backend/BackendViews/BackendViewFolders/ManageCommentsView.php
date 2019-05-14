@@ -42,33 +42,39 @@ else
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 <?php ob_start(); ?>
 
-<div class="comments">
-    <div id="titlePageComments">
-        <h1>Page de gestion des commentaires</h1>
-    </div>
+<section class="comments">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 col-md-12 col-sm-12">
+                <div id="titlePageComments">
+                    <h1>Page de gestion des commentaires</h1>
+                </div>
 
-    <!--Compter les commentaires existants en base-->
-    <!--Compter les commentaires publiés-->
-        <div class="numberOfComments">
+                <!--Compter les commentaires existants en base-->
+                <!--Compter les commentaires publiés-->
+                <div class="numberOfComments">
 
-            <p>Tous<a href="#"><span class="numberGlobalOfComments"><?php echo $commentsCount ?></span></a></p>
-            <p>commentaires signalés<a href="#"><span class="frontendNumberGlobalOfComments"></span></a></p>
+                    <p>Tous<a href="#"><span class="numberGlobalOfComments"><?php echo $commentsCount ?></span></a></p>
+                    <p>commentaires signalés<a href="#"><span class="frontendNumberGlobalOfComments"></span></a></p>
+                </div>
+
+                <!--Tableau-->
+                <!--display-->
+                <table id="displayComments" class="cell-border compact stripe" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="all">Numéro</th>
+                            <th class="all">Id</th>
+                            <th class="all">Date de création</th>
+                            <th class="all">Contenu</th>
+                            <th class="all">Supprimer</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
-
-    <!--Tableau-->
-    <!--display-->
-        <table id="displayComments" class="cell-border compact stripe" style="width:100%">
-            <thead>
-                <tr>
-                    <th class="all">Numéro</th>
-                    <th class="all">Id</th>
-                    <th class="all">Date de création</th>
-                    <th class="all">Contenu</th>
-                    <th class="all">Supprimer</th>
-                </tr>
-            </thead>
-        </table>
-</div>
+    </div>
+</section>
 <!--requéte ajax-->
     <script type="text/javascript">
         //J'insére les données

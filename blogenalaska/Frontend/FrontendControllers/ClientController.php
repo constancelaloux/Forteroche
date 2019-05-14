@@ -92,7 +92,7 @@ class ClientController
                                // print_r($passwordFromManager);
                                 $passwordFromDb = $passwordFromManager->password();
                                 $idOfClientVar = $passwordFromManager->id();
-                                $imageOfClientVar = $passwordFromManager->imageClient();
+                                $imageOfClientVar = $passwordFromManager->imageComment();
                                // print_r($imageOfClientVar);
                                 //die();
 
@@ -107,6 +107,7 @@ class ClientController
                                         $_SESSION['clientPassword'] = $clientPasswordVar;
                                         $_SESSION['ClientId'] = $idOfClientVar;
                                         $_SESSION['imageComment'] = $imageOfClientVar;
+                                        //print_r($_SESSION['imageComment']);
 
                                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             

@@ -36,6 +36,7 @@
             <?php 
                 if(isset($_SESSION['clientUsername'])) 
                     {
+                    
             ?>
                         <div class="d-flex">
                             <div class="dropdown mr-1">

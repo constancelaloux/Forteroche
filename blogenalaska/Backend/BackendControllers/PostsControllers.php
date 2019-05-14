@@ -68,7 +68,6 @@ class PostsControllers
         //Fonction qui compte les articles
         function countArticles()
             {
-            //print_r("jysuis je compte mes articles");
                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
@@ -181,6 +180,7 @@ class PostsControllers
                 $articleSubject = $myArticlesToModify->subject();
                 $articleContent = $myArticlesToModify->content();
                 $articleImage = $myArticlesToModify->image();
+                //echo "<image src='$articleImage' />";
 
                 $id = $myArticlesToModify->id();
 
@@ -194,11 +194,11 @@ class PostsControllers
                         {
                             if (!empty($_POST['id']))
                                 {
-
                                     // check if the id has been set
                                     $id = ($_POST['id']);
                                     $myContentOfArticle = ($_POST['content']);
                                     $myTitleOfArticle = ($_POST['title']);
+                                    $myImageOfArticle =  ($_POST['image']);
                                 }
                             else 
                                 {
@@ -211,7 +211,8 @@ class PostsControllers
                         ([
                             'content' => $myContentOfArticle,
                             'subject' => $myTitleOfArticle,
-                            'id' => $id
+                            'id' => $id,
+                            'image'=>$myImageOfArticle
                         ]);
 
                     $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();

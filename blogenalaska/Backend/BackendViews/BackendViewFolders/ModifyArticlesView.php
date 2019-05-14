@@ -43,16 +43,12 @@ else
 <?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?> ?>
 
 
-    <h1>Modifier votre article</h1>
-
         <script type="text/javascript">
             tinymce.init
                 ({ 
                         selector:'#mytextarea',
 
                         // langue
-                        //language : "fr_FR",
-                        //language: 'fr_FR',
                         language_url: '/blogenalaska/Public/js/fr_FR.js',
                         font_formats: 'Arial=arial',
                         //toolbar: ['fontsizeselect', 'image'],
@@ -67,31 +63,38 @@ else
 
    
     <form action="/blogenalaska/index.php?action=articleUpdated" id="formArticle" method="post">
-        <h1>Ajouter un nouvel article</h1>
-        <div class="titleOfArticle">
-            <label for="titleArticle">Titre de l'article</label>
-            <input type="text" id="titleArticle" name="title" value ='<?php echo $articleSubject?>' />
-        </div>
-        
-        <div class="contentOfArticle">
-            <label for="contentArticle">Contenu de l'article</label>
-            <textarea id="mytextarea" name="content"> <?php echo $articleContent?></textarea>
-        </div>
-        
-        
-        <div  class="imageOfArticle">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
-            <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->       
-        </div>
-        <!--<input type="image" class="preview">-->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h1>Modifier votre article</h1>
+                    <div class="titleOfArticle">
+                        <label for="titleArticle">Titre de l'article</label>
+                        <input type="text" id="titleArticle" name="title" value ='<?php echo $articleSubject?>' />
+                    </div>
 
-        <div class="preview"><img id="image" src="<?php echo $articleImage; ?>"/> </div>
+                    <div class="contentOfArticle">
+                        <label for="contentArticle">Contenu de l'article</label>
+                        <textarea id="mytextarea" name="content"> <?php echo $articleContent?></textarea>
+                    </div>
 
-            <input type="hidden" class="valueHidden" name="image" value="<?php echo $articleImage ?>"/>
-        <div>
-        <input type="hidden" name="id" value="<?= $id ?>" />
-        <div>
-            <input type = "submit" value="Valider"/>
+
+                    <div  class="imageOfArticle">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
+                        <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->       
+                    </div>
+                    <!--<input type="image" class="preview">-->
+                    <div class="preview"><?php echo $articleImage; ?></div>
+
+                    <!--<div class="preview"><img id="image" src="'.echo $articleImage.'"/> </div>-->
+
+                        <input type="hidden" class="valueHidden" name="image" value=""/>
+                    <div>
+                    <input type="hidden" name="id" value="<?= $id ?>" />
+                    <div>
+                        <input type = "submit" value="Valider"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     

@@ -80,26 +80,32 @@ else
 
    
     <form action="/blogenalaska/index.php?action=saveNewArticle" id="formArticle" method="post">
-        <h1>Ajouter un nouvel article</h1>
-        <div class="titleOfArticle">
-            <label for="titleArticle">Titre de l'article</label>
-            <input type="text" id="titleArticle" name="title" />
-        </div>
-        <div class="contentOfArticle">
-            <label for="contentArticle">Contenu de l'article</label>
-            <textarea id="mytextarea" name="content"> <p></textarea>
-        </div>
-          
-        <div  class="imageOfArticle">
-            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
-            <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
-            
-        </div>
-        <!--<input type="image" class="preview">-->
-        <div class="preview"><img id="image" src="/blogenalaska/public/images/upload.png" /> </div>
-        <input type="hidden" class="valueHidden" name="image" value=""/>
-        <div>         
-            <input type = "submit" value="Valider"/>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <h1>Ajouter un nouvel article</h1>
+                    <div class="titleOfArticle">
+                        <label for="titleArticle">Titre de l'article</label>
+                        <input type="text" id="titleArticle" name="title" />
+                    </div>
+                    <div class="contentOfArticle">
+                        <label for="contentArticle">Contenu de l'article</label>
+                        <textarea id="mytextarea" name="content"> <p></textarea>
+                    </div>
+
+                    <div  class="imageOfArticle">
+                        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>
+                        <!--<div class="preview"><img name="image" id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
+
+                    </div>
+                    <!--<input type="image" class="preview">-->
+                    <div class="preview"><img id="image" src="/blogenalaska/public/images/upload.png" /> </div>
+                    <input type="hidden" class="valueHidden" name="image" value=""/>
+                    <div>         
+                        <input type = "submit" value="Valider"/>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
     

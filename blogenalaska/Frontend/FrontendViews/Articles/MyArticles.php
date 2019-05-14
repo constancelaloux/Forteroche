@@ -94,7 +94,10 @@
                                         $commentsToDisplay = $comments->content();
                                         $commentsDate = $comments->createdate();
                                         $commentsDateToDisplay=$commentsDate->format('Y-m-d');
-                                        echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",'<button id="reportComment">Signaler</button>',"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDateToDisplay, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button id="modifyComment" > Modifier</button>',"\n", '</div>',"\n", '</div>';                
+                                        echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",
+                                                '<button id="reportComment"><a href="/blogenalaska/index.php?action=moderateComments">Signaler à l\'administrateur</a></button>',"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDateToDisplay, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button id="modifyComment" > Modifier</button>',"\n", '</div>',"\n", '</div>';                
+                                    
+                                       // '<button id="reportComment" action="/blogenalaska/index.php?action=moderateComments>Signaler</button>'
                                     }
                             } 
                     ?>
