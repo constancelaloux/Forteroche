@@ -132,16 +132,42 @@ class CommentsController
                 $commentManager = new CommentsManager($db);
 
                 $commentsCount = $commentManager->countChapterComments($comment);
-                //print_r($commentsCount);
                 
                 return $commentsCount;
                 //require 'Backend/BackendViews/BackendViewFolders/BackendView.php';
             }
         
         //Je signale un commentaire indésirable à l'administrateur du site
-        function moderateComment()
+        //Et j'ajoute la mention indésirable en base de données
+        function unwantedComments()
             {
-                print_r("j y suis");
+               if (isset($_GET['id']) AND isset ($_GET['p']) AND isset ($_GET['idarticle']))
+                    {
+                        if (!empty($_GET['id']) AND (!empty($_GET['p'])) AND(!empty($_GET['idarticle'])))
+
+                            {
+                                $myIdComment = ($_GET['id']);
+                                $unwantedComment = ($_GET['p']);
+                                $id = ($_GET['idarticle']);
+                            }
+                        else 
+                            {
+                                echo 'pas de commentaire séléctionné';
+                            }
+                    }
+                    
+                $comment = new Comment
+                        ([
+
+                            'id' => $myIdComment,
+                            'status' => $unwantedComment
+
+                        ]);
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $commentManager = new CommentsManager($db);
+                $commentManager->addStatusOfComment($comment);
+                header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$id");
 
             }
     }

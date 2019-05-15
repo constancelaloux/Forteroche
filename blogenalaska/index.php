@@ -162,9 +162,9 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         break;
                     
                         //Modérer les comentaires
-                        case 'moderateComments':
+                        case 'unwantedComments':
                             $commentsController = new CommentsController();
-                            $commentsController->moderateComment();
+                            $commentsController->unwantedComments();
                         break;
                     
                 //CLIENT                    

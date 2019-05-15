@@ -19,6 +19,7 @@ class Comment
         private $_content;
         private $_createdate;
         private $_updatedate;
+        private $_status;
 
         //ci, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
         //Il faudra donc lui spécifier en paramétre dans pdoConnection.
@@ -97,6 +98,11 @@ class Comment
             {
                 return $this->_updatedate;
             }
+        
+        public function status()
+            {
+                return $this->_status;
+            }
 
 
         //liste des setters 
@@ -164,5 +170,13 @@ class Comment
         public function setUpdatedate(DateTime $updatedate)
             {
                 $this->_updatedate = $updatedate;
+            }
+            
+        public function setStatus($status)
+            {
+                if(is_string($status))
+                {
+                    $this->_status = $status;                
+                }
             }
     }

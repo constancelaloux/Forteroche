@@ -67,7 +67,8 @@ class CommentsManager
         public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
             {
                 //$getComments = $this->_db->prepare("SELECT * FROM comments WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage ");
-                $getComments = $this->_db->prepare("SELECT  a.firstname firstname , a.imageComment imageComment, c.create_date create_date, c.update_date update_date, c.id_comments_author id_comments_author, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author  WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
+                $getComments = $this->_db->prepare("SELECT  a.firstname firstname , a.imageComment imageComment, c.create_date create_date, c.update_date update_date, c.id_comments_author id_comments_author, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author "
+                        . "WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
                 $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );
                 $getComments->execute();
                 
@@ -104,7 +105,7 @@ class CommentsManager
 
                 $articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, content FROM comments");
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, content FROM comments WHERE status = 'unwanted'");
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())
@@ -141,6 +142,18 @@ class CommentsManager
             {
                 //Executer une requéte de type delete.
                 $this->_db->exec('DELETE FROM comments WHERE id = '.$comment->id());
+            }
+            
+        public function addStatusOfComment(Comment $comment)
+            {
+                $sendStatusCommentDatas = $this->_db->prepare("UPDATE comments
+                        SET status = (:status)
+                        WHERE id = :id");
+    
+                //$sendCommentDatas->bindValue(':title', $comment->title(), \PDO::PARAM_STR);
+                $sendStatusCommentDatas->bindValue(':status', $comment->status(), \PDO::PARAM_STR);
+                $sendStatusCommentDatas->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+                $sendStatusCommentDatas->execute();
             }
             
         public function setDb(\PDO $db)
