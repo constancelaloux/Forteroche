@@ -261,16 +261,26 @@
 <!--Mes derniers ouvrages-->
 <section id="myLastBooks">
     <p>MES DERNIERS OUVRAGES</p>
+
     <!--<div id="books">-->
       <div class="container">
         <section class="row">
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-2 col-sm-2 col-md-2">
                     <img src="/blogenalaska/public/images/livre1.png" alt="logo" style="width:100%">
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-2 col-sm-2 col-md-2">
                     <img src="/blogenalaska/public/images/livre2.jpg" alt="logo" style="width:100%">
             </div>
-            <div class="col-xs-4 col-sm-4 col-md-4">
+            <div class="col-xs-2 col-sm-2 col-md-2">
+                    <img src="/blogenalaska/public/images/livre3.png" alt="logo" style="width:100%">  
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
+                    <img src="/blogenalaska/public/images/livre1.png" alt="logo" style="width:100%">
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
+                    <img src="/blogenalaska/public/images/livre2.jpg" alt="logo" style="width:100%">
+            </div>
+            <div class="col-xs-2 col-sm-2 col-md-2">
                     <img src="/blogenalaska/public/images/livre3.png" alt="logo" style="width:100%">  
             </div>
         </section>

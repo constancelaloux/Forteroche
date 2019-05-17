@@ -133,6 +133,12 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsAdminController = new CommentsAdminControler();
                             $commentsAdminController -> removeComments(); 
                         break;
+                    
+                        //Valider les commentaires du datatables qui ont ete considérés comme signalés
+                        case 'validateArticles':
+                            $commentsAdminController = new CommentsAdminControler();
+                            $commentsAdminController -> validateComment(); 
+                            
 
 //FRONTEND              
                         //Je vais vers la page d'accueil de mon blog
@@ -166,6 +172,10 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsController = new CommentsController();
                             $commentsController->unwantedComments();
                         break;
+                    
+                        case 'addStatusAndNumberOfClicksToComment':
+                            $commentsController = new CommentsController();
+                            $commentsController->addStatusAndNumberOfClicksToComment();
                     
                 //CLIENT                    
                         //Je vais vers le formulaire de connexion client

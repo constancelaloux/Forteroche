@@ -84,11 +84,12 @@
                                 <p>Aucun commentaire n'a encore été posté. Soyez le premier à en laisser un !</p>
                     <?php
                             }
-                         else
+                        else
                             {
                                 foreach ($myComment as $comments) 
                                     { 
                                         $idComments = $comments->id();
+                                        //print_r($idComments);
                                         $imageClientToDisplay = $comments->imageComment();
                                         $nameToDisplay = $comments->firstname();
                                         //$titleToDisplay = $comments->title();
@@ -97,11 +98,38 @@
                                         $commentsDateToDisplay=$commentsDate->format('Y-m-d');
                                         $unwantedCommments = "unwanted";
                                         echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",
-                                                '<button id="reportComment"><a href="/blogenalaska/index.php?action=unwantedComments&id='.$idComments.'&p='.$unwantedCommments.'&idarticle='.$commentId.'">Signaler à l\'administrateur</a></button>',"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDateToDisplay, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button id="modifyComment" > Modifier</button>',"\n", '</div>',"\n", '</div>';                
+                                                '<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>'
+                                                ,"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDateToDisplay, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button id="modifyComment"> Modifier</button>',"\n", '</div>',"\n", '</div>';                
                                     }
                             } 
                     ?>
-                </div>           
+                </div>   
+                <script>
+                    count=1;
+                    $('.reportComment').click(function() 
+                        { 
+                            event.preventDefault();
+                            var id = $(this).attr('id');
+                            console.log(id);
+                            //var number = 1;
+                            //var number = count++;
+                            var number = count;
+                            //$('span').text(count);
+
+                            $.ajax
+                                ({
+                                    url: "/blogenalaska/index.php?action=unwantedComments&p=<?php echo $unwantedCommments ?>&idarticle=<?php echo $commentId ?>",
+                                    type: 'POST',
+                                    data: {number:number, id: id}, // An object with the key 'submit' and value 'true;
+                                    success: function (result) 
+                                        {
+                                            console.log("test");
+                                            //location.reload(true);
+                                            //alert("Your bookmark has been saved");
+                                        }
+                                });  
+                        });
+                </script>
 
                 <!--Navigation des commentaires-->
                 <div id="navComments">

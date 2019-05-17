@@ -13,6 +13,7 @@ class Comment
         private $_id;
         private $_idFromArticle;
         private $_id_comments_author;
+        private $_subject;
         private $_imageComment;
         private $_firstname;
         //private $_title;
@@ -20,6 +21,7 @@ class Comment
         private $_createdate;
         private $_updatedate;
         private $_status;
+        private $_countclicks;
 
         //ci, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
         //Il faudra donc lui spécifier en paramétre dans pdoConnection.
@@ -103,6 +105,16 @@ class Comment
             {
                 return $this->_status;
             }
+            
+        public function countclicks()
+            {
+                return $this->_countclicks;
+            }
+            
+        public function subject()
+            {
+                return $this->_subject;
+            }
 
 
         //liste des setters 
@@ -177,6 +189,24 @@ class Comment
                 if(is_string($status))
                 {
                     $this->_status = $status;                
+                }
+            }
+        
+        public function setCountclicks($countclicks)
+            {
+                $countclicks = (int) $countclicks;
+
+                if ($countclicks > 0)
+                    {
+                        $this->_countclicks = $countclicks;
+                    }
+            }
+            
+        public function setSubject($subject)
+            {
+                if(is_string($subject))
+                {
+                    $this->_subject = $subject;                
                 }
             }
     }

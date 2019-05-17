@@ -98,6 +98,7 @@ class CommentsManager
                 return $data;
             }
         
+            
         //Je récupére les commentaires pour les afficher dans le tableau datatables
         public function getComments()
             {
@@ -105,14 +106,14 @@ class CommentsManager
 
                 $articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, content FROM comments WHERE status = 'unwanted'");
+                $getArticlesDatas = $this->_db->prepare("SELECT a.subject subject, c.id id, c.create_date create_date, c.content content, c.countclicks countclicks FROM articles a INNER JOIN comments c ON a.id = c.id_From_Article WHERE status = 'unwanted'order by countclicks DESC");
+  
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())
                     {
                         $tmpArticle =  new Comment($donnees);
 
-        
                         $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         $tmpArticle->setCreatedate($articleDate);
                         
@@ -148,12 +149,33 @@ class CommentsManager
             {
                 $sendStatusCommentDatas = $this->_db->prepare("UPDATE comments
                         SET status = (:status)
+                        ,countclicks = :countclicks
                         WHERE id = :id");
     
                 //$sendCommentDatas->bindValue(':title', $comment->title(), \PDO::PARAM_STR);
                 $sendStatusCommentDatas->bindValue(':status', $comment->status(), \PDO::PARAM_STR);
                 $sendStatusCommentDatas->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+                $sendStatusCommentDatas->bindValue(':countclicks', $comment->countclicks(), \PDO::PARAM_INT);
                 $sendStatusCommentDatas->execute();
+            }
+            
+        public function getNumberOfClicksComment(Comment $comment)
+            {
+                $getNumberOfClicksDatas = $this->_db->prepare("SELECT countclicks FROM comments WHERE id = :id");
+                $getNumberOfClicksDatas->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+                //$getNumberOfClicksDatas->bindValue(':countclicks', $comment->countclicks(), \PDO::PARAM_STR);
+                $getNumberOfClicksDatas->execute();
+                //$data = $getNumberOfClicksDatas->fetch();
+                return new Comment($getNumberOfClicksDatas->fetch());
+                //return $data;
+            }
+            
+        //Je vais supprimer les champs status et countclicks en fonction de l'id en base de données
+        public function validateComment(Comment $comment)
+            {
+                //Executer une requéte de type delete.
+                $this->_db->exec('UPDATE comments SET status = "", countclicks = 0 WHERE id = '.$comment->id());
+                //$this->_db->exec('DELETE status, countclicks FROM comments WHERE id = '.$comment->id());
             }
             
         public function setDb(\PDO $db)

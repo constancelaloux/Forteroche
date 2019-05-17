@@ -66,8 +66,10 @@ else
                             <th class="all">Numéro</th>
                             <th class="all">Id</th>
                             <th class="all">Date de création</th>
+                            <th class="all">Nom du Chapitre</th>
                             <th class="all">Contenu</th>
-                            <th class="all">Supprimer</th>
+                            <th class="all">Nombre de clicks</th>
+                            <th class="all">Supprimer/Valider</th>
                         </tr>
                     </thead>
                 </table>
@@ -82,7 +84,8 @@ else
             {
                 var table = $('#displayComments').DataTable
                     (
-                        {   
+                        {
+                            "order": [[ 5, "desc" ]],
                             processing: true,
                             //serverSide: true,
                             ajax:
@@ -110,15 +113,18 @@ else
                                     {data: "0", visible: false},
                                     {data: "1"},
                                     {data: "2"},
+                                    {data: "3"},
+                                    {data: "4"},
                                     {
                                        // data: null,
                                         className: "center",
-                                        defaultContent: '<button class="btn-delete" type="button">Supprimer</button></td><td></td>'
+                                        defaultContent: '<td><button class="btn-delete" type="button">Supprimer</button></td><td><button class="btn-validate" type="button">Valider le commentaire</button></td>'
                                     }
                                 ]
                         }
                     );
-                                       // La liste des articles dans le tableau est numéroté
+
+                    // La liste des articles dans le tableau est numéroté
                     //  create index for table at columns zero
                     table.on('order.dt search.dt', function () 
                         {
@@ -127,7 +133,7 @@ else
                             });
                         }).draw();
                     
-                    //Supprimer des articles
+                //Supprimer des articles
                 $('#displayComments').on( 'click', '.btn-delete', function () 
                     {
                         //var id = $(this).attr("id");
@@ -156,6 +162,47 @@ else
                                                 console.log('ca ne fonctionne pas');
                                             }
                                     });
+                             };            
+                    } );
+                    
+                    
+                //Valider un article
+                $('#displayComments').on( 'click', '.btn-validate', function () 
+                    {
+                        //var id = $(this).attr("id");
+                        var datas = table.row( $(this).parents('tr') ).data();
+                        var id = datas[ 0 ];
+                        alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
+                        //console.log(id);
+                        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
+                        //var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
+                        if(confirm("Are you sure you want to validate this?"))
+                            {
+                                //table
+                                //    .row( $(this).parents('tr') )
+                                //    .remove()
+                                //    .draw();
+                                $.ajax
+                                ({
+                                    url:"/blogenalaska/index.php?action=validateArticles",
+                                    method:"POST",
+                                    data:{id:id},
+                                    dataType: 'html',
+                                    success:function(data)
+                                        {
+                                            console.log('c cool');
+                                            console.log(data);
+                                            table.ajax.reload();
+                                            /*$tr.find('td').fadeOut(1000,function()
+                                                { 
+                                                    $tr.remove();
+                                                });*/
+                                        },
+                                    error:function(response)
+                                        {
+                                            console.log('ca ne fonctionne pas');
+                                        }
+                                });
                              };            
                     } );
                     

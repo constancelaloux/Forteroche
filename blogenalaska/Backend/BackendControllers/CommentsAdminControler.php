@@ -30,12 +30,17 @@ class commentsAdminControler
 
                 foreach ($commentsFromManager as $comments) 
                     {
+                    //print_r($comments);
                         $row = array();
 
                         $row[] = $comments->id();
 
                         $commentDate = $comments->createdate();
                         $row[] = $commentDate->format('Y-m-d');
+                        
+                        $row[] = $comments->subject();
+                        //print_r($row[] = $comments->subject());
+                        
                         if (strlen($comments->content()) <= 400)
                             {
                                  $row[] = $comments->content();
@@ -60,7 +65,7 @@ class commentsAdminControler
                                 $row[] = $updateCommentDate->format('Y-m-d');
                             }*/
 
-
+                        $row[] = $comments->countclicks();
                         $data[] = $row;
 
                     }
@@ -70,6 +75,7 @@ class commentsAdminControler
                                 "data" => $data
                             );
                             //print_r($json_data);
+                        
                         echo json_encode($json_data);
             }
             
@@ -99,5 +105,34 @@ class commentsAdminControler
                     $commentsManager = new CommentsManager($db);
 
                     $commentsManager->removeComment($comment);
+            }
+        
+        //Valider les commentaires
+        function validateComment()
+            {
+                           if (isset($_POST['id']))
+                    {
+                        if (!empty($_POST['id']))
+                            {
+                                // check if the id has been set
+                                $myIdComment = ($_POST['id']);
+                            }
+                        else 
+                            {
+                                echo 'pas d article séléctionné';
+                                require'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                            }
+                    }  
+                    $comment = new Comment
+                        ([
+
+                            'id' => $myIdComment
+                        ]);
+
+                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                    $commentsManager = new CommentsManager($db);
+
+                    $commentsManager->validateComment($comment);
             }
     }

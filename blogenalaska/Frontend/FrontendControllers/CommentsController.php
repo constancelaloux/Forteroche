@@ -141,14 +141,15 @@ class CommentsController
         //Et j'ajoute la mention indésirable en base de données
         function unwantedComments()
             {
-               if (isset($_GET['id']) AND isset ($_GET['p']) AND isset ($_GET['idarticle']))
+               if (isset($_POST['id']) AND isset ($_GET['p']) AND isset ($_GET['idarticle']) AND isset ($_POST['number']))
                     {
-                        if (!empty($_GET['id']) AND (!empty($_GET['p'])) AND(!empty($_GET['idarticle'])))
+                        if (!empty($_POST['id']) AND (!empty($_GET['p'])) AND(!empty($_GET['idarticle'])) AND(!empty($_POST['number'])))
 
                             {
-                                $myIdComment = ($_GET['id']);
+                                $myIdComment = ($_POST['id']);
                                 $unwantedComment = ($_GET['p']);
                                 $id = ($_GET['idarticle']);
+                                $number = ($_POST['number']);
                             }
                         else 
                             {
@@ -160,14 +161,49 @@ class CommentsController
                         ([
 
                             'id' => $myIdComment,
-                            'status' => $unwantedComment
+                            //'status' => $unwantedComment,
+                            'countclicks'=>$number
 
                         ]);
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
                 $commentManager = new CommentsManager($db);
+                $nbrClicks = $commentManager->getNumberOfClicksComment($comment);
+                //print_r($nbrClicks);
+                $clicks = $nbrClicks->countclicks();
+                
+                $clicksIncremented = $clicks + $number;
+                header("Location: /blogenalaska/index.php?action=addStatusAndNumberOfClicksToComment&id=$id&idcomment=$myIdComment&unwantedcomment=$unwantedComment&clicks=$clicksIncremented");
+                //print_r($clicks);
+                //exit();
+            }
+        function addStatusAndNumberOfClicksToComment()
+            {
+            //print_r($_GET['id']);
+            //exit();
+               if (isset($_GET['id']) AND isset ($_GET['idcomment']) AND isset ($_GET['unwantedcomment']) AND isset ($_GET['clicks']))
+                    {
+                        if (!empty($_GET['id']) AND (!empty($_GET['idcomment'])) AND(!empty($_GET['unwantedcomment'])) AND(!empty($_GET['clicks'])))
+                            {
+                                $myIdComment = ($_GET['idcomment']);
+                                $unwantedComment = ($_GET['unwantedcomment']);
+                                $id = ($_GET['id']);
+                                $numberOfClicks = ($_GET['clicks']);
+                            }
+                  
+                    }
+                    
+                $comment = new Comment
+                    ([
+
+                            'id' => $myIdComment,
+                            'status' => $unwantedComment,
+                            'countclicks'=>$numberOfClicks
+                    ]);
+                
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $commentManager = new CommentsManager($db);           
                 $commentManager->addStatusOfComment($comment);
                 header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$id");
-
             }
     }
