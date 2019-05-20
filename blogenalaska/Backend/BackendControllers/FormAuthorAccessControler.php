@@ -26,44 +26,54 @@ class FormAuthorAccessControler
         //Je récupére le formulaire pour envoyer des données administrateur en bdd
         function getFormToCreateNewAdmin()
             {
-                require 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                require_once 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
             }
             
         //Fonction qui permet d'nvoyer les identifiants de l'utilisateur du backend en base
         function createNewAdmin()
             {
-                //Connexion à la base de données et création des identifiants de Jean Forteroche
-                    if (isset($_POST['login']) AND isset($_POST['pass']))
-                        {
-                            if (!empty($_POST['login']) && !empty($_POST['pass']))
-                                {
-                                    // check if the username and the password has been set
-                                    $firstnameVar = ($_POST['firstname']);
-                                    
-                                    $surnameVar = ($_POST['surname']);
-                                    
-                                    $usernameVar = ($_POST['login']);
-       
-                                    $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
-                                    
-                                    $newAuthor = new Author
-                                        ([
-                                            'firstname' => $firstnameVar,
-                                            'surname' => $surnameVar,
-                                            'password' => $passwordVar,
-                                            'username' => $usernameVar
-                                        ]);
-                                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                try
+                    {
+                        //Connexion à la base de données et création des identifiants de Jean Forteroche
+                        if (isset($_POST['login']) AND isset($_POST['pass']))
+                            {
+                                if (!empty($_POST['login']) && !empty($_POST['pass']))
+                                    {
+                                        // check if the username and the password has been set
+                                        $firstnameVar = ($_POST['firstname']);
 
-                                    $manager = new AuthorManager($db);
-                                    $sendToTheManager = $manager->add($newAuthor);
-                                }
-                            else
-                                {
-                                    echo "Vous n'avez pas rempli le formulaire";
-                                    require'Backend/ AuthorFormAccess/CreateNewAuthor.php';
-                                }
-                        }
+                                        $surnameVar = ($_POST['surname']);
+
+                                        $usernameVar = ($_POST['login']);
+
+                                        $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+
+                                        $newAuthor = new Author
+                                            ([
+                                                'firstname' => $firstnameVar,
+                                                'surname' => $surnameVar,
+                                                'password' => $passwordVar,
+                                                'username' => $usernameVar
+                                            ]);
+                                        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                                        $manager = new AuthorManager($db);
+                                        $sendToTheManager = $manager->add($newAuthor);
+                                    }
+                                else
+                                    {
+                                        throw new Exception('Vous n\'avez pas rempli le formulaire!');
+                                        //echo "Vous n'avez pas rempli le formulaire";
+                                        //require_once'Backend/ AuthorFormAccess/CreateNewAuthor.php';
+                                    }
+                            }
+                    }
+                catch(Exception $e) 
+                    {
+                        // S'il y a eu une erreur, alors...
+                        echo 'Erreur : ' . $e->getMessage();
+                    }
+                require_once'Backend/ AuthorFormAccess/CreateNewAuthor.php';
             }
 
 //CONNEXION AU BACKEND PAR UN UTILISATEUR
@@ -71,7 +81,7 @@ class FormAuthorAccessControler
         //Je récupére le formulaire de connexion par default
         function getTheFormAdminConnexionBackend()
             {
-                require'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
             }
             
         //Fonction qui permet de vérifier les identifiants de l'utilisateur
@@ -79,72 +89,96 @@ class FormAuthorAccessControler
         //function transferDatatoModel($usernameVar,$passwordVar)
         function checkThePassAndUsername()
             {
-            //print_r("je vais recup mes variables de connexion et vérifier ma connexion");
                 // On vérifie les variables du formulaire si elles sont présentes et remplies
-                if (isset($_POST['username']) AND isset($_POST['password']))
+                try
                     {
-                        if (!empty($_POST['username']) && !empty($_POST['password']))
+                        if (isset($_POST['username']) AND isset($_POST['password']))
                             {
-                                // check if the username and the password has been set
-                                $usernameVar = ($_POST['username']);
-                                $passwordVar = ($_POST['password']);
- 
-                                $author = new Author(
-                                    [
-                                        'username' => $usernameVar,
-                                        'password' => $passwordVar
-                                        
-                                    ]); //Création d'un objet
-                                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
-
-                                $manager = new AuthorManager($db);
-                                $passwordFromManager = $manager->verify($author); // Appel d'une fonction de cet objet
-
-                                $passwordFromDb = $passwordFromManager->password();
-
-                                //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
-                                $AuthorPassword = password_verify($passwordVar, $passwordFromDb);
-
-
-                                if ($AuthorPassword)
-                                    { 
-                                        // Start the session
-                                        session_start();
-                                        $_SESSION['username'] = $usernameVar;
-                                        $_SESSION['password'] = $passwordVar;
-     
-                                        header('Location: /blogenalaska/index.php?action=countArticles');
-                                        
-                                    }
-                                else 
+                                if (!empty($_POST['username']) && !empty($_POST['password']))
                                     {
-                                        echo "Vos identifiants sont incorrects";
-                                        require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                                        // check if the username and the password has been set
+                                        $usernameVar = ($_POST['username']);
+                                        $passwordVar = ($_POST['password']);
+
+                                        $author = new Author(
+                                            [
+                                                'username' => $usernameVar,
+                                                'password' => $passwordVar
+
+                                            ]); //Création d'un objet
+                                        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                                        $manager = new AuthorManager($db);
+                                        $passwordFromManager = $manager->verify($author); // Appel d'une fonction de cet objet
+
+                                        $passwordFromDb = $passwordFromManager->password();
+
+                                        //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                                        $AuthorPassword = password_verify($passwordVar, $passwordFromDb);
+
+                                        if ($AuthorPassword)
+                                            { 
+                                                // Start the session
+                                                session_start();
+                                                $_SESSION['username'] = $usernameVar;
+                                                $_SESSION['password'] = $passwordVar;
+
+                                                header('Location: /blogenalaska/index.php?action=countArticles');        
+                                            }
+                                        else 
+                                            {
+                                                throw new Exception('Vos identifiants sont incorrects!');
+                                                //echo "Vos identifiants sont incorrects";
+                                                //require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                                            }
+
                                     }
 
+                                else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
+                                    {
+                                        throw new Exception('Tous les champs ne sont pas remplis !');
+                                        //echo "Remplissez les champs suivants";
+                                        //require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                                        //header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                                    }
                             }
-                            
-                        else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
-                            {
-                                echo "Remplissez les champs suivants";
-                                require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
-                            }
+                    } 
+                catch(Exception $e) 
+                    {
+                        // S'il y a eu une erreur, alors...
+                        echo 'Erreur : ' . $e->getMessage();
                     }
-
+                require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
             }
+            
 //DECONNEXION DU BACKEND PAR L'UTILISATEUR            
         function disconnect()
             {
-                session_start();
-                // Suppression des variables de session et de la session
-                // Réinitialisation du tableau de session
-                // On le vide intégralement
-                $_SESSION = array();
-                // On détruit les variables de notre session
-                session_unset ();
-                session_destroy();
-                
-                header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                try
+                    {
+                        if (disconnect()===TRUE)
+                            {
+                                session_start();
+                                // Suppression des variables de session et de la session
+                                // Réinitialisation du tableau de session
+                                // On le vide intégralement
+                                $_SESSION = array();
+                                // On détruit les variables de notre session
+                                session_unset ();
+                                session_destroy();
+
+                                header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                            }
+                        else 
+                            {
+                                throw new Exception('Vous n etes pas déconnecté !');
+                            }
+                    } 
+                catch(Exception $e) 
+                    {
+                        // S'il y a eu une erreur, alors...
+                        echo 'Erreur : ' . $e->getMessage();
+                    }
             }
             
     }

@@ -129,9 +129,60 @@ and open the template in the editor.
         font-family: 'News Cycle', sans-serif;
         /*justify-content: center;*/
         text-align: center;
-        font-size: 32px;
+        font-size: 22px;
+        color: #72777c;
+        font-size: 14px;
+        width: 320px;
+        padding: 8% 0 0;
+        margin: auto;
     }
-
+     
+.username
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+.password
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+input#username
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+    
+input#password
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+    
+#submitAuthorFormConnection input
+    {
+        background: #0085ba;
+        border-color: #0073aa #006799 #006799;
+        box-shadow: 0 1px 0 #006799;
+        color: #fff;
+        text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    } 
+    
+.formTitle
+    {
+        border-left: 4px solid #00a0d2;
+        padding: 12px;       
+    }
+    
+    
+    
+    
 /*HEADER DU BACKEND*/
 /*Je met une marge entre la barre de menu et le contenu*/
 .articles
