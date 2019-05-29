@@ -18,7 +18,10 @@ require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendMo
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/AuthorManager.php';
-    
+ 
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php';
+//require("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php");
+
 class FormAuthorAccessControler
     {
 //CREATION D'UN ADMIN
@@ -63,14 +66,12 @@ class FormAuthorAccessControler
                                 else
                                     {
                                         throw new Exception('Vous n\'avez pas rempli le formulaire!');
-                                        //echo "Vous n'avez pas rempli le formulaire";
-                                        //require_once'Backend/ AuthorFormAccess/CreateNewAuthor.php';
                                     }
                             }
                     }
                 catch(Exception $e) 
                     {
-                        // S'il y a eu une erreur, alors...
+                         //S'il y a eu une erreur, alors...
                         echo 'Erreur : ' . $e->getMessage();
                     }
                 require_once'Backend/ AuthorFormAccess/CreateNewAuthor.php';
@@ -137,9 +138,6 @@ class FormAuthorAccessControler
                                 else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
                                     {
                                         throw new Exception('Tous les champs ne sont pas remplis !');
-                                        //echo "Remplissez les champs suivants";
-                                        //require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
-                                        //header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
                                     }
                             }
                     } 
@@ -156,28 +154,28 @@ class FormAuthorAccessControler
             {
                 try
                     {
-                        if (disconnect()===TRUE)
-                            {
-                                session_start();
-                                // Suppression des variables de session et de la session
-                                // Réinitialisation du tableau de session
-                                // On le vide intégralement
-                                $_SESSION = array();
-                                // On détruit les variables de notre session
-                                session_unset ();
-                                session_destroy();
+                        session_start();
 
+                        // Suppression des variables de session et de la session
+                        // Réinitialisation du tableau de session
+                        // On le vide intégralement
+                        $_SESSION = array();
+                        // On détruit les variables de notre session
+                        session_unset ();
+                        session_destroy();
+                        
+                        if(!session_id())
+                            {
                                 header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
                             }
-                        else 
+                        else
                             {
                                 throw new Exception('Vous n etes pas déconnecté !');
                             }
                     } 
                 catch(Exception $e) 
                     {
-                        // S'il y a eu une erreur, alors...
-                        echo 'Erreur : ' . $e->getMessage();
+                        header('Location: /blogenalaska/index.php?action=countArticles&error='.$e->getMessage());
                     }
             }
             

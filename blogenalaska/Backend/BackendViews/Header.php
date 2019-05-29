@@ -46,8 +46,22 @@
                     <div class="dropdown mr-1">
                             <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" id="dropdownMenuOffset" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-offset="10,20"  style="background-color: #23282d;">                                     
                                 <?php
-                                //Session 
-                                    echo 'Bonjour ' . $_SESSION['username'] . ' !<br />'
+                                //Session
+                                try
+                                    {
+                                        if (!empty($_SESSION['username']))
+                                            {
+                                                echo 'Bonjour ' . $_SESSION['username'] . ' !<br />';
+                                            }
+                                        else 
+                                            {
+                                                throw new Exception('Votre identifiant n\'existe plus');
+                                            }
+                                    }
+                                catch (Exception $e)
+                                    {
+                                        echo 'Erreur : ' . $e->getMessage();
+                                    }
                                 ;?>
                                 <img src="/blogenalaska/public/images/disconnect.png">
                             </button>
@@ -57,6 +71,16 @@
                                 </div>
                             </div>
                     </div> 
+                </div>
+                <!--message d'erreur si pas déconnecté-->
+                <div id="errorMessageDisplay">
+                    <p>
+                        <?php if (isset($error))
+                                {
+                                    echo $error;
+                                }
+                        ?>
+                    </p>
                 </div>
             </div>
         </nav>

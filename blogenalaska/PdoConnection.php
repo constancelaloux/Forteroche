@@ -6,18 +6,17 @@ use PDO;
 
 
 class PdoConnection
-{
-    public static function connect()
     {
-         //On créé un objet db
-        
-        $db = new \PDO('mysql:host=localhost;dbname=blogalaska;charset=utf8', 'root', 'root');
-        //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // On émet une alerte à chaque fois qu'une requête a échoué.
-        //print_r("ma connexion est ok");
-        return $db; 
-    }  
-}
+        public static function connect()
+            {
+                 //On créé un objet db
+                $db = new \PDO('mysql:host=localhost;dbname=blogalaska;charset=utf8', 'root', 'root');
+                //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // On émet une alerte à chaque fois qu'une requête a échoué.
+                //print_r("ma connexion est ok");
+                return $db; 
+            }  
+    }
 
 /*
  * To change this license header, choose License Headers in Project Properties.

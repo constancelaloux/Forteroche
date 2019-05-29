@@ -8,86 +8,13 @@ and open the template in the editor.
     Author     : constancelaloux
 */
 
-/*Le contenu s'affiche en dessous de la barre de menu*/
-/*.content
-    {
-        padding-top: 100px;
-    }*/
-
 /*Le bouton déconnexion se met en ligne*/
 .btn:not(:disabled):not(.disabled)
     {
         display: flex;
         flex-direction: row;
     }
-
-
-
-/*Page d'accueil du blog*/
-/*.container 
-    {
-      padding-right: 15px;
-      padding-left: 15px;
-      margin-right: auto;
-      margin-left: auto;
-    }
-
-.row 
-    {
-      margin-right: -15px;
-      margin-left: -15px;
-    }
-
-.listOfArticles
-    {
-        display: flex;
-        flex-direction: column;*/
-        /*justify-content: center;*/
-        /*text-align: center;*/
-        /*border: 2px solid green;*/
-    /*}*/
     
-/*#navArticles
-    {
-        display: flex;
-        justify-content: center;
-    }*/
-
-/*.listOfArticles a
-    {
-        color: black;
-        border: solid 1px black;
-        padding: 3px;
-        display: flex;
-        justify-content: center;*/
-        /*text-decoration: none; */ /*enlever le soulignage*/
-   /* }
-    
-    
-
-.listOfArticles a:hover 
-    {
-        color: black;
-        text-decoration: none;*/ /*enlever le soulignage*/
-     /*   background: #80808038;
-    }
-    
-.listOfArticles p
-    {*/
-        /*border: 2px solid red;*/
-    /*}*/
-    
-/*.carousel-inner
-    {
-        height: 100%;
-        width: 100%
-    }*/
-
-
-
-
-
-
 /*BACKEND*/
 /*ECRIRE UN ARTICLE*/
 /*selecteur d'image de l'éditeur wisywig */
@@ -221,10 +148,19 @@ input#password
     {
         margin-top: 150px;  
     }
+    
+/*HEADER DE BACKEND*/
+#errorMessageDisplay p
+    {
+        color: white;
+    }
+    
+    
+  
 
-    
-    
-    
+
+
+
 /*FRONTEND*/ 
 
  /*HEADER de HOMEPAGE.php*/
@@ -640,6 +576,15 @@ a.page-link
         font-weight: bold;
     }
     
+.myArticleById h2
+    {
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+        font-weight: bold;  
+        font-size: 2.125rem;
+        margin: 0 0 20px 0;
+    }
+    
 /*Les commentaires ont une bordure et se mettent en ligne, le fond est en blanc*/ 
 #myComments
     {
@@ -784,7 +729,17 @@ a.page-link
         width: 75px;
     }
 
-    
+/*Bouton signaler à l'administrateur*/   
+button.reportComment
+    {
+        margin-left: auto;        
+    }
+
+/*Je met une marge en dessous des blocs de commentaires*/
+#myComments
+    {
+        padding: 20px 5px 20px 5px;
+    }
     
     
     

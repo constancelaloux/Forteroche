@@ -23,18 +23,28 @@ class ArticlesManager
         //J'ajoute un article en bdd
         public function add(Article $articles)
             {
-                $sendArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date, image) '
-                        . 'VALUES(:content, :subject, NOW(), :image)');
+                $sendArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date, image, status) '
+                        . 'VALUES(:content, :subject, NOW(), :image, :status)');
 
                 $sendArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
                 $sendArticlesDatas->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
+                $sendArticlesDatas->bindValue(':status', $articles->status(), \PDO::PARAM_STR);
 
                 $sendArticlesDatas->execute();
             }
-            
+        
+        //Je sauvegarde un article en base de données mais celui ci doit etre valider pour etre afficher sur le blog
         public function save(Article $articles)
             {
+                $saveArticlesDatas = $this->_db->prepare('INSERT INTO articles (content, subject, create_date, image, status) '
+                . 'VALUES(:content, :subject, NOW(), :image, :status)');
+
+                $saveArticlesDatas->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
+                $saveArticlesDatas->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
+                $saveArticlesDatas->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
+                $saveArticlesDatas->bindValue(':status', $articles->status(), \PDO::PARAM_STR);
+                $saveArticlesDatas->execute();
                 /*if ($articles->isValid())
                     {
                         $articles->isNew() ? $this->add($articles) : $this->modify($articles);
@@ -67,7 +77,6 @@ class ArticlesManager
         public function get(Article $articles)
             {
                 //Je récupére mes articles en fonction de l'id
-                //print_r("je récup des données");
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
                 $getArticlesDatasFromId = $this->_db->prepare("SELECT * FROM articles WHERE id = :id");
@@ -83,7 +92,7 @@ class ArticlesManager
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
 
-                $articles = [];
+                //$articles = [];
                 
                 $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content FROM articles");
                 $getArticlesDatas->execute();
@@ -93,7 +102,9 @@ class ArticlesManager
                         $tmpArticle =  new Article($donnees);
 
         
-                        $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        setlocale(LC_TIME, "fr_FR");
+                        $articleDate = strftime("%H %B %Y", $date->getTimestamp());
                         $tmpArticle->setCreatedate($articleDate);
                         
                         //Je vérifie si j'ai Null ou une date d'enregistré en bdd
@@ -105,15 +116,15 @@ class ArticlesManager
                             }
                         else
                             {
-                                $articleUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+                                $date =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
+                                setlocale(LC_TIME, "fr_FR");
+                                $articleUpdateDate = strftime("%H %B %Y", $date->getTimestamp());
                                 $tmpArticle->setUpdatedate($articleUpdateDate);
                             }
                         
                         $articles[] = $tmpArticle;
                     }
-                
                 $data = $articles;
-
                 return $data;
             }
         
@@ -123,14 +134,29 @@ class ArticlesManager
                 // Prépare une requête de type UPDATE.
                 // Assignation des valeurs à la requête.
                 // Exécution de la requête.
-                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW() WHERE id = :id');
+                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW(), status = :status WHERE id = :id');
     
                 $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
-                //$dbRequestModifyArticle->bindValue(':auteur', $articles->auteur());
                 $dbRequestModifyArticle->bindValue(':content', $articles->content());
                 $dbRequestModifyArticle->bindValue(':image', $articles->image());
                 $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
+                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_INT);
+                $dbRequestModifyArticle->execute();
+            }
+            
+        //Je met a jour les articles dans la base de données et je sauvegarde, je ne valide pas
+        public function updateAndSave(Article $articles)
+            {
+                // Prépare une requête de type UPDATE.
+                // Assignation des valeurs à la requête.
+                // Exécution de la requête.
+                $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW(), status = :status WHERE id = :id');
     
+                $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
+                $dbRequestModifyArticle->bindValue(':content', $articles->content());
+                $dbRequestModifyArticle->bindValue(':image', $articles->image());
+                $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
+                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_INT);
                 $dbRequestModifyArticle->execute();
             }
         
@@ -138,7 +164,7 @@ class ArticlesManager
         public function getUnique()
             {
                 $data = array();
-                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT 0, 2"); 
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles  WHERE status = 'Valider' ORDER BY ID DESC LIMIT 0, 2");
                 $getLastArticle->execute();
                  while ($donnees = $getLastArticle->fetch())
                     {
@@ -153,13 +179,18 @@ class ArticlesManager
         public function getListOfFiveArticles($page,$nbrArticlesPerPage)
             {
                 $data = array();
-                $getLastArticle = $this->_db->prepare("SELECT * FROM articles ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage "); 
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles WHERE status = 'Valider' ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage"); 
                 $getLastArticle->execute(); 
                 while ($donnees = $getLastArticle->fetch())
                     {
                         $article =  new Article($donnees);
-                        $articleDate = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        setlocale(LC_TIME, "fr_FR");
+                        $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
+                        //print_r($date);
+                        $articleDate = strftime("%H %B %Y", $date->getTimestamp());
+                        //print_r($articleDate);
                         $article->setCreatedate($articleDate);
+
                         $data[] = $article;
                     } 
 

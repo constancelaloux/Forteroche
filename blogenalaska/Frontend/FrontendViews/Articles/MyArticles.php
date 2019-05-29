@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php  if(!isset($_SESSION))
+        {
+            session_start();
+        }
+?>
 <!--Include Footer et template -->
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
@@ -43,18 +47,18 @@
     <div class="container">
             <div class="row">
                 <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h2>
+                        <?php
+                            echo $titleToDisplay;
+                        ?>
+                    </h2>
+                        <?php
+                            echo $imageToDisplay;
+                        ?>
                     <p>
-                    <?php
-                        echo $titleToDisplay;
-                    ?>
-                    </p>
-                    <?php
-                        echo $imageToDisplay;
-                    ?>
-                    <p>
-                    <?php
-                        echo $articlesToDisplay;
-                    ?>
+                        <?php
+                            echo $articlesToDisplay;
+                        ?>
                     </p>   
                 </div>
             </div>
@@ -89,13 +93,11 @@
                                 foreach ($myComment as $comments) 
                                     { 
                                         $idComments = $comments->id();
-                                        //print_r($idComments);
                                         $imageClientToDisplay = $comments->imageComment();
                                         $nameToDisplay = $comments->firstname();
-                                        //$titleToDisplay = $comments->title();
                                         $commentsToDisplay = $comments->content();
                                         $commentsDate = $comments->createdate();
-                                        $commentsDateToDisplay=$commentsDate->format('Y-m-d');
+                                        $commentsDateToDisplay=$commentsDate;//->format('Y-m-d');
                                         $unwantedCommments = "unwanted";
                                         echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",
                                                 '<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>'
@@ -110,11 +112,7 @@
                         { 
                             event.preventDefault();
                             var id = $(this).attr('id');
-                            console.log(id);
-                            //var number = 1;
-                            //var number = count++;
                             var number = count;
-                            //$('span').text(count);
 
                             $.ajax
                                 ({
@@ -124,8 +122,6 @@
                                     success: function (result) 
                                         {
                                             console.log("test");
-                                            //location.reload(true);
-                                            //alert("Your bookmark has been saved");
                                         }
                                 });  
                         });
@@ -164,11 +160,6 @@
                                 <!--Formulaire pour envoyer des commentaires-->
                                 <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>&idClient=<?php echo $_SESSION['ClientId'] ?>" method="post">
                                     <p>Laissez votre commentaire</p>
-                                    
-                                    <!--<div class="titleOfComment">
-                                        <label for="titleComment">Titre</label>
-                                        <input type="text" id="titleComment" name="title" />
-                                    </div>-->
                                     
                                     <div  class="contentOfComment">
                                         <label for="comments">Commentaire</label>

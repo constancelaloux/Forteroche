@@ -89,12 +89,10 @@ class ClientController
 
                                 $manager = new ClientManager($db);
                                 $passwordFromManager = $manager->verify($client); // Appel d'une fonction de cet objet
-                               // print_r($passwordFromManager);
+
                                 $passwordFromDb = $passwordFromManager->password();
                                 $idOfClientVar = $passwordFromManager->id();
                                 $imageOfClientVar = $passwordFromManager->imageComment();
-                               // print_r($imageOfClientVar);
-                                //die();
 
                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
                                 $AuthorPassword = password_verify($clientPasswordVar, $passwordFromDb);
@@ -107,7 +105,6 @@ class ClientController
                                         $_SESSION['clientPassword'] = $clientPasswordVar;
                                         $_SESSION['ClientId'] = $idOfClientVar;
                                         $_SESSION['imageComment'] = $imageOfClientVar;
-                                        //print_r($_SESSION['imageComment']);
 
                                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             

@@ -16,7 +16,6 @@ class Comment
         private $_subject;
         private $_imageComment;
         private $_firstname;
-        //private $_title;
         private $_content;
         private $_createdate;
         private $_updatedate;
@@ -144,7 +143,6 @@ class Comment
                 if(is_string($imageComment))
                     {
                         $this->_imageComment = $imageComment;
-                        //print_r($this->_imageComment = $imageComment);
                     }
             }
             
@@ -153,7 +151,6 @@ class Comment
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
                 if(is_string($firstname))
                     {
-                    //print_r($this->_id_comments_author = $id_comments_author);
                         $this->_firstname = $firstname;
                     }
             }
@@ -174,14 +171,20 @@ class Comment
                     }
             }
 
-        public function setCreatedate(DateTime $createdate)
+        public function setCreatedate($createdate)
             {
-                $this->_createdate = $createdate;
+                if(is_string($createdate))
+                    {
+                        $this->_createdate = $createdate;
+                    }
             }
 
-        public function setUpdatedate(DateTime $updatedate)
+        public function setUpdatedate($updatedate)
             {
-                $this->_updatedate = $updatedate;
+                if(is_string($updatedate))
+                    {
+                        $this->_updatedate = $updatedate;
+                    }
             }
             
         public function setStatus($status)

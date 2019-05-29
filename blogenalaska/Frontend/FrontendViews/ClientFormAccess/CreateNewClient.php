@@ -82,17 +82,16 @@
                 processData : false,
                 data        : form_data,                         
                 type        : 'post',
+                success     : function(output)
+                    {
+                        var message;
+                        message = $("#newFile").attr("value",output);
 
-                //dataType    : 'json', // what type of data do we expect back from the server
-                success     : function(output){
-                    var message;
-
-                    message = $("#newFile").attr("value",output);
-
-                },
-                error: function(xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                }
+                    },
+                error: function(xhr, ajaxOptions, thrownError)
+                    {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                    }
             });
         }
 </script>

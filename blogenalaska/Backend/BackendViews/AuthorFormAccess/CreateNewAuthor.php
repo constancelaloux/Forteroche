@@ -15,5 +15,6 @@
 </form>
 
 
+
 <?php $content = ob_get_clean(); ?>
 <?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');

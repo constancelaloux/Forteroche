@@ -80,9 +80,14 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         
                         //J'envoi mon article en base de donnée
                         case 'saveNewArticle':
-                            //exit('je sors');
                             $postsController = new PostsControllers();     
                             $postsController->createNewArticle();
+                        break;
+                    
+                        //Je sauvegarde un article en base de données mais celui ci n'est pas validé
+                        case 'saveArticleBeforeToValidate':
+                            $postsController = new PostsControllers();     
+                            $postsController->saveNewArticle();
                         break;
                         
                         //Je reviens à la page principale du backend
@@ -98,10 +103,17 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $postsController->getArticlesFromId();
                         break;
                     
+                        //L'article est mis à jour en base de données
                         case 'articleUpdated':
                             $postsController = new PostsControllers();
                             $postsController->update(); 
                         break;
+                    
+                        //L'article est mis à jour en base de données mais il est juste sauvegardé
+                        case 'updateArticleBeforeToValidate':
+                            $postsController = new PostsControllers();
+                            $postsController->saveArticleFromUpdate(); 
+                        break;             
                         
                         // Je télécharge une image pour l'insérer dans mon article
                         case 'uploadImage':
@@ -167,115 +179,52 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsController->createNewComment();
                         break;
                     
-                        //Modérer les comentaires
+                        //je récupére en base de données le nombre de signalements en fonction de l'id du commentaire
                         case 'unwantedComments':
                             $commentsController = new CommentsController();
                             $commentsController->unwantedComments();
                         break;
                     
+                        //Je vais aller modifier le nombre de signalements en base de données et ajouter la mention unwanted
                         case 'addStatusAndNumberOfClicksToComment':
                             $commentsController = new CommentsController();
                             $commentsController->addStatusAndNumberOfClicksToComment();
                     
                 //CLIENT                    
-                        //Je vais vers le formulaire de connexion client
+                        //Je vais vers le formulaire de connexion de l'utilisateur
                         case 'getTheFormClientsConnexion':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->getClientFormConnexion();
                         break;
                     
-                        //Je vais vers le formulaire pour créer un client
+                        //Je vais vers le formulaire pour créer un utilisateur
                         case 'createNewClientForm':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->getFormToCreateNewClient();
                         break;
                     
-                        //Je vais inserer en base les données du client
+                        //Je vais inserer en base les données de l'utilisateur
                         case 'createNewClientPasswordAndUsername':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->createNewClientInDatabase();
                         break;
                         
-                        //Je vérifie les données mot de passe et identifiant du client pour accéder au blog
+                        //Je vérifie les données mot de passe et identifiant de l'utilisateur pour accéder au blog
                         case 'checkThePassAndUsernameOfClient':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->checkClientUsernameAndPassword();
                         break;
                     
-                        //bouton pour déconnecter le client
+                        //bouton pour déconnecter l'utilisateur
                         case 'disconnectTheClient':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->disconnectTheClient();
                         break;
                     
                 //EMAIL
+                        //L'utilisateur envoi un email à l'administrateur
                         case 'sendEmail':
                             $EmailFrontendController = new EmailController();
                             $EmailFrontendController->sendEmail();
-                        break;   
-                        
-                        //Je récupére les commentaires pour les afficher sur la page
-                        /*case 'iGetCommentsToshowInTheBlogPage':
-                            $commentsController = new CommentsController();
-                            $commentsController->getListOfComments(); 
-                        break;*/
-                    
-                        //Je récupére le dernier article pour l'afficher sur le blog    
-                        /*case 'getLastArticle':
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getUniqueArticle();
-                        break;*/
-                    
-                        //Je vais vers la vue ou s'affiche mes articles de mon blog
-                        /*case 'myArticlesViewPage':
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getTheArticleBlogPage();
-                        break;*/
-                        
-                        //Je vais vers la vue contact ou s'affiche le formulaire de contact
-                        /*case 'myContactViewPage':
-                            $blogFrontendController = new BlogController();
-                            $blogFrontendController->getTheContactBlogPage();
-                        break;*/
-                        //Je récupére le dernier article pour l'afficher sur le blog
-                        /*case 'goToLogOut';
-                            $logoutController = new doLogout();
-                            $logoutController->logout();*/
-                        /*case 'untestdelupload':
-                            $uploadController = new upload();
-                            $uploadController->upload(); */
-                        /*case 'actionGoToTheForm':
-                            $sessionController = new FormAuthorAccessControler();
-                            $sessionController->getTheFormConnexion();*/
-                            
-                        /*case 'checkThePassAndUsername':
-                            $sessionController = new FormAuthorAccessControler();
-                            $sessionController->checkThePassAndUsername();*/
-                        
-                        /*case 'mainBackendPage':
-                            $sessionController = new FormAuthorAccessControler();
-                            $sessionController->getMainPage();*/
-                            
-
-                            
-                        /*case 'datatablesArticles':
-                            $postsController = new PostsControllers();
-                            $postsController->getArticles();*/
-                        
-                        /*case 'removeArticles':
-                            $postsController = new PostsControllers();
-                            $postsController->deleteArticles();*/
-                            
-                        /*case 'writeAnArticle':
-                            $postsController = new PostsControllers();
-                            $postsController->writeAnArticle();*/
-                        
-                            /*case 'mainBackendPage':
-                            $postsController = new PostsControllers();
-                            $postsController->countArticles();
-                            $sessionController = new FormAuthorAccessControler();
-                            $sessionController->getTheMainBackendPage();*/
-                            
-                        //case 'countArticles':*/
-                        
+                        break;                           
                     }

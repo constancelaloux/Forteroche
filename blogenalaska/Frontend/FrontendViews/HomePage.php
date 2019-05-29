@@ -1,4 +1,8 @@
-<?php session_start(); ?>
+<?php  if(!isset($_SESSION))
+        {
+            session_start();
+        }
+?>
 <!--Include Footer et template -->
 <?php $title = 'Frontend main page'; ?>
 <?php ob_start(); ?>
@@ -97,7 +101,8 @@
                                             $idArticles = $articles->id();
 
                                             $dateCreate = $articles->createdate();
-                                            $articleDateCreate = $dateCreate->format('Y-m-d');
+                                            
+                                            $articleDateCreate = $dateCreate;//->format('l jS F Y');
 
                                             $image = $articles->image();
                                             
@@ -239,13 +244,7 @@
                                             </div>
 
                                             <div class="titleFromLastArticle">
-                                                <!--<div class="col-lg-12  col-md-12 col-sm-12">-->
                                                     <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo $titleLastArticle?></a></p>
-                                                <!--<div class="col-lg-12  col-md-12 col-sm-12">-->
-                        <?php                        
-                                                    //echo $contentArticleToDisplay; //, "\n", '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idLastArticle, '">lire la suite', '</a></p>';//$contentLastArticle;                
-                        ?>
-                                               <!--</div>-->
                                             </div>
                                         </div>
                         <?php

@@ -27,8 +27,6 @@ class ClientManager// extends Manager
                 // Préparation de la requête d'insertion.
                 $sendClientDatas = $this->_db->prepare('INSERT INTO comments_author (surname, firstname, username, password, imageComment) '
                         . 'VALUES(:surname, :firstname, :username, :password, :imageComment)');
-                //$sendAdminDatas = $this->_db->prepare('INSERT INTO articles_author (username, password) '
-                //        . 'VALUES(:username, :password)');
                 // Assignation des valeurs pour le nom du personnage.
                 $sendClientDatas->bindValue(':surname', $client->surname(), \PDO::PARAM_STR);
                 $sendClientDatas->bindValue(':firstname', $client->firstname(), \PDO::PARAM_STR);
@@ -49,10 +47,8 @@ class ClientManager// extends Manager
                 //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
                 $getClientLogin = $this->_db->prepare("SELECT password, username, imageComment, id FROM comments_author WHERE username = :username");//AND password = :password");
                 $getClientLogin->bindValue(':username', $client->username(), \PDO::PARAM_STR );
-                //$getAuthorLogin->bindValue(':password', $author->password(), \PDO::PARAM_STR );
                 $getClientLogin->execute();
-                //print_r($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
-                //exit();
+                
                 return new Client($getClientLogin->fetch(\PDO::FETCH_ASSOC));
             }
 

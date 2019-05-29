@@ -93,6 +93,11 @@ class Article
             {
                 return $this->_updatedate;
             }
+            
+        public function status()
+            {
+                return $this->_status;
+            }
 
 
         //liste des setters 
@@ -139,14 +144,29 @@ class Article
                         $this->_content = $content;
                     }
             }
-
-        public function setCreatedate(DateTime $createdate)
-            {
-                $this->_createdate = $createdate;
+            
+        //public function setCreatedate(DateTime $createdate)
+        public function setCreatedate($createdate)
+            {              
+                if(is_string($createdate))
+                    {
+                        $this->_createdate = $createdate;
+                    }
             }
 
-        public function setUpdatedate(DateTime $updatedate)
+        public function setUpdatedate($updatedate)
             {
-                $this->_updatedate = $updatedate;
+                if(is_string($updatedate))
+                    {
+                        $this->_updatedate = $updatedate;
+                    }
+            }
+            
+        public function setStatus($status)
+            {
+                if(is_string($status))
+                    {
+                        $this->_status = $status;
+                    }
             }
     }

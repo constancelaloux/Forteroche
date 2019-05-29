@@ -15,7 +15,6 @@ class commentsAdminControler
         //Je vais vers la vue avec le tableau des commentaires
         function getCommentsView()
             {
-            //print_r("j y suis");
                 require 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';  
             }
         
@@ -31,15 +30,15 @@ class commentsAdminControler
                 foreach ($commentsFromManager as $comments) 
                     {
                     //print_r($comments);
-                        $row = array();
-
+                        //$row = array();
+                        //$data = array();
+;                       $row = array();
                         $row[] = $comments->id();
 
-                        $commentDate = $comments->createdate();
-                        $row[] = $commentDate->format('Y-m-d');
+                        $row[] = $comments->createdate();
+                        //$row[] = $commentDate;//->format('Y-m-d');
                         
                         $row[] = $comments->subject();
-                        //print_r($row[] = $comments->subject());
                         
                         if (strlen($comments->content()) <= 400)
                             {
@@ -52,6 +51,7 @@ class commentsAdminControler
                                 $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
 
                                  $row[] = $debut;
+                                 
                             }
                         //$row[] = $comments->content();
                         //$updateCommentDate = $comments->updatedate();
@@ -66,6 +66,7 @@ class commentsAdminControler
                             }*/
 
                         $row[] = $comments->countclicks();
+                        //print_r($row);
                         $data[] = $row;
 
                     }
@@ -74,7 +75,6 @@ class commentsAdminControler
                             (
                                 "data" => $data
                             );
-                            //print_r($json_data);
                         
                         echo json_encode($json_data);
             }

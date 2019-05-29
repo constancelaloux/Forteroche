@@ -134,11 +134,9 @@ class CommentsController
                 $commentsCount = $commentManager->countChapterComments($comment);
                 
                 return $commentsCount;
-                //require 'Backend/BackendViews/BackendViewFolders/BackendView.php';
             }
         
-        //Je signale un commentaire indésirable à l'administrateur du site
-        //Et j'ajoute la mention indésirable en base de données
+        //Je récupére le nombre de signalement en base de données
         function unwantedComments()
             {
                if (isset($_POST['id']) AND isset ($_GET['p']) AND isset ($_GET['idarticle']) AND isset ($_POST['number']))
@@ -161,7 +159,6 @@ class CommentsController
                         ([
 
                             'id' => $myIdComment,
-                            //'status' => $unwantedComment,
                             'countclicks'=>$number
 
                         ]);
@@ -169,18 +166,18 @@ class CommentsController
 
                 $commentManager = new CommentsManager($db);
                 $nbrClicks = $commentManager->getNumberOfClicksComment($comment);
-                //print_r($nbrClicks);
+
                 $clicks = $nbrClicks->countclicks();
                 
                 $clicksIncremented = $clicks + $number;
+                
                 header("Location: /blogenalaska/index.php?action=addStatusAndNumberOfClicksToComment&id=$id&idcomment=$myIdComment&unwantedcomment=$unwantedComment&clicks=$clicksIncremented");
-                //print_r($clicks);
-                //exit();
             }
+            
+        //Je signale un commentaire indésirable à l'administrateur du site
+        //Et j'ajoute la mention indésirable et je modifie le nombre de signalements en base de données       
         function addStatusAndNumberOfClicksToComment()
             {
-            //print_r($_GET['id']);
-            //exit();
                if (isset($_GET['id']) AND isset ($_GET['idcomment']) AND isset ($_GET['unwantedcomment']) AND isset ($_GET['clicks']))
                     {
                         if (!empty($_GET['id']) AND (!empty($_GET['idcomment'])) AND(!empty($_GET['unwantedcomment'])) AND(!empty($_GET['clicks'])))
@@ -190,7 +187,6 @@ class CommentsController
                                 $id = ($_GET['id']);
                                 $numberOfClicks = ($_GET['clicks']);
                             }
-                  
                     }
                     
                 $comment = new Comment
@@ -204,6 +200,7 @@ class CommentsController
                 $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
                 $commentManager = new CommentsManager($db);           
                 $commentManager->addStatusOfComment($comment);
+                
                 header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$id");
             }
     }

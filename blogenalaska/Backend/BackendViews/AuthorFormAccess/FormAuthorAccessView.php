@@ -1,4 +1,4 @@
-<?php $title = 'connect blog page'; ?>
+<?php $title = 'connect author blog page'; ?>
 <?php ob_start(); ?>
 
 <section class="connectAuthor">

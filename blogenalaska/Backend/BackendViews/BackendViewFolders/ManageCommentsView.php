@@ -1,5 +1,9 @@
-<?php  session_start(); ?>
-<?php if (isset($_SESSION['username']))
+<?php  if(!isset($_SESSION))
+        {
+            session_start();
+        }
+        
+if (isset($_SESSION['username']))
     {
         $expireAfter = 30;
 
@@ -87,14 +91,11 @@ else
                         {
                             "order": [[ 5, "desc" ]],
                             processing: true,
-                            //serverSide: true,
                             ajax:
                                 {
                                     url :"/blogenalaska/index.php?action=getCommentsIntoDatatables", // json datasource
                                     type:"POST",
                                     dataType: 'json'
-                                    //dataSrc: 'json_data'
-                                    //data:"data.json",
                                 },
                             "language": 
                                 {
@@ -102,11 +103,8 @@ else
                                 },
                             columnsDefs:
                                 [{
-                                    "className": 'dt-center',
-                                    //"targets": [ 0 ]
-                                    //"visible": false
+                                    "className": 'dt-center'
                                 }],
-                            //"data": "data",
                             columns: 
                                 [
                                     {data: null},
@@ -116,7 +114,6 @@ else
                                     {data: "3"},
                                     {data: "4"},
                                     {
-                                       // data: null,
                                         className: "center",
                                         defaultContent: '<td><button class="btn-delete" type="button">Supprimer</button></td><td><button class="btn-validate" type="button">Valider le commentaire</button></td>'
                                     }
@@ -136,13 +133,10 @@ else
                 //Supprimer des articles
                 $('#displayComments').on( 'click', '.btn-delete', function () 
                     {
-                        //var id = $(this).attr("id");
                         var datas = table.row( $(this).parents('tr') ).data();
                         var id = datas[ 0 ];
                         alert(datas[0] +"'le numero en : base est"+ datas[ 0 ] );
-                        //console.log(id);
-                        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
-                        //var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
+                        
                         if(confirm("Voulez vous supprimer ce commentaire?"))
                             {
                                 $.ajax
@@ -169,19 +163,12 @@ else
                 //Valider un article
                 $('#displayComments').on( 'click', '.btn-validate', function () 
                     {
-                        //var id = $(this).attr("id");
                         var datas = table.row( $(this).parents('tr') ).data();
                         var id = datas[ 0 ];
                         alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
-                        //console.log(id);
-                        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
-                        //var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
+
                         if(confirm("Are you sure you want to validate this?"))
                             {
-                                //table
-                                //    .row( $(this).parents('tr') )
-                                //    .remove()
-                                //    .draw();
                                 $.ajax
                                 ({
                                     url:"/blogenalaska/index.php?action=validateArticles",
@@ -193,10 +180,6 @@ else
                                             console.log('c cool');
                                             console.log(data);
                                             table.ajax.reload();
-                                            /*$tr.find('td').fadeOut(1000,function()
-                                                { 
-                                                    $tr.remove();
-                                                });*/
                                         },
                                     error:function(response)
                                         {
