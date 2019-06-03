@@ -15,9 +15,22 @@ class commentsAdminControler
         //Je vais vers la vue avec le tableau des commentaires
         function getCommentsView()
             {
-                require 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';  
+                //require 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php'; 
+                header('Location: /blogenalaska/index.php?action=countCommentsForAdminTableView');
             }
-        
+ 
+        //Je vais compter les commentaires en base de données et ceux qui ont été signalés
+        function countComments()
+            {
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $commentsManager = new CommentsManager($db); 
+                //ALler chercher les articles en bdd
+                $globalCommentsCount = $commentsManager->count();//Appel d'une fonction de cet objet
+                $unwantedCommentsCount = $commentsManager->countUnwantedComments();//Appel d'une fonction de cet objet
+                require_once 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';
+            }
+            
         //Je vais récupérer les commentaires en base de données
         function getCommentsIntoDatatables()
             {
@@ -29,10 +42,8 @@ class commentsAdminControler
 
                 foreach ($commentsFromManager as $comments) 
                     {
-                    //print_r($comments);
-                        //$row = array();
                         //$data = array();
-;                       $row = array();
+                        $row = array();
                         $row[] = $comments->id();
 
                         $row[] = $comments->createdate();
@@ -66,7 +77,6 @@ class commentsAdminControler
                             }*/
 
                         $row[] = $comments->countclicks();
-                        //print_r($row);
                         $data[] = $row;
 
                     }
@@ -76,9 +86,10 @@ class commentsAdminControler
                                 "data" => $data
                             );
                         
-                        echo json_encode($json_data);
+                    echo json_encode($json_data);
             }
             
+        //Je supprime les commentaires indésirables     
         function removeComments()
             {
                 if (isset($_POST['id']))
@@ -91,26 +102,26 @@ class commentsAdminControler
                         else 
                             {
                                 echo 'pas d article séléctionné';
-                                require'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
                             }
                     }  
-                    $comment = new Comment
-                        ([
+                $comment = new Comment
+                    ([
 
-                            'id' => $myIdComment
-                        ]);
+                        'id' => $myIdComment
+                    ]);
 
-                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-                    $commentsManager = new CommentsManager($db);
+                $commentsManager = new CommentsManager($db);
 
-                    $commentsManager->removeComment($comment);
+                $commentsManager->removeComment($comment);
             }
         
-        //Valider les commentaires
+        //Valider les commentaires qui ont été considérés comme indésirables par les visiteurs
         function validateComment()
             {
-                           if (isset($_POST['id']))
+                if (isset($_POST['id']))
                     {
                         if (!empty($_POST['id']))
                             {
@@ -120,19 +131,19 @@ class commentsAdminControler
                         else 
                             {
                                 echo 'pas d article séléctionné';
-                                require'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
                             }
                     }  
-                    $comment = new Comment
-                        ([
+                $comment = new Comment
+                    ([
 
-                            'id' => $myIdComment
-                        ]);
+                        'id' => $myIdComment
+                    ]);
 
-                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
 
-                    $commentsManager = new CommentsManager($db);
+                $commentsManager = new CommentsManager($db);
 
-                    $commentsManager->validateComment($comment);
+                $commentsManager->validateComment($comment);
             }
     }

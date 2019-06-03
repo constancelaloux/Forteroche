@@ -36,6 +36,12 @@ class CommentsManager
                 return $this->_db->query('SELECT COUNT(*) as nbCmt FROM comments')->fetchColumn();
             }
             
+        //Je compte les commentaires qui ont été signalés en base de données
+        public function countUnwantedComments()
+            {
+                return $this->_db->query('SELECT COUNT(*) as nbCmt FROM comments WHERE status = "unwanted"')->fetchColumn();
+            }
+            
         //Je compte les commentaires en bases de données
         public function countChapterComments(Comment $comment)
             {
@@ -49,7 +55,7 @@ class CommentsManager
         //Je récupére les commentaire en base de données pour les afficher en fonction de l'article
         public function getListOfComments(Comment $comment, $page, $nbrCommentsPerPage)
             {
-                //$datas = array();
+                $datas = array();
                 $getComments = $this->_db->prepare("SELECT  a.firstname firstname , a.imageComment imageComment, c.create_date create_date, c.update_date update_date, c.id_comments_author id_comments_author, c.content content, c.id_From_Article id_From_Article, c.id id FROM comments_author a INNER JOIN comments c ON a.id = c.id_comments_author "
                         . "WHERE id_From_Article = :idFromArticle ORDER BY ID DESC LIMIT ".(($page-1)*$nbrCommentsPerPage).", $nbrCommentsPerPage");
                 $getComments->bindValue(':idFromArticle', $comment->idFromArticle(), \PDO::PARAM_STR );

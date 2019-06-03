@@ -139,7 +139,13 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsAdminController = new CommentsAdminControler();
                             $commentsAdminController ->getCommentsIntoDatatables();
                         break;
-                        
+                    
+                        //Compter le nombre de commentaires
+                        case 'countCommentsForAdminTableView':
+                            $commentsAdminController = new CommentsAdminControler();
+                            $commentsAdminController ->countComments();
+                        break;
+                    
                         //Je vais supprimer les commentaires
                         case 'removeComments':
                             $commentsAdminController = new CommentsAdminControler();
@@ -150,7 +156,7 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'validateArticles':
                             $commentsAdminController = new CommentsAdminControler();
                             $commentsAdminController -> validateComment(); 
-                            
+                        break;
 
 //FRONTEND              
                         //Je vais vers la page d'accueil de mon blog
@@ -189,7 +195,7 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'addStatusAndNumberOfClicksToComment':
                             $commentsController = new CommentsController();
                             $commentsController->addStatusAndNumberOfClicksToComment();
-                    
+                        break;
                 //CLIENT                    
                         //Je vais vers le formulaire de connexion de l'utilisateur
                         case 'getTheFormClientsConnexion':
@@ -226,5 +232,5 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'sendEmail':
                             $EmailFrontendController = new EmailController();
                             $EmailFrontendController->sendEmail();
-                        break;                           
+                        break;                         
                     }

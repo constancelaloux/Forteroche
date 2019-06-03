@@ -117,8 +117,10 @@ class PostsControllers
                 $articlesManager = new ArticlesManager($db);
 
                 $articlesCount = $articlesManager->count();
-
-                if(!isset($articlesCount))
+                
+                $numberOfArticlesPublished = $articlesManager->countPublishedArticles();
+                
+                if(!isset($articlesCount) and (!isset($numberOfArticlesPublished)))
                     {
                         $session = new SessionClass();
                         $session->setFlash('pas de donnée disponible pour l\'instant','error');  

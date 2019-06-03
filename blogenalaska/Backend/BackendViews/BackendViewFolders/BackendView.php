@@ -66,7 +66,6 @@ else
 
                                 if (!empty($session))
                                     {
-                                        //print_r($session->flash());
                                         $session->flash(); 
                                     }
                             ?>

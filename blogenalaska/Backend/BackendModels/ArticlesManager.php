@@ -58,12 +58,13 @@ class ArticlesManager
         //Je compte mes articles
         public function count()
             {
-                /**
-                    * Méthode permettant de supprimer une news.
-                    * @param $id int L'identifiant de la news à supprimer
-                    * @return void
-                */
                 return $this->_db->query('SELECT COUNT(*) as nbArt FROM articles')->fetchColumn();
+            }
+            
+        //Je compte mes articles publiés
+        public function countPublishedArticles()
+            {
+                return $this->_db->query('SELECT COUNT(*) as nbArt FROM articles WHERE status = "Valider"')->fetchColumn();
             }
             
         //Je supprime un article 
@@ -186,9 +187,7 @@ class ArticlesManager
                         $article =  new Article($donnees);
                         setlocale(LC_TIME, "fr_FR");
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
-                        //print_r($date);
-                        $articleDate = strftime("%H %B %Y", $date->getTimestamp());
-                        //print_r($articleDate);
+                        $articleDate = strftime("%d %B %Y", $date->getTimestamp());
                         $article->setCreatedate($articleDate);
 
                         $data[] = $article;
