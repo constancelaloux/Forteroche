@@ -105,7 +105,7 @@ class ArticlesManager
         
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         setlocale(LC_TIME, "fr_FR");
-                        $articleDate = strftime("%H %B %Y", $date->getTimestamp());
+                        $articleDate = strftime("%d %B %Y", $date->getTimestamp());
                         $tmpArticle->setCreatedate($articleDate);
                         
                         //Je vérifie si j'ai Null ou une date d'enregistré en bdd
@@ -119,7 +119,7 @@ class ArticlesManager
                             {
                                 $date =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
                                 setlocale(LC_TIME, "fr_FR");
-                                $articleUpdateDate = strftime("%H %B %Y", $date->getTimestamp());
+                                $articleUpdateDate = strftime("%d %B %Y", $date->getTimestamp());
                                 $tmpArticle->setUpdatedate($articleUpdateDate);
                             }
                         

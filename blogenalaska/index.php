@@ -66,7 +66,7 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $postsController->getArticles();
                         break; 
                    
-                        //Je suuprime un article
+                        //Je supprime un article
                         case 'removeArticles':
                             $postsController = new PostsControllers();
                             $postsController->deleteArticles();
@@ -157,6 +157,8 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsAdminController = new CommentsAdminControler();
                             $commentsAdminController -> validateComment(); 
                         break;
+                   
+                            
 
 //FRONTEND              
                         //Je vais vers la page d'accueil de mon blog
@@ -196,6 +198,22 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsController = new CommentsController();
                             $commentsController->addStatusAndNumberOfClicksToComment();
                         break;
+                                            //je récupére le commentaire en base de données pour aller le modifier
+                        case 'getCommentFromIdBeforeToUpdate':
+                            $commentsAdminController = new CommentsController();
+                            $commentsAdminController -> getCommentFromIdBeforeToUpdate(); 
+                        break;
+                    
+                        case 'updateComment':
+                            $commentsAdminController = new CommentsController();
+                            $commentsAdminController ->updateComment(); 
+                        break;
+                    
+                        case 'deleteComment':
+                            $commentsAdminController = new CommentsController();
+                            $commentsAdminController -> deleteComment(); 
+                        break;
+                    
                 //CLIENT                    
                         //Je vais vers le formulaire de connexion de l'utilisateur
                         case 'getTheFormClientsConnexion':
@@ -226,6 +244,10 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->disconnectTheClient();
                         break;
+                    
+                        case 'removeClient':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->removeTheClient();
                     
                 //EMAIL
                         //L'utilisateur envoi un email à l'administrateur

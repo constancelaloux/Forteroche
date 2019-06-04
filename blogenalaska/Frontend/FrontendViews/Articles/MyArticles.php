@@ -97,11 +97,11 @@
                                         $nameToDisplay = $comments->firstname();
                                         $commentsToDisplay = $comments->content();
                                         $commentsDate = $comments->createdate();
-                                        $commentsDateToDisplay=$commentsDate;//->format('Y-m-d');
+                                        //$commentsDateToDisplay=$commentsDate;//->format('Y-m-d');
                                         $unwantedCommments = "unwanted";
                                         echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",
                                                 '<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>'
-                                                ,"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDateToDisplay, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button id="modifyComment"> Modifier</button>',"\n", '</div>',"\n", '</div>';                
+                                                ,"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDate, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button class="modifyComment"> <a href="/blogenalaska/index.php?action=getCommentFromIdBeforeToUpdate&idComment='.$idComments.'&id='.$commentId.'"> Modifier</button>',"\n", '</div>',"\n", '</div>';                
                                     }
                             } 
                     ?>
@@ -150,31 +150,59 @@
                         </ul>
                     </nav>
                 </div>
-                
-                <!--Formulaire commentaires-->
-                <?php
-                    if(isset($_SESSION['clientUsername']))
+                <?php 
+                    if(!isset($commentContent))
                         {
                 ?>
-                            <div class="formComment">
-                                <!--Formulaire pour envoyer des commentaires-->
-                                <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>&idClient=<?php echo $_SESSION['ClientId'] ?>" method="post">
-                                    <p>Laissez votre commentaire</p>
-                                    
-                                    <div  class="contentOfComment">
-                                        <label for="comments">Commentaire</label>
-                                        <textarea id="comments" name="comments"></textarea>
-                                    </div>
-                                    
-                                    <div class="buttonComments">
-                                        <input type="submit" value="Poster le commentaire" />
-                                    </div>
-                                </form>
+                <!--Formulaire commentaires-->
+                <?php
+                            if(isset($_SESSION['clientUsername']))
+                                {
+                ?>
+                                    <div class="formComment">
+                                        <!--Formulaire pour envoyer des commentaires-->
+                                        <form action="/blogenalaska/index.php?action=sendCommentsFromId&id=<?php echo $commentId ?>&idClient=<?php echo $_SESSION['ClientId'] ?>" method="post">
+                                            <p>Laissez votre commentaire</p>
 
+                                            <div  class="contentOfComment">
+                                                <label for="comments">Commentaire</label>
+                                                <textarea id="comments" name="comments"></textarea>
+                                            </div>
+
+                                            <div class="buttonComments">
+                                                <input type="submit" value="Poster le commentaire" />
+                                            </div>
+                                        </form>
                     <?php
-                        }
+                            }
                     ?>
-                            </div>
+                                    </div>
+                <?php
+                        }
+                    else
+                        {
+                            if(isset($_SESSION['clientUsername']))
+                                {
+                ?>
+                                    <div class="formComment">
+                                        <!--Formulaire pour envoyer des commentaires-->
+                                        <form action="/blogenalaska/index.php?action=updateComment&idArticle=<?php echo $commentId ?>&id=<?php echo $id ?>&idClient=<?php echo $_SESSION['ClientId'] ?>" method="post">
+                                            <p>Laissez votre commentaire</p>
+
+                                            <div  class="contentOfComment">
+                                                <label for="comments">Commentaire</label>
+                                                <textarea id="comments" name="comments"><?php echo $commentContent; ?></textarea>
+                                            </div>
+
+                                            <div class="buttonComments">
+                                                <input type="submit" value="Poster le commentaire" />
+                                            </div>
+                                        </form>
+                                    </div>
+                <?php
+                                }
+                        }
+                ?>
             </div>
         </div>
     </div>

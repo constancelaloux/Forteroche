@@ -67,7 +67,7 @@ class CommentsManager
 
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         setlocale(LC_TIME, "fr_FR");
-                        $commentDate = strftime("%H %B %Y", $date->getTimestamp());
+                        $commentDate = strftime("%d %B %Y", $date->getTimestamp());
                         $comment->setCreatedate($commentDate);
                         
                         //Je vérifie si j'ai Null ou une date d'enregistré en bdd
@@ -80,7 +80,9 @@ class CommentsManager
                         else
                             {
                                 $commentUpdateDate =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
-                                $comment->setUpdatedate($commentUpdateDate);
+                                setlocale(LC_TIME, "fr_FR");
+                                $commentDateUpdated = strftime("%d %B %Y", $commentUpdateDate->getTimestamp());
+                                $comment->setUpdatedate($commentDateUpdated);
                             }
                         $datas[] = $comment;
 
@@ -107,7 +109,7 @@ class CommentsManager
 
                         $date = DateTime::createFromFormat('Y-m-d H:i:s', $donnees['create_date']);
                         setlocale(LC_TIME, "fr_FR");
-                        $articleDate = strftime("%H %B %Y", $date->getTimestamp());
+                        $articleDate = strftime("%d %B %Y", $date->getTimestamp());
                         $tmpArticle->setCreatedate($articleDate);
                         
                         //Je vérifie si j'ai Null ou une date d'enregistré en bdd
@@ -164,6 +166,27 @@ class CommentsManager
             {
                 //Executer une requéte de type delete.
                 $this->_db->exec('UPDATE comments SET status = "", countclicks = 0 WHERE id = '.$comment->id());
+            }
+        
+        //Je récupére un commentaire en fonction de l'id pour ensuite aller le modifier
+        public function get(Comment $comment)
+            {
+                $getCommentDatasFromId = $this->_db->prepare("SELECT * FROM comments WHERE id = :id");
+
+                $getCommentDatasFromId->bindValue(':id', $comment->id(), \PDO::PARAM_STR );
+                $getCommentDatasFromId->execute();
+
+                return new Comment($getCommentDatasFromId->fetch(\PDO::FETCH_ASSOC));     
+            }
+            
+        public function update(Comment $comment)
+            {
+                $dbRequestModifyComment = $this->_db->prepare('UPDATE comments SET content = :content WHERE id = :id');
+
+                $dbRequestModifyComment->bindValue(':content', $comment->content(), \PDO::PARAM_STR);
+                $dbRequestModifyComment->bindValue(':id', $comment->id(), \PDO::PARAM_INT);
+                $dbRequestModifyComment->execute();
+
             }
             
         public function setDb(\PDO $db)

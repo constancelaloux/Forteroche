@@ -102,12 +102,12 @@
 
                                             $dateCreate = $articles->createdate();
                                             
-                                            $articleDateCreate = $dateCreate;//->format('l jS F Y');
+                                            //$articleDateCreate = $dateCreate;//->format('l jS F Y');
 
                                             $image = $articles->image();
                                             
                                     
-                                            echo '<div id="myarticles">', '<h3>', $titlesToDisplay , '</h3>', "\n", '<p>', $articleDateCreate , '</p>' , "\n",'<div id="textAndImage">',"\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div>',"\n",
+                                            echo '<div id="myarticles">', '<h3>', $titlesToDisplay , '</h3>', "\n", '<p>', $dateCreate , '</p>' , "\n",'<div id="textAndImage">',"\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div>',"\n",
                                             '<p>', $articlesToDisplay, '</p>', "\n", '<div id="next">', '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>',  '</div>', '</div>' , '</div>';
                                         }
                                 }

@@ -54,7 +54,7 @@ class CommentsController
                                 }
                             else 
                                 {
-                                    echo 'pas d article séléctionné';
+                                    echo 'pas de commentaire séléctionné';
                                 }
                         }
 
@@ -69,13 +69,13 @@ class CommentsController
 
                 $commentManager = new CommentsManager($db);
                 
-                //Je vais compter mes articles
+                //Je vais compter mes commentaires
                 
-               //On récupére le nombre d'articles total en bdd
+               //On récupére le nombre de commentaires total en bdd
                 $countCommentsFromManager = $commentManager->count();
                 $nbrComments = $countCommentsFromManager;
                 
-                //Combien d'articles souhaite t'on par page
+                //Combien de commentaires souhaite t'on par page
                 $nbrCommentsPerPage = 5;
 
                 $numberOfPages = ceil($nbrComments/$nbrCommentsPerPage);
@@ -202,5 +202,92 @@ class CommentsController
                 $commentManager->addStatusOfComment($comment);
                 
                 header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$id");
+            }
+            
+        //Je récupére mon commentaire pour aller le modifier
+        function getCommentFromIdBeforeToUpdate()
+            {
+                if (isset($_GET['idComment']))
+                    {
+                        if (!empty($_GET['idComment']))
+                            {
+                                // check if the id has been set
+                                $myIdComment = $_GET['idComment'];
+                                $id = $_GET['id'];
+                            }
+                        else 
+                            {
+                                $session = new SessionClass();
+                                $session->setFlash('pas de commentaire séléctionné','error');
+                            }
+                    }
+            
+                $comment = new Comment
+                    ([
+                        'id' => $myIdComment
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $commentManager = new CommentsManager($db);
+
+                $myCommentToModify = $commentManager->get($comment);
+                
+                if(!empty($myCommentToModify))
+                    {
+                        $commentContent = $myCommentToModify->content();
+                        $idComment = $myCommentToModify->id();
+                        $articleFromId = new BlogController();
+                        $getArticleFromId = $articleFromId->getTheArticleFromId();
+                        //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendViews/Articles/MyArticles.php';
+                    }
+                else
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas d\'article trouvé','error');
+                        header('Location: /blogenalaska/index.php?action=getArticleFromId');
+                        //require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendViews/Articles/MyArticles.php';
+                    }
+            }
+            
+        function updateComment()
+            {
+            //print_r($_POST['id']);
+            
+                if (isset($_GET['id']))
+                    {
+                        if (!empty($_GET['id']))
+                            {
+                                // check if the id has been set
+                                $id = $_GET['id'];
+                                $myContentOfComment = $_POST['comments'];
+                                $idArticle = $_GET['idArticle'];
+                            }
+                        else 
+                            {
+                                $session = new SessionClass();
+                                $session->setFlash('pas d\'article sélectionné','error');
+                                require'/blogenalaska/Frontend/FrontendViews/Articles/MyArticles.php';
+                            }
+                    } 
+                        
+                $comment = new Comment
+                    ([
+                        'content' => $myContentOfComment,
+                        'id' => $id,
+                    ]);
+
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $commentManager = new CommentsManager($db);
+                $commentManager->update($comment);
+                header("Location: /blogenalaska/index.php?action=getArticleFromId&id=$idArticle");
+                //header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+
+            }
+            
+        function deleteComment()
+            {
+
             }
     }
