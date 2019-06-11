@@ -209,11 +209,15 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsAdminController ->updateComment(); 
                         break;
                     
-                        case 'deleteComment':
+                        case 'removeComment':
                             $commentsAdminController = new CommentsController();
-                            $commentsAdminController -> deleteComment(); 
+                            $commentsAdminController ->removeComment(); 
                         break;
-                    
+                //RECHERCHER
+                        case'search':
+                            $blogFrontendController = new BlogController();
+                            $blogFrontendController ->search();
+                        break;
                 //CLIENT                    
                         //Je vais vers le formulaire de connexion de l'utilisateur
                         case 'getTheFormClientsConnexion':

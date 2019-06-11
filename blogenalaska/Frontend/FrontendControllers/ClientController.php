@@ -133,5 +133,13 @@ class ClientController
                 
                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             }
+            
+        //Supprimer le client
+        function removeTheClient()
+            {
+                
+                
+                header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+            }
     }
  

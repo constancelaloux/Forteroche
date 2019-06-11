@@ -101,7 +101,7 @@
                                         $unwantedCommments = "unwanted";
                                         echo '<div id="myComments">',"\n",'<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",'<div class="contentOfComment">', "\n",'<div id="Name">', "\n",'<p> De ', $nameToDisplay, '</p>',"\n",
                                                 '<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>'
-                                                ,"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDate, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button class="modifyComment"> <a href="/blogenalaska/index.php?action=getCommentFromIdBeforeToUpdate&idComment='.$idComments.'&id='.$commentId.'"> Modifier</button>',"\n", '</div>',"\n", '</div>';                
+                                                ,"\n",'</div>', "\n",'<div id="Date">', "\n", '<p>Créé le ' ,$commentsDate, '</p>','</div>', "\n",'<p>', $commentsToDisplay, '</p>',"\n", '<button class="modifyComment"> <a href="/blogenalaska/index.php?action=getCommentFromIdBeforeToUpdate&idComment='.$idComments.'&id='.$commentId.'"> Modifier</a></button>',"\n", '<button class="deleteComment"> <a href="/blogenalaska/index.php?action=removeComment&idComment='.$idComments.'&id='.$commentId.'">Supprimer</a></button>',"\n", '</div>',"\n", '</div>';                
                                     }
                             } 
                     ?>

@@ -1,4 +1,9 @@
 <?php
+require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/Search.php';
+
+require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
+
+require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/SearchManager.php';
 
 class BlogController 
     {
@@ -21,7 +26,7 @@ class BlogController
                 if (empty($articlesManager))
                     {
                         //$this->app->httpResponse()->redirect404();
-                        require 'Frontend/FrontendViews/HomePage.php';
+                        require_once 'Frontend/FrontendViews/HomePage.php';
                     }
 
                 else 
@@ -65,9 +70,8 @@ class BlogController
                         $lastArticle = $articlesManager->getUnique();//Appel d'une fonction de cet objet
                        
                          
-                        require 'Frontend/FrontendViews/HomePage.php';
+                        require_once 'Frontend/FrontendViews/HomePage.php';
                     }
-
             }
             
         //Obtenir l'intégralité de l'article en fonction de l'id 
@@ -78,7 +82,7 @@ class BlogController
                     {
                         if (!empty($_GET['id']))
                             {
-                                $myIdArticle = ($_GET['id']);
+                                $myIdArticle = $_GET['id'];
                             }
                         else 
                             {
@@ -106,7 +110,42 @@ class BlogController
                 $numberOfComments = $comment->countComments();
                 $myComment = $comment->getListOfComments();
                 
-                require 'Frontend/FrontendViews/Articles/MyArticles.php';
+                require_once 'Frontend/FrontendViews/Articles/MyArticles.php';
+            }
+        
+        function search()
+            {
+                if (isset($_POST['whatImSearching']))
+                    {
+                        if (!empty($_POST['whatImSearching']))
+                            {
+                                $mySearchWords = $_POST['whatImSearching'];
+                            }
+                        else 
+                            {
+                                echo 'Vous n\'avez rien recherché';
+                            }
+                    }
+                    
+                /*$words = new Search
+                    ([
+
+                        'mySearchWords' => $mySearchWords
+
+                    ]);*/
+                //print_r($_POST['whatImSearching']);
+                //print_r($words);
+                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+
+                $searchManager = new SearchManager($db);
+
+                $mySearchResult = $searchManager->get($mySearchWords);
+
+                //print_r("je récup le resultat");
+                //print_r($mySearchResult = $searchManager->get($mySearchWords));
+                
+                //die("je ne continue pas");
+                require_once 'Frontend/FrontendViews/ResultSearchPage.php';
             }
             
     }

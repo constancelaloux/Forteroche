@@ -30,9 +30,17 @@
                         <a class="nav-link" href="#ancre_contact" style="color: rgba(0,0,0,.5);">CONTACT</a>
                     </li>
                 </ul>
-                <div id="buttonSubmit">
-                    <button type="submit"><i class="fas fa-search"></i></button>
-                </div>
+                <!--<div id="buttonSubmit">-->
+                <form action="/blogenalaska/index.php?action=search" method="post">
+                    <div class="input-group md-form form-sm form-2 pl-0">
+                        <input class="form-control my-0 py-1 red-border" type="text" name="whatImSearching" placeholder="Rechercher" aria-label="Search">
+                            <div class="input-group-append">
+                                <button type="submit" id="#userSearch" name="userSearch"><span class="input-group-text red lighten-3" id="basic-text1"><i class="fas fa-search text-grey" aria-hidden="true"></i></span></button>
+                            </div>
+                    </div>
+                </form>
+
+                    <!--<button type="submit" name="userSearch"><i class="fas fa-search"></i>chercher</button>-->
             <?php 
                 if(isset($_SESSION['clientUsername'])) 
                     {
