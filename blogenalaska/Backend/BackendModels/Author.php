@@ -4,6 +4,7 @@
 // de les organiser et de les assembler pour qu'elles puissent ensuite être traitées par le contrôleur. 
 // On y trouve donc entre autres les requêtes SQL.
 //namespace Forteroche\blogenalaska\Models\BackendModels; // La classe AuthorManager sera dans ce namespace
+//namespace Forteroche\blogenalaska\Backend\BackendModels;
 
 class Author
     {
@@ -25,7 +26,10 @@ class Author
 
         public function __construct(array $donnees)
             {
-                $this->hydrate($donnees);
+                if (!empty($donnees))
+                    {
+                        $this->hydrate($donnees);       
+                    }
             }
 
         //Hydratation = assigner des valeurs aux attributs passées en paramétres. 

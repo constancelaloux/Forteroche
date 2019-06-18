@@ -1,16 +1,16 @@
 <?php
-
+//namespace Forteroche\blogenalaska\Backend\BackendControllers;
 // Chargement des classes
-//require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
-//Autoloader::register();
+require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Article.php';
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Article.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/ArticlesManager.php';
+/*require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/ArticlesManager.php';
 
-require_once"/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php";
+require_once"/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php";*/
 
 class PostsControllers
     {
@@ -43,7 +43,7 @@ class PostsControllers
                                             'status' => $status
                                         ]);
 
-                                    $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                                    $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
 
                                     $sendToTheArticlesManager = new ArticlesManager($db);
@@ -85,7 +85,7 @@ class PostsControllers
                                 'status'=>$status
                             ]);
 
-                        $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                        $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
 
                         $sendToTheArticlesManager = new ArticlesManager($db);
@@ -112,7 +112,9 @@ class PostsControllers
                         $error = $_GET['error'];
                     }
                 //Je vais compter mes articles en base de données    
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                //$db = \Forteroche\blogenalaska\PdoConnection::connect();
+                $database = new \Forteroche\blogenalaska\PdoConnection();
+                $db = $database->connect();
 
                 $articlesManager = new ArticlesManager($db);
 
@@ -125,14 +127,14 @@ class PostsControllers
                         $session = new SessionClass();
                         $session->setFlash('pas de donnée disponible pour l\'instant','error');  
                     }
-                require 'Backend/BackendViews/BackendViewFolders/BackendView.php';
+                require_once 'Backend/BackendViews/BackendViewFolders/BackendView.php';
             }
 
         //Récupérer des articles de la base de données pour afficher au sein du datatables
         function getArticles()
             { 
                 //$row = array();
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db); 
                 
@@ -160,7 +162,7 @@ class PostsControllers
                                     {
                                         $row[] = $updateArticleDate;//->format('Y-m-d');
                                     }
-
+                                $row[] = $articles->status();
                                 $data[] = $row;
                             }
                         // Structure des données à retourner
@@ -193,7 +195,7 @@ class PostsControllers
                             {
                                 $session = new SessionClass();
                                 $session->setFlash('pas d\'article séléctionné','error');
-                                require'/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                                require_once '/Backend/BackendViews/BackendViewFolders/BackendView.php';
                             }
                     }  
                 $article = new Article
@@ -203,7 +205,7 @@ class PostsControllers
 
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
 
@@ -232,7 +234,7 @@ class PostsControllers
                         'id' => $myIdArticle
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
 
@@ -245,13 +247,13 @@ class PostsControllers
                         $articleImage = $myArticlesToModify->image();
                         $id = $myArticlesToModify->id();
 
-                        require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
+                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
                     }
                 else
                     {
                         $session = new SessionClass();
                         $session->setFlash('pas d\'article trouvé','error');
-                        require'/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                        require_once'/Backend/BackendViews/BackendViewFolders/BackendView.php';
                     }
             }
         
@@ -273,7 +275,7 @@ class PostsControllers
                                 {
                                     $session = new SessionClass();
                                     $session->setFlash('pas d\'article sélectionné','error');
-                                    require'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                    require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
                                 }
                         } 
                         
@@ -286,7 +288,7 @@ class PostsControllers
                         'status' => $validate
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
                 $articlesManager->update($article);
@@ -311,7 +313,7 @@ class PostsControllers
                                 {
                                     $session = new SessionClass();
                                     $session->setFlash('pas d\'article sélectionné','error');
-                                    require'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                    require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
                                 }
                         } 
                         
@@ -324,7 +326,7 @@ class PostsControllers
                         'status' => $save
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
                 $articlesManager->updateAndSave($article);

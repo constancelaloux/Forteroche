@@ -62,7 +62,7 @@
                                                     $idsearchresultArticle = $result->id();
                                                     //echo '<div id="mySearchResult">','<a href='.$searchResult.'', "\n", '</div>';
                                                     ?>
-                                                    <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idsearchresultArticle ?>,"> <?php echo $searchResult?></a></p>
+                                                    <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idsearchresultArticle ?>,"> <?php echo htmlspecialchars($searchResult)?></a></p>
                                                 <?php
                                                 }
 

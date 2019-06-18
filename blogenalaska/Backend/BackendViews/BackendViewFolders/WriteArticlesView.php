@@ -80,7 +80,7 @@ else
                     </div>
                     <div class="contentOfArticle">
                         <label for="contentArticle">Contenu de l'article</label>
-                        <textarea id="mytextarea" name="content"> <p></textarea>
+                        <textarea id="mytextarea" name="content" rows="1000" cols="45"> <p>Votre message ici </p></textarea>
                     </div>
 
                     <div  class="imageOfArticle">

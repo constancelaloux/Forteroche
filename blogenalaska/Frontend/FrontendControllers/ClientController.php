@@ -1,10 +1,13 @@
 <?php
+//namespace Forteroche\blogenalaska\Frontend\FrontendControllers;
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/Client.php';
+require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/Client.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/ClientManager.php';
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/ClientManager.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,13 +18,13 @@ class ClientController
        //Je vais vers le formulaire de connexion du client
         function getClientFormConnexion()
             {
-                require 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
+                require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
             }
         
         //Je vais vers le formulaire de création d'un nouveau client
         function getFormToCreateNewClient()
             {
-                require 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
             }
         
         //Je créé un nouveau client et envoi en bdd ses informations
@@ -33,13 +36,13 @@ class ClientController
                         if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['image']))
                             {
                                 // check if the username and the password has been set
-                                $firstnameVar = ($_POST['firstname']);
+                                $firstnameVar = $_POST['firstname'];
 
-                                $surnameVar = ($_POST['surname']);
+                                $surnameVar = $_POST['surname'];
 
-                                $usernameVar = ($_POST['login']);
+                                $usernameVar = $_POST['login'];
                                 
-                                $imageVar = ($_POST['image']);
+                                $imageVar = $_POST['image'];
 
                                 $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
@@ -51,7 +54,7 @@ class ClientController
                                         'username' => $usernameVar,
                                         'imageComment' => $imageVar
                                     ]);
-                                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                                 $manager = new ClientManager($db);
                                 $sendToTheManager = $manager->add($newClient);
@@ -61,7 +64,7 @@ class ClientController
                         else
                             {
                                 echo "Vous n'avez pas rempli le formulaire";
-                                require'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                             }
                     }       
             }
@@ -75,8 +78,8 @@ class ClientController
                         if (!empty($_POST['username']) && !empty($_POST['password']))
                             {
                                 // check if the username and the password has been set
-                                $clientUsernameVar = ($_POST['username']);
-                                $clientPasswordVar = ($_POST['password']);
+                                $clientUsernameVar = $_POST['username'];
+                                $clientPasswordVar = $_POST['password'];
  
                                 $client = new Client(
                                     [
@@ -85,7 +88,7 @@ class ClientController
                                         
                                     ]); //Création d'un objet
 
-                                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                                 $manager = new ClientManager($db);
                                 $passwordFromManager = $manager->verify($client); // Appel d'une fonction de cet objet
@@ -93,6 +96,7 @@ class ClientController
                                 $passwordFromDb = $passwordFromManager->password();
                                 $idOfClientVar = $passwordFromManager->id();
                                 $imageOfClientVar = $passwordFromManager->imageComment();
+                                $firstnameOfClientVar = $passwordFromManager->firstname();
 
                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
                                 $AuthorPassword = password_verify($clientPasswordVar, $passwordFromDb);
@@ -101,7 +105,7 @@ class ClientController
                                     { 
                                         // Start the session
                                         session_start();
-                                        $_SESSION['clientUsername'] = $clientUsernameVar;
+                                        $_SESSION['clientUsername'] = $firstnameOfClientVar;
                                         $_SESSION['clientPassword'] = $clientPasswordVar;
                                         $_SESSION['ClientId'] = $idOfClientVar;
                                         $_SESSION['imageComment'] = $imageOfClientVar;
@@ -135,9 +139,63 @@ class ClientController
             }
             
         //Supprimer le client
-        function removeTheClient()
+        function removeClient()
             {
+                if(isset($_POST['data']))
+                    {
+                        //print_r($_POST['validateRemoveClient']);
+                        $clientId = $_POST['data'];
+                    }
+                    
+                $client = new Client(
+                    [
+                        'id' => $clientId,
+
+                    ]); //Création d'un objet
+
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                $manager = new ClientManager($db);
                 
+                $removeClient = $manager->delete($client); 
+            }
+            
+        function updateClientForm()
+            {
+            
+                if(isset($_GET['id']))
+                    {
+                        $clientId = $_GET['id'];
+                    }
+                
+                //header("Location: /blogenalaska/index.php?action=getUpdateClientForm&id='.$clientId'");
+                require_once 'Frontend/FrontendViews/ClientFormAccess/ReinitiateClient.php';
+            }
+            
+        //Réinitialiser le compte client
+        function updateClient()
+            {
+                if(isset($_POST['id']) AND isset($_POST['password']))
+                    {
+                        if (!empty($_POST['id']) && !empty($_POST['password']))
+                            {
+                                $clientId = $_POST['id'];
+                                $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                            }
+                    }
+                    
+                $client = new Client(
+                    [
+                        'id' => $clientId,
+                        'password' => $password
+
+                    ]); //Création d'un objet
+
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                $manager = new ClientManager($db);
+                
+                $updateClient = $manager->update($client);
                 
                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             }

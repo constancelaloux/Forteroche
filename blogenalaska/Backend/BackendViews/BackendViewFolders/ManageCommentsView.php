@@ -58,8 +58,8 @@ else
                 <!--Compter les commentaires publiés-->
                 <div class="numberOfComments">
 
-                    <p>Commentaires publiés<a href="#"><span class="numberGlobalOfComments"><?php echo $globalCommentsCount ?></span></a></p>
-                    <p>commentaires signalés<a href="#"><span class="unwantedComments"><?php echo $unwantedCommentsCount ?></span></a></p>
+                    <p>Commentaires publiés<a href="#"><span class="numberGlobalOfComments"><?php echo htmlspecialchars($globalCommentsCount)?></span></a></p>
+                    <p>commentaires signalés<a href="#"><span class="unwantedComments"><?php echo htmlspecialchars($unwantedCommentsCount)?></span></a></p>
                 </div>
 
                 <!--Tableau-->

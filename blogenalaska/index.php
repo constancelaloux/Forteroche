@@ -1,12 +1,10 @@
 <?php
-
 // Chargement des classes
-//require '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
-//Autoloader::register();
+require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();
 //Backend
-require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
+/*require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
 require_once'Backend/BackendControllers/PostsControllers.php';
-//require_once'Backend/BackendControllers/doLogout.php';
 require_once 'Backend/BackendControllers/Upload.php';
 require_once 'Backend/BackendControllers/CommentsAdminControler.php';
 
@@ -15,7 +13,7 @@ require_once 'Frontend/FrontendControllers/BlogController.php';
 require_once 'Frontend/FrontendControllers/CommentsController.php';
 require_once 'Frontend/FrontendControllers/ClientController.php';
 require_once 'Frontend/FrontendControllers/EmailController.php';
-//Si j'ai une action ou sinon action par default
+//Si j'ai une action ou sinon action par default*/
 
     (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
 
@@ -249,10 +247,22 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $clientFrontendController->disconnectTheClient();
                         break;
                     
+                        //Supprimer un client
                         case 'removeClient':
                             $clientFrontendController = new ClientController();
-                            $clientFrontendController->removeTheClient();
+                            $clientFrontendController->removeClient();
+                        break;
                     
+                        //réinitialiser un client
+                        case 'updateClientForm':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->updateClientForm();
+                        break;
+                    
+                        case  'updateClient':
+                            $clientFrontendController = new ClientController();
+                            $clientFrontendController->updateClient();
+                        break;
                 //EMAIL
                         //L'utilisateur envoi un email à l'administrateur
                         case 'sendEmail':

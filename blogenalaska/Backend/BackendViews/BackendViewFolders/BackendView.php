@@ -60,7 +60,7 @@ else
                     <p>Tous<a href="#">
                         <span class="numberGlobalOfArticles">
                             <!--J'affiche le nombre d'articles présents en base de données!-->
-                            <?php echo $articlesCount ?>        
+                            <?php echo htmlspecialchars($articlesCount)?>        
                             <!--message d'erreur si l'article n'a pas été complété-->
                             <?php
 
@@ -73,10 +73,12 @@ else
                     </a></p>
                     <p>Publiés<a href="#"><span class="frontendNumberGlobalOfArticles">
                         <!--J'affiche le nombre d'articles publiés sur le blog-->
-                        <?php echo $numberOfArticlesPublished ?>
+                        <?php echo htmlspecialchars($numberOfArticlesPublished)?>
                     </span></a></p>
                 </div>
 
+                <button id="hide">Liste des articles publiés</button>
+                <button id="reset">Liste compléte</button>
                 <!--Tableau-->
                 <!--display-->
                 <table id="displayarticles" class="cell-border compact stripe" style="width:100%">
@@ -87,6 +89,7 @@ else
                             <th class="all">Sujet</th>
                             <th class="all">Date de création</th>
                             <th class="all">Date de modification</th>
+                            <th class="all">Status</th>
                             <th class="all">Supprimer/Modifier</th>
                         </tr>
                     </thead>
@@ -129,6 +132,7 @@ else
                                     {data: "1"},
                                     {data: "2"},
                                     {data: "3"},
+                                    {data: "4", visible: false},
                                     {
                                         data: null,
                                         className: "center",
@@ -145,6 +149,23 @@ else
                         });
                     }).draw();
                 
+                    //Boutons
+                    $("#hide").click(function() 
+                        {
+                            $.fn.dataTable.ext.search.push(
+                            function(settings, data, dataIndex) 
+                                {
+                                    return $(table.row(dataIndex).node()).attr('data-user') == 5;
+                                }
+                            );
+                            table.draw();
+                        });
+                        
+                    $("#reset").click(function() 
+                        {
+                            $.fn.dataTable.ext.search.pop();
+                            table.draw();
+                        });
                 //Supprimer des articles
                 $('#displayarticles').on( 'click', '.btn-delete', function () 
                     {
@@ -163,8 +184,6 @@ else
                                     dataType: 'html',
                                     success:function(data)
                                         {
-                                            console.log('c cool');
-                                            console.log(data);
                                             table.ajax.reload();
                                         },
                                     error:function(response)
@@ -187,7 +206,6 @@ else
                         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
                         if(confirm("Are you sure you want to update this?"))
                             {
-                                console.log('test');
                                 var url = "/blogenalaska/index.php?action=updateArticles&id="+id; 
                                 window.location.href = url;                              
                              };            

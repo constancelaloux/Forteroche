@@ -1,3 +1,6 @@
+<?php
+print_r($_SESSION['ClientId']);
+?>
 <!--Menu-->
 <header class="nav">
 
@@ -58,7 +61,12 @@
                                     </button>
                                     <div class="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                         <div>
-                                            <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheClient">DECONNEXION</a>
+                                            <a class="dropdown-item" href="/blogenalaska/index.php?action=disconnectTheClient">Déconnexion</a>
+                                            
+                                            <!--<button  type="button" class="dropdown-item" data-toggle="modal" data-target="#getModal">Supprimer mon compte</button>-->
+                                            <!--href="/blogenalaska/index.php?action=removeClient"-->
+                                            <button type="button" class="dropdown-item" data-toggle="modal" data-target="#getModal">Supprimer mon compte</button>
+                                            <a class="dropdown-item" href="/blogenalaska/index.php?action=updateClientForm&id=<?php echo $_SESSION['ClientId']?>">Réinitialiser mon compte</a>
                                         </div>
                                     </div>
                             </div> 
@@ -93,6 +101,31 @@
     
 </header> 
 
+                
+<!-- Modal -->
+<div id="getModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">File upload form</h4>
+            </div>
+            <div class="modal-body">
+                <!-- Form -->
+                <form>
+                    <p>Voulez vous vraiment supprimer votre compte ?</p>
+                    <br>
+                    <input type="hidden" id="newFile" name="newFile" value="<?php echo $_SESSION['ClientId'] ?>"/>
+                    <button id="validateDeleteClient"  data-dismiss="modal" name="validateRemoveClient">Valider</button>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+</div>
 
 <!--script permettant le hover sur les dropdown-->
 <script>
@@ -103,4 +136,29 @@
         {
             $(this).find('.dropdown-menu').stop(true, true).delay(200).fadeOut(500);
         });
+</script>
+
+<script>
+    $('#validateDeleteClient').on('click', function(e)
+        {
+            e.preventDefault();
+
+            var form_data = $("#newFile").val();
+            $.ajax(
+                {
+                    url         : '/blogenalaska/index.php?action=removeClient',     // point to server-side PHP script 
+                    method      :"POST",
+                    dataType: 'html',
+                    data        : {'data' : form_data},
+                    success     : function(response)
+                        {
+                            var url = "/blogenalaska/index.php?action=disconnectTheClient"; 
+                            window.location.href = url; 
+                        },
+                    error: function(xhr, ajaxOptions, thrownError) 
+                        {
+                            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                        }      
+                });
+        });    
 </script>

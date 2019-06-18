@@ -1,5 +1,5 @@
 <?php
-
+//namespace Forteroche\blogenalaska\Frontend\FrontendModels;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -40,12 +40,13 @@ class ClientManager// extends Manager
         public function delete(Client $client)
             {
                 //Execeute une requéte de type delete.
+                $this->_db->exec('DELETE FROM comments_author WHERE id = '.$client->id());
             }
 
         public function verify(Client $client)
             {
                 //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
-                $getClientLogin = $this->_db->prepare("SELECT password, username, imageComment, id FROM comments_author WHERE username = :username");//AND password = :password");
+                $getClientLogin = $this->_db->prepare("SELECT * FROM comments_author WHERE username = :username");//AND password = :password");
                 $getClientLogin->bindValue(':username', $client->username(), \PDO::PARAM_STR );
                 $getClientLogin->execute();
                 
@@ -62,6 +63,10 @@ class ClientManager// extends Manager
                 // Prépare une requête de type UPDATE.
                 // Assignation des valeurs à la requête.
                 // Exécution de la requête.
+                $dbRequestUpdateClient = $this->_db->prepare('UPDATE comments_author SET password = :password WHERE id = :id');
+                $dbRequestUpdateClient->bindValue(':password', $client->password(), \PDO::PARAM_INT);
+                $dbRequestUpdateClient->bindValue(':id', $client->id(), \PDO::PARAM_INT);
+                $dbRequestUpdateClient->execute();
             }
 
        public function setDb(\PDO $db)

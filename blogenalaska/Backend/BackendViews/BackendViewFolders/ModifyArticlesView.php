@@ -70,12 +70,12 @@ else
                     <h1>Modifier votre article</h1>
                     <div class="titleOfArticle">
                         <label for="titleArticle">Titre de l'article</label>
-                        <input type="text" id="titleArticle" name="title" value ='<?php echo $articleSubject?>' />
+                        <input type="text" id="titleArticle" name="title" value ='<?php echo htmlspecialchars($articleSubject)?>' />
                     </div>
 
                     <div class="contentOfArticle">
                         <label for="contentArticle">Contenu de l'article</label>
-                        <textarea id="mytextarea" name="content"> <?php echo $articleContent?></textarea>
+                        <textarea id="mytextarea" name="content" rows="1000" cols="45"> <?php echo $articleContent?></textarea>
                     </div>
 
 

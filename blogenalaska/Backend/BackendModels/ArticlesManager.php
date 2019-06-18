@@ -1,5 +1,5 @@
 <?php
-
+//namespace Forteroche\blogenalaska\Backend\BackendModels;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -95,7 +95,7 @@ class ArticlesManager
 
                 //$articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content FROM articles");
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content, status FROM articles");
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())

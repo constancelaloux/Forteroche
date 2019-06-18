@@ -1,6 +1,5 @@
 <?php
-
-//namespace Forteroche\blogenalaska\Models\BackendModels; 
+//namespace Forteroche\blogenalaska\Backend\BackendModels;
 
 /**
  * Description of Manager
@@ -9,7 +8,7 @@
  */
 //require_once 'Manager.php';
 
-class AuthorManager// extends Manager
+class AuthorManager
     {
 
 
@@ -55,27 +54,41 @@ class AuthorManager// extends Manager
             }
             
         //Requéte qui permer de récupérer en base de données le mot de passe et l'identifiant de l'administrateur
-        public function verify(Author $author)
+        public function verify($author)
             {
                 try 
                     {
                         //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
-                        $getAuthorLogin = $this->_db->prepare("SELECT password, username FROM articles_author WHERE username = :username");//AND password = :password");
-                        $getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
-                        $getAuthorLogin->execute();
-
-                        return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
+                        $checkAuthorLogin = $this->_db->prepare("SELECT  COUNT(*) FROM articles_author WHERE username = :username");//AND password = :password");
+                        //$getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
+                        $checkAuthorLogin->execute([':username' => $author]);
+                        
+                        //$getAuthorLogin->execute();
+                        return (bool) $checkAuthorLogin->fetchColumn();
+                        //return new Author($getAuthorLogin->fetch(\PDO::FETCH_ASSOC));
                     }
                 catch(PDOException $e)
                     {
                         throw new Exception('la requéte n\'a pas pu etre effectuée'). $e->getMessage();
                     }
             }
+        public function get($author)
+            {
+                $getAuthorLogin = $this->_db->prepare('SELECT password, username FROM articles_author WHERE username = :username');
+                $getAuthorLogin->execute([':username' => $author]);
+                //$getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
+                return new Author($getAuthorLogin->fetch(PDO::FETCH_ASSOC));
+            }
         
         //Je vais chercher la liste de tous les admin en base de données
-        public function getList()
+        public function exists($author)
             {
-                //retourne la liste de tous les AdminManager
+                //on regarde le nombre de lignes en base de données ou nous avons un username portant le meme username que la personne a inséré
+                $getAuthorLogin = $this->_db->prepare("SELECT COUNT(*) FROM articles_author WHERE username = :username");
+
+                $getAuthorLogin->execute([':username' => $author]);
+
+                return (bool) $getAuthorLogin->fetchColumn();
             }
 
         //Je met à jour un administrateur en base de données

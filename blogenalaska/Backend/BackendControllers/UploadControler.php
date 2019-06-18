@@ -1,4 +1,5 @@
 <?php
+//namespace Forteroche\blogenalaska\Backend\BackendControllers;
 
 class UploadControler
     {
@@ -92,19 +93,17 @@ class UploadControler
                                             $image = imagecreatefromgif($imageFolder .$temp['name']);
 
                                             //Je créé la miniature
-                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height);
+                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
-                                            imageGif($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
-  
+                                            imageGif($miniature, $imageFolder . $temp['name'], 100 );
                                         break;
                                     
                                         case IMAGETYPE_PNG:
                                             $image = imagecreatefrompng($imageFolder .$temp['name']);
-
                                             //Je créé la miniature
-                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $dest_w, $dest_h, $width, $height );
+                                            ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
-                                            imagePng($miniature, $imageFolder . 'thumb_' . $temp['name'], 100 );
+                                            imagePng($miniature, $imageFolder . $temp['name'], 9 );
                                         break;           
                                     }       
                             }

@@ -1,15 +1,16 @@
 <?php
-
+//namespace Forteroche\blogenalaska\Backend\BackendControllers;
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/Comment.php';
+// Chargement des classes
+require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
-//require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/CommentManager.php';
 class commentsAdminControler
     {
         //Je vais vers la vue avec le tableau des commentaires
@@ -22,7 +23,7 @@ class commentsAdminControler
         //Je vais compter les commentaires en base de données et ceux qui ont été signalés
         function countComments()
             {
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db); 
                 //ALler chercher les articles en bdd
@@ -34,7 +35,7 @@ class commentsAdminControler
         //Je vais récupérer les commentaires en base de données
         function getCommentsIntoDatatables()
             {
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db); 
                 //ALler chercher les articles en bdd
@@ -111,7 +112,7 @@ class commentsAdminControler
                         'id' => $myIdComment
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db);
 
@@ -140,7 +141,7 @@ class commentsAdminControler
                         'id' => $myIdComment
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db);
 

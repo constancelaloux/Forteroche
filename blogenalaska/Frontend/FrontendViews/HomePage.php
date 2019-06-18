@@ -107,7 +107,7 @@
                                             $image = $articles->image();
                                             
                                     
-                                            echo '<div id="myarticles">', '<h3>', $titlesToDisplay , '</h3>', "\n", '<p>', $dateCreate , '</p>' , "\n",'<div id="textAndImage">',"\n", '<div id="imageFromListing">','<p>', $image, '</p>',  '</div>',"\n",
+                                            echo '<div id="myarticles">', '<h3>',htmlspecialchars($titlesToDisplay) , '</h3>', "\n", '<p>', htmlspecialchars($dateCreate) , '</p>' , "\n",'<div id="textAndImage">',"\n", '<div id="imageFromListing">','<p>', $image , '</p>',  '</div>',"\n",
                                             '<p>', $articlesToDisplay, '</p>', "\n", '<div id="next">', '<p><a href="/blogenalaska/index.php?action=getArticleFromId&id=', $idArticles, '">lire la suite', '</a></p>',  '</div>', '</div>' , '</div>';
                                         }
                                 }
@@ -239,12 +239,12 @@
                                         <div id="imageAndTitlefromLastArticles">
                                             <div class="imageFromLastArticle">
                                                 <div class="col-lg-12  col-md-12 col-sm-12">
-                                                    <?php echo $imageLastArticle ; ?>
+                                                    <?php echo $imageLastArticle; ?>
                                                 </div>
                                             </div>
 
                                             <div class="titleFromLastArticle">
-                                                    <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo $titleLastArticle?></a></p>
+                                                    <p> <a href="/blogenalaska/index.php?action=getArticleFromId&id=<?php echo $idLastArticle ?>,"> <?php echo htmlspecialchars($titleLastArticle)?></a></p>
                                             </div>
                                         </div>
                         <?php
@@ -332,8 +332,8 @@
                             <label for="titleMessage">Titre du Message</label>
                             <input type="text" id="titleMessage" name="title" />
                             
-                            <label for="textarea">Votre message :</label>
-                            <textarea id="textarea" name="content" class="form-control" rows="4"></textarea>
+                            <label for="textarea">Votre message ici:</label>
+                            <textarea id="textarea" name="content" class="form-control" rows="8" cols="45"></textarea>
                             <p class="help-block">Vous pouvez agrandir la fenêtre</p>
                             <button class="btn btn-primary" type="submit"><span class="glyphicon glyphicon-ok-sign"></span> Envoyer</button>
                         </fieldset>

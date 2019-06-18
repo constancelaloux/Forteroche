@@ -1,9 +1,13 @@
 <?php
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/Search.php';
+//namespace Forteroche\blogenalaska\Frontend\FrontendControllers;
+// Chargement des classes
+require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/Search.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/SearchManager.php';
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/SearchManager.php';
 
 class BlogController 
     {
@@ -18,7 +22,7 @@ class BlogController
         function getArticles()
             {
                 //Je récupére mes articles
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db); 
                 
@@ -97,7 +101,7 @@ class BlogController
 
                     ]);
 
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $articlesManager = new ArticlesManager($db);
 
@@ -135,7 +139,7 @@ class BlogController
                     ]);*/
                 //print_r($_POST['whatImSearching']);
                 //print_r($words);
-                $db = \Forteroche\blogenalaska\Controllers\PdoConnection::connect();
+                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $searchManager = new SearchManager($db);
 

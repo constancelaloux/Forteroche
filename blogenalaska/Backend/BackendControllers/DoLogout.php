@@ -1,7 +1,7 @@
 <?php                                     
 //session timeout
 // Is the admin logged in? 
-class doLogout
+class DoLogout
     {
         function logout()
             {

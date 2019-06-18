@@ -1,4 +1,4 @@
-<?php $title = 'connect author blog page'; ?>
+<?php $title = 'connect author backend page'; ?>
 <?php ob_start(); ?>
 
 <section class="connectAuthor">
@@ -12,25 +12,27 @@
 
                     <div class="username">
                         <label for="username">Identifiant</label>
-                        <input type="text" id="username" name="username" />
+                        <input type="text" id="username" name="username" maxlength="20"/>
                     </div>
 
                     <div class="password">
                         <label for="password">Mot de passe</label>
-                        <input type="password" id="password" name="password" />
+                        <input type="password" id="password" name="password" maxlength="20"/>
                     </div>
 
                     <div>Jean_Forteroche</div>
 
-                    <div>passFromUser</div>
+                    <div>@Jean38</div>
 
                     <div id="submitAuthorFormConnection">
                         <input type="submit" value="Se connecter" />
                     </div>
-                </form>    
+                </form>  
+                <a class="authorForm" href="/blogenalaska/index.php?action=createNewAdminForm">Créer un nouvel administrateur</a>
             </div>
         </div>
      </div>
+</section>
 
 
 <?php $content = ob_get_clean(); ?>
