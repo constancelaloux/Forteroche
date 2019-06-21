@@ -15,7 +15,7 @@ class Comment
         private $_id_comments_author;
         private $_subject;
         private $_imageComment;
-        private $_firstname;
+        private $_username;
         private $_content;
         private $_createdate;
         private $_updatedate;
@@ -70,9 +70,9 @@ class Comment
             }
 
 
-        public function firstname()
+        public function username()
             {
-                return $this->_firstname;
+                return $this->_username;
             }
             
         public function imageComment()
@@ -146,12 +146,12 @@ class Comment
                     }
             }
             
-        public function setfirstname($firstname)
+        public function setUsername($username)
             {
                 //On vérifie qu'il s'agit bien d'une chaine de caractéres
-                if(is_string($firstname))
+                if(is_string($username))
                     {
-                        $this->_firstname = $firstname;
+                        $this->_username = $username;
                     }
             }
             

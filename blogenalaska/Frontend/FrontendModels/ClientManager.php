@@ -19,6 +19,7 @@ class ClientManager// extends Manager
                 $this->setDb($db);      
             }
 
+//AJOUTER UN CLIENT EN BDD
         public function add(Client $client)
             {
                 //Preparation de la requéte d'insertion.
@@ -36,28 +37,43 @@ class ClientManager// extends Manager
                 // Exécution de la requête.
                 $sendClientDatas->execute();    
             }
-
+//FIN AJOUTER UN CLIENT
+            
+            
+            
+//SUPPRIMER UN CLIENT
         public function delete(Client $client)
             {
                 //Execeute une requéte de type delete.
-                $this->_db->exec('DELETE FROM comments_author WHERE id = '.$client->id());
+                $this->_db->exec('DELETE firstname, surname, password, imageComment FROM comments_author WHERE id = '.$client->id());
             }
+//FIN SUPPRIMER UN CLIENT
+            
+            
+            
+//ON VERIFIE SI LE MOT DE PASSE ET L UTILISATEUR SONT BIEN EN BDD
+            public function get($client)
+                {
+                    //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
+                    $getClientLogin = $this->_db->prepare("SELECT * FROM comments_author WHERE username = :username");//AND password = :password");
+                    //$getClientLogin->bindValue(':username', $client->username(), \PDO::PARAM_STR );
+                    $getClientLogin->execute([':username' => $client]);
+                    //$getClientLogin->execute();
 
-        public function verify(Client $client)
-            {
-                //execute une requéte de type select avec une clause Where, et retourne un objet AdminManager. 
-                $getClientLogin = $this->_db->prepare("SELECT * FROM comments_author WHERE username = :username");//AND password = :password");
-                $getClientLogin->bindValue(':username', $client->username(), \PDO::PARAM_STR );
-                $getClientLogin->execute();
-                
-                return new Client($getClientLogin->fetch(\PDO::FETCH_ASSOC));
-            }
+                    return new Client($getClientLogin->fetch(\PDO::FETCH_ASSOC));
+                }
+            public function exists($newClient)
+                {
+                    //on regarde le nombre de lignes en base de données ou nous avons un username portant le meme username que la personne a inséré
+                    $getClientLogin = $this->_db->prepare("SELECT COUNT(*) FROM comments_author WHERE username = :username");
 
-        public function getList()
-            {
-                //retourne la liste de tous les AdminManager
-            }
+                    $getClientLogin->execute([':username' => $newClient]);
 
+                    return (bool) $getAuthorLogin->fetchColumn();
+                }
+//FIN VERIFIE  SI LE MOT DE PASSE ET L UTILISATEUR SONT BIEN EN BDD
+      
+//METTRE A JOUR UN CLIENT        
         public function update(Client $client)
             {
                 // Prépare une requête de type UPDATE.
@@ -68,7 +84,17 @@ class ClientManager// extends Manager
                 $dbRequestUpdateClient->bindValue(':id', $client->id(), \PDO::PARAM_INT);
                 $dbRequestUpdateClient->execute();
             }
+//FIN METTRE A JOUR UN CLIENT
+                     
+        
+            
+        public function getList()
+            {
+                //retourne la liste de tous les AdminManager
+            }
 
+            
+                
        public function setDb(\PDO $db)
             {
                 $this->_db = $db;

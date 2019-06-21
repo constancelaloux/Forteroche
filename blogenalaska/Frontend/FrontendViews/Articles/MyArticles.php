@@ -94,25 +94,32 @@
                                     { 
                                         $idComments = $comments->id();
                                         $imageClientToDisplay = $comments->imageComment();
-                                        $nameToDisplay = $comments->firstname();
+                                        $usernameToDisplay = $comments->username();
                                         $commentsToDisplay = $comments->content();
                                         $commentsDate = $comments->createdate();
-                                        //$commentsDateToDisplay=$commentsDate;//->format('Y-m-d');
+
                                         $unwantedCommments = "unwanted";
                     ?>
                                             <div id="myComments">
                     <?php
-                                                echo 
-                                                    '<div class="image">',$imageClientToDisplay, "\n",'</div>', "\n",
-                                                    '<div class="contentOfComment">', "\n",
-                                                        '<div id="Name">', "\n",'<p> De ', htmlspecialchars($nameToDisplay), '</p>',"\n",'<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>',"\n",'</div>', "\n",
-                                                        '<div id="Date">', "\n", '<p>Créé le ' ,htmlspecialchars($commentsDate), '</p>','</div>', "\n",'<p>', htmlspecialchars($commentsToDisplay), '</p>',"\n", 
-                                                    '</div>'; 
+                                                if(!empty($imageClientToDisplay))
+                                                    {    
+                                                        echo '<div class="image">',$imageClientToDisplay, "\n",'</div>';
+                                                    }
+                                                else 
+                                                    {
+                    ?>
+                                                        <div class="image"><img src="/blogenalaska/public/images/userdeleteicon.png" alt="logo"></div>;
+                    <?php
+                                                    }
+                                                echo    '<div class="contentOfComment">', "\n",
+                                                        '<div id="Name">', "\n",'<p> De ', htmlspecialchars($usernameToDisplay), '</p>',"\n",'<button class="reportComment" id="'.$idComments.'">Signaler à l\'administrateur</button>',"\n",'</div>', "\n",
+                                                        '<div id="Date">', "\n", '<p>Créé le ' ,htmlspecialchars($commentsDate), '</p>','</div>', "\n",'<p>', htmlspecialchars($commentsToDisplay), '</p>',"\n", '</div>'; 
                                         
                                         
                                                 if(isset($_SESSION['clientUsername']))
                                                     {
-                                                        if($_SESSION['clientUsername']===$nameToDisplay)
+                                                        if($_SESSION['clientUsername']===$usernameToDisplay)
                                                             {
                                                                 echo '<button class="modifyComment"> <a href="/blogenalaska/index.php?action=getCommentFromIdBeforeToUpdate&idComment='.$idComments.'&id='.$commentId.'"> Modifier</a></button>',"\n", 
                                                                      '<button class="deleteComment"> <a href="/blogenalaska/index.php?action=removeComment&idComment='.$idComments.'&id='.$commentId.'">Supprimer</a></button>';                

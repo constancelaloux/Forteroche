@@ -43,7 +43,7 @@ else
 ?>
 <?php $title = 'ManageCommentsView'; ?>
 <?php ob_start(); ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?> ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/Header.php'); ?>
 
     <!--Tinymce javascript-->
     <script type="text/javascript">
@@ -59,7 +59,6 @@ else
                     max_height: 300,
                     min_height: 300
             });
-
     </script>
 
     <!--Formulaire-->

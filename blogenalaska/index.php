@@ -196,17 +196,20 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                             $commentsController = new CommentsController();
                             $commentsController->addStatusAndNumberOfClicksToComment();
                         break;
-                                            //je récupére le commentaire en base de données pour aller le modifier
+                    
+                        //je récupére le commentaire en base de données pour aller le modifier
                         case 'getCommentFromIdBeforeToUpdate':
                             $commentsAdminController = new CommentsController();
                             $commentsAdminController -> getCommentFromIdBeforeToUpdate(); 
                         break;
-                    
+                        
+                        //Je modifie le commentaire
                         case 'updateComment':
                             $commentsAdminController = new CommentsController();
                             $commentsAdminController ->updateComment(); 
                         break;
                     
+                        //Je supprime un commentaire
                         case 'removeComment':
                             $commentsAdminController = new CommentsController();
                             $commentsAdminController ->removeComment(); 

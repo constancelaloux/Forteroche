@@ -19,7 +19,10 @@ class ArticlesManager
             { 
                 $this->setDb($db);
             }
-        
+            
+            
+//BACKEND  
+//AJOUTER ET SAUVEGARDER UN ARTICLE
         //J'ajoute un article en bdd
         public function add(Article $articles)
             {
@@ -45,16 +48,12 @@ class ArticlesManager
                 $saveArticlesDatas->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
                 $saveArticlesDatas->bindValue(':status', $articles->status(), \PDO::PARAM_STR);
                 $saveArticlesDatas->execute();
-                /*if ($articles->isValid())
-                    {
-                        $articles->isNew() ? $this->add($articles) : $this->modify($articles);
-                    }
-                else
-                    {
-                        throw new \RuntimeException('La news doit être validée pour être enregistrée');
-                    }*/
             }
-        
+//FIN AJOUTER ET SAUVEGARDER UN ARTICLE
+            
+            
+            
+//COMPTER LES ARTICLES
         //Je compte mes articles
         public function count()
             {
@@ -62,32 +61,28 @@ class ArticlesManager
             }
             
         //Je compte mes articles publiés
-        public function countPublishedArticles()
+        public function countPublishedArticles($status)
             {
-                return $this->_db->query('SELECT COUNT(*) as nbArt FROM articles WHERE status = "Valider"')->fetchColumn();
+                $articles = $this->_db->prepare('SELECT COUNT(*) as nbArt FROM articles WHERE status = :status');
+                $articles->execute([':status' => $status]);
+                return $articles->fetchColumn();
             }
+//FIN COMPTER LES ARTICLES        
             
+            
+            
+//SUPPRIMER ARTICLES            
         //Je supprime un article 
         public function delete(Article $articles)
             {
                 //Executer une requéte de type delete.
                 $this->_db->exec('DELETE FROM articles WHERE id = '.$articles->id());
             }
-        
-        //Je récupére mon article en fonction de l'id
-        public function get(Article $articles)
-            {
-                //Je récupére mes articles en fonction de l'id
-                //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
+//FIN SUPPRIMER ARTCILES        
 
-                $getArticlesDatasFromId = $this->_db->prepare("SELECT * FROM articles WHERE id = :id");
-
-                $getArticlesDatasFromId->bindValue(':id', $articles->id(), \PDO::PARAM_STR );
-                $getArticlesDatasFromId->execute();
-
-                return new Article($getArticlesDatasFromId->fetch(\PDO::FETCH_ASSOC));
-            }
-
+            
+            
+//AFFICHER ARTICLES DATATABLES
         //Je récupére la liste compléte de mes articles   
         public function getList()
             {
@@ -95,7 +90,7 @@ class ArticlesManager
 
                 //$articles = [];
                 
-                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content, status FROM articles");
+                $getArticlesDatas = $this->_db->prepare("SELECT id, create_date, update_date, subject, content, status FROM articles ORDER BY create_date");
                 $getArticlesDatas->execute();
 
                 while ($donnees = $getArticlesDatas->fetch())
@@ -109,18 +104,18 @@ class ArticlesManager
                         $tmpArticle->setCreatedate($articleDate);
                         
                         //Je vérifie si j'ai Null ou une date d'enregistré en bdd
-                        if (is_null($donnees['update_date']))
-                            {
-                                //echo '<td>0000-00-00 00:00:00 </td>';
-
-                                //print_r($articleUpdateDate); 
-                            }
-                        else
+                        if (!is_null($donnees['update_date']))
                             {
                                 $date =  DateTime::createFromFormat('Y-m-d H:i:s', $donnees['update_date']);
                                 setlocale(LC_TIME, "fr_FR");
                                 $articleUpdateDate = strftime("%d %B %Y", $date->getTimestamp());
                                 $tmpArticle->setUpdatedate($articleUpdateDate);
+                            }
+                        else
+                            {
+                                //echo '<td>0000-00-00 00:00:00 </td>';
+
+                                //print_r($articleUpdateDate); 
                             }
                         
                         $articles[] = $tmpArticle;
@@ -128,7 +123,31 @@ class ArticlesManager
                 $data = $articles;
                 return $data;
             }
-        
+//FIN AFFICHER ARTICLES DATATABLES
+//FIN BACKEND
+            
+
+
+//FRONTEND            
+//RECUPERATION ARTICLE 
+        //Je récupére mon article en fonction de l'id
+        public function get(Article $articles)
+            {
+                //Je récupére mes articles en fonction de l'id
+                //execute une requéte de type select avec une clause Where, et retourne un objet ArticlesManager. 
+
+                $getArticlesDatasFromId = $this->_db->prepare("SELECT * FROM articles WHERE id = :id");
+
+                $getArticlesDatasFromId->bindValue(':id', $articles->id(), \PDO::PARAM_STR );
+                $getArticlesDatasFromId->execute();
+
+                return new Article($getArticlesDatasFromId->fetch(\PDO::FETCH_ASSOC));
+            }
+//FIN RECUPERATION ARTICLE
+
+            
+            
+//MODIFICATION D'ARTICLES      
         //Je met a jour les articles dans la base de données
         public function update(Article $articles)
             {
@@ -137,11 +156,11 @@ class ArticlesManager
                 // Exécution de la requête.
                 $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW(), status = :status WHERE id = :id');
     
-                $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
-                $dbRequestModifyArticle->bindValue(':content', $articles->content());
-                $dbRequestModifyArticle->bindValue(':image', $articles->image());
+                $dbRequestModifyArticle->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
+                $dbRequestModifyArticle->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
+                $dbRequestModifyArticle->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
                 $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
-                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_INT);
+                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_STR);
                 $dbRequestModifyArticle->execute();
             }
             
@@ -153,20 +172,21 @@ class ArticlesManager
                 // Exécution de la requête.
                 $dbRequestModifyArticle = $this->_db->prepare('UPDATE articles SET subject = :subject, content = :content, image = :image,  update_date = NOW(), status = :status WHERE id = :id');
     
-                $dbRequestModifyArticle->bindValue(':subject', $articles->subject());
-                $dbRequestModifyArticle->bindValue(':content', $articles->content());
-                $dbRequestModifyArticle->bindValue(':image', $articles->image());
+                $dbRequestModifyArticle->bindValue(':subject', $articles->subject(), \PDO::PARAM_STR);
+                $dbRequestModifyArticle->bindValue(':content', $articles->content(), \PDO::PARAM_STR);
+                $dbRequestModifyArticle->bindValue(':image', $articles->image(), \PDO::PARAM_STR);
                 $dbRequestModifyArticle->bindValue(':id', $articles->id(), \PDO::PARAM_INT);
-                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_INT);
+                $dbRequestModifyArticle->bindValue(':status', $articles->status(), \PDO::PARAM_STR);
                 $dbRequestModifyArticle->execute();
             }
-        
+//FIN DE MODIFICATION D'ARTICLES
+   
         //Je récupére le dernier article
-        public function getUnique()
+        public function getUnique($status)
             {
                 $data = array();
-                $getLastArticle = $this->_db->prepare("SELECT * FROM articles  WHERE status = 'Valider' ORDER BY ID DESC LIMIT 0, 2");
-                $getLastArticle->execute();
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles  WHERE status = :status ORDER BY ID DESC LIMIT 0, 2");
+                $getLastArticle->execute([':status' => $status]);
                  while ($donnees = $getLastArticle->fetch())
                     {
                        $article =  new Article($donnees);
@@ -177,11 +197,11 @@ class ArticlesManager
             }
         
         //Je récupére 5 articles
-        public function getListOfFiveArticles($page,$nbrArticlesPerPage)
+        public function getListOfFiveArticles($page,$nbrArticlesPerPage,$status)
             {
                 $data = array();
-                $getLastArticle = $this->_db->prepare("SELECT * FROM articles WHERE status = 'Valider' ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage"); 
-                $getLastArticle->execute(); 
+                $getLastArticle = $this->_db->prepare("SELECT * FROM articles WHERE status = :status ORDER BY ID DESC LIMIT ".(($page-1)*$nbrArticlesPerPage).", $nbrArticlesPerPage"); 
+                $getLastArticle->execute([':status' => $status]); 
                 while ($donnees = $getLastArticle->fetch())
                     {
                         $article =  new Article($donnees);

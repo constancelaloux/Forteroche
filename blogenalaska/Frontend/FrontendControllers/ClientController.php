@@ -15,114 +15,195 @@ require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php
  */
 class ClientController
     {
+
+//OBTENIR LE FORMULAIRE DE CONNEXION
        //Je vais vers le formulaire de connexion du client
         function getClientFormConnexion()
             {
                 require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
             }
-        
+//FIN OBTENIR LE FORMULAIRE DE CONNEXION
+
+            
+            
+//OBTENIR le FORMULAIRE DE CREATION D'UN CLIENT
         //Je vais vers le formulaire de création d'un nouveau client
         function getFormToCreateNewClient()
             {
                 require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
             }
-        
+//FIN OBTENIR LE FORMULAIRE DE CREATION D'UN CLIENT
+
+            
+            
+//JE CREE UN NOUVEAU CLIENT EN BDD
         //Je créé un nouveau client et envoi en bdd ses informations
         function createNewClientInDatabase()
             {
-                //Connexion à la base de données et création des identifiants du client
-                if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname'])AND isset($_POST['image']))
+                try
                     {
-                        if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['image']))
+                        //Connexion à la base de données et création des identifiants du client
+                        if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname'])AND isset($_POST['image']))
                             {
-                                // check if the username and the password has been set
-                                $firstnameVar = $_POST['firstname'];
+                                if (!empty($_POST['login']) && !empty($_POST['pass']) && !empty($_POST['firstname']) && !empty($_POST['surname']) && !empty($_POST['image']))
+                                    {
+                                        // check if the username and the password has been set
+                                        $firstnameVar = $_POST['firstname'];
 
-                                $surnameVar = $_POST['surname'];
+                                        $surnameVar = $_POST['surname'];
 
-                                $usernameVar = $_POST['login'];
-                                
-                                $imageVar = $_POST['image'];
+                                        $usernameVar = $_POST['login'];
 
-                                $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+                                        $imageVar = $_POST['image'];
 
-                                $newClient = new Client
-                                    ([
-                                        'firstname' => $firstnameVar,
-                                        'surname' => $surnameVar,
-                                        'password' => $passwordVar,
-                                        'username' => $usernameVar,
-                                        'imageComment' => $imageVar
-                                    ]);
-                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+                                        //Je vérifie si mon identifiant n'est pas trop court
+                                                if (strlen($usernameVar) > 20)
+                                                    {
+                                                        throw new Exception('identifiant trop court !');
+                                                    }
+                                        //https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2917331-controlez-les-mots-de-passe
+                                        //Je vérifie si mon mot de passe n'est pas trop court et conforme
+                                            if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,8}$#', $_POST['pass'])) 
+                                                {             
+                                                    $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-                                $manager = new ClientManager($db);
-                                $sendToTheManager = $manager->add($newClient);
+                                                    $newClient = new Client
+                                                        ([
+                                                            'firstname' => $firstnameVar,
+                                                            'surname' => $surnameVar,
+                                                            'password' => $passwordVar,
+                                                            'username' => $usernameVar,
+                                                            'imageComment' => $imageVar
+                                                        ]);
 
-                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                                        $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                                        $manager = new ClientManager($db);
+
+                                                        //Je vérifie si l'identifiant existe déja pour aller ensuite le comparer
+
+                                                        if($manager->exists($newClient->username()))
+                                                            {
+                                                                //unset() détruit la ou les variables dont le nom a été passé en argument var.
+                                                                unset($newClient);
+                                                                throw new Exception('Votre identifiant existe déja');
+                                                            }
+                                                        else
+                                                            {
+                                                                $manager->add($newClient);
+                                                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                                            }
+                                                            //$sendToTheManager = $manager->add($newClient);
+                                                }
+                                            else 
+                                                {
+                                                    throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
+                                                }
+                                    }
+                                else
+                                    {
+                                        throw new Exception('Vous n\'avez pas rempli le formulaire!');
+                                    }
                             }
-                        else
+                        else 
                             {
-                                echo "Vous n'avez pas rempli le formulaire";
-                                require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                throw new Exception('Le ou les champs ne sont pas remplis !');
                             }
-                    }       
+                    }
+                catch(Exception $e) 
+                    {
+                        //S'il y a eu une erreur, alors...
+                        echo 'Erreur : ' . $e->getMessage();
+                        require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                    }      
             }
-        
+//FIN JE CREE UN NOUVEAU CLIENT EN BDD
+
+            
+            
+// JE VERIFIE LE MOT DE PASSE ET LE CLIENT
         //Vérifier l'identifiant et le mot de passe du client avant de le faire accéder à son compte
         function checkClientUsernameAndPassword()
             {
                 // On vérifie les variables du formulaire si elles sont présentes et remplies
-                if (isset($_POST['username']) AND isset($_POST['password']))
+                try
                     {
-                        if (!empty($_POST['username']) && !empty($_POST['password']))
+                        // On vérifie les variables du formulaire si elles sont présentes et remplies
+                        if (isset($_POST['username']) AND isset($_POST['password']))
                             {
-                                // check if the username and the password has been set
-                                $clientUsernameVar = $_POST['username'];
-                                $clientPasswordVar = $_POST['password'];
- 
-                                $client = new Client(
-                                    [
-                                        'username' => $clientUsernameVar,
-                                        'password' => $clientPasswordVar
-                                        
-                                    ]); //Création d'un objet
-
-                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                                $manager = new ClientManager($db);
-                                $passwordFromManager = $manager->verify($client); // Appel d'une fonction de cet objet
-
-                                $passwordFromDb = $passwordFromManager->password();
-                                $idOfClientVar = $passwordFromManager->id();
-                                $imageOfClientVar = $passwordFromManager->imageComment();
-                                $firstnameOfClientVar = $passwordFromManager->firstname();
-
-                                //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
-                                $AuthorPassword = password_verify($clientPasswordVar, $passwordFromDb);
-
-                                if ($AuthorPassword)
-                                    { 
-                                        // Start the session
-                                        session_start();
-                                        $_SESSION['clientUsername'] = $firstnameOfClientVar;
-                                        $_SESSION['clientPassword'] = $clientPasswordVar;
-                                        $_SESSION['ClientId'] = $idOfClientVar;
-                                        $_SESSION['imageComment'] = $imageOfClientVar;
-
-                                header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
-            
-                                                                    }
-                                else 
+                                if (!empty($_POST['username']) && !empty($_POST['password']))
                                     {
-                                        echo "Vos identifiants sont incorrects";
-                                    
-                                        header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                        // check if the username and the password has been set
+                                        $clientUsernameVar = $_POST['username'];
+                                        $clientPasswordVar = $_POST['password'];
+
+                                        $client = new Client(
+                                            [
+                                                'username' => $clientUsernameVar,
+                                                'password' => $clientPasswordVar
+
+                                            ]); //Création d'un objet
+
+                                        $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                        $manager = new ClientManager($db);
+
+                                        if($manager->exists($client->username()))
+                                            {
+                                                // Appel d'une fonction de cet objet
+                                                $client = $manager->get($client->username());
+                                                $idOfClientVar = $client->id();
+                                                $imageOfClientVar = $client->imageComment();
+                                                
+                                                $passwordFromDb = $client->password();
+                                                //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                                                $clientPassword = password_verify($passwordVar, $passwordFromDb);                  
+
+                                                if ($clientPassword)
+                                                    {
+                                                        // Start the session
+                                                        session_start();
+                                                        $_SESSION['clientUsername'] = $clientUsernameVar;
+                                                        $_SESSION['clientPassword'] = $clientPasswordVar;
+                                                        $_SESSION['ClientId'] = $idOfClientVar;
+                                                        $_SESSION['imageComment'] = $imageOfClientVar;
+
+                                                        header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
+                                                    }
+                                                else 
+                                                    {
+                                                        throw new Exception('Votre mot de passe est incorrect!');
+                                                    }
+                                            }
+                                        else 
+                                            {
+                                                throw new Exception('Votre nom d\'utilisateur est incorrect!');
+                                            }
+
+                                    }
+
+                                else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
+                                    {
+                                        throw new Exception('Tous les champs ne sont pas remplis !');
                                     }
                             }
+                        else 
+                            {
+                                throw new Exception('Le ou les champs ne sont pas remplis !');
+                            }
+                    }        
+                catch(Exception $e) 
+                    {
+                        // S'il y a eu une erreur, alors...
+                        echo 'Erreur : ' . $e->getMessage();
                     }
+                    header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');             
             }
-        
+//FIN JE VERIFIE LE MOT DE PASSE ET LE CLIENT 
+
+            
+            
+//DECONNECTION D UN CLIENT
         //Déconnecter le client
         function disconnectTheClient()
             {
@@ -137,7 +218,11 @@ class ClientController
                 
                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             }
+// FIN DECONNEXION D UN CLIENT
+
             
+            
+//SUPPRIMER UN CLIENT
         //Supprimer le client
         function removeClient()
             {
@@ -159,7 +244,11 @@ class ClientController
                 
                 $removeClient = $manager->delete($client); 
             }
+//FIN SUPPRIMER UN CLIENT
             
+            
+            
+//METTRE A JOUR UN CLIENT
         function updateClientForm()
             {
             
@@ -199,5 +288,6 @@ class ClientController
                 
                 header('Location: /blogenalaska/index.php?action=goToFrontPageOfTheBlog');
             }
+//FIN METTRE A JOUR UN CLIENT
     }
  

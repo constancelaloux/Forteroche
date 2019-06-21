@@ -13,33 +13,44 @@ require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php
 
 class commentsAdminControler
     {
+//COMMENTAIRES DATATABLES VUE
         //Je vais vers la vue avec le tableau des commentaires
         function getCommentsView()
             {
                 //require 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php'; 
                 header('Location: /blogenalaska/index.php?action=countCommentsForAdminTableView');
             }
- 
+//FIN COMMENTAIRES DATATABLES VUE
+
+            
+            
+//COMPTER LES COMMENTAIRES
         //Je vais compter les commentaires en base de données et ceux qui ont été signalés
         function countComments()
             {
+                $status = 'unwanted';
                 $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
                 $commentsManager = new CommentsManager($db); 
                 //ALler chercher les articles en bdd
                 $globalCommentsCount = $commentsManager->count();//Appel d'une fonction de cet objet
-                $unwantedCommentsCount = $commentsManager->countUnwantedComments();//Appel d'une fonction de cet objet
+                $unwantedCommentsCount = $commentsManager->countUnwantedComments($status);//Appel d'une fonction de cet objet
                 require_once 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';
             }
+//FIN COMPTER LES COMMENTAIRES
+
             
+
+//DATATABLES COMMENTAIRES
         //Je vais récupérer les commentaires en base de données
         function getCommentsIntoDatatables()
             {
+                $status = 'unwanted';
                 $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
+                
                 $commentsManager = new CommentsManager($db); 
                 //ALler chercher les articles en bdd
-                $commentsFromManager = $commentsManager->getComments();//Appel d'une fonction de cet objet
+                $commentsFromManager = $commentsManager->getComments($status);//Appel d'une fonction de cet objet
 
                 foreach ($commentsFromManager as $comments) 
                     {
@@ -65,17 +76,17 @@ class commentsAdminControler
                                  $row[] = $debut;
                                  
                             }
-                        //$row[] = $comments->content();
-                        //$updateCommentDate = $comments->updatedate();
+
+                        $updateCommentDate = $comments->updatedate();
                         
-                        /*if (is_null($updateCommentDate))
+                        if (is_null($updateCommentDate))
                             {
-                                $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
+                                $row[] = "Pas de modifications faites sur ce commentaire pour l'instant";
                             }
                         else 
                             {
-                                $row[] = $updateCommentDate->format('Y-m-d');
-                            }*/
+                                $row[] = $updateCommentDate;
+                            }
 
                         $row[] = $comments->countclicks();
                         $data[] = $row;
@@ -89,7 +100,11 @@ class commentsAdminControler
                         
                     echo json_encode($json_data);
             }
+//FIN DATATABLES COMMENTAIRES
+
             
+
+//SUPPRIMER LES COMMENTAIRES
         //Je supprime les commentaires indésirables     
         function removeComments()
             {
@@ -118,7 +133,11 @@ class commentsAdminControler
 
                 $commentsManager->removeComment($comment);
             }
-        
+//FIN SUPPRIMER LES COMMENTAIRES
+
+            
+            
+//VALIDER LES COMMENTAIRES INDESIRABLES
         //Valider les commentaires qui ont été considérés comme indésirables par les visiteurs
         function validateComment()
             {
@@ -135,10 +154,15 @@ class commentsAdminControler
                                 require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
                             }
                     }  
+                $status = '';
+                $countclicks = '0';
+                
                 $comment = new Comment
                     ([
 
-                        'id' => $myIdComment
+                        'id' => $myIdComment,
+                        'status' => $status,
+                        'countclicks' => $countclicks
                     ]);
 
                 $db = \Forteroche\blogenalaska\PdoConnection::connect();
@@ -147,4 +171,5 @@ class commentsAdminControler
 
                 $commentsManager->validateComment($comment);
             }
+//FIN VALIDER LES COMMENTAIRES INDESIRABLES
     }

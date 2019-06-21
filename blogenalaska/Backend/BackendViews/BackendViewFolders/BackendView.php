@@ -77,7 +77,8 @@ else
                     </span></a></p>
                 </div>
 
-                <button id="hide">Liste des articles publiés</button>
+                <button id="hideSaveDatas">Liste des articles publiés</button>
+                <button id="hidePublishedDatas">Liste des articles sauvegardés</button>
                 <button id="reset">Liste compléte</button>
                 <!--Tableau-->
                 <!--display-->
@@ -107,7 +108,7 @@ else
                 var table = $('#displayarticles').DataTable
                     (
                         {
-                            
+                            "order": [[ 1, "desc" ]],   
                             processing: true,
                             ajax:
                                 {
@@ -150,48 +151,66 @@ else
                     }).draw();
                 
                     //Boutons
-                    $("#hide").click(function() 
+                    if($("#hideSaveDatas").click(function()
                         {
                             $.fn.dataTable.ext.search.push(
-                            function(settings, data, dataIndex) 
-                                {
-                                    return $(table.row(dataIndex).node()).attr('data-user') == 5;
-                                }
+                                function(settings, data, dataIndex) 
+                                    {
+                                        return data[5] !== "Sauvegarder";
+                                    }
                             );
                             table.draw();
-                        });
+                            $.fn.dataTable.ext.search.pop();
+                        }));
+
                         
-                    $("#reset").click(function() 
+                    if($("#reset").click(function() 
                         {
                             $.fn.dataTable.ext.search.pop();
                             table.draw();
-                        });
+                        }));
+                    
+                    if($("#hidePublishedDatas").click(function() 
+                        {
+                            $.fn.dataTable.ext.search.push(
+                                function(settings, data, dataIndex) 
+                                    {
+                                        return data[5] !== "Valider";
+                                    }
+                            );
+                            table.draw();
+                            $.fn.dataTable.ext.search.pop();
+                        }));
+                        
                 //Supprimer des articles
                 $('#displayarticles').on( 'click', '.btn-delete', function () 
                     {
                         //var id = $(this).attr("id");
                         var datas = table.row( $(this).parents('tr') ).data();
                         var id = datas[ 0 ];
-                        alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
+                        //alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
 
-                        if(confirm("Are you sure you want to remove this?"))
+                        if(confirm("Voulez vous supprimer cet article?"))
                             {
                                 $.ajax
-                                ({
-                                    url:"/blogenalaska/index.php?action=removeArticles",
-                                    method:"POST",
-                                    data:{id:id},
-                                    dataType: 'html',
-                                    success:function(data)
-                                        {
-                                            table.ajax.reload();
-                                        },
-                                    error:function(response)
-                                        {
-                                            console.log('ca ne fonctionne pas');
-                                        }
-                                });
-                             };            
+                                    ({
+                                        url:"/blogenalaska/index.php?action=removeArticles",
+                                        method:"POST",
+                                        data:{id:id},
+                                        dataType: 'html',
+                                        success:function(data)
+                                            {
+                                                table.ajax.reload();
+                                                //var url = "/blogenalaska/index.php?action=updateArticles&id="+id;
+                                                var url = '/blogenalaska/index.php?action=mainBackendPage';
+                                                window.location.href = url;
+                                            },
+                                        error:function(response)
+                                            {
+                                                console.log('ca ne fonctionne pas');
+                                            }
+                                    });
+                            };            
                     } );
                 
                 //Modifier des articles
@@ -200,15 +219,15 @@ else
                         //e.preventDefault();
                         var datas = table.row( $(this).parents('tr') ).data();
                         var id = datas[ 0 ];
-                        alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
+                        //alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
 
                         //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
                         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
-                        if(confirm("Are you sure you want to update this?"))
+                        if(confirm("Voulez vous modifier cet article?"))
                             {
                                 var url = "/blogenalaska/index.php?action=updateArticles&id="+id; 
                                 window.location.href = url;                              
-                             };            
+                            };            
                     });
             });
     </script>

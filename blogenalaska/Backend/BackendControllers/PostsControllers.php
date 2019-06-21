@@ -4,14 +4,14 @@
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();
 
-//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Article.php';
-
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
+//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Article.php';
 /*require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/ArticlesManager.php';
 
 require_once"/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php";*/
 
+//JE VAIS VERS MA PAGE ECRIRE UN ARTICLE
 class PostsControllers
     {
         //Bouton écrire un article du menu pour afficher la page de redaction d'articles
@@ -19,7 +19,11 @@ class PostsControllers
             {
                 header('Location: /blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
             }
+//FIN PAGE ECRIRE UN ARTICLE
+
             
+            
+//JE CREE UN NOUVEL ARTICLE
         //Envoyer des articles en base de données
         function createNewArticle()
             { 
@@ -96,13 +100,21 @@ class PostsControllers
                         header('Location: /blogenalaska/index.php?action=mainBackendPage');
                     }
             }
-        
+//FIN CREER UN NOUVEL ARTICLE
+  
+            
+            
+//ALLER VERS LA PAGE PRINCIPALE DU BACKEND
         //Récupérer la page principale du Backend
         function getMainBackendPage()
             {
                 header('Location: /blogenalaska/index.php?action=countArticles');
             }
+//FIN ALLER VERS LA PAGE PRINCIPALE DU BACKEND
             
+   
+            
+//COMPTER LES ARTICLES        
         //Fonction qui compte les articles
         function countArticles()
             {
@@ -111,6 +123,8 @@ class PostsControllers
                     {
                         $error = $_GET['error'];
                     }
+                $status = 'Valider';
+                
                 //Je vais compter mes articles en base de données    
                 //$db = \Forteroche\blogenalaska\PdoConnection::connect();
                 $database = new \Forteroche\blogenalaska\PdoConnection();
@@ -120,8 +134,8 @@ class PostsControllers
 
                 $articlesCount = $articlesManager->count();
                 
-                $numberOfArticlesPublished = $articlesManager->countPublishedArticles();
-                
+                $numberOfArticlesPublished = $articlesManager->countPublishedArticles($status);
+
                 if(!isset($articlesCount) and (!isset($numberOfArticlesPublished)))
                     {
                         $session = new SessionClass();
@@ -129,7 +143,11 @@ class PostsControllers
                     }
                 require_once 'Backend/BackendViews/BackendViewFolders/BackendView.php';
             }
+//FIN COMPTER LES ARTICLES
 
+            
+            
+//DATATABLES ARTICLES
         //Récupérer des articles de la base de données pour afficher au sein du datatables
         function getArticles()
             { 
@@ -140,7 +158,7 @@ class PostsControllers
                 
                 //ALler chercher les articles en bdd
                 $articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet
-                
+                //print_r($articlesFromManager);
                 if (!empty ($articlesFromManager))
                     {
                         foreach ($articlesFromManager as $articles) 
@@ -164,6 +182,8 @@ class PostsControllers
                                     }
                                 $row[] = $articles->status();
                                 $data[] = $row;
+                                
+                                //die('je sors');
                             }
                         // Structure des données à retourner
                         $json_data = array
@@ -179,8 +199,11 @@ class PostsControllers
                         $session->setFlash('pas de donnée disponible pour l\'instant','error');
                     }
             }
-        
+//FIN DATATABLES ARTICLES      
+  
             
+            
+//SUPPRIMER ARTICLES
         //Supprimer des articles en base de données
         function deleteArticles()
             {
@@ -211,8 +234,11 @@ class PostsControllers
 
                 $articlesManager->delete($article);
             }
+//FIN SUPPRIMER ARTICLES
 
-        //Aller réupérer le titre et l'article en base de données    
+            
+//MODIFIER UN ARTICLE
+        //Aller réupérer le titre, l'article et l'image en base de données    
         function getArticlesFromId()
             {
                 if (isset($_GET['id']))
@@ -332,4 +358,5 @@ class PostsControllers
                 $articlesManager->updateAndSave($article);
                 header('Location: /blogenalaska/index.php?action=mainBackendPage');
             }
+//FIN MODIFIER UN ARTICLE
     }       

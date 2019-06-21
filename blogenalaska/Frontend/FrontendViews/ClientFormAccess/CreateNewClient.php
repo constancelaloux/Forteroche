@@ -12,13 +12,24 @@
                     <p>Entrez votre login et votre mot de passe.</p>
                 </div>
                 <form action="/blogenalaska/index.php?action=createNewClientPasswordAndUsername" method="post">
-                    <p>
-                        Prenom: <input type="text" name="firstname"><br />
-                        Nom : <input type="text" name="surname"><br />
-                        Identifiant : <input type="text" name="login"><br />
-                        Mot de passe : <input type="text" name="pass"><br /><br />
-                    </p>
-                    
+
+                        <div class="surname">
+                            <label for="surname">Nom</label>
+                            <input type="text" name="surname"  maxlength="20" ><br />
+                        </div>
+                        <div class="firstname">
+                            <label for="firstname">Prénom</label>
+                            <input type="text" name="firstname"  maxlength="20" ><br />
+                        </div>
+                        <div class="username">
+                            <label for="username">Prénom</label>
+                            <input type="text" name="login" pattern=".{6,}"   required title="6 caracteres minimum"><br />
+                        </div>
+                        <div class="password">
+                            <label for="password">Mot de passe</label>
+                            <input type="text" name="pass" pattern=".{6,}"   required title="6 caracteres minimum"><br />
+                        </div>
+
                     <!--J'upload une image-->
                     <div id="newClientImageUpload">
                         <div  class="imageOfClient">

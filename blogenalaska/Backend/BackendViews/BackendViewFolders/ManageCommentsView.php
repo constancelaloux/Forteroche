@@ -70,6 +70,7 @@ else
                             <th class="all">Numéro</th>
                             <th class="all">Id</th>
                             <th class="all">Date de création</th>
+                            <th class="all">Date de modification</th>
                             <th class="all">Nom du Chapitre</th>
                             <th class="all">Contenu</th>
                             <th class="all">Nombre de clicks</th>
@@ -89,7 +90,7 @@ else
                 var table = $('#displayComments').DataTable
                     (
                         {
-                            "order": [[ 5, "desc" ]],
+                            "order": [[ 6, "desc" ]],
                             processing: true,
                             ajax:
                                 {
@@ -113,6 +114,7 @@ else
                                     {data: "2"},
                                     {data: "3"},
                                     {data: "4"},
+                                    {data: "5"},
                                     {
                                         className: "center",
                                         defaultContent: '<td><button class="btn-delete" type="button">Supprimer</button></td><td><button class="btn-validate" type="button">Valider le commentaire</button></td>'
@@ -147,9 +149,9 @@ else
                                         dataType: 'html',
                                         success:function(data)
                                             {
-                                                console.log('c cool');
-                                                console.log(data);
                                                 table.ajax.reload();
+                                                var url = '/blogenalaska/index.php?action=getCommentsViewDatatables';
+                                                window.location.href = url;
                                             },
                                         error:function(response)
                                             {
@@ -177,9 +179,9 @@ else
                                     dataType: 'html',
                                     success:function(data)
                                         {
-                                            console.log('c cool');
-                                            console.log(data);
                                             table.ajax.reload();
+                                                var url = '/blogenalaska/index.php?action=getCommentsViewDatatables';
+                                                window.location.href = url;
                                         },
                                     error:function(response)
                                         {
