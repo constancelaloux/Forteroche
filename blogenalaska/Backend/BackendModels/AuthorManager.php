@@ -54,7 +54,7 @@ class AuthorManager
             }
             
         //Requéte qui permer de récupérer en base de données le mot de passe et l'identifiant de l'administrateur
-        public function verify($author)
+        /*public function verify($author)
             {
                 try 
                     {
@@ -71,12 +71,13 @@ class AuthorManager
                     {
                         throw new Exception('la requéte n\'a pas pu etre effectuée'). $e->getMessage();
                     }
-            }
+            }*/
         public function get($author)
             {
                 $getAuthorLogin = $this->_db->prepare('SELECT password, username FROM articles_author WHERE username = :username');
                 $getAuthorLogin->execute([':username' => $author]);
                 //$getAuthorLogin->bindValue(':username', $author->username(), \PDO::PARAM_STR );
+                //$getAuthorLogin->closeCursor();
                 return new Author($getAuthorLogin->fetch(PDO::FETCH_ASSOC));
             }
         
@@ -87,7 +88,7 @@ class AuthorManager
                 $getAuthorLogin = $this->_db->prepare("SELECT COUNT(*) FROM articles_author WHERE username = :username");
 
                 $getAuthorLogin->execute([':username' => $author]);
-
+                //$getAuthorLogin->closeCursor();
                 return (bool) $getAuthorLogin->fetchColumn();
             }
 

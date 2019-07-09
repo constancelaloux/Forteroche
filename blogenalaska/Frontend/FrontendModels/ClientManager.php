@@ -62,6 +62,7 @@ class ClientManager// extends Manager
 
                     return new Client($getClientLogin->fetch(\PDO::FETCH_ASSOC));
                 }
+                
             public function exists($newClient)
                 {
                     //on regarde le nombre de lignes en base de données ou nous avons un username portant le meme username que la personne a inséré
@@ -69,7 +70,7 @@ class ClientManager// extends Manager
 
                     $getClientLogin->execute([':username' => $newClient]);
 
-                    return (bool) $getAuthorLogin->fetchColumn();
+                    return (bool) $getClientLogin->fetchColumn();
                 }
 //FIN VERIFIE  SI LE MOT DE PASSE ET L UTILISATEUR SONT BIEN EN BDD
       

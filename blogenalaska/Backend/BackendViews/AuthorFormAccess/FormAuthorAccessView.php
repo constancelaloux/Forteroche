@@ -1,5 +1,12 @@
 <?php $title = 'connect author backend page'; ?>
 <?php ob_start(); ?>
+<?php
+    //Session flash message
+    if (!empty($session))
+        {
+            $session->flash(); 
+        }
+?>
 
 <section class="connectAuthor">
     <div class="container">

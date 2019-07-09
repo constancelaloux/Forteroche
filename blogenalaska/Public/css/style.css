@@ -931,3 +931,23 @@ button.reportComment
         height: 20px;
         text-align: center;
     }
+    
+    
+    
+    
+    
+/*Page 4040*/
+.text-secondary #404text p
+    {
+        padding: 50px;
+        display: none;
+    }
+
+/*Message d'erreur*/
+.alert
+    {
+        position: fixed;
+        top: 0; left:0; right:0;
+        z-index: 1060;
+        /*display: none;*/
+    }

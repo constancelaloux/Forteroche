@@ -129,9 +129,18 @@ class UploadControler
 
                                 echo "<img src='$filetowrite1' />";
                             }
+                        else
+                            {
+                                $session = new SessionClass();
+                                $session->setFlash('erreur','error');
+                            }
 
                     }
-
+                else
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('erreur','error');
+                    }
             }
     }
 

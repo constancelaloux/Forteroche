@@ -34,8 +34,30 @@ class commentsAdminControler
                 $commentsManager = new CommentsManager($db); 
                 //ALler chercher les articles en bdd
                 $globalCommentsCount = $commentsManager->count();//Appel d'une fonction de cet objet
+                
+                if(empty($globalCommentsCount))
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas de données','error');     
+                    }
+                    
+
                 $unwantedCommentsCount = $commentsManager->countUnwantedComments($status);//Appel d'une fonction de cet objet
-                require_once 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';
+                
+                if(empty($unwantedCommentsCount))
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas de données','error');     
+                    }
+                    
+                if(file_exists('Backend/BackendViews/BackendViewfolders/ManageCommentsview.php'))   
+                    {
+                        require_once 'Backend/BackendViews/BackendViewfolders/ManageCommentsview.php';
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
 //FIN COMPTER LES COMMENTAIRES
 
@@ -113,25 +135,49 @@ class commentsAdminControler
                         if (!empty($_POST['id']))
                             {
                                 // check if the id has been set
-                                $myIdComment = ($_POST['id']);
+                                $myIdComment = $_POST['id'];
+                                $comment = new Comment
+                                    ([
+
+                                        'id' => $myIdComment
+                                    ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                $commentsManager = new CommentsManager($db);
+
+                                $commentsManager->removeComment($comment);
                             }
                         else 
                             {
-                                echo 'pas d article séléctionné';
+                                //echo 'pas d article séléctionné';
+                                $session = new SessionClass();
+                                $session->setFlash('pas d\'article séléctionné','error');
+                                //require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                if (file_exists('/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php'))
+                                    {
+                                        require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                            }
+                    } 
+                else
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas d\'article séléctionné','error');
+                        //require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                        if (file_exists('/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php'))
+                            {
                                 require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
                             }
-                    }  
-                $comment = new Comment
-                    ([
-
-                        'id' => $myIdComment
-                    ]);
-
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $commentsManager = new CommentsManager($db);
-
-                $commentsManager->removeComment($comment);
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
+                    }
             }
 //FIN SUPPRIMER LES COMMENTAIRES
 
@@ -146,30 +192,55 @@ class commentsAdminControler
                         if (!empty($_POST['id']))
                             {
                                 // check if the id has been set
-                                $myIdComment = ($_POST['id']);
+                                $myIdComment = $_POST['id'];
+                                $status = '';
+                                $countclicks = '0';
+                
+                                $comment = new Comment
+                                    ([
+
+                                        'id' => $myIdComment,
+                                        'status' => $status,
+                                        'countclicks' => $countclicks
+                                    ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+                    
+                                $commentsManager = new CommentsManager($db);
+
+                                $commentsManager->validateComment($comment);
                             }
                         else 
                             {
-                                echo 'pas d article séléctionné';
+                                $session = new SessionClass();
+                                $session->setFlash('pas d\'article séléctionné','error');
+                                //echo 'pas d article séléctionné';
+                                //require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                if (file_exists('/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php'))
+                                    {
+                                        require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                            }
+                    } 
+                else 
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas d\'article séléctionné','error');
+                        //echo 'pas d article séléctionné';
+                        //require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
+                        if (file_exists('/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php'))
+                            {
                                 require_once'/Backend/BackendViews/BackendViewFolders/ManageCommentsView.php';
                             }
-                    }  
-                $status = '';
-                $countclicks = '0';
-                
-                $comment = new Comment
-                    ([
-
-                        'id' => $myIdComment,
-                        'status' => $status,
-                        'countclicks' => $countclicks
-                    ]);
-
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $commentsManager = new CommentsManager($db);
-
-                $commentsManager->validateComment($comment);
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
+                    }
             }
 //FIN VALIDER LES COMMENTAIRES INDESIRABLES
     }

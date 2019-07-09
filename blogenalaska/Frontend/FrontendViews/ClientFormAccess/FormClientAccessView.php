@@ -1,10 +1,39 @@
+<?php //session_start();?>
 <?php $title = 'connect client blog page'; ?>
 <?php ob_start(); ?>
+<?php
+//print_r($_SESSION);
+//Session flash message
+    /*if(isset($session))
+        {
+            $session->flash();  
+            print_r($_SESSION);
+        }
+    else
+    {
+            print_r('rien');
+    }*/
+?>
+
+<!--le message flash se ferme lorsque je clique sur la croix-->
+<script>
+    var alert = $('.alert');
+    if(alert.length>0)
+      {
+          alert.hide().slideDown(500);
+          $('.close').on('click', function(e) 
+            {
+              // do something…
+              e.preventDefault();
+              alert.slideUp();
+            });
+      };
+</script>
+                            
 <section class="connectClient">
     <div class="container">
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12">
-                
                 <div id="logoAndTextClientForm">
                     <a class="navbar-brand" href="#">
                         <img src="/blogenalaska/public/images/logoforteroche.png" alt="logo">
@@ -12,7 +41,6 @@
 
                     <p>Veuillez entrer votre mot de passe et votre identifiant</p>
                 </div>
-                
                 <form action="/blogenalaska/index.php?action=checkThePassAndUsernameOfClient" method="post">
 
                     <div id="usernameFormClient">

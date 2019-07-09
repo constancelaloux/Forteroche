@@ -35,52 +35,90 @@ class BlogController
                 if (empty($articlesManager))
                     {
                         //$this->app->httpResponse()->redirect404();
-                        require_once 'Frontend/FrontendViews/HomePage.php';
+                        //require_once 'Frontend/FrontendViews/HomePage.php';
+                        if (file_exists('Frontend/FrontendViews/HomePage.php'))
+                            {
+                                require_once'Frontend/FrontendViews/HomePage.php';
+                            }
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
                     }
 
                 else 
                     {
                         //On récupére le nombre d'articles total en bdd
-                        $countArticlesFromManager = $articlesManager->count();
-                        $nbrArticles = $countArticlesFromManager;
-                
-                
+                        $nbrArticles = $articlesManager->count();
                         //Combien d'articles souhaite t'on par page
                         $nbrArticlesPerPage = 5;
-                
-                        $numberOfPages = ceil($nbrArticles/$nbrArticlesPerPage);
-                
-                        if (isset($_GET['p']))
+                        //$nbrArticles = $countArticlesFromManager;
+                        if(!empty($nbrArticles))
                             {
-                                $page = $_GET['p'];
-
-                                $nextpage = $page + 1;
-
-                                $prevpage = $page - 1;
-
-                                if($prevpage  < 1)
+                                $numberOfPages = ceil($nbrArticles/$nbrArticlesPerPage);
+                                if (isset($_GET['p']))
                                     {
-                                        $prevpage = $numberOfPages;
-                                    }
+                                        $page = $_GET['p'];
 
-                                if($nextpage > $numberOfPages)
+                                        $nextpage = $page + 1;
+
+                                        $prevpage = $page - 1;
+
+                                        if($prevpage  < 1)
+                                            {
+                                                $prevpage = $numberOfPages;
+                                            }
+
+                                        if($nextpage > $numberOfPages)
+                                            {
+                                                $nextpage = 1;
+                                            }
+                                    } 
+                                else
                                     {
-                                        $nextpage = 1;
+                                        $page = 1;
                                     }
-                            } 
-                        else
-                            {
-                                $page = 1;
-                            }
                              
-                        $status = 'Valider';    
-                        $articlesFromManager = $articlesManager->getListOfFiveArticles($page,$nbrArticlesPerPage, $status);
-                        //Je récupére mon dernier article en bdd
-                        
-                        $lastArticle = $articlesManager->getUnique($status);//Appel d'une fonction de cet objet
-                       
-                         
-                        require_once 'Frontend/FrontendViews/HomePage.php';
+                                $status = 'Valider'; 
+                                
+                                //Je récupére tous les articles
+                                $articlesFromManager = $articlesManager->getListOfFiveArticles($page,$nbrArticlesPerPage, $status);
+                                if(empty($articlesFromManager))
+                                    {
+                                        $session = new SessionClass();
+                                        $session->setFlash('impossible d\'afficher les articles','error');
+                                    }
+                                //Je récupére mon dernier article en bdd
+                                $lastArticle = $articlesManager->getUnique($status);//Appel d'une fonction de cet objet
+                                if(empty($lastArticle))
+                                    {
+                                        $session = new SessionClass();
+                                        $session->setFlash('impossible d\'afficher les articles','error');
+                                    }
+                                    
+                                if (file_exists('Frontend/FrontendViews/HomePage.php'))
+                                    {
+                                        require_once'Frontend/FrontendViews/HomePage.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //require_once 'Frontend/FrontendViews/HomePage.php';
+                            }
+                        else 
+                           {
+                                $session = new SessionClass();
+                                $session->setFlash('impossible d\'afficher les articles','error');
+                                if (file_exists('Frontend/FrontendViews/HomePage.php'))
+                                    {
+                                        require_once'Frontend/FrontendViews/HomePage.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                           }
                     }
             }
 //FIN RECUPERER LA LISTE DES ARTICLES QUI SONT VALIDES
@@ -97,34 +135,49 @@ class BlogController
                         if (!empty($_GET['id']))
                             {
                                 $myIdArticle = $_GET['id'];
+                                $article = new Article
+                                ([
+
+                                    'id' => $myIdArticle
+
+                                ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                $articlesManager = new ArticlesManager($db);
+                                if(empty($articlesManager))
+                                    {
+                                        $session = new SessionClass();
+                                        $session->setFlash('impossible d\'afficher l\'article','error');
+                                    }
+                                else
+                                    {
+                                        $myArticle = $articlesManager->get($article);
+                                        $titleToDisplay = $myArticle->subject();
+                                        $articlesToDisplay = $myArticle->content();
+                                        $imageToDisplay = $myArticle->image();
+                                    }
+                
+                                $comment = new CommentsController();
+                                $numberOfComments = $comment->countComments();
+                                $myComment = $comment->getListOfComments();
+                                if (file_exists('Frontend/FrontendViews/Articles/MyArticles.php'))
+                                    {
+                                        require_once'Frontend/FrontendViews/Articles/MyArticles.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //require_once 'Frontend/FrontendViews/Articles/MyArticles.php';
                             }
                         else 
                             {
-                                echo 'pas d article séléctionné';
+                                //echo 'pas d article séléctionné';
+                                $session = new SessionClass();
+                                $session->setFlash('pas d article séléctionné','error');
                             }
                     }
-                    
-                $article = new Article
-                    ([
-
-                        'id' => $myIdArticle
-
-                    ]);
-
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $articlesManager = new ArticlesManager($db);
-
-                $myArticle = $articlesManager->get($article);
-                $titleToDisplay = $myArticle->subject();
-                $articlesToDisplay = $myArticle->content();
-                $imageToDisplay = $myArticle->image();
-                
-                $comment = new CommentsController();
-                $numberOfComments = $comment->countComments();
-                $myComment = $comment->getListOfComments();
-                
-                require_once 'Frontend/FrontendViews/Articles/MyArticles.php';
             }
 //FIN JE RECUPERE L'ARTICLE EN FN DE L'ID  
             
@@ -138,11 +191,32 @@ class BlogController
                         if (!empty($_POST['whatImSearching']))
                             {
                                 $mySearchWords = $_POST['whatImSearching'];
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                $searchManager = new SearchManager($db);
+
+                                $mySearchResult = $searchManager->get($mySearchWords);
+                                if (file_exists('Frontend/FrontendViews/ResultSearchPage.php'))
+                                    {
+                                        require_once'Frontend/FrontendViews/ResultSearchPage.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //require_once 'Frontend/FrontendViews/ResultSearchPage.php';
                             }
                         else 
                             {
-                                echo 'Vous n\'avez rien recherché';
+                                $session = new SessionClass();
+                                $session->setFlash('Vous n\'avez pas fait de recherche','error');
+                                //echo 'Vous n\'avez rien recherché';
                             }
+                    }
+                else
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('Vous n\'avez pas fait de recherche','error');
                     }
                     
                 /*$words = new Search
@@ -153,17 +227,6 @@ class BlogController
                     ]);*/
                 //print_r($_POST['whatImSearching']);
                 //print_r($words);
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $searchManager = new SearchManager($db);
-
-                $mySearchResult = $searchManager->get($mySearchWords);
-
-                //print_r("je récup le resultat");
-                //print_r($mySearchResult = $searchManager->get($mySearchWords));
-                
-                //die("je ne continue pas");
-                require_once 'Frontend/FrontendViews/ResultSearchPage.php';
             }
 //FIN JE RECHERCHE UN ARTICLE DANS LE BLOG
             

@@ -6,18 +6,20 @@ require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
 
-//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Article.php';
-/*require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/ArticlesManager.php';
-
-require_once"/Applications/MAMP/htdocs/Forteroche/blogenalaska/Session/SessionClass.php";*/
-
 //JE VAIS VERS MA PAGE ECRIRE UN ARTICLE
 class PostsControllers
     {
         //Bouton écrire un article du menu pour afficher la page de redaction d'articles
         function writeAnArticle()
             {
-                header('Location: /blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
+                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php"))
+                    {
+                        header('Location: /blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
 //FIN PAGE ECRIRE UN ARTICLE
 
@@ -54,16 +56,36 @@ class PostsControllers
 
                                     //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
                                     $sendToTheArticlesManager->add($newArticles);
-
-                                    header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                                    
+                                    header('Location: /blogenalaska/index.php?action=mainBackendPage');    
                                 }
                             else 
                                 {
                                     $session = new SessionClass();
-                                    $session->setFlash('Les champs ne sont pas remplis','error');
-                                    //header('Location: /blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php');
+                                    $session->setFlash('Les champs sont vides','error');
+                                    
+                                    if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php"))
+                                        {
+                                            require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php';
+                                        }
+                                    else
+                                        {
+                                            header('Location: /blogenalaska/Error/Page404.php');
+                                        }
+                                }    
+                        }
+                    else
+                        {
+                            $session = new SessionClass();
+                            $session->setFlash('Les champs ne sont pas remplis','error');
+                                    
+                            if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php"))
+                                {
                                     require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php';
-                                    //header('Location: /blogenalaska/index.php?action=writeAnArticle');
+                                }
+                            else
+                                {
+                                    header('Location: /blogenalaska/Error/Page404.php');
                                 }
                         }
             }
@@ -73,31 +95,62 @@ class PostsControllers
             {
                 if (isset($_POST['content']) AND isset($_POST['title']) AND isset($_POST['image']) AND isset($_POST['save']))
                     {
-                        $myText = $_POST['content'];
+                        if (!empty($_POST['content']) && !empty($_POST['title']) && !empty($_POST['image']) && !empty($_POST['save']))
+                            {
+                                $myText = $_POST['content'];
 
-                        $myTitle = $_POST['title'];
+                                $myTitle = $_POST['title'];
 
-                        $myImg = $_POST['image'];
-                         
-                        $status = $_POST['save'];
+                                $myImg = $_POST['image'];
 
-                        $newArticles = new Article
-                            ([
-                                'subject' => $myTitle,
-                                'content' => $myText,
-                                'image' => $myImg,
-                                'status'=>$status
-                            ]);
+                                $status = $_POST['save'];
 
-                        $db = \Forteroche\blogenalaska\PdoConnection::connect();
+                                $newArticles = new Article
+                                    ([
+                                        'subject' => $myTitle,
+                                        'content' => $myText,
+                                        'image' => $myImg,
+                                        'status'=>$status
+                                    ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
 
-                        $sendToTheArticlesManager = new ArticlesManager($db);
+                                $sendToTheArticlesManager = new ArticlesManager($db);
 
-                        //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
-                        $sendToTheArticlesManager->save($newArticles);
+                                //Je vais vers la fonction add de ArticlesManager pour ajouter les données en basex
+                                $sendToTheArticlesManager->save($newArticles);
 
-                        header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                                header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                            }
+                        else
+                            {
+                                $session = new SessionClass();
+                                $session->setFlash('Les champs sont vides','error');
+                                
+                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php"))
+                                    {
+                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                            }
+                    }
+                else 
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('Les champs ne sont pas remplis','error');
+
+                        if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php"))
+                            {
+                                require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/WriteArticlesView.php';
+                            }
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
                     }
             }
 //FIN CREER UN NOUVEL ARTICLE
@@ -119,10 +172,22 @@ class PostsControllers
         function countArticles()
             {
                 //Dans le cas ou si j'ai une erreur de déconnexion
-                if (isset($_GET['error']))
+                /*if (isset($_GET['error']))
                     {
-                        $error = $_GET['error'];
+                        if(!empty($_GET['error']))
+                            {
+                                $error = $_GET['error']; 
+                            }
+                        else
+                            {
+
+                            }
+                        
                     }
+                else
+                    {
+
+                    }*/
                 $status = 'Valider';
                 
                 //Je vais compter mes articles en base de données    
@@ -136,12 +201,20 @@ class PostsControllers
                 
                 $numberOfArticlesPublished = $articlesManager->countPublishedArticles($status);
 
-                if(!isset($articlesCount) and (!isset($numberOfArticlesPublished)))
+                if(empty($articlesCount) and (empty($numberOfArticlesPublished)))
                     {
                         $session = new SessionClass();
                         $session->setFlash('pas de donnée disponible pour l\'instant','error');  
                     }
-                require_once 'Backend/BackendViews/BackendViewFolders/BackendView.php';
+                    
+                if (file_exists("Backend/BackendViews/BackendViewFolders/BackendView.php"))
+                    {
+                        require_once 'Backend/BackendViews/BackendViewFolders/BackendView.php';
+                    }
+                else 
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
 //FIN COMPTER LES ARTICLES
 
@@ -158,7 +231,7 @@ class PostsControllers
                 
                 //ALler chercher les articles en bdd
                 $articlesFromManager = $articlesManager->getList();//Appel d'une fonction de cet objet
-                //print_r($articlesFromManager);
+
                 if (!empty ($articlesFromManager))
                     {
                         foreach ($articlesFromManager as $articles) 
@@ -168,7 +241,6 @@ class PostsControllers
                                 $row[] = $articles->subject();
 
                                 $row[] = $articles->createdate();
-                                //$row[] =$articleDate;//->format('Y-m-d');
 
                                 $updateArticleDate = $articles->updatedate();
 
@@ -178,13 +250,13 @@ class PostsControllers
                                     }
                                 else 
                                     {
-                                        $row[] = $updateArticleDate;//->format('Y-m-d');
+                                        $row[] = $updateArticleDate;
                                     }
+                                    
                                 $row[] = $articles->status();
                                 $data[] = $row;
-                                
-                                //die('je sors');
                             }
+                            
                         // Structure des données à retourner
                         $json_data = array
                             (
@@ -197,6 +269,14 @@ class PostsControllers
                     {
                         $session = new SessionClass();
                         $session->setFlash('pas de donnée disponible pour l\'instant','error');
+                        if (file_exists("Backend/BackendViews/BackendViewFolders/BackendView.php"))
+                            {
+                                require_once 'Backend/BackendViews/BackendViewFolders/BackendView.php';
+                            }
+                        else 
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
                     }
             }
 //FIN DATATABLES ARTICLES      
@@ -213,26 +293,48 @@ class PostsControllers
                             {
                                 // check if the id has been set
                                 $myIdArticle = $_POST['id'];
+                                $article = new Article
+                                    ([
+
+                                        'id' => $myIdArticle
+
+                                    ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                $articlesManager = new ArticlesManager($db);
+
+                                $articlesManager->delete($article);
                             }
                         else 
                             {
                                 $session = new SessionClass();
                                 $session->setFlash('pas d\'article séléctionné','error');
+                                
+                                if (file_exists('/Backend/BackendViews/BackendViewFolders/BackendView.php'))
+                                    {
+                                        require_once '/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                                    }
+                                else 
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                            }
+                    } 
+                else 
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas d\'article séléctionné','error');
+
+                        if (file_exists('/Backend/BackendViews/BackendViewFolders/BackendView.php'))
+                            {
                                 require_once '/Backend/BackendViews/BackendViewFolders/BackendView.php';
                             }
-                    }  
-                $article = new Article
-                    ([
-
-                        'id' => $myIdArticle
-
-                    ]);
-
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $articlesManager = new ArticlesManager($db);
-
-                $articlesManager->delete($article);
+                        else 
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
+                    }
             }
 //FIN SUPPRIMER ARTICLES
 
@@ -247,39 +349,74 @@ class PostsControllers
                             {
                                 // check if the id has been set
                                 $myIdArticle = $_GET['id'];
+                                $article = new Article
+                                    ([
+                                        'id' => $myIdArticle
+                                    ]);
+
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                $articlesManager = new ArticlesManager($db);
+
+                                $myArticlesToModify = $articlesManager->get($article);
+                
+                                if(!empty($myArticlesToModify))
+                                    {
+                                        $articleSubject = $myArticlesToModify->subject();
+                                        $articleContent = $myArticlesToModify->content();
+                                        $articleImage = $myArticlesToModify->image();
+                                        $id = $myArticlesToModify->id();
+                                        if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php'))
+                                            {
+                                                require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
+                                            }
+                                        else
+                                            {
+                                                header('Location: /blogenalaska/Error/Page404.php');
+                                            }
+                                    }
+                                else
+                                    {
+                                        $session = new SessionClass();
+                                        $session->setFlash('pas d\'article trouvé','error');
+                                        if (file_exists('/Backend/BackendViews/BackendViewFolders/BackendView.php'))
+                                            {
+                                                require_once'/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                                            }
+                                        else
+                                            {
+                                                header('Location: /blogenalaska/Error/Page404.php');
+                                            }
+                                    }
                             }
                         else 
                             {
                                 $session = new SessionClass();
                                 $session->setFlash('pas d\'article séléctionné','error');
+                                
+                                if (file_exists('/Backend/BackendViews/BackendViewFolders/BackendView.php'))
+                                    {
+                                        require_once '/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                                    }
+                                else 
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
                             }
-                    }
-            
-                $article = new Article
-                    ([
-                        'id' => $myIdArticle
-                    ]);
-
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $articlesManager = new ArticlesManager($db);
-
-                $myArticlesToModify = $articlesManager->get($article);
-                
-                if(!empty($myArticlesToModify))
-                    {
-                        $articleSubject = $myArticlesToModify->subject();
-                        $articleContent = $myArticlesToModify->content();
-                        $articleImage = $myArticlesToModify->image();
-                        $id = $myArticlesToModify->id();
-
-                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendViews/BackendViewFolders/ModifyArticlesView.php';
                     }
                 else
                     {
                         $session = new SessionClass();
                         $session->setFlash('pas d\'article trouvé','error');
-                        require_once'/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                        
+                        if (file_exists('/Backend/BackendViews/BackendViewFolders/BackendView.php'))
+                            {
+                                require_once'/Backend/BackendViews/BackendViewFolders/BackendView.php';
+                            }
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
                     }
             }
         
@@ -296,67 +433,109 @@ class PostsControllers
                                     $myTitleOfArticle = $_POST['title'];
                                     $myImageOfArticle = $_POST['image'];
                                     $validate =  $_POST['validate'];
+                                    
+                                    $article = new Article
+                                        ([
+                                            'content' => $myContentOfArticle,
+                                            'subject' => $myTitleOfArticle,
+                                            'id' => $id,
+                                            'image'=>$myImageOfArticle,
+                                            'status' => $validate
+                                        ]);
+
+                                    $db = \Forteroche\blogenalaska\PdoConnection::connect();
+
+                                    $articlesManager = new ArticlesManager($db);
+                                    $articlesManager->update($article);
+                                    header('Location: /blogenalaska/index.php?action=mainBackendPage');
                                 }
                             else 
                                 {
                                     $session = new SessionClass();
                                     $session->setFlash('pas d\'article sélectionné','error');
-                                    require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                    
+                                    if (file_exists('/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php'))
+                                        {
+                                            require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                        }
+                                    else
+                                        {
+                                            header('Location: /blogenalaska/Error/Page404.php');
+                                        }
                                 }
                         } 
-                        
-                $article = new Article
-                    ([
-                        'content' => $myContentOfArticle,
-                        'subject' => $myTitleOfArticle,
-                        'id' => $id,
-                        'image'=>$myImageOfArticle,
-                        'status' => $validate
-                    ]);
+                    else
+                        {
+                            $session = new SessionClass();
+                            $session->setFlash('pas d\'article sélectionné','error');
 
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
-
-                $articlesManager = new ArticlesManager($db);
-                $articlesManager->update($article);
-                header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                            if (file_exists('/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php'))
+                                {
+                                    require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                }
+                            else
+                                {
+                                    header('Location: /blogenalaska/Error/Page404.php');
+                                }
+                        }
             }
             
         //Modifier les données de l'article en base de données apres validation
         function saveArticleFromUpdate()
             {
                 if (isset($_POST['id']))
-                        {
-                            if (!empty($_POST['id']))
-                                {
-                                    // check if the id has been set
-                                    $id = $_POST['id'];
-                                    $myContentOfArticle = $_POST['content'];
-                                    $myTitleOfArticle = $_POST['title'];
-                                    $myImageOfArticle = $_POST['image'];
-                                    $save =  $_POST['save'];
-                                }
-                            else 
-                                {
-                                    $session = new SessionClass();
-                                    $session->setFlash('pas d\'article sélectionné','error');
-                                    require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
-                                }
-                        } 
-                        
-                $article = new Article
-                    ([
-                        'content' => $myContentOfArticle,
-                        'subject' => $myTitleOfArticle,
-                        'id' => $id,
-                        'image'=>$myImageOfArticle,
-                        'status' => $save
-                    ]);
+                    {
+                        if (!empty($_POST['id']))
+                            {
+                                // check if the id has been set
+                                $id = $_POST['id'];
+                                $myContentOfArticle = $_POST['content'];
+                                $myTitleOfArticle = $_POST['title'];
+                                $myImageOfArticle = $_POST['image'];
+                                $save =  $_POST['save'];
+                                                                 
+                                $article = new Article
+                                    ([
+                                        'content' => $myContentOfArticle,
+                                        'subject' => $myTitleOfArticle,
+                                        'id' => $id,
+                                        'image'=>$myImageOfArticle,
+                                        'status' => $save
+                                    ]);
 
-                $db = \Forteroche\blogenalaska\PdoConnection::connect();
+                                $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
-                $articlesManager = new ArticlesManager($db);
-                $articlesManager->updateAndSave($article);
-                header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                                $articlesManager = new ArticlesManager($db);
+                                $articlesManager->updateAndSave($article);
+                                header('Location: /blogenalaska/index.php?action=mainBackendPage');
+                            }
+                        else 
+                            {
+                                $session = new SessionClass();
+                                $session->setFlash('pas d\'article sélectionné','error');
+                                if (file_exists('/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php'))
+                                    {
+                                        require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                            }
+                    }
+                else 
+                    {
+                        $session = new SessionClass();
+                        $session->setFlash('pas d\'article sélectionné','error');
+                        if (file_exists('/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php'))
+                            {
+                                require_once'/blogenalaska/Views/Backend/BackendViewFolders/BackendView.php';
+                            }
+                        else
+                            {
+                                header('Location: /blogenalaska/Error/Page404.php');
+                            }
+                    }
             }
 //FIN MODIFIER UN ARTICLE
     }       

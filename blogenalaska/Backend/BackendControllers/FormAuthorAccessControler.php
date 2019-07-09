@@ -12,12 +12,8 @@
 // Chargement des classes
 require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();
- 
-//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/Author.php';
 
 require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/PdoConnection.php';
-
-//require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Backend/BackendModels/AuthorManager.php';
 
 class FormAuthorAccessControler
     {
@@ -26,14 +22,21 @@ class FormAuthorAccessControler
         //Je récupére le formulaire pour envoyer des données administrateur en bdd
         function getFormToCreateNewAdmin()
             {
-                require_once 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                if (file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                    {
+                        require_once 'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
             
         //Fonction qui permet d'nvoyer les identifiants de l'utilisateur du backend en base
         function createNewAdmin()
             {
-                try
-                    {
+                /*try
+                    {*/
                         //Connexion à la base de données et création des identifiants de Jean Forteroche
                         if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname']))
                             {
@@ -49,7 +52,17 @@ class FormAuthorAccessControler
                                         //Je vérifie si mon identifiant n'est pas trop court
                                         if (strlen($usernameVar) > 20)
                                             {
-                                                throw new Exception('identifiant trop court !');
+                                                //throw new Exception('identifiant trop court !');
+                                                $session = new SessionClass();
+                                                $session->setFlash('identifiant trop court !','error');
+                                                if(file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                                                    {
+                                                       require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'; 
+                                                    }
+                                                else
+                                                    {
+                                                        header('Location: /blogenalaska/Error/Page404.php');
+                                                    }
                                             }
                                             
                                         //https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2917331-controlez-les-mots-de-passe
@@ -77,7 +90,17 @@ class FormAuthorAccessControler
                                                     {
                                                         //unset() détruit la ou les variables dont le nom a été passé en argument var.
                                                         unset($newAuthor);
-                                                        throw new Exception('Votre identifiant existe déja');
+                                                        //throw new Exception('Votre identifiant existe déja');
+                                                        $session = new SessionClass();
+                                                        $session->setFlash('Votre identifiant existe déja','error');
+                                                        if(file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                                                            {
+                                                               require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'; 
+                                                            }
+                                                        else
+                                                            {
+                                                                header('Location: /blogenalaska/Error/Page404.php');
+                                                            }
                                                     }
                                                 else
                                                     {
@@ -87,33 +110,72 @@ class FormAuthorAccessControler
                                             }	
                                         else 
                                             {
-                                                throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
+                                                $session = new SessionClass();
+                                                $session->setFlash('Mot de passe pas conforme! Votre mot de passe '
+                                                        . 'doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, '
+                                                        . 'et doit etre entre 6 caractéres minimum et 8 maximum','error');
+                                                if(file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                                                    {
+                                                        require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                                                    }
+                                                else
+                                                    {
+                                                        header('Location: /blogenalaska/Error/Page404.php');
+                                                    }
+                                                //throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
                                             }
                                     }
                                 else
                                     {
-                                        throw new Exception('Vous n\'avez pas rempli le formulaire!');
+                                        $session = new SessionClass();
+                                        $session->setFlash('Vous n\'avez pas rempli le formulaire!','error');
+                                        if(file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                                            {
+                                                require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
+                                            }
+                                        else
+                                            {
+                                                header('Location: /blogenalaska/Error/Page404.php');
+                                            }
+                                        //throw new Exception('Vous n\'avez pas rempli le formulaire!');
                                     }
                             }
                         else 
                             {
-                                throw new Exception('Le ou les champs ne sont pas remplis !');
+                                $session = new SessionClass();
+                                $session->setFlash('Le ou les champs ne sont pas remplis !','error');
+                                if(file_exists('Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'))
+                                    {
+                                       require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php'; 
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //throw new Exception('Le ou les champs ne sont pas remplis !');
                             }
-                    }
+                /*    }
                 catch(Exception $e) 
                     {
                          //S'il y a eu une erreur, alors...
                         echo 'Erreur : ' . $e->getMessage();
                         require_once'Backend/BackendViews/AuthorFormAccess/CreateNewAuthor.php';
-                    }
+                    }*/
             }
 
-//CONNEXION AU BACKEND PAR UN UTILISATEUR
+//CONNEXION AU BACKEND PAR UN ADMIN
 
         //Je récupére le formulaire de connexion par default
         function getTheFormAdminConnexionBackend()
             {
-                require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                    {
+                        require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
             
         //Fonction qui permet de vérifier les identifiants de l'utilisateur
@@ -122,8 +184,8 @@ class FormAuthorAccessControler
         function checkThePassAndUsername()
             {
                 // On vérifie les variables du formulaire si elles sont présentes et remplies
-                try
-                    {
+                /*try
+                    {*/
                         if (isset($_POST['username']) AND isset($_POST['password']))
                             {
                                 if (!empty($_POST['username']) && !empty($_POST['password']))
@@ -143,22 +205,16 @@ class FormAuthorAccessControler
 
                                         $manager = new AuthorManager($db);
                                         
-                                        if($manager->verify($author->username()))
+                                        if($manager->exists($author->username()))
                                             { 
-                                                //print_r($manager->verify($author->username()));
-                                                //print_r("je passe dans la fonction vérify");
                                                 // Appel d'une fonction de cet objet
                                                 $author = $manager->get($author->username());
                                                 $passwordFromDb = $author->password();
                                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
-                                                //print_r($passwordFromDb);
-                                                //print_r("je passe sans la fonction get");
                                                 $AuthorPassword = password_verify($passwordVar, $passwordFromDb);
                                                 
                                                 if ($AuthorPassword)
                                                     {
-                                                        //print_r("je passe sans la fonction get");
-                                                        //print_r($AuthorPassword);
                                                         // Start the session
                                                         session_start();
                                                         $_SESSION['username'] = $usernameVar;
@@ -168,58 +224,81 @@ class FormAuthorAccessControler
                                                     }
                                                 else 
                                                     {
-                                                        throw new Exception('Votre mot de passe est incorrect!');
+                                                        $session = new SessionClass();
+                                                        $session->setFlash('Votre mot de passe est incorrect!','error');
+                                                        if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                                                            {
+                                                               require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'; 
+                                                            }
+                                                        else
+                                                            {
+                                                                header('Location: /blogenalaska/Error/Page404.php');
+                                                            }
+                                                        //throw new Exception('Votre mot de passe est incorrect!');
                                                     }
                                             }
                                         else 
                                             {
-                                                throw new Exception('Votre nom d\'utilisateur est incorrect!');
+                                                $session = new SessionClass();
+                                                $session->setFlash('Votre nom d\'utilisateur est incorrect!','error');
+                                                if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                                                    {
+                                                       require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'; 
+                                                    }
+                                                else
+                                                    {
+                                                        header('Location: /blogenalaska/Error/Page404.php');
+                                                    }
+                                                //throw new Exception('Votre nom d\'utilisateur est incorrect!');
                                             }
-                                        //$passwordFromDb = $passwordFromManager->password();
-                                        //print_r($passwordFromDb);
-
-                                        //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
-                                        //$AuthorPassword = password_verify($passwordVar, $passwordFromDb);
-
-                                        /*if ($AuthorPassword)
-                                            { 
-                                                // Start the session
-                                                session_start();
-                                                $_SESSION['username'] = $usernameVar;
-                                                $_SESSION['password'] = $passwordVar;
-
-                                                header('Location: /blogenalaska/index.php?action=countArticles');        
-                                            }
-                                        else 
-                                            {
-                                                throw new Exception('Vos identifiants sont incorrects!');
-                                            }*/
 
                                     }
 
-                                else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
+                                else
                                     {
-                                        throw new Exception('Tous les champs ne sont pas remplis !');
+                                        $session = new SessionClass();
+                                        $session->setFlash('Tous les champs ne sont pas remplis !','error');
+                                        if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                                            {
+                                               require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'; 
+                                            }
+                                        else
+                                            {
+                                                header('Location: /blogenalaska/Error/Page404.php');
+                                            }
+                                        //throw new Exception('Tous les champs ne sont pas remplis !');
                                     }
+                            //die('je continue dans le script');
                             }
                         else 
                             {
-                                throw new Exception('Le ou les champs ne sont pas remplis !');
+                                die('je passe pas dans le isset');
+                                $session = new SessionClass();
+                                $session->setFlash('Le ou les champs ne sont pas remplis !','error');
+                                if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                                    {
+                                       require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'; 
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //throw new Exception('Le ou les champs ne sont pas remplis !');
                             }
-                    } 
+                /*    } 
                 catch(Exception $e) 
                     {
                         // S'il y a eu une erreur, alors...
                         echo 'Erreur : ' . $e->getMessage();
-                    }
-                require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                        require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php';
+                    }*/
             }
             
-//DECONNEXION DU BACKEND PAR L'UTILISATEUR            
+//DECONNEXION DU BACKEND PAR UN ADMIN            
         function disconnect()
             {
-                try
-                    {
+                /*try
+                    {*/
                         session_start();
 
                         // Suppression des variables de session et de la session
@@ -236,13 +315,23 @@ class FormAuthorAccessControler
                             }
                         else
                             {
-                                throw new Exception('Vous n etes pas déconnecté !');
+                                $session = new SessionClass();
+                                $session->setFlash('Vous n etes pas déconnecté !','error');
+                                /*if(file_exists('Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'))
+                                    {
+                                       require_once'Backend/BackendViews/AuthorFormAccess/FormAuthorAccessView.php'; 
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }*/
+                                //throw new Exception('Vous n etes pas déconnecté !');
                             }
-                    } 
+                /*    } 
                 catch(Exception $e) 
                     {
                         header('Location: /blogenalaska/index.php?action=countArticles&error='.$e->getMessage());
-                    }
+                    }*/
             }
             
     }

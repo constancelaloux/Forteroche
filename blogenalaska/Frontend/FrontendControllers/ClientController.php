@@ -20,7 +20,15 @@ class ClientController
        //Je vais vers le formulaire de connexion du client
         function getClientFormConnexion()
             {
-                require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
+                if (file_exists("Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php"))
+                    {
+                        require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
+                //require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
             }
 //FIN OBTENIR LE FORMULAIRE DE CONNEXION
 
@@ -30,7 +38,15 @@ class ClientController
         //Je vais vers le formulaire de création d'un nouveau client
         function getFormToCreateNewClient()
             {
-                require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                //require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                    {     
+                        require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                    }
+                else
+                    {
+                        header('Location: /blogenalaska/Error/Page404.php');
+                    }
             }
 //FIN OBTENIR LE FORMULAIRE DE CREATION D'UN CLIENT
 
@@ -40,8 +56,8 @@ class ClientController
         //Je créé un nouveau client et envoi en bdd ses informations
         function createNewClientInDatabase()
             {
-                try
-                    {
+                /*try
+                    {*/
                         //Connexion à la base de données et création des identifiants du client
                         if (isset($_POST['login']) AND isset($_POST['pass']) AND isset($_POST['firstname']) AND isset($_POST['surname'])AND isset($_POST['image']))
                             {
@@ -57,65 +73,121 @@ class ClientController
                                         $imageVar = $_POST['image'];
 
                                         //Je vérifie si mon identifiant n'est pas trop court
-                                                if (strlen($usernameVar) > 20)
+                                        if (strlen($usernameVar) > 20)
+                                            {
+                                                //throw new Exception('identifiant trop court !');
+                                                $session = new SessionClass();
+                                                $session->setFlash('identifiant trop court !','error');
+                                                if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
                                                     {
-                                                        throw new Exception('identifiant trop court !');
+                                                        require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                                                     }
+                                                else
+                                                    {
+                                                        header('Location: /blogenalaska/Error/Page404.php');
+                                                    }
+                                            }
                                         //https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2917331-controlez-les-mots-de-passe
                                         //Je vérifie si mon mot de passe n'est pas trop court et conforme
-                                            if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,8}$#', $_POST['pass'])) 
-                                                {             
-                                                    $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
+                                        if (preg_match('#^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).{6,8}$#', $_POST['pass'])) 
+                                            {             
+                                                $passwordVar = password_hash($_POST['pass'], PASSWORD_DEFAULT);
 
-                                                    $newClient = new Client
-                                                        ([
-                                                            'firstname' => $firstnameVar,
-                                                            'surname' => $surnameVar,
-                                                            'password' => $passwordVar,
-                                                            'username' => $usernameVar,
-                                                            'imageComment' => $imageVar
-                                                        ]);
+                                                $newClient = new Client
+                                                    ([
+                                                        'firstname' => $firstnameVar,
+                                                        'surname' => $surnameVar,
+                                                        'password' => $passwordVar,
+                                                        'username' => $usernameVar,
+                                                        'imageComment' => $imageVar
+                                                    ]);
 
-                                                        $db = \Forteroche\blogenalaska\PdoConnection::connect();
+                                                    $db = \Forteroche\blogenalaska\PdoConnection::connect();
 
-                                                        $manager = new ClientManager($db);
+                                                    $manager = new ClientManager($db);
 
-                                                        //Je vérifie si l'identifiant existe déja pour aller ensuite le comparer
+                                                    //Je vérifie si l'identifiant existe déja pour aller ensuite le comparer
 
-                                                        if($manager->exists($newClient->username()))
-                                                            {
-                                                                //unset() détruit la ou les variables dont le nom a été passé en argument var.
-                                                                unset($newClient);
-                                                                throw new Exception('Votre identifiant existe déja');
-                                                            }
-                                                        else
-                                                            {
-                                                                $manager->add($newClient);
-                                                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
-                                                            }
-                                                            //$sendToTheManager = $manager->add($newClient);
-                                                }
-                                            else 
-                                                {
-                                                    throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
-                                                }
+                                                    if($manager->exists($newClient->username()))
+                                                        {
+                                                            //unset() détruit la ou les variables dont le nom a été passé en argument var.
+                                                            unset($newClient);
+                                                            $session = new SessionClass();
+                                                            $session->setFlash('Votre identifiant existe déja','error');
+                                                            if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                                                               {
+                                                                   require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                                               }
+                                                           else
+                                                               {
+                                                                   header('Location: /blogenalaska/Error/Page404.php');
+                                                               }
+                                                            //throw new Exception('Votre identifiant existe déja');
+                                                            
+                                                        }
+                                                    else
+                                                        {
+                                                            $manager->add($newClient);
+                                                            header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                                        }
+                                                        //$sendToTheManager = $manager->add($newClient);
+                                            }
+                                        else 
+                                            {
+                                                $session = new SessionClass();
+                                                $session->setFlash('Mot de passe pas conforme! Votre mot de passe doit '
+                                                        . 'comporter au moins un caractére spécial, un chiffre, '
+                                                        . 'une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum','error');
+                                                if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                                                    {
+                                                        require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                                    }
+                                                else
+                                                    {
+                                                        header('Location: /blogenalaska/Error/Page404.php');
+                                                    }
+                                                //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                                //throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
+                                            }
                                     }
                                 else
                                     {
-                                        throw new Exception('Vous n\'avez pas rempli le formulaire!');
+                                        //throw new Exception('Vous n\'avez pas rempli le formulaire!');
+                                        $session = new SessionClass();
+                                        $session->setFlash('Vous n\'avez pas rempli le formulaire!','error');
+                                        if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                                            {
+                                                require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                            }
+                                        else
+                                            {
+                                                header('Location: /blogenalaska/Error/Page404.php');
+                                            }
+                                        //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                                     }
                             }
                         else 
                             {
-                                throw new Exception('Le ou les champs ne sont pas remplis !');
+                                //throw new Exception('Le ou les champs ne sont pas remplis !');
+                                $session = new SessionClass();
+                                $session->setFlash('Le ou les champs ne sont pas remplis !','error');
+                                if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                                    {
+                                        require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
+                                    }
+                                else
+                                    {
+                                        header('Location: /blogenalaska/Error/Page404.php');
+                                    }
+                                //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                             }
-                    }
-                catch(Exception $e) 
+                    /*}*/
+                /*catch(Exception $e) 
                     {
                         //S'il y a eu une erreur, alors...
                         echo 'Erreur : ' . $e->getMessage();
                         require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
-                    }      
+                    }  */    
             }
 //FIN JE CREE UN NOUVEAU CLIENT EN BDD
 
@@ -126,8 +198,8 @@ class ClientController
         function checkClientUsernameAndPassword()
             {
                 // On vérifie les variables du formulaire si elles sont présentes et remplies
-                try
-                    {
+                /*try
+                    {*/
                         // On vérifie les variables du formulaire si elles sont présentes et remplies
                         if (isset($_POST['username']) AND isset($_POST['password']))
                             {
@@ -157,7 +229,7 @@ class ClientController
                                                 
                                                 $passwordFromDb = $client->password();
                                                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
-                                                $clientPassword = password_verify($passwordVar, $passwordFromDb);                  
+                                                $clientPassword = password_verify($clientPasswordVar, $passwordFromDb);                  
 
                                                 if ($clientPassword)
                                                     {
@@ -172,32 +244,66 @@ class ClientController
                                                     }
                                                 else 
                                                     {
-                                                        throw new Exception('Votre mot de passe est incorrect!');
+                                                        //throw new Exception('Votre mot de passe est incorrect!');
+                                                        $session = new SessionClass();
+                                                        $session->setFlash('Le ou les champs ne sont pas remplis !','error');
+                                                        header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
                                                     }
                                             }
                                         else 
                                             {
-                                                throw new Exception('Votre nom d\'utilisateur est incorrect!');
+                                                //throw new Exception('Votre nom d\'utilisateur est incorrect!');
+                                                $session = new SessionClass();
+                                                $session->setFlash('Votre nom d\'utilisateur est incorrect!','error');
+                                                //print_r($session);
+                                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
                                             }
 
                                     }
-
-                                else if (empty($_POST['username']) && empty($_POST['mot_de_passe']))
+                                else
                                     {
-                                        throw new Exception('Tous les champs ne sont pas remplis !');
+                                        //throw new Exception('Tous les champs ne sont pas remplis !');
+                                        $session = new SessionClass();
+                                        $session->setFlash('Tous les champs ne sont pas remplis!','danger');
+                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
+                                        //return $this->response->redirect('blogenalaska/test.php');
+                                        //require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
+                                        //$setmessage = $session->flash();
+                                        //$session->redirect();
+                                        //header("Location:/blogenalaska/test.php");
+
+                                        //header('location: /blogenalaska/test.php');
+                                        //$session->flash();
+                                        //print_r($session::setFlash('Tous les champs ne sont pas remplis!','error'));
+                                        //print_r($_SESSION);
+                                        //die("ouhhh je meurs et j en est marre");
+                                        //require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
+                                
+                                        //header('Location: /blogenalaska/Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php');
+                                        //echo $session->flash();
+                                        //die('je sors');   
+                                        //print_r($_SESSION['flash']['message']);
+                                                //print_r($session);
+                                        //$msg->error();
+                                        //$msg->sticky('This is "success" sticky message', 'http://redirect-url.com', $msg::SUCCESS);
+                                        //$this->app->SessionClass()->setFlash();
+                                        //header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
                                     }
                             }
                         else 
                             {
-                                throw new Exception('Le ou les champs ne sont pas remplis !');
+                                //throw new Exception('Le ou les champs ne sont pas remplis !');
+                                $session = new SessionClass();
+                                $session->setFlash('Tous les champs ne sont pas remplis !','error');
+                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
                             }
-                    }        
-                catch(Exception $e) 
+                    //}        
+                /*catch(Exception $e) 
                     {
                         // S'il y a eu une erreur, alors...
                         echo 'Erreur : ' . $e->getMessage();
-                    }
-                    header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');             
+                        header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                    }      */       
             }
 //FIN JE VERIFIE LE MOT DE PASSE ET LE CLIENT 
 

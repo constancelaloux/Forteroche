@@ -14,7 +14,6 @@ require_once 'Frontend/FrontendControllers/CommentsController.php';
 require_once 'Frontend/FrontendControllers/ClientController.php';
 require_once 'Frontend/FrontendControllers/EmailController.php';
 //Si j'ai une action ou sinon action par default*/
-
     (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
 
                 switch ($action)
@@ -242,6 +241,7 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'checkThePassAndUsernameOfClient':
                             $clientFrontendController = new ClientController();
                             $clientFrontendController->checkClientUsernameAndPassword();
+                            //require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
                         break;
                     
                         //bouton pour déconnecter l'utilisateur
@@ -271,5 +271,5 @@ require_once 'Frontend/FrontendControllers/EmailController.php';
                         case 'sendEmail':
                             $EmailFrontendController = new EmailController();
                             $EmailFrontendController->sendEmail();
-                        break;                         
+                        break;
                     }

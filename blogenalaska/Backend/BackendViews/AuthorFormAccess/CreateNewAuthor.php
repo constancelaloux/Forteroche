@@ -1,5 +1,12 @@
 <?php $title = 'create new Author form'; ?>
 <?php ob_start(); ?>
+<?php
+    //Session flash message
+    if (!empty($session))
+        {
+            $session->flash(); 
+        }
+?>
 
 <section class="connectAuthor">
     <div class="container">
@@ -19,7 +26,7 @@
                             <input type="text" name="firstname"  maxlength="20" ><br />
                         </div>
                         <div class="username">
-                            <label for="username">Prénom</label>
+                            <label for="username">Identifiant</label>
                             <input type="text" name="login" pattern=".{6,}"   required title="6 caracteres minimum"><br />
                         </div>
                         <div class="password">
