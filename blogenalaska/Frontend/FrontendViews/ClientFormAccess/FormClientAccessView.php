@@ -2,17 +2,19 @@
 <?php $title = 'connect client blog page'; ?>
 <?php ob_start(); ?>
 <?php
+if(isset($error))
+    { 
+?>
+        <div  id='#myAlert' class="alert alert-danger"> <a class="close">x</a><?= $error?></div>
+<?php
+    }
+
 //print_r($_SESSION);
 //Session flash message
-    /*if(isset($session))
+ /*if(isset($session))
         {
             $session->flash();  
-            print_r($_SESSION);
-        }
-    else
-    {
-            print_r('rien');
-    }*/
+        }*//*$session->flash();*/
 ?>
 
 <!--le message flash se ferme lorsque je clique sur la croix-->

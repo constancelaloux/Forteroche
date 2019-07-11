@@ -2,17 +2,7 @@
 // Chargement des classes
 require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();
-//Backend
-/*require_once'Backend/BackendControllers/FormAuthorAccessControler.php';
-require_once'Backend/BackendControllers/PostsControllers.php';
-require_once 'Backend/BackendControllers/Upload.php';
-require_once 'Backend/BackendControllers/CommentsAdminControler.php';
 
-//Frontend
-require_once 'Frontend/FrontendControllers/BlogController.php';
-require_once 'Frontend/FrontendControllers/CommentsController.php';
-require_once 'Frontend/FrontendControllers/ClientController.php';
-require_once 'Frontend/FrontendControllers/EmailController.php';
 //Si j'ai une action ou sinon action par default*/
     (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
 

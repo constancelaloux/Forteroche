@@ -198,8 +198,8 @@ class ClientController
         function checkClientUsernameAndPassword()
             {
                 // On vérifie les variables du formulaire si elles sont présentes et remplies
-                /*try
-                    {*/
+                try
+                    {
                         // On vérifie les variables du formulaire si elles sont présentes et remplies
                         if (isset($_POST['username']) AND isset($_POST['password']))
                             {
@@ -244,28 +244,20 @@ class ClientController
                                                     }
                                                 else 
                                                     {
-                                                        //throw new Exception('Votre mot de passe est incorrect!');
-                                                        $session = new SessionClass();
-                                                        $session->setFlash('Le ou les champs ne sont pas remplis !','error');
-                                                        header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                                        throw new Exception('Votre mot de passe est incorrect!');
                                                     }
                                             }
                                         else 
                                             {
-                                                //throw new Exception('Votre nom d\'utilisateur est incorrect!');
-                                                $session = new SessionClass();
-                                                $session->setFlash('Votre nom d\'utilisateur est incorrect!','error');
-                                                //print_r($session);
-                                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                                throw new Exception('Votre nom d\'utilisateur est incorrect!');
                                             }
-
                                     }
                                 else
                                     {
-                                        //throw new Exception('Tous les champs ne sont pas remplis !');
-                                        $session = new SessionClass();
-                                        $session->setFlash('Tous les champs ne sont pas remplis!','danger');
-                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
+                                        throw new Exception('Tous les champs ne sont pas remplis !');
+                                        //$session = new SessionClass();
+                                        //$session->setFlash('Tous les champs ne sont pas remplis!','danger');
+                                        //require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
                                         //return $this->response->redirect('blogenalaska/test.php');
                                         //require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
                                         //$setmessage = $session->flash();
@@ -292,18 +284,23 @@ class ClientController
                             }
                         else 
                             {
-                                //throw new Exception('Le ou les champs ne sont pas remplis !');
-                                $session = new SessionClass();
-                                $session->setFlash('Tous les champs ne sont pas remplis !','error');
-                                header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                                throw new Exception('Le ou les champs ne sont pas remplis !');
                             }
-                    //}        
-                /*catch(Exception $e) 
+                    } 
+                catch(Forteroche\blogenalaska\ExtendExceptions $e)
                     {
                         // S'il y a eu une erreur, alors...
-                        echo 'Erreur : ' . $e->getMessage();
-                        header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
-                    }      */       
+                        $error = $e->getMessage();
+                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
+                    }
+                catch(Exception $e) 
+                    {
+                        // S'il y a eu une erreur, alors...
+                        $error = $e->getMessage();
+                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
+                        //echo 'Erreur : ' .$e->getMessage();
+                        //header('Location: /blogenalaska/index.php?action=getTheFormClientsConnexion');
+                    }           
             }
 //FIN JE VERIFIE LE MOT DE PASSE ET LE CLIENT 
 
