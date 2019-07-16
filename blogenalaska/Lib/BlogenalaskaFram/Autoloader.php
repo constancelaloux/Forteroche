@@ -5,7 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-namespace Forteroche\blogenalaska;
+namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
 
 class Autoloader 
     {
