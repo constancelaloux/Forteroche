@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
+namespace blogenalaska\Lib\BlogenalaskaFram;
 
 /**
  * Description of Route
@@ -30,12 +30,14 @@ class Route
                 $this->setAction($action);
                 $this->setVarsNames($varsNames);
             }
-
+        
+        //Est ce que j'ai des variables
         public function hasVars()
             {
                 return !empty($this->varsNames);
             }
-
+        
+        //Est ce que l'url correspond
         public function match($url)
             {
                 if (preg_match('`^'.$this->url.'$`', $url, $matches))
@@ -47,7 +49,8 @@ class Route
                         return false;
                     }
             }
-
+        
+        //Mes setters
         public function setAction($action)
             {
                 if (is_string($action))
@@ -81,7 +84,8 @@ class Route
             {
                 $this->vars = $vars;
             }
-
+        
+        //Mes getters
         public function action()
             {
                 return $this->action;

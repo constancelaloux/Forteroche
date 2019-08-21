@@ -1,11 +1,11 @@
 <?php
-namespace Forteroche\blogenalaska;
+namespace blogenalaska\Lib\BlogenalaskaFram;
 
 
 use PDO;
 
 
-class PdoConnection
+class PDOConnection
     {
         public static function connect()
             {

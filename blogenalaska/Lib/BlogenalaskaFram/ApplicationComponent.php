@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
-
+namespace blogenalaska\Lib\BlogenalaskaFram;
+use blogenalaska\Lib\BlogenalaskaFram\Application;
 /**
  * Description of ApplicationComponent
  *

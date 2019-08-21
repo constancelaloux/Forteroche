@@ -1,10 +1,25 @@
 <?php
+
+//require'vendor/autoload.php';
+require(__DIR__ . '/../Lib/BlogenalaskaFram/vendor/autoload.php');
+//use \blogenalaska\Test\Test2;
+//use blogenalaska\Lib\BlogenalaskaFram\Application;
+//use blogenalaska\Frontend\Modules\News\Controllers\NewsController;
+//require"/Applications/MAMP/htdocs/Forteroche/blogenalaska/Test/Test2.php";
+//phpinfo();
+//echo 'Current PHP version: ' . phpversion();
+//echo Forteroche\blogenalaska\Test\Test2::input();
+//echo Test2::input();
+/*$app = new Application();
+$app->run();*/
+//$app = new NewsController();
+//$test =$app->executeIndex();
 // Chargement des classes
-require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
-\Forteroche\blogenalaska\Autoloader::register();
+/*require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+\Forteroche\blogenalaska\Autoloader::register();*/
 
 //Si j'ai une action ou sinon action par default*/
-    (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
+/*    (isset($_GET['action'])) ? $action = $_GET['action'] : $action = "goToFrontPageOfTheBlog";
 
                 switch ($action)
                     {
@@ -262,4 +277,4 @@ require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
                             $EmailFrontendController = new EmailController();
                             $EmailFrontendController->sendEmail();
                         break;
-                    }
+                    }*/

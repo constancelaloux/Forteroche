@@ -6,8 +6,8 @@
  * and open the template in the editor.
  */
 
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
-
+namespace blogenalaska\Lib\BlogenalaskaFram;
+//use blogenalaska\Lib\BlogenalaskaFram\ApplicationComponent;
 /**
  * Description of HTTPRequest
  *
@@ -58,6 +58,7 @@ class HTTPRequest extends ApplicationComponent
 //Obtenir l'URL entrée (utile pour que le routeur connaisse la page souhaitée).
         public function requestURI()
             {
-              return $_SERVER['REQUEST_URI'];
+                //print_r($_SERVER['REQUEST_URI']);
+                return $_SERVER['REQUEST_URI'];
             }
     }

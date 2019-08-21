@@ -6,8 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
-
+namespace blogenalaska\Lib\BlogenalaskaFram;
 /**
  * Description of HTTPResponse
  *
@@ -33,9 +32,24 @@ class HTTPResponse extends ApplicationComponent
             }
             
         //De le rediriger vers une erreur 404.
+        //On commence d'abord par créer une instance de la classe Page 
+        //que l'on stocke dans l'attribut correspondant.
+        //On assigne ensuite à la page le fichier qui fait office de vue 
+        //à générer. Ce fichier contient le message d'erreur formaté. 
+        //Vous pouvez placer tous ces fichiers dans le dossier /Errors 
+        //par exemple, sous le nom code.html. Le chemin menant au fichier
+        // contenant l'erreur 404 sera donc /Errors/404.html.
+        //un header disant que le document est non trouvé (HTTP/1.0 404 
+        //Not Found).
+        //On envoie la réponse.
         public function redirect404()
             {
+                $this->page = new Page($this->app);
+                $this->page->setContentFile(__DIR__.'/../../Errors/404.html');
 
+                $this->addHeader('HTTP/1.0 404 Not Found');
+
+                $this->send();
             }
         
         //Cependant, il est bien beau d'assigner une page,encore faudrait-il pouvoir l'envoyer !

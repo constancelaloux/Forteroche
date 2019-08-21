@@ -42,8 +42,14 @@
 //managers l'API que l'on souhaite utiliser. Suivant ce qu'on lui 
 //demande, notre classe nous retournera une instance de NewsManagerPDO 
 //ou NewsManagerMySQLi par exemple.
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
+namespace blogenalaska\Lib\BlogenalaskaFram;
 
+use blogenalaska\Lib\BlogenalaskaFram\PdoConnection;
+use blogenalaska\Lib\BlogenalaskaFram\Application;
+use blogenalaska\Lib\BlogenalaskaFram\Page;
+
+//La class BackController va me permettre d'apporter des variables get ou post au
+//controllers de mes modules, puis ensuite de modifier une action, une vue, le module associé au controleur
 abstract class BackController extends ApplicationComponent
     {
         protected $action = '';
@@ -55,8 +61,8 @@ abstract class BackController extends ApplicationComponent
         public function __construct(Application $app, $module, $action)
             {
                 parent::__construct($app);
-                
-                $this->managers = new Managers('PDO', PDOFactory::getMysqlConnexion());
+                //Les controllers accéderont aux managers par la
+                $this->managers = new PDOConnection(PDOConnection::connect());
                 $this->page = new Page($app);
 
                 $this->setModule($module);
@@ -64,6 +70,19 @@ abstract class BackController extends ApplicationComponent
                 $this->setView($action);
             }
 
+        //Une instance de BackController nous permettra donc : D'exécuter
+        // une action (donc une méthode).
+        //Concernant la méthode execute(), comment fonctionnera-t-elle ?
+        // Son rôle est d'invoquer la méthode correspondant à l'action 
+        // assignée à notre objet. Le nom de la méthode suit une logique 
+        // qui est de se nommer executeNomdelaction(). Par exemple, si 
+        // nous avons une action show sur notre module, nous devrons 
+        // implémenter la méthode executeShow() dans notre contrôleur. 
+        // Aussi, pour une question de simplicité, nous passerons la 
+        // requête du client à la méthode. En effet, dans la plupart 
+        // des cas, les méthodes auront besoin de la requête du client
+        //  pour obtenir une donnée (que ce soit une variable GET, POST,
+        //   ou un cookie).
         public function execute()
             {
                 $method = 'execute'.ucfirst($this->action);
@@ -76,11 +95,14 @@ abstract class BackController extends ApplicationComponent
                 $this->$method($this->app->httpRequest());
             }
 
+        //D'obtenir la page associée au contrôleur.
         public function page()
             {
                 return $this->page;
             }
 
+        
+        //De modifier le module, l'action et la vue associés au contrôleur.
         public function setModule($module)
             {
                 if (!is_string($module) || empty($module))
@@ -102,6 +124,10 @@ abstract class BackController extends ApplicationComponent
             }
             
         //Cette fonction sera utilisée pour afficher une vue
+        //méthode setView($view). En effet, lorsque l'on change de vue, 
+        //il faut en informer la page concernée grâce à la méthode 
+        //setContentFile() de notre classe Page
+            
         public function setView($view)
             {
                 if (!is_string($view) || empty($view))
@@ -110,5 +136,6 @@ abstract class BackController extends ApplicationComponent
                     }
 
                 $this->view = $view;
+                $this->page->setContentFile(__DIR__.'/../../blogenalaska/'.$this->app->name().'/Modules/'.$this->module.'/Views/'.$this->view.'.php');
             }
     }

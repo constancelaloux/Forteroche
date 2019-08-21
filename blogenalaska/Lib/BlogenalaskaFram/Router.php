@@ -5,9 +5,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+//require(__DIR__ . '/../Lib/BlogenalaskaFram/vendor/autoload.php');
+namespace blogenalaska\Lib\BlogenalaskaFram;
 
-namespace Forteroche\blogenalaska\Lib\BlogenalaskaFram;
-
+use blogenalaska\Lib\BlogenalaskaFram\Route;
 /**
  * Description of Router
  *
@@ -20,24 +21,29 @@ class Router
         //Les routes sont stockés dans un tableau
         protected $routes = [];
         const NO_ROUTE = 1;
+        
+        //J'ajoute une route dans mon tableau aprés avoir hydraté les setters
         public function addRoute(Route $route)
             {
                 if (!in_array($route, $this->routes))
                     {
                       $this->routes[] = $route;
+                      //print_r($this);
                     }
             }
-
+        
+        //Je récupére une route
         public function getRoute($url)
             {
                 foreach ($this->routes as $route)
                     {
                         // Si la route correspond à l'URL
-                        if (($varsValues = $route->match($url)) !== false)
+                        if (($varsValues = $route->match($url)) !== 'false')
                             {
                                 // Si elle a des variables
                                 if ($route->hasVars())
                                     {
+                                    //print_r('je passe ici');
                                         $varsNames = $route->varsNames();
                                         $listVars = [];
 
@@ -55,7 +61,7 @@ class Router
                                         // On assigne ce tableau de variables � la route
                                         $route->setVars($listVars);
                                     }
-
+                                    
                                 return $route;
                             }
                     }
