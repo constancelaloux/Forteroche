@@ -1,7 +1,108 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 'on');
+/**
+ * Autoload
+ */
+require(__DIR__ . '/../BlogenalaskaFram/vendor/autoload.php');
+/**
+ * Router
+ */
+//print_r($_SERVER['REQUEST_URI']);
+//$uri = $_SERVER['REQUEST_URI'];
+//echo $_SERVER['SERVER_NAME'];
+$router = new AltoRouter();
+$router->setBasePath('/blogenalaska/Public');
+//print_r($router->setBasePath('/blogenalaska/Public'));
+//print_r($router);
+//On évite de répéter (__DIR__).'/views dans le require
+//define('VIEW_PATH', dirname(__DIR__) .'/views');
 
-//require'vendor/autoload.php';
-require(__DIR__ . '/../Lib/BlogenalaskaFram/vendor/autoload.php');
+//$test = dirname(__DIR__).'/views/post/index.php';
+//print_r($test);
+
+//$router->map($method, $route, $router);
+$router->map('GET', '/', 'Page404');
+
+$router->map('GET', '/nous-contacter', function()
+        {
+    //print_r($router);
+            //Charger la page d'accueil
+            //print_r(require 'views/post/index.php');
+            //echo"Nous contacter";
+            require __DIR__ .'/../views/posts/index.php';
+        }
+    );
+
+$router->map('GET', '/blog/[*:slug]-[i:id]', function()
+        {       
+            echo 'Blog';
+        }
+    );
+    
+$match = $router->match();
+//var_dump($match);
+
+if (is_array($match)) 
+    {
+        if(is_callable($match['target']))
+            {
+            //var_dump($match['target']);
+                call_user_func_array($match['target'], $match['params']);
+            //$match['target']();
+            }
+        else 
+            {
+                $params =$match['params'];
+                require __DIR__ ."/../views/error/{$match['target']}.php";
+            }
+    }
+else {
+    echo"HTTP/1.0 404 Not Found";
+}
+/*if($uri === '/nous-contacter')
+    {
+        print_r($_SERVER['REQUEST_URI']);
+       require __DIR__ .'/../../views/index.php'; 
+    }
+else if ($uri === '/')
+    {
+        require __DIR__ .'/error/Page404.php';
+    }
+else
+    {
+            echo 'rien ne s est fait';
+    };*/
+/*$page = $_GET['page'] ?? '404';
+//print_r($_GET['page']);
+if($page === 'blog')
+    {
+        //exit("je sors");
+        require __DIR__ .'/blog/index.php';
+        //print_r($__DIR__ .'/blog/index.php');
+    }
+else if ($page === '404')
+    {
+        require __DIR__ .'/error/Page404.php';
+    }
+?><h1>Bienvenue sur mon site</h1>*/
+
+
+
+//var_dump($_SERVER)
+
+/*
+print_r($router);
+  
+//Je vais voir si la route correspond à l'url qui est demandée
+$match = $router->match();
+print_r($router->match());
+
+print_r($match['target']());
+exit("je sors");
+$match['target']();
+print_r($match['target']());*/
+//exit("je sors");
 //use \blogenalaska\Test\Test2;
 //use blogenalaska\Lib\BlogenalaskaFram\Application;
 //use blogenalaska\Frontend\Modules\News\Controllers\NewsController;
