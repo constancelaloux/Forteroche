@@ -13,49 +13,32 @@ require(__DIR__ . '/../BlogenalaskaFram/vendor/autoload.php');
 //echo $_SERVER['SERVER_NAME'];
 $router = new AltoRouter();
 $router->setBasePath('/blogenalaska/Public');
-//print_r($router->setBasePath('/blogenalaska/Public'));
-//print_r($router);
+
 //On évite de répéter (__DIR__).'/views dans le require
 //define('VIEW_PATH', dirname(__DIR__) .'/views');
 
 //$test = dirname(__DIR__).'/views/post/index.php';
-//print_r($test);
-
+require '../config/Routes.php';
 //$router->map($method, $route, $router);
-$router->map('GET', '/', 'Page404');
 
-$router->map('GET', '/nous-contacter', function()
-        {
-    //print_r($router);
-            //Charger la page d'accueil
-            //print_r(require 'views/post/index.php');
-            //echo"Nous contacter";
-            require __DIR__ .'/../views/posts/index.php';
-        }
-    );
-
-$router->map('GET', '/blog/[*:slug]-[i:id]', function()
-        {       
-            echo 'Blog';
-        }
-    );
-    
+//Est ce que l'url qui est tapé correspond à une de ces routes
 $match = $router->match();
-//var_dump($match);
 
 if (is_array($match)) 
     {
         if(is_callable($match['target']))
             {
-            //var_dump($match['target']);
                 call_user_func_array($match['target'], $match['params']);
             //$match['target']();
             }
         else 
             {
                 $params =$match['params'];
-                require __DIR__ ."/../views/error/{$match['target']}.php";
+                ob_start();
+                require __DIR__ ."/../views/{$match['target']}.php";
+                $content = ob_get_clean();
             }
+        require  __DIR__ .'/../Template/Layout.php';
     }
 else {
     echo"HTTP/1.0 404 Not Found";
