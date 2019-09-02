@@ -4,45 +4,35 @@ ini_set('display_errors', 'on');
 /**
  * Autoload
  */
-require(__DIR__ . '/../BlogenalaskaFram/vendor/autoload.php');
+require(__DIR__ . '/../src/BlogenalaskaFram/vendor/autoload.php');
+
+define('DEBUG_TIME', microtime(TRUE));
+sleep(2);
 /**
  * Router
  */
 //print_r($_SERVER['REQUEST_URI']);
 //$uri = $_SERVER['REQUEST_URI'];
 //echo $_SERVER['SERVER_NAME'];
-$router = new AltoRouter();
-$router->setBasePath('/blogenalaska/Public');
+//$router = new AltoRouter();
+//$router->setBasePath('/blogenalaska/Public');
+
+$router = new \blogenalaska\src\blogenalaskaFram\Router(dirname(__DIR__).'/views');
+//Lorsque tu appelles en get /blog, je veux que tu ailles chercher post/index.php
+//Le get permet d'enregistrer une nouvelle url
+$router->get('/', 'post/index', 'blog')
+       ->get('/blog/category', 'category/Blog', 'category')
+       ->post('/blog/[*:slug]-[i:id]', 'category/Show' ,'test')
+       ->run();
 
 //On évite de répéter (__DIR__).'/views dans le require
 //define('VIEW_PATH', dirname(__DIR__) .'/views');
 
 //$test = dirname(__DIR__).'/views/post/index.php';
-require '../config/Routes.php';
+//require '../config/Routes.php';
 //$router->map($method, $route, $router);
 
-//Est ce que l'url qui est tapé correspond à une de ces routes
-$match = $router->match();
 
-if (is_array($match)) 
-    {
-        if(is_callable($match['target']))
-            {
-                call_user_func_array($match['target'], $match['params']);
-            //$match['target']();
-            }
-        else 
-            {
-                $params =$match['params'];
-                ob_start();
-                require __DIR__ ."/../views/{$match['target']}.php";
-                $content = ob_get_clean();
-            }
-        require  __DIR__ .'/../Template/Layout.php';
-    }
-else {
-    echo"HTTP/1.0 404 Not Found";
-}
 /*if($uri === '/nous-contacter')
     {
         print_r($_SERVER['REQUEST_URI']);
