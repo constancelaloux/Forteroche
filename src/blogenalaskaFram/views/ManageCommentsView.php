@@ -43,7 +43,7 @@ else
 ?>
 
 <?php $title = 'ManageCommentsView'; ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Header.php'); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Header.php'); ?>
 <?php ob_start(); ?>
 
 <section class="comments">
@@ -197,6 +197,6 @@ else
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Template.php');?>
+<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');?>
 
 

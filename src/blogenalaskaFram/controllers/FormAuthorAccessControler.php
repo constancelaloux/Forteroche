@@ -13,7 +13,7 @@
 /*require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();*/
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/PdoConnection.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/PdoConnection.php';
 
 class FormAuthorAccessControler
     {
@@ -22,13 +22,13 @@ class FormAuthorAccessControler
         //Je récupére le formulaire pour envoyer des données administrateur en bdd
         function getFormToCreateNewAdmin()
             {
-                if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                     {
-                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php';
+                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php';
                     }
                 else
                     {
-                        header('Location: /blogenalaska/views/Page404.php');
+                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                     }
             }
             
@@ -55,13 +55,13 @@ class FormAuthorAccessControler
                                                 //throw new Exception('identifiant trop court !');
                                                 $session = new SessionClass();
                                                 $session->setFlash('identifiant trop court !','error');
-                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                                                     {
-                                                       require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'; 
+                                                       require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'; 
                                                     }
                                                 else
                                                     {
-                                                        header('Location: /blogenalaska/views/Page404.php');
+                                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                     }
                                             }
                                             
@@ -93,13 +93,13 @@ class FormAuthorAccessControler
                                                         //throw new Exception('Votre identifiant existe déja');
                                                         $session = new SessionClass();
                                                         $session->setFlash('Votre identifiant existe déja','error');
-                                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                                                             {
-                                                               require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'; 
+                                                               require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'; 
                                                             }
                                                         else
                                                             {
-                                                                header('Location: /blogenalaska/views/Page404.php');
+                                                                header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                             }
                                                     }
                                                 else
@@ -114,13 +114,13 @@ class FormAuthorAccessControler
                                                 $session->setFlash('Mot de passe pas conforme! Votre mot de passe '
                                                         . 'doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, '
                                                         . 'et doit etre entre 6 caractéres minimum et 8 maximum','error');
-                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                                                     {
-                                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php';
+                                                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php';
                                                     }
                                                 else
                                                     {
-                                                        header('Location: /blogenalaska/views/Page404.php');
+                                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                     }
                                                 //throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
                                             }
@@ -129,13 +129,13 @@ class FormAuthorAccessControler
                                     {
                                         $session = new SessionClass();
                                         $session->setFlash('Vous n\'avez pas rempli le formulaire!','error');
-                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                                             {
-                                                require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php';
+                                                require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php';
                                             }
                                         else
                                             {
-                                                header('Location: /blogenalaska/views/Page404.php');
+                                                header('Location: /src/blogenalaskaFram/views/Page404.php');
                                             }
                                         //throw new Exception('Vous n\'avez pas rempli le formulaire!');
                                     }
@@ -144,13 +144,13 @@ class FormAuthorAccessControler
                             {
                                 $session = new SessionClass();
                                 $session->setFlash('Le ou les champs ne sont pas remplis !','error');
-                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'))
+                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'))
                                     {
-                                       require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewAuthor.php'; 
+                                       require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewAuthor.php'; 
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                                 //throw new Exception('Le ou les champs ne sont pas remplis !');
                             }
@@ -168,13 +168,13 @@ class FormAuthorAccessControler
         //Je récupére le formulaire de connexion par default
         function getTheFormAdminConnexionBackend()
             {
-                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'))
+                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'))
                     {
-                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php';
+                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php';
                     }
                 else
                     {
-                        header('Location: /blogenalaska/views/Page404.php');
+                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                     }
             }
             
@@ -226,13 +226,13 @@ class FormAuthorAccessControler
                                                     {
                                                         $session = new SessionClass();
                                                         $session->setFlash('Votre mot de passe est incorrect!','error');
-                                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'))
+                                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'))
                                                             {
-                                                               require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'; 
+                                                               require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'; 
                                                             }
                                                         else
                                                             {
-                                                                header('Location: /blogenalaska/views/Page404.php');
+                                                                header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                             }
                                                         //throw new Exception('Votre mot de passe est incorrect!');
                                                     }
@@ -241,13 +241,13 @@ class FormAuthorAccessControler
                                             {
                                                 $session = new SessionClass();
                                                 $session->setFlash('Votre nom d\'utilisateur est incorrect!','error');
-                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'))
+                                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'))
                                                     {
-                                                       require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'; 
+                                                       require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'; 
                                                     }
                                                 else
                                                     {
-                                                        header('Location: /blogenalaska/views/Page404.php');
+                                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                     }
                                                 //throw new Exception('Votre nom d\'utilisateur est incorrect!');
                                             }
@@ -258,13 +258,13 @@ class FormAuthorAccessControler
                                     {
                                         $session = new SessionClass();
                                         $session->setFlash('Tous les champs ne sont pas remplis !','error');
-                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'))
+                                        if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'))
                                             {
-                                               require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'; 
+                                               require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'; 
                                             }
                                         else
                                             {
-                                                header('Location: /blogenalaska/views/Page404.php');
+                                                header('Location: /src/blogenalaskaFram/views/Page404.php');
                                             }
                                         //throw new Exception('Tous les champs ne sont pas remplis !');
                                     }
@@ -275,13 +275,13 @@ class FormAuthorAccessControler
                                 die('je passe pas dans le isset');
                                 $session = new SessionClass();
                                 $session->setFlash('Le ou les champs ne sont pas remplis !','error');
-                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'))
+                                if(file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'))
                                     {
-                                       require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormAuthorAccessView.php'; 
+                                       require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormAuthorAccessView.php'; 
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                                 //throw new Exception('Le ou les champs ne sont pas remplis !');
                             }

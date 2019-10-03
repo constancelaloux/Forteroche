@@ -6,12 +6,12 @@
 //\Forteroche\blogenalaska\Autoloader::register();
 //require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/frontend/FrontendModels/Search.php';
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/PdoConnection.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/ArticlesManager.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/Article.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/session/SessionClass.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/controllers/CommentsController.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/SearchManager.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/PdoConnection.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/ArticlesManager.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/Article.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/session/SessionClass.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/controllers/CommentsController.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/SearchManager.php';
 
 class BlogController 
     {
@@ -40,13 +40,13 @@ class BlogController
                     {
                         //$this->app->httpResponse()->redirect404();
                         //require_once 'Frontend/FrontendViews/HomePage.php';
-                        if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php'))
+                        if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php'))
                             {
-                                require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php';
+                                require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php';
                             }
                         else
                             {
-                                header('Location: /blogenalaska/Error/Page404.php');
+                                header('Location: /src/blogenalaskaFram/Error/Page404.php');
                             }
                     }
 
@@ -100,13 +100,13 @@ class BlogController
                                         $session->setFlash('impossible d\'afficher les articles','error');
                                     }
                                     
-                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php'))
+                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php'))
                                     {
-                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php';
+                                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php';
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                                 //require_once 'Frontend/FrontendViews/HomePage.php';
                             }
@@ -115,13 +115,13 @@ class BlogController
                                 $session = new SessionClass();
                                 $session->setFlash('impossible d\'afficher les articles','error');
                                 
-                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php'))
+                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php'))
                                     {
-                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/HomePage.php';
+                                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/HomePage.php';
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                            }
                     }
@@ -167,13 +167,13 @@ class BlogController
                                 $comment = new CommentsController();
                                 $numberOfComments = $comment->countComments();
                                 $myComment = $comment->getListOfComments();
-                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/MyArticles.php'))
+                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/MyArticles.php'))
                                     {
-                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/MyArticles.php';
+                                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/MyArticles.php';
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                                 //require_once 'Frontend/FrontendViews/Articles/MyArticles.php';
                             }
@@ -202,13 +202,13 @@ class BlogController
                                 $searchManager = new SearchManager($db);
 
                                 $mySearchResult = $searchManager->get($mySearchWords);
-                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/ResultSearchPage.php'))
+                                if (file_exists('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/ResultSearchPage.php'))
                                     {
-                                        require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/ResultSearchPage.php';
+                                        require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/ResultSearchPage.php';
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                     }
                                 //require_once 'Frontend/FrontendViews/ResultSearchPage.php';
                             }

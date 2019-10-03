@@ -5,10 +5,10 @@
 \Forteroche\blogenalaska\Autoloader::register();*/
 //require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/FrontendModels/Client.php';
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/PdoConnection.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/session/SessionClass.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/Client.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/ClientManager.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/PdoConnection.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/blogenalaska/session/SessionClass.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/Client.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/ClientManager.php';
 /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -21,13 +21,13 @@ class ClientController
        //Je vais vers le formulaire de connexion du client
         function getClientFormConnexion()
             {
-                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormClientAccessView.php"))
+                if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormClientAccessView.php"))
                     {
-                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/FormClientAccessView.php';
+                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/FormClientAccessView.php';
                     }
                 else
                     {
-                        header('Location: /blogenalaska/views/Page404.php');
+                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                     }
                 //require_once 'Frontend/FrontendViews/ClientFormAccess/FormClientAccessView.php';
             }
@@ -40,13 +40,13 @@ class ClientController
         function getFormToCreateNewClient()
             {
                 //require_once 'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
-                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php"))
+                if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                     {     
-                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                     }
                 else
                     {
-                        header('Location: /blogenalaska/views/Page404.php');
+                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                     }
             }
 //FIN OBTENIR LE FORMULAIRE DE CREATION D'UN CLIENT
@@ -79,13 +79,13 @@ class ClientController
                                                 //throw new Exception('identifiant trop court !');
                                                 $session = new SessionClass();
                                                 $session->setFlash('identifiant trop court !','error');
-                                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php"))
+                                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                                                     {
-                                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                                                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                                                     }
                                                 else
                                                     {
-                                                        header('Location: /blogenalaska/views/Page404.php');
+                                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                     }
                                             }
                                         //https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2917331-controlez-les-mots-de-passe
@@ -115,13 +115,13 @@ class ClientController
                                                             unset($newClient);
                                                             $session = new SessionClass();
                                                             $session->setFlash('Votre identifiant existe déja','error');
-                                                            if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php"))
+                                                            if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                                                                {
-                                                                   require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                                                                   require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                                                                }
                                                            else
                                                                {
-                                                                   header('Location: /blogenalaska/views/Page404.php');
+                                                                   header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                                }
                                                             //throw new Exception('Votre identifiant existe déja');
                                                             
@@ -139,13 +139,13 @@ class ClientController
                                                 $session->setFlash('Mot de passe pas conforme! Votre mot de passe doit '
                                                         . 'comporter au moins un caractére spécial, un chiffre, '
                                                         . 'une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum','error');
-                                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php"))
+                                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                                                     {
-                                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                                                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                                                     }
                                                 else
                                                     {
-                                                        header('Location: /blogenalaska/views/Page404.php');
+                                                        header('Location: /src/blogenalaskaFram/views/Page404.php');
                                                     }
                                                 //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                                                 //throw new Exception('Mot de passe pas conforme! Votre mot de passe doit comporter au moins un caractére spécial, un chiffre, une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum');
@@ -156,13 +156,13 @@ class ClientController
                                         //throw new Exception('Vous n\'avez pas rempli le formulaire!');
                                         $session = new SessionClass();
                                         $session->setFlash('Vous n\'avez pas rempli le formulaire!','error');
-                                        if (file_exists("/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php"))
+                                        if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                                             {
-                                                require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                                                require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                                             }
                                         else
                                             {
-                                                header('Location: /blogenalaska/views/Page404.php');
+                                                header('Location: /src/blogenalaskaFram/views/Page404.php');
                                             }
                                         //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                                     }
@@ -172,13 +172,13 @@ class ClientController
                                 //throw new Exception('Le ou les champs ne sont pas remplis !');
                                 $session = new SessionClass();
                                 $session->setFlash('Le ou les champs ne sont pas remplis !','error');
-                                if (file_exists("Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php"))
+                                if (file_exists("/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php"))
                                     {
-                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/CreateNewClient.php';
+                                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/CreateNewClient.php';
                                     }
                                 else
                                     {
-                                        header('Location: /blogenalaska/views/Error/Page404.php');
+                                        header('Location: /src/blogenalaskaFram/views/Error/Page404.php');
                                     }
                                 //require_once'Frontend/FrontendViews/ClientFormAccess/CreateNewClient.php';
                             }
@@ -266,7 +266,7 @@ class ClientController
                                         //throw new Exception('Tous les champs ne sont pas remplis !');
                                         $session = new SessionClass();
                                         $session->setFlash('Tous les champs ne sont pas remplis!','danger');
-                                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/test.php';
+                                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/test.php';
                                         //return $this->response->redirect('blogenalaska/test.php');
                                         //require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/test.php';
                                         //$setmessage = $session->flash();
@@ -365,7 +365,7 @@ class ClientController
                     }
                 
                 //header("Location: /blogenalaska/index.php?action=getUpdateClientForm&id='.$clientId'");
-                require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/ReinitiateClient.php';
+                require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/ReinitiateClient.php';
             }
             
         //Réinitialiser le compte client

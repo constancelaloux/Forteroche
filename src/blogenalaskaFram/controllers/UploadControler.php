@@ -46,8 +46,8 @@ class UploadControler
 
                         // Accept upload if there was no origin, or if it is an accepted origin
 
-                        $filetowrite1 = "/blogenalaska/" . $imageFolder . $temp['name'];
-
+                        $filetowrite1 = "/publics/" . $imageFolder . $temp['name'];
+                        //blogenalaska à la place de public avant
                         if (move_uploaded_file($temp['tmp_name'], $imageFolder . $temp['name']))
                             {
                         

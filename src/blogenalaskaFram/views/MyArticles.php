@@ -10,7 +10,7 @@
 <?php 
     if(isset($_SESSION['username']))
         {
-            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Header.php');
+            include('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Header.php');
             $expireAfter = 30;
 
             //Check to see if our "last action" session
@@ -38,7 +38,7 @@
         }
     else 
         {
-            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/ClientsHeader.php');       
+            include('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/ClientsHeader.php');       
         }
 ?>
 
@@ -234,8 +234,8 @@
         </div>
     </div>
 </section>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Footer.php'); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Footer.php'); ?>
 <?php $content = ob_get_clean(); ?>
 
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Template.php');?>
+<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');?>
 

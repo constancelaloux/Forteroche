@@ -17,12 +17,12 @@ class Autoloader
                         $dirs = array(
                             //Backend
                             //'Backend/BackendModels', // Project specific classes (+Core Overrides)
-                            __DIR__.'/../blogenalaska/controllers/',
+                            __DIR__.'/../src/blogenalaskaFram/controllers/',
                             //'/Forteroche/blogenalaska/',
-                            __DIR__.'/blogenalaska/models',
+                            __DIR__.'/src/blogenalaskaFram/models',
                             //'Backend/BackendControllers/Manager',
                             //Frontend
-                            __DIR__.'/blogenalaska/session/'
+                            __DIR__.'/src/blogenalaskaFram/session/'
                             );
 
                         // Looping through each directory to load all the class files. It will only require a file once.

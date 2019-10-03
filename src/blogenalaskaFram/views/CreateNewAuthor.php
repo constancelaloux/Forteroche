@@ -47,4 +47,4 @@
 
 
 <?php $content = ob_get_clean(); ?>
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Template.php');
+<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');

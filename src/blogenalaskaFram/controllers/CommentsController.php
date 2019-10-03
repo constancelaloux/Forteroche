@@ -8,10 +8,10 @@
 /*require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();*/
 
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/PdoConnection.php';
-require'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/Comment.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/models/CommentsManager.php';
-require_once'/Applications/MAMP/htdocs/Forteroche/blogenalaska/session/SessionClass.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/PdoConnection.php';
+require'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/Comment.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/models/CommentsManager.php';
+require_once'/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/session/SessionClass.php';
 
 class CommentsController
     {
@@ -190,7 +190,7 @@ class CommentsController
                         $getArticleFromId = $articleFromId->getTheArticleFromId();
                         $commentContent = $myCommentToModify->content();
                         $idComment = $myCommentToModify->id();
-                        require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/MyArticles.php';
+                        require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/MyArticles.php';
                     }
                 else
                     {
@@ -217,7 +217,7 @@ class CommentsController
                             {
                                 $session = new SessionClass();
                                 $session->setFlash('pas d\'article sélectionné','error');
-                                require_once'/blogenalaska/views/MyArticles.php';
+                                require_once'/src/blogenalaskaFram/views/MyArticles.php';
                             }
                     } 
                         
@@ -253,7 +253,7 @@ class CommentsController
                         else 
                             {
                                 echo 'pas de commentaire séléctionné';
-                                require_once'/Frontend/views/MyArticles.php';
+                                require_once'/src/blogenalaskaFram/views/MyArticles.php';
                             }
                     }  
                 $comment = new Comment

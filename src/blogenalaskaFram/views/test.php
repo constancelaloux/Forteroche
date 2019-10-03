@@ -12,4 +12,4 @@ ob_start();
 $session->flash();
 
 $content = ob_get_clean();
-require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');
+require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/Template.php');

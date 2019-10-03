@@ -28,7 +28,7 @@ if (isset($_SESSION))
                         session_unset();
                         session_destroy();
 
-                        header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+                        header('Location: /src/blogenalaskaFram/index.php?action=getTheFormAdminConnexionBackend');
                     }
             }
 
@@ -44,7 +44,7 @@ else
 ?>
 <?php $title = 'backend main page'; ?>
 <?php ob_start(); ?>
-<?php include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Header.php'); ?>
+<?php include('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Header.php'); ?>
 
 <section class="articles">
     <div class="container">
@@ -234,4 +234,4 @@ else
 
 <?php $content = ob_get_clean(); ?>
 
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/views/Template.php');?>
+<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');?>
