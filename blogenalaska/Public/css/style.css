@@ -8,21 +8,946 @@ and open the template in the editor.
     Author     : constancelaloux
 */
 
-/*Le contenu s'affiche en dessous de la barre de menu*/
-.content
-    {
-        padding-top: 100px;
-    }
-
 /*Le bouton déconnexion se met en ligne*/
 .btn:not(:disabled):not(.disabled)
     {
         display: flex;
         flex-direction: row;
     }
+    
+/*BACKEND*/
+/*ECRIRE UN ARTICLE*/
+/*selecteur d'image de l'éditeur wisywig */
+.hidden
+    {
+        display:none;
+    }
 
+/*La publicité de Tinymce est cachée*/
+.mce-notification.mce-has-close
+    {
+        display: none;
+    }
+    
+ /*Ecrire un article*/
+.titleOfArticle
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+.imageOfArticle
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+#formArticle 
+    {
+        margin-top: 120px;
+    }   
+      
+/*FORMULAIRE DE CONNEXION D'UN AUTEUR*/
+.connectAuthor
+    {
+        margin: 10%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'News Cycle', sans-serif;
+        /*justify-content: center;*/
+        text-align: center;
+        font-size: 22px;
+        color: #72777c;
+        font-size: 14px;
+        width: 320px;
+        padding: 8% 0 0;
+        margin: auto;
+    }
+     
+.username
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+.password
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+input#username
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+    
+input#password
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+    
+#submitAuthorFormConnection input
+    {
+        background: #0085ba;
+        border-color: #0073aa #006799 #006799;
+        box-shadow: 0 1px 0 #006799;
+        color: #fff;
+        text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    } 
+    
+.formTitle
+    {
+        border-left: 4px solid #00a0d2;
+        padding: 12px;       
+    }
+    
+    
+    
+    
+/*HEADER DU BACKEND*/
+/*Je met une marge entre la barre de menu et le contenu*/
+.articles
+    {
+        padding-top: 10%;
+    }
+    
+.articles #titlePageArticles
+    {
+        text-align: center;
+    }
+
+.navbarAuthor .fixed-top
+    {
+        background: #23282d;
+    }
+
+.navbarAuthor .nav-link
+    {
+        width: 70px;
+    }
+    
+.navAuthor .navbar-expand-lg .navbar-collapse
+    {
+        margin-right: 30%;
+    }
+/*@media (min-width: 992px)
+    {
+        .navbar
+            {
+                height: 32px;  
+            }
+    }*/
+/*TABLEAU DE GESTION DES COMMENTAIREs*/
+.comments
+    {
+        margin-top: 150px;  
+    }
+    
+/*HEADER DE BACKEND*/
+#errorMessageDisplay p
+    {
+        color: white;
+    }
+    
+    
+  
+
+
+
+
+/*FRONTEND*/ 
+
+ /*HEADER de HOMEPAGE.php*/
+/*barre header*/
+/*Le menu a une petite bordure grise a droite*/
+.navbar-expand-lg .navbar-nav
+    {
+        border-right: 1px solid #e9ecef;
+        margin-left: 60%;
+    }
+
+/*La police du menu*/    
+.nav-item
+    {
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        color: rgba(0,0,0,.5);
+        font-size: .85rem;
+    }
+    
+/*Bouton de recherche*/    
+#buttonSubmit button
+    {
+        border: transparent;
+        font-size: x-large;
+    }
+
+/*J'enléve les bordures autour du bouton*/
+#dropdownMenuOffset
+    {
+        border: none;
+    }
+    
+/*Menu Burger*/
+.dropdown-toggle::after
+    {
+        color: black;
+    }
+
+.btn-secondary
+    {
+        border-color: white!important;
+    }
+
+.navbar-dark .navbar-toggler 
+    {
+        color: black!important;
+        border-color: black!important;
+        background-color: black!important;
+    }
+
+/*Le bouton dropdown se centre par rapport au bouton dropdown*/
+.dropdown-menu.show
+    {
+        transform: translate(-60%, 0) !important;
+    }
+
+/*Le bouton bonjour et deconnexion*/
+#dropdownMenuOffset
+    {
+         background-color: white; 
+         color: rgba(0,0,0,.5);
+         font-family: 'News Cycle', sans-serif;
+    }  
+    
+#dropdownMenuOffset img
+    {
+        width: auto;
+        height: 35px;
+    }
+    
+    
+    
+    
+    
+    
+/*HOMEPAGE.php: La page de mes articles du frontend*/
+
+/*CAROUSEL*/
+/*Le titre sur le carousel*/
+#title
+    {
+        position: absolute;
+        bottom: 40%;
+        /*text-align: center;*/
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        border-left: 3px solid yellow;
+        /*width: 200px;*/
+        width: 410px;
+        margin-left: 20px;
+        padding-left: 3rem;
+    }
+
+#title h2
+    {
+        font-size: 3.4rem;
+        color: white;
+    }
+
+/*Le titre se centre par rapport au carousel*/
+.carousel 
+    {
+        /*display: flex;
+        justify-content: center;*/
+    }
+
+/*Le carousel a une marge de 120px par rapport au header donc il passe en dessous*/
+#caroussel
+    {
+        margin-top: 120px;
+    }
+
+    
+    
+/*LES ARTICLES*/
+
+#articles
+    {
+        padding-top: 5%;
+    }
+    
+/*Je resize les images du listing de mes articles*/
+#myarticles #imageFromListing
+    {
+        width: 100%;
+        height: 300px;
+        overflow: hidden;
+        /*margin: 10px;*/
+        position: relative;
+    }
+    
+#imageFromListing img
+    {
+        min-height: 100%;
+        max-width: 100%;
+        position: absolute;
+        margin: auto;
+        border-radius: 4px 4px;
+    }
+    
+/*Mes articles ont chacun une marge entre eux*/    
+#myarticles
+    {
+        /*background-color: #f7f7f7;*/
+        /*border-bottom: 1px solid #DCDCBE;*/
+        padding-bottom: 7%;
+    }
+    
+#myarticles h3
+    {
+        /*font-family: 'Roboto', sans-serif;*/
+        /*font-family: 'Montserrat', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        font-size: 27px;
+        text-transform: uppercase;
+        color: #2F2E2E;
+    }
+
+#myarticles p
+    {
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'News Cycle', sans-serif;
+        font-size: 14px;
+        color: #2F2E2E;
+    }
+
+#myarticles a
+    {
+        /*font-family: 'Roboto', sans-serif;*/
+        color: #16447d;
+        text-transform: uppercase;
+    }
+    
+#next p
+    {
+        text-align: center;
+        border: 1px solid #6c757d;
+        padding: 7px;
+    }
+
+    
+.page-item 
+    {
+        font-family: 'News Cycle', sans-serif;
+        padding: 0px 15px 0px 0px;    
+    }
+    
+#navArticles
+    {
+        display: flex;
+        justify-content: center;
+        margin-top: -7%;
+    }
+    
+.page-item a
+    {
+        color: black;
+    }
+
+a.page-link
+    {
+            border: 1px solid rgba(47, 46, 46, 1);
+            padding: 5px 10px;
+            color: #2F2E2E;
+            font-size: 14px;
+    }
+
+/*Au hover le texte "lire la suite" a un fond gris et une bordure grise, le soulignage existe plus*/  
+#next p:hover
+    {
+        background-color: #e9ecef;
+        border-color: #dee2e6;
+        text-decoration: none;
+    }
+    
+    #next p a{
+        text-decoration: none;
+    }
+    
+    
+    
+    
+/*LOGO ET EXPLICATIF DU BLOG*/
+/*Explication du blog*/
+#logoAndExplanation
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+#titleOfBlogExplanation h3
+    {
+        font-family: 'News Cycle', sans-serif;
+        font-size: 15px;
+        color: #2F2E2E;
+    }
+    
+#logoAndExplanation p
+    {
+        font-family: 'News Cycle', sans-serif;
+        font-size: 15px;
+        color: #2F2E2E;
+        padding-bottom: 7%;
+    }
+    
+/*Logo*/
+#logo
+    {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 10%;
+    }
+
+#logo img
+    {
+        border-radius: 90px 90px;
+    }
+    
+#logoFollowME p
+    {
+        font-family: 'News Cycle', sans-serif;
+        font-size: 18px;
+        color: #2F2E2E;
+    }
+    
+#logoFollowME
+    {
+        text-align: center;
+    }
+    
+/*Titre en dessous du logo*/
+#titleOfBlogExplanation h3
+    {
+        text-align: center;
+        font-size: 15px;
+        color: #2F2E2E;
+    }
+    
+ /*texte en dessous du logo*/
+/*#textHomePage p
+    {
+        text-align: center;
+        font-family:  'Bad Script', cursive;
+    }*/
+    
+/*bordure en dessous du logo follow me*/
+#logoFollowME
+    {
+        border-bottom: 1px solid rgba(204, 204, 204, 1);;
+        padding: 0px 0px 10px 0px;
+    }
+
+    
+    
+    
+/*DERNIER ARTICLE*/
+/*dernier article marge du dessus*/
+#LastArticle
+    {
+        padding: 10px 0px 0px 0px;  
+    }
+    
+/*image du dernier article*/
+#LastArticle .imageFromLastArticle
+    {
+        max-width: 100%;
+        max-height: 100px;
+        overflow: hidden;
+        margin: 10px;
+        /*position: relative;    */  
+    }
+    
+.imageFromLastArticle img
+    {
+        max-height: 100%;
+        max-width: 100%;
+        /*position: absolute;*/
+        margin: auto;
+    }
+
+#imageAndTitlefromLastArticles
+    {
+        display:flex;
+        flex-direction: row;
+    }
+    
+#LastArticle h3
+    {
+        font-family: 'News Cycle', sans-serif;
+        font-size: 18px;
+        color: #2F2E2E;
+    }
+ 
+#LastArticle p
+    {
+        font-family: 'News Cycle', sans-serif;
+        width: 200px;
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+    
+#LastArticle p a
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: black;
+    } 
+    
+    
+    
+/*CONTACT*/    
+/*le background du formulaire de contact*/
+#contact
+    {
+        background-color: #f7f7f7;
+    } 
+    
+#contact
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+
+/*MES DERNIERS OUVRAGES*/
+#myLastBooks
+    {
+        background-color: black;
+        padding-bottom: 30px;
+    }
+    
+#myLastBooks p
+    {
+        color: white;
+        font-family: 'News Cycle', sans-serif;
+        text-align: center;
+        font-size: 22px;
+    }
+    
+/*#books
+    {
+            display: flex;*/
+            /*flex-direction: row;*/
+            /*justify-content: center;
+            margin-bottom: 5px;
+    }*/
+
+
+  
+/*MYARTICLES.php La page qui montre que un seul article en fonction de l'id*/
+    
+/*mon article*/
+.myArticleById
+    {
+        display: flex;
+        flex-direction: column;       
+    }
+
+.myArticleById img
+    {
+        min-width: 100%;
+        height: auto;
+    }
+    
+.myArticleById
+    {
+        margin-top: 120px;
+    }
+    
+.myArticleById p
+    {
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+        font-weight: bold;
+    }
+    
+.myArticleById h2
+    {
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+        font-weight: bold;  
+        font-size: 2.125rem;
+        margin: 0 0 20px 0;
+    }
+    
+/*Les commentaires ont une bordure et se mettent en ligne, le fond est en blanc*/ 
+#myComments
+    {
+        border: 1px solid #EBEBEB;
+        margin: 20px;
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+    }
+
+/*#listOfComments
+    {
+        background-color: #e4e0e0
+    }*/
+    
+.listOfComments p
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+.numberOfComments p
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+.formComment
+    {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+        font-family: 'News Cycle', sans-serif;
+        margin: 20px;
+    }
+
+/*Je met la navigation de commentaires en logne et je la centre*/
+#navComments
+    {
+        /*display: flex;
+        flex-direction: row;
+        justify-content: center;*/
+        font-family: 'News Cycle', sans-serif;
+    }
+    
+#navComments .pagination
+    {
+        margin: 20px;
+    }
+
+/*.btn:not(:disabled):not(.disabled)
+    {
+        width: 10%;
+    }*/
+
+.imageOfArticle
+    {
+        align-items: center;
+    }
+
+
+/*Je met en column le champ titre*/
+/*.titleOfComment
+    {
+        display: flex;
+        flex-direction: column;
+    }*/
+ 
+.contentOfComment
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+/*Lorsque mon commentaire s'affiche l'image se met sous cette taille*/
+#myComments .image img
+    {
+        width:auto;
+        height:75px;
+        border-radius: 50%;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.15);
+        border: 5px solid #FFF;
+    }
+
+#Name
+    {
+        display: flex;
+        flex-direction: row;
+        color:#ef4347;
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+#Date
+    {
+        color: #9b9b9b;
+        font-size: 14px;
+    }
+    
+.image
+    {
+        margin-right: 5px;
+    }
+
+/*le fond de la section commentaires est en gris*/
+#listOfComments
+    {
+        background-color: #f9f9f9;
+    }
+
+.formComment p
+    {
+        background-color: #fff;
+        box-shadow: 0 1px 3px 0 rgba(0,0,0,.1);
+        font-size: 22px;
+        padding:15px 15px 18px;
+    }
+
+/*Le fond du textarea est en gris*/
+#comments
+    {
+        background-color: #f9f9f9;
+        height: 150px;
+        border: 1px solid rgba(0,0,0,.1);
+    }
+    
+/*Le bouton submit du formulaire est en rouge*/
+.buttonComments input
+    {
+        border-color: #ef4347;
+        background-color: #ef4347;
+        color: white;
+    }
+
+/*Bouton modifier le commentaire*/
+#modifyComment
+    {
+        border: 1px solid #ef4347;
+        padding: 2px 10px;
+        color:#ef4347;
+        font-size: 12px;
+        border-radius: 4px;
+        width: 75px;
+    }
+
+/*Bouton signaler à l'administrateur*/   
+button.reportComment
+    {
+        margin-left: auto;        
+    }
+
+/*Je met une marge en dessous des blocs de commentaires*/
+#myComments
+    {
+        padding: 20px 5px 20px 5px;
+    }
+    
+    
+    
+    
+/*FORMULAIRE DE CONNEXION CLIENT*/
+.connectClient
+    {
+        margin: 10%;
+        display: flex;
+        flex-direction: column;
+        font-family: 'News Cycle', sans-serif;
+        /*justify-content: center;*/
+        text-align: center;
+        /*font-size: 22px;*/
+        /*padding: 26px 24px 46px;*/
+        color: #72777c;
+        font-size: 14px;
+        width: 320px;
+        padding: 8% 0 0;
+        margin: auto;
+    }
+    
+#usernameFormClient
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+#passwordFormClient
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    
+#logoAndTextClientForm p
+    {
+        border-left: 4px solid #00a0d2;
+        padding: 12px;       
+    }
+    
+#usernameFormClient input
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+
+#passwordFormClient input
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }   
+
+#submitClientForm input
+    {
+        background: #0085ba;
+        border-color: #0073aa #006799 #006799;
+        box-shadow: 0 1px 0 #006799;
+        color: #fff;
+        text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    }
+    
+    
+    
+    
+/*FORMULAIRE D'INSCRIPTION CLIENT*/
+.imageOfClient button
+    {
+        border-color: #f9f9f9;
+        background-color: #f9f9f9;
+        color: #72777c;
+    }
+    
+.newClient button
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+
+.newClient p
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        display:flex;
+        flex-direction: column;
+        margin-bottom: 0;
+    }
+    
+#textFormNewClient p
+    {
+        border-left: 4px solid #00a0d2;
+        padding: 12px;
+        margin-bottom: 10px;
+    }
+    
+#textFormNewClient
+    {
+        display:flex;
+        flex-direction: column;
+    }
+    
+#textFormNewClient a
+    {
+        justify-content: center;
+        display: flex;
+    }
+
+.newClient input
+    {
+        font-family: 'News Cycle', sans-serif;
+        color: #72777c;
+        background-color: rgb(232, 240, 254);
+        border: 1px solid #ddd;
+    }
+
+#submitNewClient input
+    {
+        background: #0085ba;
+        border-color: #0073aa #006799 #006799;
+        box-shadow: 0 1px 0 #006799;
+        color: #fff;
+        text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    }
+
+#submitNewClient
+    {
+        display: flex;
+        justify-content: center;
+    }
+    
+.newClient
+    {
+        /*text-align: center;*/
+        width: 320px;
+        padding: 2% 0 0;
+        margin: auto;
+    }
+
+#newClientImageUpload
+    {
+        display:flex;
+        flex-direction: row; 
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 30px;
+        border: 1px solid #ddd
+    }
+    
+/*L'image prend une taille défini*/
+ .preview img
+    {
+        width:auto;
+        height:75px;
+    }
+
+/*body
+    {
+
+        background: #f1f1f1;
+    }*/
+
+/*.newClient form
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }*/
+
+.imageOfClient .btn-info:hover 
+    {
+        color: #fff;
+        background-color:#0085ba;
+        border-color: #0085ba;
+    }
+
+/*BACKEND AND FRONTEND*/
+
+/*FOOTER*/
+.footer
+    {
+        font-family: 'News Cycle', sans-serif;
+    }
+    
 /*Hauteur du footer*/
 .footer
     {
         height: 20px;
+        text-align: center;
+    }
+    
+    
+    
+    
+    
+/*Page 4040*/
+.text-secondary #404text p
+    {
+        padding: 50px;
+        display: none;
+    }
+
+/*Message d'erreur*/
+.alert
+    {
+        position: fixed;
+        top: 0; left:0; right:0;
+        z-index: 1060;
+        /*display: none;*/
     }
