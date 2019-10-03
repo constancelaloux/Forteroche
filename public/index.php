@@ -1,6 +1,6 @@
 <?php
 // Chargement des classes
-require_once '/Applications/MAMP/htdocs/Forteroche/blogenalaska/Autoloader.php';
+require_once '/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/Autoloader.php';
 \Forteroche\blogenalaska\Autoloader::register();
 //Backend
 /*require_once'Backend/BackendControllers/FormAuthorAccessControler.php';

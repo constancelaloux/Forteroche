@@ -17,7 +17,7 @@ class Autoloader
                         $dirs = array(
                             //Backend
                             //'Backend/BackendModels', // Project specific classes (+Core Overrides)
-                            __DIR__.'/../src/blogenalaskaFram/controllers/',
+                            __DIR__.'/../../src/blogenalaskaFram/controllers/',
                             //'/Forteroche/blogenalaska/',
                             __DIR__.'/src/blogenalaskaFram/models',
                             //'Backend/BackendControllers/Manager',
