@@ -4,7 +4,8 @@
  *Liste de mes routes à écrire
  */
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
-$router->get('/', "Posts#getPage");
+//$router->get('/', "Posts#getPage");
+$router->get('/', "Posts#saveIntoDatabase");
 $router->get('/test', function(){ echo "Bienvenue sur ma homepage !"; }); 
 //$router->get('/test/:id-:slug', function($id, $slug)
 /*        use($router)

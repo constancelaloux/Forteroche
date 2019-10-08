@@ -10,6 +10,7 @@ namespace blog\controllers;
 use blog\controllers\Controller;
 use blog\Renderer;
 //use blog\HTTPResponse;
+use blog\database\Post;
 
 /**
  * Description of TestFormController
@@ -18,7 +19,8 @@ use blog\Renderer;
  */
 class PostsController extends Controller
 {
-    
+   
+    //Je récupére une vue
     public function getPage()
     {
         $render = new Renderer();
@@ -28,6 +30,31 @@ class PostsController extends Controller
         //$render->addPath('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views');
         //$render->addPath('blog',__DIR__.'/../views');
         //return $render->render('@blog/Blog');
+    }
+
+    //Je save des données en bdd
+    public function saveIntoDatabase()
+    {
+        $Post = new Post(); // this creates post object
+        $Post->id = '0';
+        $Post->title = 'How to cook new pizza';
+        $Post->date = time();
+        //$Post->finished = false;
+        $Post->finished = 'no';
+        $Post->body = 'niet';
+        //$Post->id = '0';
+        $Post->author_id = '1';
+        $Post->views = 'rien';
+
+        $Post->save(); // here we construct sql and execute it on the database
+    }
+    
+    //Je récupére des données en bdd
+    public function getIntoDatabase()
+    {
+        $posts = Post::find([
+        'title' => 'Some title'
+        ]);
     }
     
     /*public function show()
