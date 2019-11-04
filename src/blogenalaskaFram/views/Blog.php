@@ -1,5 +1,5 @@
 <?php
-$title = 'Blog page';
+$title = 'Form page';
 //ob_start();
 //ob_start();
 /* 
@@ -9,10 +9,8 @@ $title = 'Blog page';
  */
 
 //$renderer->render('Header');
-//echo 'voici la page de blog';
+echo 'voici la page de blog';
 //$content = 'test';
-?>
-<h1>voici la page de blog</h1>
-<?php
+echo $form;
 //$content = ob_get_clean();
 //$content = ob_get_clean();

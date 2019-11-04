@@ -8,18 +8,18 @@
 
 namespace blog\database;
 
-use blog\database\Entity;
+//use blog\database\Entity;
 
-use PDO;
-
-use blog\DotEnv;
+use blog\database\DbConnexion;
 /**
  * Description of Post
  *
  * @author constancelaloux
  */
-class Post extends Entity
+class Post extends DbConnexion
 {
+    
+    
     protected $tableName = 'Posts'; // usually tables are named in plural when the object should be named singular
 
     public $id;
@@ -37,16 +37,11 @@ class Post extends Entity
     public $finished;
     
     protected $db;
+    //protected $database;
     
     public function __construct() 
     {
-        $dotenv = new Dotenv();
-        $dotenv->load(__DIR__.'/.env');
-        //On créé un objet db
-        //$this->db = new \PDO('mysql:host=localhost;dbname=blogalaska;charset=utf8', 'root', 'root');
-        //$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        //$this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING); // On émet une alerte à chaque fois qu'une requête a échoué.
-        //return $this->db; 
+        $this->db = $this->connect();
     }
     
     public function save() 
@@ -80,6 +75,7 @@ class Post extends Entity
         else 
         {
             $sqlQuery = 'INSERT INTO'.' '.$tableName.'('.$setClause.')'.' '.'VALUES'.'('.$setName.')';//'WHERE id ='.$this->id;
+            //$sqlQuery->bindValue(':surname', $author->surname(), \PDO::PARAM_STR);
             //print_r($sqlQuery);
             //INSERT INTO Post(id,title,body,author_id,date,views,finished) VALUES('0','How to cook new pizza','niet','1','1570279652','rien','no')
             //die("merde fait chier");

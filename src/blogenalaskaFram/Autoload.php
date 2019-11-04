@@ -15,3 +15,4 @@ $loader->addNamespace('blog', __DIR__ . '/../../src/blogenalaskaFram');
 $loader->addNamespace('blog\provider', __DIR__ . '../../src/blogenalaskaFram/provider');
 $loader->addNamespace('blog\controllers', __DIR__ . '../../src/blogenalaskaFram/controllers');
 $loader->addNamespace('blog\database', __DIR__ . '../../src/blogenalaskaFram/provider');
+$loader->addNamespace('blog\HTML', __DIR__ . '../../src/blogenalaskaFram/HTML');
