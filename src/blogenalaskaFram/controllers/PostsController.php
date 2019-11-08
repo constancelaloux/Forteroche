@@ -21,19 +21,38 @@ use blog\HTML\Form;
  */
 class PostsController extends Controller
 {
+    
     public function getForm()
     {
         $form = new Form($_POST);
-        $form->create('myform', ['method'=>'POST']);
-        $form->input('text', 'name', 'Titre');
-        $form->input('password', 'password', 'mot de passe');
-        $form->textarea('text', 'content', 'contenu');
-        $form->input('date', 'created_at', 'Date de création');
-        $form->submit('submit', 'Enregistrer');
-        die("meurs");
+        $form->setFormOpen('myform', ['method'=>'POST']);
+        $form->setInput('date', 'name', 'Titre');
+        $form->text('person', ['id' => 'span2']);
+        $form->password('person2', ['id' => 'span3']);
+        $form->date('la date', ['id' => 'span4']);
+        //$form->setInput('password', 'password', 'mot de passe');
+        $form->setTextarea('text', 'content', 'contenu');
+        //$form->setInput('date', 'created_at', 'Date de création');
+        $form->setTsubmit('submit', 'Enregistrer');
+        $form->setFormClose();
+
         $render = new Renderer();
         $render->addPath(__DIR__.'/../views');
-        return $render->render('Blog',$form);
+        $render->render('Blog',[
+         'form' => $form
+      ]);
+        
+                //return $render->render('Blog',['form'=>$form->createView()]);
+        //return $render->render('Blog',['form'=>$form->getFormOpen(),'button'=>$form->getButton(), 'input'=>$form->getInput(), 'textarea'=>$form->getTextarea()]);
+        ////$test = ['nom'=>'jules']
+        //print_r(['form'=>$form]);
+        //print_r(get_object_vars($form));
+                //var_dump( (array) $form);
+        /*foreach ($form as $a => $b) 
+        {
+            print "$a : $b\n";
+            die("meurs");
+        }*/
     }
    
     //Je récupére une vue

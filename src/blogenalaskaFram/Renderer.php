@@ -46,7 +46,7 @@ class Renderer implements RendererInterface
      * $this->render('view')
     */
     //Elle retourne une chaine de caractéres
-    public function render(string $view)
+    public function render(string $view, array $params = [])
     {
         //print_r($view);
         if($this->hasNamespace($view))
@@ -64,15 +64,16 @@ class Renderer implements RendererInterface
 
         //Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
         ob_start();
-        //$renderer = $this;;
-        //extract($this->globals);
-        //extract($params);
-        //print_r($path);
+
+        extract($params);
         require $path;
         $content = ob_get_clean();
         require __DIR__.'/views/layout.php';
+        //print_r($path);
         //echo $content;
         //print_r($content);
+                //$renderer = $this;;
+        //extract($this->globals);
     }
     
     /*
