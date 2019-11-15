@@ -25,22 +25,34 @@ class PostsController extends Controller
     public function getForm()
     {
         $form = new Form($_POST);
-        $form->setFormOpen('myform', ['method'=>'POST']);
-        $form->setInput('date', 'name', 'Titre');
         $form->text('person', ['id' => 'span2']);
         $form->password('person2', ['id' => 'span3']);
         $form->date('la date', ['id' => 'span4']);
-        //$form->setInput('password', 'password', 'mot de passe');
         $form->setTextarea('text', 'content', 'contenu');
-        //$form->setInput('date', 'created_at', 'Date de création');
         $form->setTsubmit('submit', 'Enregistrer');
         $form->setFormClose();
 
-        $render = new Renderer();
-        $render->addPath(__DIR__.'/../views');
-        $render->render('Blog',[
+        //$render = new Renderer();
+        $render = new \blog\HTML\template(__DIR__.'/../views/template.html');
+        //$render->addPath(__DIR__.'/../views');
+        /*$render->render('newhtml',[
          'form' => $form
-      ]);
+      ]);*/
+
+        $render->assign('text', $form->getImputPassword());
+        $render->assign('password', 'mot de passe');
+        $render->show();
+        //$render->render('newhtml'
+        //);
+        
+                //$htmlBuilder = new \blog\HTML\);
+        //$result4 = $htmlBuilder->tag(['form' => $form]);
+                //$form->setInput('date', 'created_at', 'Date de création');
+                //$form->setInput('password', 'password', 'mot de passe');
+                //$form->add('content',   TextareaType::class);
+        //$form->open(['action' => 'newaction','method' => 'POST', 'class' => 'form', 'id' => 'id-form']);
+        //$form->setFormOpen('myform', ['method'=>'POST']);
+        //$form->setInput('date', 'name', 'Titre');
         
                 //return $render->render('Blog',['form'=>$form->createView()]);
         //return $render->render('Blog',['form'=>$form->getFormOpen(),'button'=>$form->getButton(), 'input'=>$form->getInput(), 'textarea'=>$form->getTextarea()]);

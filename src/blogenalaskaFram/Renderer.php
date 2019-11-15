@@ -39,6 +39,24 @@ class Renderer implements RendererInterface
         }
     }
     
+    public function getVar($params)
+    {
+        //$str = '';
+        foreach($params as $test) 
+        {
+            foreach($test as $key => $value) 
+            {
+                print_r($key);
+                print_r($value);
+                die("meurs");
+            }
+        }
+        //print_r($value);
+        //$str .= str_replace('%product_name%', $product, $matches[1]); // $matches[1] is whatever is between {products} and {/products}
+        //return $str;
+
+        //$str = preg_replace_callback('#\{products}(.*)\{/products}#s', 'parse_products', $str);
+    }
     /*
     * Permet de rendre une vue
      * Le chemin peut etre précisé avec des namespaces rajoutés via le addPath()
@@ -51,13 +69,13 @@ class Renderer implements RendererInterface
         //print_r($view);
         if($this->hasNamespace($view))
         {
-            $path = $this->replaceNamespace($view).'.php';
+            $path = $this->replaceNamespace($view).'.html';
             //print_r($path);
         }
         else
         {
             //print_r($this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR);
-            $path = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.php';
+            $path = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.html';
             //print_r($path);
         }
         //print_r($path);
@@ -66,7 +84,16 @@ class Renderer implements RendererInterface
         ob_start();
 
         extract($params);
-        require $path;
+        //print_r($params);
+        //print_r($path);
+        if(file_exists($path))
+        {
+            require $path; 
+        }
+        else
+        {
+            echo"page 404";
+        }
         $content = ob_get_clean();
         require __DIR__.'/views/layout.php';
         //print_r($path);

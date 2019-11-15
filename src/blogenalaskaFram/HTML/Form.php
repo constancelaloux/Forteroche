@@ -6,6 +6,19 @@ use blog\HTML\HtmlBuilder;
  */
 class Form 
 {
+        /**
+     * The reserved form open attributes.
+     *
+     * @var array
+     */
+    protected $reserved = ['method', 'url', 'route', 'action', 'files'];
+        /**
+     * The URL generator instance.
+     *
+     * @var UrlGenerator
+     */
+    protected $url;
+    
     protected $inputClass;
         /**
      * The HTML builder instance.
@@ -105,30 +118,140 @@ class Form
     /**
     * Setters
     */
-    //Je cree un formulaire
-    public function setFormOpen($name, array $options = [])
+        /**
+     * The children of the form builder.
+     *
+     * @var FormBuilderInterface[]
+     */
+    private $children = [];
+    /**
+     * The data of children who haven't been converted to form builders yet.
+     *
+     * @var array
+     */
+    private $unresolvedChildren = [];
+    
+    protected $locked = false;
+    
+        /**
+     * {@inheritdoc}
+     */
+    public function add($child, string $type = null, array $options = [])
     {
-        $method = $options['method']??'POST';
-        return $this->openForm =<<<HTML
-        <form method="'.$method.'" name="'.$name.'" id="form-'.ucfirst($name).'">
-HTML;
+        print_r($child);
+        print_r($type);
+        print_r($options);
+        if ($this->locked) {
+        print_r("je suis la");
+            throw new BadMethodCallException('FormBuilder methods cannot be accessed anymore once the builder is turned into a FormConfigInterface instance.');
+        }
+        if ($child instanceof FormBuilderInterface) {
+            $this->children[$child->getName()] = $child;
+            // In case an unresolved child with the same name exists
+            unset($this->unresolvedChildren[$child->getName()]);
+            return $this;
+        }
+        if (!\is_string($child) && !\is_int($child)) {
+            throw new UnexpectedTypeException($child, 'string or Symfony\Component\Form\FormBuilderInterface');
+        }
+        if (null !== $type && !\is_string($type)) {
+            throw new UnexpectedTypeException($type, 'string or null');
+        }
+        // Add to "children" to maintain order
+        $this->children[$child] = null;
+        $this->unresolvedChildren[$child] = [$type, $options];
+        return $this;
+    }
+    //Je cree un formulaire
+    
+        /**
+     * Open up a new HTML form.
+     *
+     * @param  array $options
+     *
+     * @return HtmlString
+     */
+    public function open(array $options = [])
+    {
+        //print_r($options);
+        $method = Arr::get($options, 'method', 'post');
+        //print_r($method);
+        // We need to extract the proper method from the attributes. If the method is
+        // something other than GET or POST we'll use POST since we will spoof the
+        // actual method since forms don't support the reserved methods in HTML.
+        $attributes['method'] = $this->getMethod($method);
+        //print_r($attributes['method']);
+        //print_r($options);
+        $attributes['action'] = $this->getAction($options);
+        //print_r($attributes['action']);
+        $attributes['accept-charset'] = 'UTF-8';
+        // If the method is PUT, PATCH or DELETE we will need to add a spoofer hidden
+        // field that will instruct the Symfony request to pretend the method is a
+        // different method than it actually is, for convenience from the forms.
+        /*$append = $this->getAppendage($method);
+        if (isset($options['files']) && $options['files']) {
+            $options['enctype'] = 'multipart/form-data';
+        }*/
+        // Finally we're ready to create the final form HTML field. We will attribute
+        // format the array of attributes. We will also add on the appendage which
+        // is used to spoof requests for this PUT, PATCH, etc. methods on forms.
+        $attributes = array_merge(
+          $attributes, Arr::except($options, $this->reserved)
+        );
+        // Finally, we will concatenate all of the attributes into a single string so
+        // we can build out the final form open statement. We'll also append on an
+        // extra value for the hidden _method field if it's needed for the form.
+        $attributes = $this->html->attributes($attributes);
+        print_r($attributes);
+        return $this->openForm = $this->toHtmlString('<form' . $attributes . '>');
     }
     
-    //Je cree un input
-    public function setInput(string $type, string $key, string $label)
+        /**
+     * Parse the form action method.
+     *
+     * @param  string $method
+     *
+     * @return string
+     */
+    protected function getMethod($method)
     {
-        //$this->arrayOfimputs = [$type, $key, $label];
-        //print_r($this->arrayOfimputs);*/
-        //$type = isset($options['type']) ? $options['type'] : 'text';
-        //$value = $this->getValue($key);
-        $inputClass = 'form-control';
-        return $this->input =<<<HTML
-            <div class="form-group">
-                <label for="field{$key}">{$label}</label>
-                    <input type="{$type}" id="field{$key}" class="{$inputClass}" name="{$key}"required>
-            </div>
-HTML;
+        $method = strtoupper($method);
+        return $method !== 'GET' ? 'POST' : $method;
     }
+    
+        /**
+     * Get the form action from the options.
+     *
+     * @param  array $options
+     *
+     * @return string
+     */
+    protected function getAction(array $options)
+    {
+        // We will also check for a "route" or "action" parameter on the array so that
+        // developers can easily specify a route or controller action when creating
+        // a form providing a convenient interface for creating the form actions.
+        /*if (isset($options['url'])) 
+        {
+            print_r("la");
+            return $this->getUrlAction($options['url']);
+        }
+        if (isset($options['route'])) 
+        {
+            print_r("la");
+            return $this->getRouteAction($options['route']);
+        }*/
+        // If an action is available, we are attempting to open a form to a controller
+        // action route. So, we will use the URL generator to get the path to these
+        // actions and return them from the method. Otherwise, we'll use current.
+        if (isset($options['action'])) 
+        {
+            return $options['action'];
+        }
+        //return $this->url->current();
+    }
+    
+    
     /**
      * Create a text input field.
      *
