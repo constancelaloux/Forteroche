@@ -8,7 +8,7 @@
 
 namespace blog\controllers;
 use blog\controllers\Controller;
-use blog\Renderer;
+use blog\HTML\Renderer;
 //use blog\HTTPResponse;
 use blog\database\Post;
 use blog\database\test;
@@ -31,17 +31,52 @@ class PostsController extends Controller
         $form->setTextarea('text', 'content', 'contenu');
         $form->setTsubmit('submit', 'Enregistrer');
         $form->setFormClose();
+        $data = array(
 
-        //$render = new Renderer();
-        $render = new \blog\HTML\template(__DIR__.'/../views/template.html');
-        //$render->addPath(__DIR__.'/../views');
-        /*$render->render('newhtml',[
-         'form' => $form
-      ]);*/
+           "titre" => "Seconde page",
+           "pays" => array(
+               0 => array(
+                   "regions" => array(
+                       0 => array(
+                           "nom" => "Nord",
+                           "numero" => "59"
+                       ),
+                       1 => array(
+                           "nom" => "Oise",
+                           "numero" => "60"
+                       ),
+                   ),
+                   "nom" => "France"
+               ),
+               1 => array(
+                   "regions" => array(
+                       0 => array(
+                           "nom" => "Flamand",
+                           "numero" => "Y'en a ?"
+                       ),
+                       1 => array(
+                           "nom" => "Wallons",
+                           "numero" => "Je sais pas.."
+                       ),
+                   ),
+                   "nom" => "Belgique"
+               )
+           )
+        ); 
+        $render = new Renderer();
+        //$render = new \blog\HTML\Template(__DIR__.'/../views/template.html');
+        $render->addPath(__DIR__.'/../views');
+        $render->render('test',[
+         'test' => 'voici mon test',
+         //'password' => $form,
+         //'text' =>['name' => '<strong>Mathieu</strong>', 'age' => '13'],
+         'tableau' => $data
+      ]);
 
-        $render->assign('text', $form->getImputPassword());
-        $render->assign('password', 'mot de passe');
-        $render->show();
+        //$render->assign('password', 'hé oui sayé ceci est un test');
+        //$render->assign('text', ['name' => '<strong>Mathieu</strong>', 'age' => '13']);
+        //$render->show();
+        
         //$render->render('newhtml'
         //);
         

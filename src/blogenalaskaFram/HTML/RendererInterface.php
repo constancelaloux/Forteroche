@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace blog;
+namespace blog\HTML;
 
 interface RendererInterface 
 {
