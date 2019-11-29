@@ -3,8 +3,7 @@
 namespace blog\provider;
 use blog\provider\Route;
 use blog\exceptions\RouterException;
-//use blog\HTTPRequest;
-//use blog\HTTPResponse;
+
 /**
  * Description of Router
  *
@@ -110,7 +109,7 @@ class Router
             }
         }
         throw new RouterException('No matching routes');
-        //return $this->response->redirect404();
+        //return $this->response->redirect404();s
         //return $this->url('/test');
         //throw new \RuntimeException('Aucune route ne correspond à l\'URL', self::NO_ROUTE);
     }
@@ -121,7 +120,6 @@ class Router
         //Est ce que l'url correspond et ensuite je l'execute
         if(!isset($this->namedRoutes[$name]))
         {
-            //echo('j y suis pas');
             throw new RouterException('No route matches this name');
         }
         return $this->namedRoutes[$name]->getUrl($params);

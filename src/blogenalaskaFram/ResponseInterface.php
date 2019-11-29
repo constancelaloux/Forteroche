@@ -1,18 +1,32 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace blog;
 
 /**
  *
  * @author constancelaloux
  */
-interface ResponseInterface 
+interface ResponseInterface
 {
-    //put your code here
+
+    /**
+    * @return string
+    * De rediriger l'utilisateur.
+    */
+    public function redirect($location);
+
+    /**
+    * @return string
+     * De le rediriger vers une erreur 404.
+     * On commence d'abord par créer une instance de la classe Page 
+     * que l'on stocke dans l'attribut correspondant.
+     * On assigne ensuite à la page le fichier qui fait office de vue 
+     * à générer. Ce fichier contient le message d'erreur formaté. 
+     * Vous pouvez placer tous ces fichiers dans le dossier /Errors 
+     * par exemple, sous le nom code.html. Le chemin menant au fichier
+     * contenant l'erreur 404 sera donc /Errors/404.html.
+     * un header disant que le document est non trouvé (HTTP/1.0 404 Not Found).
+     * On envoie la réponse.
+    */
+    public function redirect404();
 }

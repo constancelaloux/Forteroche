@@ -8,10 +8,10 @@
 
 namespace blog\database;
 
-//use \blog\database\Model;
+use \blog\database\Model;
 
 
-class test //extends Model
+class test extends Model
 {
 
     /**
@@ -36,7 +36,42 @@ class test //extends Model
     */
     protected $name;
 
+        /**
+     * @inheritdoc
+     */
+    public static function metadata()
+    {
+        return [
+            "table"             => "test",
+            "primaryKey"        => "id",
+            "columns"           => [
+                "id"            => [
+                    "type"      => "integer",
+                    "property"  => "id"
+                ],
+                "age"            => [
+                    "type"      => "integer",
+                    "property"  => "age"
+                ],
+                "test"            => [
+                    "type"      => "string",
+                    "property"  => "test"
+                ],
+                "name"            => [
+                    "type"      => "string",
+                    "property"  => "name"
+                ],
+            ]
+        ];
+    }
     
+    /**
+    * @inheritdoc
+    */
+    public static function getManager()
+    {
+        return;
+    }
     
     /**
     * Getters
@@ -46,7 +81,7 @@ class test //extends Model
     * Get the user id.
     * @return int
     */
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
@@ -55,9 +90,8 @@ class test //extends Model
     * Get the user test.
     * @return string
     */
-    public function test()
+    public function getTest()
     {
-        //print_r("je passe la");
         return $this->test;
     }
     
@@ -65,7 +99,7 @@ class test //extends Model
     * Get the user age.
     * @return string
     */
-    public function age()
+    public function getAge()
     {
         return $this->age;  
     }
@@ -74,7 +108,7 @@ class test //extends Model
     * Get the user name.
     * @return string
     */
-    public function name()
+    public function getName()
     {
         return $this->name;  
     }

@@ -6,21 +6,15 @@
  * and open the template in the editor.
  */
 
-namespace blog\database;
+namespace blog\exceptions;
 
 /**
+ * class ORMException
  *
  * @author constancelaloux
  */
-interface ModelInterface 
+
+
+class ORMException extends \Exception
 {
-    public function all();
-
-    public function create(array $data);
-
-    public function update(array $data, $id);
-
-    public function delete($id);
-
-    public function show($id);
 }

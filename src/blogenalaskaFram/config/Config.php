@@ -3,10 +3,17 @@
 /* 
  * On va mettre la configuration générale de notre projet
  */
-
 return [
-    blog\RendererInterface::class =>function ()
+
+    /*blog\HTML\RendererInterface::class =>function ()
     {
-        return new blog\Renderer(dirname(__DIR__.'/../views'));
+        return new blog\HTML\Renderer(dirname(__DIR__.'/../views'));
+    },*/
+    'renderer' => function()
+    {
+        return new blog\HTML\Renderer(dirname(__DIR__).'/../views');
+    },
+    "myInstance"=>function(ContainerInterface $container) {
+    return new MyInstance();
     }
 ];

@@ -10,6 +10,7 @@ use blog\HTML\RendererInterface;
  */
 class Renderer implements RendererInterface
 {
+    private $stack = array();
     const DEFAULT_NAMESPACE = 'blog';
     
     private $tpl;
@@ -89,27 +90,42 @@ class Renderer implements RendererInterface
         
         if(count($this->assignedValues) > 0)
         {
+            //print_r($this->assignedValues); //signifie array 0, 1 et 2
             foreach ($this->assignedValues as $firstkey => $value)
             {
-                //print_r($firstkey); // signifie test et tableau
-                //print_r($value); //signifie voici mon test, titre, pays
+                //print_r($firstkey); // signifie test et stuff
+                //print_r($this->assignedValues); //signifie array 0, 1 et 2
                 if(is_array($value))
                 {
-                    //print_r($value);//titre, pays 
-                    foreach ($value as $key => $value) 
+                    //print_r($value[1]);//titre, pays 
+                    // Parsage des FOR  
+                    foreach ($value as $key => $valu) 
                     {
-                        print_r($value);
+                        //print_r($key); // 0, 1, 2
+                        //print_r($key); //array
+                            //print_r($valu);
+                            //print_r($key);
+                                // process your loop here, probably with new foreach,
+                                // to populate $processedValue by content of your array in $value
+                                $this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?php foreach('.$valu['stuff'].' as \$$1s){ echo $$1s ?>', $this->tpl);
+                                $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php } ?>', $this->tpl);
+                    //print_r($value);//titre, pays 
+                    /*foreach ($value as $key => $value) 
+                    {
+                        //print_r($value);
                         //exit("je sors");
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', $value, $this->tpl);
                         // Parsage des FOR      
                         $this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?foreach ($value[\'$1\'] as \$_$1_vars): $this->_stack(\$_$1_vars); ?>', $this->tpl);
                         //ENDFOR
                         $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php $this->_unstack(); endforeach; ?>', $this->tpl);
+                    }*/
+
                     }
                 }
                 else if(is_object($value))
                 {
-                    print_r(get_object_vars($value));
+                    //print_r(get_object_vars($value));
                     foreach ($value as $key => $value) 
                     {
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', htmlspecialchars($value), $this->tpl);
@@ -140,16 +156,21 @@ class Renderer implements RendererInterface
         }*/
     }
     
-    private function _stack($elem)
+    private function stack($elem)
     {
-        $this->stack[] = $this->data;
+        foreach($elem as $key => $value)
+        {
+          print_r($key)  ;
+          $this->data[$key] = $value;
+        }
+        /*$this->stack[] = $this->data;
         foreach ($elem as $key => $value)
         {
             $this->data[$key] = $value;
-        }
+        }*/
     }
     
-    private function _unstack()
+    private function unstack()
     {
         $this->data = array_pop($this->stack);
     } 

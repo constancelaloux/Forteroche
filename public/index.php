@@ -22,6 +22,9 @@ sleep(2);
  */
 require(__DIR__ . '/../src/blogenalaskaFram/Autoload.php');
 
+
+$myInstance = new blog\config\Container(dirname(__DIR__).'/config/config.php');
+$myInstance->get('renderer');
 //je récupére l'application à charger
 /**
  * instance class

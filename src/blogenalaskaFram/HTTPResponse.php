@@ -1,55 +1,43 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 namespace blog;
 
-use blog\Renderer;
+use blog\ResponseInterface;
+//use blog\Renderer;
 /**
- * Description of HTTPResponse
- *
- * @author constancelaloux
- */
+* Description of HTTPResponse
+* Ce que l'on va renvoyer au client.
+* @author constancelaloux
+*/
 
-//Ce que l'on va renvoyer au client
-class HTTPResponse
+class HTTPResponse implements ResponseInterface
     {
-        protected $renderer;
+        //protected $renderer;
         
-        //D'ajouter un header spécifique. Il est possible d'avoir différents header
-        public function addHeader($header)
-        {
-            header($header);
-        }
-        
-        //A enlever
-        public function write($status)
-        {
-            echo $status;
-        }
-            
-        //De rediriger l'utilisateur.
+        /**
+        * @return string
+         * De rediriger l'utilisateur.
+        */
         public function redirect($location)
         {
             //print_r($location);
             header('Location: '.$location);
             exit;
         }
-            
-        //De le rediriger vers une erreur 404.
-        //On commence d'abord par créer une instance de la classe Page 
-        //que l'on stocke dans l'attribut correspondant.
-        //On assigne ensuite à la page le fichier qui fait office de vue 
-        //à générer. Ce fichier contient le message d'erreur formaté. 
-        //Vous pouvez placer tous ces fichiers dans le dossier /Errors 
-        //par exemple, sous le nom code.html. Le chemin menant au fichier
-        // contenant l'erreur 404 sera donc /Errors/404.html.
-        //un header disant que le document est non trouvé (HTTP/1.0 404 
-        //Not Found).
-        //On envoie la réponse.
+        
+        /**
+        * @return string
+         * De le rediriger vers une erreur 404.
+         * On commence d'abord par créer une instance de la classe Page 
+         * que l'on stocke dans l'attribut correspondant.
+         * On assigne ensuite à la page le fichier qui fait office de vue 
+         * à générer. Ce fichier contient le message d'erreur formaté. 
+         * Vous pouvez placer tous ces fichiers dans le dossier /Errors 
+         * par exemple, sous le nom code.html. Le chemin menant au fichier
+         * contenant l'erreur 404 sera donc /Errors/404.html.
+         * un header disant que le document est non trouvé (HTTP/1.0 404 Not Found).
+         * On envoie la réponse.
+        */
         public function redirect404()
         {
            // $location = __DIR__.'/views/Page404.php';
@@ -62,6 +50,21 @@ class HTTPResponse
 
             $this->send();*/
         }
+        
+        //D'ajouter un header spécifique. Il est possible d'avoir différents header
+       /* public function addHeader($header)
+        {
+            header($header);
+        }
+        
+        //A enlever
+        public function write($status)
+        {
+            echo $status;
+        }
+            
+            
+
         
         //Cependant, il est bien beau d'assigner une page,encore faudrait-il pouvoir l'envoyer !
         // Voici une deuxième fonctionnalité :celle d'envoyer la réponse en générant la page.
@@ -91,5 +94,5 @@ class HTTPResponse
             $secure = false, $httpOnly = true)
         {
             setcookie($name, $value, $expire, $path, $domain, $secure, $httpOnly);
-        }
+        }*/
     }

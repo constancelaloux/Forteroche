@@ -33,7 +33,7 @@ class PostsController extends Controller
         $form->setFormClose();
         $data = array(
 
-           "titre" => "Seconde page",
+           //"titre" => "Seconde page",
            "pays" => array(
                0 => array(
                    "regions" => array(
@@ -67,10 +67,23 @@ class PostsController extends Controller
         //$render = new \blog\HTML\Template(__DIR__.'/../views/template.html');
         $render->addPath(__DIR__.'/../views');
         $render->render('test',[
-         'test' => 'voici mon test',
+         'password' => 'voici mon test',
          //'password' => $form,
          //'text' =>['name' => '<strong>Mathieu</strong>', 'age' => '13'],
-         'tableau' => $data
+         'stuff' => array(
+            array(
+                'Thing' => "roses",
+                'Desc' => "Red",
+            ),
+            array(
+                'Thing' => "tree",
+                'Desc' => "green",
+            ),
+            array(
+                'Thing' => "Sky",
+                'Desc' => "blue",
+            ),
+        )
       ]);
 
         //$render->assign('password', 'hé oui sayé ceci est un test');
@@ -130,6 +143,20 @@ class PostsController extends Controller
         }
     }
 
+    //Je save des données dans l'orm
+    public function saveTestIntoDatabase()
+    {
+        $test = new test();
+        //$test->setId('1');
+        $test->setAge(3);
+        $test->setName('Sally');
+        $test->setTest('je fais un test');
+        //$manager = new \blog\database\DbConnexion();
+        //$manager = $manager->getManager(test::class);
+        $model = new \blog\database\Manager($test);
+        $model->persist($test);
+    }
+    
     //Je save des données en bdd
     public function saveIntoDatabase()
     {

@@ -5,7 +5,7 @@
  */
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', "Posts#getPage");
-$router->get('/', "Posts#getForm");
+$router->get('/', "Posts#saveTestIntoDatabase");
 $router->post('/test', "Posts#getValue");
 //$router->get('/test', function(){ echo "Bienvenue sur ma homepage !"; }); 
 //$router->get('/test/:id-:slug', function($id, $slug)
