@@ -27,15 +27,19 @@ class test extends Model
     protected $age;
 
     /**
-    * @ORM\Column(name="title", type="string", length=255)
+    * @ORM\Column(name="test", type="string", length=255)
     */
     protected $test;
   
     /**
-    * @ORM\Column(name="title", type="string", length=255)
+    * @ORM\Column(name="name", type="string", length=255)
     */
     protected $name;
 
+    /**
+    * @ORM\Column(name="created_at", type="datetime")
+    */
+    protected $createdate;
         /**
      * @inheritdoc
      */
@@ -61,6 +65,10 @@ class test extends Model
                     "type"      => "string",
                     "property"  => "name"
                 ],
+                "created_at"    => [
+                    "type"      => "datetime",
+                    "property"  => "createdate"
+                ],
             ]
         ];
     }
@@ -68,10 +76,11 @@ class test extends Model
     /**
     * @inheritdoc
     */
-    public static function getManager()
+    /*public static function getManager()
     {
+        print_r("je passe dans la fonction getManager");
         return;
-    }
+    }*/
     
     /**
     * Getters
@@ -112,12 +121,21 @@ class test extends Model
     {
         return $this->name;  
     }
+    
+    /**
+    * Get the created date.
+    * @return dateTime
+    */
+    public function getcreatedate()
+    {
+        return $this->createdate;
+    }
   
     /**
     * Setters
     */
     
-        /**
+    /**
     * Set the user id.
     *
     * @param  in  $id
@@ -187,5 +205,13 @@ class test extends Model
                 $this->test = $test;
                 //print_r($this->test);
             }
+    }
+    
+    public function setCreateDate($createdate)
+    {
+        if(is_string($createdate))
+        {
+            $this->createdate = $createdate;
+        }
     }
 }

@@ -3,9 +3,17 @@
 /* 
  *Liste de mes routes à écrire
  */
+//Route vers fn qui permet de rediriger vers une vue
+$router->get('/', "Posts#redirectView");
+
+//Route vers fn qui permet de rendre une vue
+$router->get('/renderView', "Posts#renderView");
+
+//Route vers fn qui permet de laisser un msg flash et rendre une vue
+$router->get('/flashMessage', "Posts#FlashMessageAndRenderView");
+//$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', "Posts#getPage");
-$router->get('/', "Posts#saveTestIntoDatabase");
 $router->post('/test', "Posts#getValue");
 //$router->get('/test', function(){ echo "Bienvenue sur ma homepage !"; }); 
 //$router->get('/test/:id-:slug', function($id, $slug)

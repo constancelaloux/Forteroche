@@ -18,9 +18,10 @@ class HTTPResponse implements ResponseInterface
         * @return string
          * De rediriger l'utilisateur.
         */
-        public function redirect($location)
+        public function redirectResponse(string $location)
         {
             //print_r($location);
+            //print_r($id);
             header('Location: '.$location);
             exit;
         }

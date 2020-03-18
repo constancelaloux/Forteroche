@@ -21,7 +21,14 @@ class Renderer implements RendererInterface
     private $globals = [];
     
     private $assignedValues = array();
+    private $renderer;
     
+    public function __construct()
+    {
+        //print_r($renderer);
+        //die("meurs un autre day");
+        $this->addPath('blog',__DIR__.'/../views');
+    }
     /*
     * Permet de rajouter un chemin pour charger les vues
      * @param string $namespace
@@ -29,7 +36,6 @@ class Renderer implements RendererInterface
     */
     public function addPath(string $namespace, string $path = null)
     {
-        //print_r($namespace);
         if(is_null($path))
         //Si le nom de chemin et le chemin ne sont pas définis alors il utilise un namespace
         //comme chemin et cette constante comme namespace par default
@@ -53,14 +59,16 @@ class Renderer implements RendererInterface
     public function render(string $view, array $params = [])
     {
         //print_r($params);
-        //$this->view = $view;
+        $this->view = $view;
         
         if($this->hasNamespace($view))
         {
+            //$this->viewpath = $this->replaceNamespace($view).'.html';
             $this->viewpath = $this->replaceNamespace($view).'.html';
         }
         else
         {
+            //$this->viewpath = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.html';
             $this->viewpath = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.html';
         }
         
@@ -82,6 +90,7 @@ class Renderer implements RendererInterface
         //print_r(extract($params));
         foreach ($params as $searchString => $replaceString) 
         {
+            //print_r($searchString);
             if(!empty($searchString))
             {
                 $this->assignedValues[$searchString] = $replaceString;   
@@ -125,11 +134,11 @@ class Renderer implements RendererInterface
                 }
                 else if(is_object($value))
                 {
+                    //print_r("c bien un objet");
                     //print_r(get_object_vars($value));
                     foreach ($value as $key => $value) 
                     {
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', htmlspecialchars($value), $this->tpl);
-                        
                     }
                 }
                 else
@@ -138,9 +147,7 @@ class Renderer implements RendererInterface
                 }
             }
         }
-
         echo $this->tpl;
-
         $content = ob_get_clean();
         require __DIR__.'/../views/layout.php';
 

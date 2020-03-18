@@ -44,12 +44,4 @@ class DbConnexion
             
             //SimpleOrm::useConnection($conn, $dbname= $_ENV['DB_NAME']);
         } 
-        
-        public function getManager($model)
-        {
-            //print_r($model);
-            $managerClass = $model::getManager();
-            $this->managers[$model] = $this->managers[$model] ?? new $managerClass($this->pdo, $model);
-            return $this->managers[$model];
-        }
 }

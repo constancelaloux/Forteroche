@@ -28,11 +28,16 @@ class App
         $this->httpResponse = new HTTPResponse($this);
     }*/
     
+    /**
+    * Permet de récupérer L'URI qui a été fourni pour accéder à cette page et ensuite
+    * le router a besoin de l'URI qui sera la requéte et de l'objet reponse pour fonctionner
+    * @author constancelaloux
+    */
     public function run()
     {
         //$request = $_GET['url'];
         //$request = new HTTPRequest;
-        //$request= $request->requestURI();
+        //$request= $request->requestURI();x
         //$request = $_SERVER['REQUEST_URI'];
 
         //$response = $response->addHeader(301);
@@ -40,8 +45,8 @@ class App
         $response = new HTTPResponse();
         
         $uri = $request->requestURI();
-        $router = new Router($uri, $response);
 
+        $router = new Router($uri, $response);
         require (__DIR__ . '/routes/Routes.php');
         //il faut que tu vérifies que l'url passé en paramétre correspond a une des urls
         $router->map($request);

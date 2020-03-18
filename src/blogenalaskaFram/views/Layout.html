@@ -44,6 +44,17 @@
     </head>
     
     <body>
+        
+        <!-- show var or object or var from loop -->
+
+        <div class="alert alert-success" role="alert">
+          This is a success alert—check it out!
+        </div>
+        <div id='#myAlert' class="alert alert-danger">          
+            {{message}}
+        </div>
+
+
         <div class="container">
             <p>
                 {% block content %} {% endblock %}

@@ -13,7 +13,7 @@ interface ResponseInterface
     * @return string
     * De rediriger l'utilisateur.
     */
-    public function redirect($location);
+    public function redirectResponse(string $location);
 
     /**
     * @return string

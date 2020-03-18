@@ -22,9 +22,34 @@ sleep(2);
  */
 require(__DIR__ . '/../src/blogenalaskaFram/Autoload.php');
 
+//Fichier de configuration
+//$myInstance = new blog\config\Container(dirname(__DIR__).'/config/Config.php');
+//$myInstance->get('renderer');
 
-$myInstance = new blog\config\Container(dirname(__DIR__).'/config/config.php');
-$myInstance->get('renderer');
+//$container = require(__DIR__ . '/../src/blogenalaskaFram/config/Container.php');
+
+
+
+
+
+//$services   = include __DIR__.'/../src/blogenalaskaFram/config/Config.php';
+//$configFile = new blog\config\Container($services);
+//$config = $configFile->get(\blog\HTML\Renderer::class);
+
+
+
+
+
+//$config = $configFile->get(\blog\HTML\Renderer::class);
+//$builder = new blog\config\Container();
+//$builder->addDefinitions(dirname(__DIR__).'/config/Config.php');
+//$container = $builder->build();
+//$renderer = $builder->get('renderer');
+/*$container = new \blog\config\Container();
+$configFile = $container->getConfigFile(dirname(__DIR__).'/config/Config.php');
+$configFile->get('renderer');*/
+
+
 //je récupére l'application à charger
 /**
  * instance class

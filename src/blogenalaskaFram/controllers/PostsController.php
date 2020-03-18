@@ -13,7 +13,9 @@ use blog\HTML\Renderer;
 use blog\database\Post;
 use blog\database\test;
 use blog\HTML\Form;
-
+//use blog\session\PHPSession;
+use blog\session\FlashService;
+use blog\session\SessionInterface;
 /**
  * Description of TestFormController
  *
@@ -21,7 +23,103 @@ use blog\HTML\Form;
  */
 class PostsController extends Controller
 {
+    //public $session;
     
+    public $flash;
+
+    //Fonction qui permet de rendre la vue
+    public function renderView()
+    {
+        //print_r("je passe la");
+        //$render = $this->getRender()->addPath(__DIR__.'/../views');
+        return $this->getRender()->render('test',[
+         'password' => 'voici mon test',
+         //'password' => $form,
+         //'text' =>['name' => '<strong>Mathieu</strong>', 'age' => '13'],
+         'stuff' => array(
+            array(
+                'Thing' => "roses",
+                'Desc' => "Red",
+            ),
+            array(
+                'Thing' => "tree",
+                'Desc' => "green",
+            ),
+            array(
+                'Thing' => "Sky",
+                'Desc' => "blue",
+            ),
+        )
+      ]);
+        die("meurs");  
+    }
+    
+    //Fonction qui permet d'effectuer une redirection
+    public function redirectView()
+    {
+        //print_r("je passe la");
+        return $this->redirect('/flashMessage');
+    }
+    
+    //Fonction qui permet un message flash et ensuite de rendre une vue
+    public function FlashMessageAndRenderView()
+    {
+        $this->flash = new FlashService();
+        $session = $this->flash->success('L\'article a bien été ajouté');
+        if($this->flash->get('success'))
+            {
+                $session = $this->flash->get('success');
+                return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $session]);
+            }
+    }
+    
+    //Fonction qui permet de save des données dans l'orm
+    public function saveTestIntoDatabase()
+    {
+        $test = new test();
+        //$test->setId('1');
+        $test->setAge(3);
+        $test->setName('Sally');
+        $test->setTest('je fais un test');
+        $test->setCreateDate('1985-12-1');
+        //$validator = new \blog\Validator();
+        //$validator = $this->getValidator($request);
+        $validator = new \blog\Validator();
+        if($validator->is_valid())
+        {
+            $model = new \blog\database\Manager($test);
+            //print_r('je vais aller dans persist');
+            $model->persist($test);
+            
+            //Je vais vers la vue pour afficher mon message flash
+            //$render = new Renderer();
+            //$this->session = new PHPSession();
+            //$this->session->set('success', 'L\'article a bien été ajouté');
+            //$session = new \blog\session\ArraySession();
+            $this->flash = new FlashService();
+            $this->flash->success('L\'article a bien été ajouté');
+            
+            $render = $this->getRender()->addPath(__DIR__.'/../views');
+            //if($this->session->get('success'))
+            if($this->flash->get('success'))
+            {
+                //$session = $this->session->get('success');
+                $session = $this->flash->get('success');
+                $render = $this->getRender()->render('TestSessionFlahMessages');
+                return $render;
+                //$render = $this->getRender()->render('TestSessionFlahMessages',  ['message' => $session]);
+                //return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $session]);
+            }
+            //$this->flash->success('Le test a bien été inséré en base de données');
+            //return $this->redirect('blog.admin.index');
+        }
+        $errors = $validator->getErrors();
+        //return $this->renderer->render('@blog/admin/edit', compact('item', 'errors'));
+        //$manager = new \blog\database\DbConnexion();
+        //$manager = $manager->getManager(test::class);
+    }
+    
+    //Je créé un formulaire
     public function getForm()
     {
         $form = new Form($_POST);
@@ -130,6 +228,7 @@ class PostsController extends Controller
     //Je recupere les valeurs de mon formulaire
     public function getValue()
     {    
+        die("meurs");
         print_r($_POST['name']);
 
         die("meurs");
@@ -141,20 +240,6 @@ class PostsController extends Controller
             $this->flash->succes("l'article a bien ete ajouté");
             return $this->redirect('/');
         }
-    }
-
-    //Je save des données dans l'orm
-    public function saveTestIntoDatabase()
-    {
-        $test = new test();
-        //$test->setId('1');
-        $test->setAge(3);
-        $test->setName('Sally');
-        $test->setTest('je fais un test');
-        //$manager = new \blog\database\DbConnexion();
-        //$manager = $manager->getManager(test::class);
-        $model = new \blog\database\Manager($test);
-        $model->persist($test);
     }
     
     //Je save des données en bdd

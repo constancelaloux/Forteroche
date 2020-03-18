@@ -1,14 +1,25 @@
 <h1>TODO write content</h1>
  
 <!-- show var or object or var from loop -->
-{{test}}
 {{password}}
+
+<!--rendre une boucle-->
 {{text.name}} a {{text.age}} ans.
 
-
-{%FOR:pays%}
-    <b>{{nom}} </b><br/>
-    {%FOR:regions%}
-        {{nom}} a le numéro : {{numero}}<br/>
-    {%ENDFOR%}
+{%FOR:stuff%}
+  {{Thing}} are {{Desc}}
 {%ENDFOR%}
+
+<!--Rendre des if/else-->
+{IF?$a == 22}A = 22{ELSE}A != 22{ENDIF}<br />
+
+<div>{IF?$a >= 22}
+A = 22
+{ELSE}
+A != 22
+{ENDIF}</div>
+
+{IF?$b<0}B > 0{ENDIF}
+<!--faire un lien vers une autre vue-->
+
+<!--rendre un layout-->
