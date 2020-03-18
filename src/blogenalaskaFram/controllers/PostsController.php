@@ -54,23 +54,21 @@ class PostsController extends Controller
         die("meurs");  
     }
     
-    //Fonction qui permet d'effectuer une redirection
+    //Fonction qui permet d'effectuer une redirection vers une nouvelle url
     public function redirectView()
     {
-        //print_r("je passe la");
         return $this->redirect('/flashMessage');
     }
     
-    //Fonction qui permet un message flash et ensuite de rendre une vue
+    //Fonction de rendre une vue avec un msg flash en paramétre
     public function FlashMessageAndRenderView()
     {
-        $this->flash = new FlashService();
-        $session = $this->flash->success('L\'article a bien été ajouté');
-        if($this->flash->get('success'))
-            {
-                $session = $this->flash->get('success');
-                return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $session]);
-            }
+        $this->addFlash()->success('L\'article a bien été ajouté');
+        if($this->addFlash()->get('success'))
+        {
+            $session = $this->addFlash()->get('success');
+            return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $session]);
+        }
     }
     
     //Fonction qui permet de save des données dans l'orm

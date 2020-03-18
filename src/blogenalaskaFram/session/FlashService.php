@@ -20,7 +20,8 @@ class FlashService
     
     public function __construct()
     {
-        $this->session = new ArraySession();
+        //$this->session = new ArraySession();
+        $this->session = SessionInterface::class;
     }
     
     public function success(string $message)

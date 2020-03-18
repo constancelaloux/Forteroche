@@ -29,7 +29,7 @@ class PHPSession implements SessionInterface
     */
     public function get(string $key, $default = null)
     {
-        print_r($key);
+        //print_r($key);
         $this->ensureSarted();
         if(array_key_exists($key, $_SESSION))
         {

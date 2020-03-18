@@ -13,6 +13,7 @@ use blog\HTTPResponse;
 use blog\HTML\Renderer;
 use blog\config\Container;
 use blog\config\ContainerInterface;
+use blog\session\FlashService;
 /**
  *Controller général qui évite les répétitions dans les controllers spécifiques.
  * Il instancie nottament page.
@@ -24,19 +25,15 @@ class Controller
     protected $renderer;
     protected $httpResponse;
     protected $container;
+    protected $flashService;
     
     //Le constructeur instancie page
     public function __construct()
     {
-        $services   = include __DIR__.'/../config/Config.php';
-        $configFile = new Container($services);
-        //print_r($configFile);
-        $this->container = $configFile;
+        $this->setContainer();
         $this->renderer = $this->container->get(\blog\HTML\Renderer::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
-        //$this->renderer = new Renderer();
-        
-        
+        //$this->renderer = new Renderer();     
         //$this->page = new Page();
         //$this->setView($view);
         //$this->renderer = new Renderer();
@@ -44,6 +41,17 @@ class Controller
         //$this->renderer = new Renderer();
         //$this->renderer->addPath(__DIR__.'/../views');
         //print_r($this->renderer->addPath('blog', __DIR__.'/views'));
+    }
+    
+    /**
+    * Returns a container for injection of dependencies
+    */
+    public function setContainer()
+    {
+        $services   = include __DIR__.'/../config/Config.php';
+        $this->container = new Container($services);
+        //print_r($configFile);
+        return $this->container;
     }
     
     /**
@@ -57,10 +65,29 @@ class Controller
     /**
     * Returns an object Renderer to get the view we had as arg.
     */
-    public function getRender()
+    protected function getRender()
     {
         return $this->renderer;
         //return new Renderer();
+    }
+    
+    /**
+    * Returns an object FlashService.
+    */
+    protected function addFlash()
+    {
+        /**/
+        return $this->flashService = $this->container->get(FlashService::class);
+            //return $this->container->get(blog\session\FlashService::class);
+        /*}*/
+    }
+    
+    /**
+    * Returns an object Form.
+    */
+    protected function createForm()
+    {
+        
     }
     
     /*public function getPage()

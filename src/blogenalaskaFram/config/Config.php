@@ -1,5 +1,5 @@
 <?php
-//print_r("je suis dans config.php");
+
 /* 
  * On va mettre la configuration générale de notre projet
  */
@@ -10,7 +10,11 @@ return [
             ],
     //print_r("je suis dans config.php"),
     \blog\HTTPResponse::class => [
-    'class' => \blog\HTTPResponse::class,
+        'class' => \blog\HTTPResponse::class,
+    /**/
+        ],
+    \blog\session\FlashService::class => [
+        'class' => \blog\session\FlashService::class,
     /**/
         ],
     /*blog\HTML\RendererInterface::class =>function ()

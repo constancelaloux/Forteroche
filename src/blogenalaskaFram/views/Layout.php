@@ -44,6 +44,30 @@
     </head>
     
     <body>
+                
+        <!-- ce qui doit etre fait normalement pour le message flash -->
+
+        <!--<div class="alert alert-success" role="alert">
+          This is a success alert—check it out!
+        </div>
+        <div id='#myAlert' class="alert alert-danger">          
+            {{message}}
+        </div>
+        
+        <!-- un test-->
+        <!--<div class="alert alert-success" role="alert">
+          This is a success alert—check it out!
+        </div>
+        <div id='#myAlert' class="alert alert-danger">   -->       
+            <?php 
+            //use blog\session\PHPSession;
+            //use blog\session\FlashService;
+            //$session = new PHPSession();
+            //$session = new FlashService();
+            //echo $session->get('success');
+            ?>
+        <!--</div>-->
+
         <div class="container">
             <?= $content ?>  
         </div>
