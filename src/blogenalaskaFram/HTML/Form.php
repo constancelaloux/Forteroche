@@ -6,163 +6,77 @@ use blog\HTML\HtmlBuilder;
  */
 class Form 
 {
-        /**
-     * The reserved form open attributes.
-     *
-     * @var array
-     */
-    protected $reserved = ['method', 'url', 'route', 'action', 'files'];
-        /**
-     * The URL generator instance.
-     *
-     * @var UrlGenerator
-     */
-    protected $url;
-    
-    protected $inputClass;
-        /**
+     /**
      * The HTML builder instance.
      *
      * @var \Collective\Html\HtmlBuilder
      */
     protected $html;
-        /**
-     * The types of inputs to not fill values on by default.
+    
+    /**
+     * The reserved form open attributes.
      *
      * @var array
      */
-    protected $skipValueTypes = ['file', 'password', 'checkbox', 'radio'];
-
-        /**
+    protected $reserved = ['method', 'url', 'route', 'action', 'files'];
+    
+     /**
+     * openForm.
+     */
+    public $openForm;
+    
+     /**
      * An array of label names we've created.
      *
      * @var array
      */
     protected $labels = [];
-        /**
+    
+     /**
+     * $text.
+     */
+    private $text;
+    
+     /**
+     * $input.
+     */
+    private $input;
+    
+     /**
      * Input Type.
      *
      * @var null
      */
     protected $type = null;
-    //private $arrayOfimputs = [];
-    private $openForm;
-    //private $input = [];
-    private $text;
-    private $input;
-    private $password;
-    private $inputhidden;
-    private $date;
-    private $search;
-    private $textarea = [];
-    private $button;
-    private $closeForm;
     
+     /**
+     * $password
+     */
+    private $password;
+    
+     /**
+     * $inputhidden.
+     */
+    private $inputhidden;
+    
+     /**
+     * $date
+     */
+    private $date;
+    
+     /**
+     * $search
+     */
+    private $search;
+
     public function __construct()
     {
         $this->html = new HtmlBuilder();
     }
-    /**
-    * Getters
-    */
-    public function getFormOpen()
-    {
-        return $this->openForm;
-    }
-    
-    public function getImput()
-    {
-        return $this->input;
-    }
-
-    public function getImputText()
-    {
-        return $this->text;
-    }
-    
-    public function getImputPassword()
-    {
-        return $this->password;
-    }
-    
-    public function getImputHidden()
-    {
-        return $this->inputhidden;
-    }  
-    
-    public function getImputSearch()
-    {
-        return $this->search;
-    } 
-    
-    public function getImputDate()
-    {
-        return $this->date;
-    }  
-    
-    public function getTextarea()
-    {
-        return $this->textarea;
-    }
-    
-    public function getButton()
-    {
-        return $this->button;
-    }
-    
-    public function getFormClose()
-    {
-        return $this->closeForm;
-    }
-    
+   
     /**
     * Setters
     */
-        /**
-     * The children of the form builder.
-     *
-     * @var FormBuilderInterface[]
-     */
-    private $children = [];
-    /**
-     * The data of children who haven't been converted to form builders yet.
-     *
-     * @var array
-     */
-    private $unresolvedChildren = [];
-    
-    protected $locked = false;
-    
-        /**
-     * {@inheritdoc}
-     */
-    public function add($child, string $type = null, array $options = [])
-    {
-        print_r($child);
-        print_r($type);
-        print_r($options);
-        if ($this->locked) {
-        print_r("je suis la");
-            throw new BadMethodCallException('FormBuilder methods cannot be accessed anymore once the builder is turned into a FormConfigInterface instance.');
-        }
-        if ($child instanceof FormBuilderInterface) {
-            $this->children[$child->getName()] = $child;
-            // In case an unresolved child with the same name exists
-            unset($this->unresolvedChildren[$child->getName()]);
-            return $this;
-        }
-        if (!\is_string($child) && !\is_int($child)) {
-            throw new UnexpectedTypeException($child, 'string or Symfony\Component\Form\FormBuilderInterface');
-        }
-        if (null !== $type && !\is_string($type)) {
-            throw new UnexpectedTypeException($type, 'string or null');
-        }
-        // Add to "children" to maintain order
-        $this->children[$child] = null;
-        $this->unresolvedChildren[$child] = [$type, $options];
-        return $this;
-    }
-    //Je cree un formulaire
     
         /**
      * Open up a new HTML form.
@@ -174,15 +88,15 @@ class Form
     public function open(array $options = [])
     {
         //print_r($options);
+        //die("meurs");
         $method = Arr::get($options, 'method', 'post');
         //print_r($method);
         // We need to extract the proper method from the attributes. If the method is
         // something other than GET or POST we'll use POST since we will spoof the
         // actual method since forms don't support the reserved methods in HTML.
-        $attributes['method'] = $this->getMethod($method);
-        //print_r($attributes['method']);
-        //print_r($options);
         $attributes['action'] = $this->getAction($options);
+        $attributes['method'] = $this->getMethod($method);
+        //print_r($options);
         //print_r($attributes['action']);
         $attributes['accept-charset'] = 'UTF-8';
         // If the method is PUT, PATCH or DELETE we will need to add a spoofer hidden
@@ -198,15 +112,17 @@ class Form
         $attributes = array_merge(
           $attributes, Arr::except($options, $this->reserved)
         );
+        //print_r($attributes);
         // Finally, we will concatenate all of the attributes into a single string so
         // we can build out the final form open statement. We'll also append on an
         // extra value for the hidden _method field if it's needed for the form.
         $attributes = $this->html->attributes($attributes);
-        print_r($attributes);
+        //print_r($attributes);
         return $this->openForm = $this->toHtmlString('<form' . $attributes . '>');
+        //print_r($this->openForm);
     }
     
-        /**
+     /**
      * Parse the form action method.
      *
      * @param  string $method
@@ -251,7 +167,20 @@ class Form
         //return $this->url->current();
     }
     
-    
+     /**
+     * Close the current form.
+     *
+     * @return string
+     */
+    public function close()
+    {
+        $this->labels = [];
+
+        $this->model = null;
+
+        return $this->toHtmlString('</form>');
+    }
+      
     /**
      * Create a text input field.
      *
@@ -320,6 +249,19 @@ class Form
         return $this->date = $this->input('date', $name, $options);
     }
     
+     /**
+     * Create a submit button element.
+     *
+     * @param  string $value
+     * @param  array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function submit($value = null, $options = [])
+    {
+        //print_r($value); veut dire envoyer
+        return $this->input('submit', null, $value, $options);
+    }
         /**
      * Create a form input field.
      *
@@ -329,9 +271,10 @@ class Form
      * @param  array  $options
      * @return HtmlString
      */
-    public function input($type, $name, $options = [])
+    public function input($type, $name, $value = null, $options = [])
     {
-        $class = 'form-control';
+        //print_r($value);
+        //$class = 'form-control';
         
         $this->type = $type;
         //print_r($this->type);
@@ -353,7 +296,7 @@ class Form
         // Once we have the type, value, and ID we can merge them into the rest of the
         // attributes array so we can convert them into their HTML attribute format
         // when creating the HTML element. Then, we will return the entire input.
-        $merge = compact('type', 'id', 'class');
+        $merge = compact('type','value', 'id');
         //print_r($merge);
         //die("die");
         $options = array_merge($options, $merge);
@@ -400,8 +343,144 @@ class Form
     }
  
     
+    /**
+     * Create a form label element.
+     *
+     * @param  string $name
+     * @param  string $value
+     * @param  array  $options
+     * @param  bool   $escape_html
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function label($name, $value = null, $options = [], $escape_html = true)
+    {
+        $this->labels[] = $name;
+
+        $options = $this->html->attributes($options);
+
+        $value = $this->formatLabel($name, $value);
+
+        if ($escape_html) {
+            $value = $this->html->entities($value);
+        }
+
+        return $this->toHtmlString('<label for="' . $name . '"' . $options . '>' . $value . '</label>');
+    }
+    
+        /**
+     * Format the label value.
+     *
+     * @param  string      $name
+     * @param  string|null $value
+     *
+     * @return string
+     */
+    protected function formatLabel($name, $value)
+    {
+        return $value ?: ucwords(str_replace('_', ' ', $name));
+    }
+    
+     /**
+    * Getters
+    */
+    /*public function getFormOpen()
+    {
+        return $this->openForm;
+    }
+    
+    public function getImput()
+    {
+        return $this->input;
+    }
+
+    public function getImputText()
+    {
+        //print_r('je passe ici');
+        //print_r($this->text);
+        return $this->text;
+    }
+    
+    public function getImputPassword()
+    {
+        return $this->password;
+    }
+    
+    public function getImputHidden()
+    {
+        return $this->inputhidden;
+    }  
+    
+    public function getImputSearch()
+    {
+        return $this->search;
+    } 
+    
+    public function getImputDate()
+    {
+        return $this->date;
+    }  
+    
+    public function getTextarea()
+    {
+        return $this->textarea;
+    }
+    
+    public function getButton()
+    {
+        return $this->button;
+    }
+    
+    public function getFormClose()
+    {
+        return $this->closeForm;
+    }*/
+    
+    
+    
+        
+    /**
+     * The children of the form builder.
+     *
+     * @var FormBuilderInterface[]
+     */
+    //private $children = [];
+    /**
+     * The data of children who haven't been converted to form builders yet.
+     *
+     * @var array
+     */
+    //private $unresolvedChildren = [];
+    
+    //protected $locked = false;
+        /**
+     * The URL generator instance.
+     *
+     * @var UrlGenerator
+     */
+    //protected $url;
+    
+    //protected $inputClass;
+
+        /**
+     * The types of inputs to not fill values on by default.
+     *
+     * @var array
+     */
+    //protected $skipValueTypes = ['file', 'password', 'checkbox', 'radio'];
+
+
+
+    //private $arrayOfimputs = [];
+
+    //private $input = [];
+    //private $textarea = [];
+    //private $button;
+    //private $closeForm;
+
+
     //Je cree un textarea
-    public function setTextarea(string $type, string $key, string $label):string
+    /*public function setTextarea(string $type, string $key, string $label):string
     {
         //$value = $this->getValue($key);
         $inputClass = 'form-control';
@@ -411,24 +490,24 @@ class Form
                     <textarea type="{$type}" id="field{$key}" class="{$inputClass}" name="{$key}"></textarea>
             </div>
 HTML;
-    }
+    }*/
     
     //Je cree un bouton submit
-    public function setTsubmit(string $label)
+    /*public function setTsubmit(string $label)
     {
         $buttonClass = 'btn btn-primary';
         return $this->button =<<<HTML
             <button class="{$buttonClass}">{$label}</button>
 HTML;
-    }
+    }*/
     
     //Je cree un formulaire
-    public function setFormClose()
+    /*public function setFormClose()
     {
         return $this->closeForm =<<<HTML
             </form>
 HTML;
-    }
+    }*/
  }   
     //Fonction qui génére la vue avec le formulaire
     //public function createView()

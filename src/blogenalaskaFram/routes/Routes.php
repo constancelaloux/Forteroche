@@ -11,6 +11,9 @@ $router->get('/renderView', "Posts#renderView");
 
 //Route vers fn qui permet de laisser un msg flash et rendre une vue
 $router->get('/flashMessage', "Posts#FlashMessageAndRenderView");
+
+//Route qui amméne vers la fn qui créé un formulaire
+$router->get('/testFormCreate', "Posts#createMyForm");
 //$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', "Posts#getPage");

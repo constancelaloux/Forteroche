@@ -14,11 +14,14 @@ use blog\HTML\Renderer;
 use blog\config\Container;
 use blog\config\ContainerInterface;
 use blog\session\FlashService;
+use blog\session\PHPSession;
+use blog\HTML\Form;
+use blog\HTML\Form2;
 /**
  *Controller général qui évite les répétitions dans les controllers spécifiques.
  * Il instancie nottament page.
  */
-class Controller 
+abstract class AbstractController 
 {
     //protected $page = null;
     //protected $view = '';
@@ -26,6 +29,7 @@ class Controller
     protected $httpResponse;
     protected $container;
     protected $flashService;
+    //private $session;
     
     //Le constructeur instancie page
     public function __construct()
@@ -33,6 +37,8 @@ class Controller
         $this->setContainer();
         $this->renderer = $this->container->get(\blog\HTML\Renderer::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
+        $this->flashService = new FlashService();
+        $this->form = new Form();
         //$this->renderer = new Renderer();     
         //$this->page = new Page();
         //$this->setView($view);
@@ -76,10 +82,16 @@ class Controller
     */
     protected function addFlash()
     {
+        return $this->flashService;
         /**/
-        return $this->flashService = $this->container->get(FlashService::class);
+        //return $this->flashService = $this->container->get(FlashService::class);
             //return $this->container->get(blog\session\FlashService::class);
         /*}*/
+    }
+    
+    protected function getFlash($type)
+    {
+        return $this->flashService->get($type);
     }
     
     /**
@@ -87,7 +99,7 @@ class Controller
     */
     protected function createForm()
     {
-        
+        return new Form();
     }
     
     /*public function getPage()

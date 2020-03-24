@@ -90,7 +90,7 @@ class Renderer implements RendererInterface
         //print_r(extract($params));
         foreach ($params as $searchString => $replaceString) 
         {
-            //print_r($searchString);
+            //print_r($replaceString);
             if(!empty($searchString))
             {
                 $this->assignedValues[$searchString] = $replaceString;   
@@ -106,44 +106,48 @@ class Renderer implements RendererInterface
                 //print_r($this->assignedValues); //signifie array 0, 1 et 2
                 if(is_array($value))
                 {
-                    //print_r($value[1]);//titre, pays 
+                    //print_r($value);//titre, pays 
                     // Parsage des FOR  
-                    foreach ($value as $key => $valu) 
-                    {
+                    /*foreach ($value as $key => $valu) 
+                    {*/
                         //print_r($key); // 0, 1, 2
-                        //print_r($key); //array
+                        /*print_r($key); //array
                             //print_r($valu);
                             //print_r($key);
                                 // process your loop here, probably with new foreach,
                                 // to populate $processedValue by content of your array in $value
                                 $this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?php foreach('.$valu['stuff'].' as \$$1s){ echo $$1s ?>', $this->tpl);
-                                $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php } ?>', $this->tpl);
+                                $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php } ?>', $this->tpl);*/
                     //print_r($value);//titre, pays 
-                    /*foreach ($value as $key => $value) 
+                    foreach ($value as $key => $value) 
                     {
-                        //print_r($value);
+                        print_r($value);
                         //exit("je sors");
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', $value, $this->tpl);
                         // Parsage des FOR      
-                        $this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?foreach ($value[\'$1\'] as \$_$1_vars): $this->_stack(\$_$1_vars); ?>', $this->tpl);
+                        /*$this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?foreach ($value[\'$1\'] as \$_$1_vars): $this->_stack(\$_$1_vars); ?>', $this->tpl);
                         //ENDFOR
-                        $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php $this->_unstack(); endforeach; ?>', $this->tpl);
-                    }*/
-
+                        $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php $this->_unstack(); endforeach; ?>', $this->tpl);*/
                     }
+
+                    /*}*/
                 }
                 else if(is_object($value))
                 {
-                    //print_r("c bien un objet");
+                    print_r("c bien un objet");
+                    print_r($value);
+                    die("meurs");
                     //print_r(get_object_vars($value));
                     foreach ($value as $key => $value) 
                     {
+                        print_r($value);
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', htmlspecialchars($value), $this->tpl);
                     }
                 }
                 else
                 {
-                    $this->tpl = str_replace('{{'.$firstkey.'}}', htmlspecialchars($value), $this->tpl);
+                    $this->tpl = str_replace('{{'.$firstkey.'}}', $value, $this->tpl);
+                    //$this->tpl = str_replace('{{'.$firstkey.'}}', htmlspecialchars($value), $this->tpl);
                 }
             }
         }

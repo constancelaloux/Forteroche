@@ -7,21 +7,22 @@
  */
 
 namespace blog\controllers;
-use blog\controllers\Controller;
-use blog\HTML\Renderer;
+use blog\controllers\AbstractController;
+use blog\Validator;
+//use blog\HTML\Renderer;
 //use blog\HTTPResponse;
-use blog\database\Post;
-use blog\database\test;
-use blog\HTML\Form;
+//use blog\database\Post;
+//use blog\database\test;
+use blog\HTML\Form3;
+use blog\HTML\StringField;
+use blog\HTML\TextField;
 //use blog\session\PHPSession;
-use blog\session\FlashService;
-use blog\session\SessionInterface;
 /**
  * Description of TestFormController
  *
  * @author constancelaloux
  */
-class PostsController extends Controller
+class PostsController extends AbstractController
 {
     //public $session;
     
@@ -57,18 +58,81 @@ class PostsController extends Controller
     //Fonction qui permet d'effectuer une redirection vers une nouvelle url
     public function redirectView()
     {
-        return $this->redirect('/flashMessage');
+        return $this->redirect('/testFormCreate');
     }
     
     //Fonction de rendre une vue avec un msg flash en paramétre
     public function FlashMessageAndRenderView()
     {
         $this->addFlash()->success('L\'article a bien été ajouté');
-        if($this->addFlash()->get('success'))
+        if($this->getFlash('success'))
         {
-            $session = $this->addFlash()->get('success');
-            return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $session]);
+            $flashMessageSuccess = $this->getFlash('success');
+            return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $flashMessageSuccess]);
         }
+    }
+    
+    //Fonction qui va me permettre de créer un formulaire
+    public function createMyForm()
+    {
+        $form = new Form3();
+    
+        $form->add(new StringField([
+            'label' => 'Auteur',
+            'name' => 'auteur',
+            'maxLength' => 50,
+           ]))
+           ->add(new TextField([
+            'label' => 'Contenu',
+            'name' => 'contenu',
+            'rows' => 7,
+            'cols' => 50,
+           ]));
+        $view = $form->createView();
+        return $this->getrender()->render('Form', ['form' => $view]);
+    }
+    //Fonction qui va me permettre de créer un formulaire
+    public function CreateNewForm()
+    {
+        /*$form = new Form();
+        $form->open([ 'action' => '/test','method' => 'POST']);
+        $form->label('username','Identifiant');
+        $form->text('login', null, ['class' => 'span2']);
+        $form->label('password','Mot de passe');
+        $form->password('pass', ['id' => 'span3']);
+        $form->submit('Envoyer');
+        $form->close();*/
+        //print_r($form);
+        //$formBuilder->createView($form);
+        //$open = $this->createForm()->open(['method' => 'POST', 'class' => 'form', 'id' => 'id-form']);
+        //$surname = $this->createForm()->text('surname', null, ['class' => 'span2']);
+        //$firstname = $this->createForm()->text('firstname', null, ['class' => 'span2']);
+        $openForm = $this->CreateForm()->open([ 'action' => '/test','method' => 'POST']);
+        $label1 = $this->CreateForm()->label('username','Identifiant');
+        $username = $this->createForm()->text('login', null, ['class' => 'span2']);
+        $label2 = $this->CreateForm()->label('password','Mot de passe');
+        $password = $this->createForm()->password('pass', ['id' => 'span3']);
+        $submitbutton = $this->createForm()->submit('Envoyer');
+        $closeForm = $this->createForm()->close();
+        //$formBuilder = new \blog\HTML\FormBuilder();
+        //$formBuilder->createView();
+        //$//this->createForm()->date('la date', ['id' => 'span4']);
+        //$submitbutton = $this->createForm()->submit('Envoyer');
+        //$this->createForm()->setTextarea('text', 'content', 'contenu');
+        //$this->createForm()->setTsubmit('submit', 'Enregistrer');
+        //$this->createForm()->setFormClose();
+        //print_r($password);
+        return $this->getrender()->render('Form', ['form' =>['openForm' => $openForm, 'labelusername' => $label1,'username' => $username, 'labelpassword' => $label2, 'password' => $password, 'submitButton' => $submitbutton, 'closeForm' => $closeForm]]);
+    }
+    
+    //Test de validator. Valider les informations
+    public function validateInformations()
+    {
+        $validator = new Validator($params);
+        $validator->required('name', 'content');
+        $validator->slug('slug');
+        $validator->dateTime('created_at');
+        $validator->minLength(8);
     }
     
     //Fonction qui permet de save des données dans l'orm

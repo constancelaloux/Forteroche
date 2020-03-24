@@ -11,10 +11,11 @@ use blog\session\SessionInterface;
 class PHPSession implements SessionInterface
 { 
     /**
-    * Assure que la session est démarrée
+    * Vérifie/Assure que la session est démarrée
+     * Ca ne chargera la session que lorsque l'on en aura besoin.
     */
     private function ensureSarted()
-    {
+    {   
         if(session_status() === PHP_SESSION_NONE)
         {
             session_start();
