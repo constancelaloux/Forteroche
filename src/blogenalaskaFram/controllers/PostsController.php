@@ -13,9 +13,11 @@ use blog\Validator;
 //use blog\HTTPResponse;
 //use blog\database\Post;
 //use blog\database\test;
-use blog\HTML\Form3;
-use blog\HTML\StringField;
-use blog\HTML\TextField;
+//use blog\HTML\Form3;
+//use blog\HTML\StringField;
+//use blog\HTML\TextField;
+//use blog\HTML\FormBuilder;
+use blog\form\TestForm;
 //use blog\session\PHPSession;
 /**
  * Description of TestFormController
@@ -75,7 +77,12 @@ class PostsController extends AbstractController
     //Fonction qui va me permettre de créer un formulaire
     public function createMyForm()
     {
-        $form = new Form3();
+        $formBuilder = new TestForm();
+        $form = $formBuilder->buildform($formBuilder->form());
+        return $this->getrender()->render('Form', ['form' => $form->createView()]);
+        //$formBuilder = new FormBuilder();
+        //$form = $formBuilder->createView(TestForm::class);
+        /*$form = new Form3();
     
         $form->add(new StringField([
             'label' => 'Auteur',
@@ -87,9 +94,8 @@ class PostsController extends AbstractController
             'name' => 'contenu',
             'rows' => 7,
             'cols' => 50,
-           ]));
-        $view = $form->createView();
-        return $this->getrender()->render('Form', ['form' => $view]);
+           ]));*/
+        //$view = $form->createView();
     }
     //Fonction qui va me permettre de créer un formulaire
     public function CreateNewForm()

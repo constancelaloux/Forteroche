@@ -1,20 +1,20 @@
 <?php
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
 namespace blog\HTML;
 
-/**
-    permet d'hydrater  l'objet field avec les données que l'on a envoyé pour créer un formulaire
- */
-abstract class Field 
-{
-    // On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
-    use Hydrator;
+// On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
 
-    protected $errorMessage;
-    protected $label;
+
+abstract class Type 
+{
+    use Hydrator;
     protected $name;
-    protected $value;
-    protected $type;
     protected $action;
     protected $method;
 
@@ -27,16 +27,11 @@ abstract class Field
         }
     }
 
-    abstract public function buildWidget();
+    abstract public function buildForm();
 
     public function isValid()
     {
         // On écrira cette méthode plus tard.
-    }
-
-    public function label()
-    {
-        return $this->label;
     }
 
     public function name()
@@ -44,17 +39,7 @@ abstract class Field
         print_r("je passe dans le getter");
         //print_r($this->name);
         return $this->name;
-    }
-
-    public function value()
-    {
-        return $this->value;
-    }
-
-    public function type()
-    {
-        return $this->type;
-    }   
+    }  
 
     public function action()
     {
@@ -66,39 +51,12 @@ abstract class Field
         return $this->method;
     }
 
-    public function setLabel($label)
-    {
-        if (is_string($label))
-        {
-            $this->label = $label;
-        }
-    }
-
     public function setName($name)
     {
         print_r("je passe dans le setter");
         if (is_string($name))
         {
             $this->name = $name;
-        }
-    }
-
-    public function setValue($value)
-    {
-        //print_r($value);
-        if (is_string($value))
-        {
-            $this->value = $value;
-            //print_r($this->value);
-        }
-    }
-
-    public function setType($type)
-    {
-        //print_r($value);
-        if (is_string($type))
-        {
-            $this->type = $type;
         }
     }
   

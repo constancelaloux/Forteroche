@@ -26,24 +26,41 @@ class Form3
         $this->setEntity($entity);
     }
 
-    public function add(Field $field)
+    //On hydrate l'objet Field avec les valeurs données pour créer un formulaire.
+    //Ensuite on assigne la valeur correspondante au champ et on génére un tableau avec les données
+    public function add($field)
     {
+        //print_r($field);
         $attr = $field->name(); // On récupère le nom du champ.
-        $field->setValue($this->entity($attr)); // On assigne la valeur correspondante au champ.
-
+        //print_r($attr);
+        //$field->setValue($this->entity($attr)); // On assigne la valeur correspondante au champ.
+        //die("meurs");
         $this->fields[] = $field; // On ajoute le champ passé en argument à la liste des champs.
+        //print_r($this);
         return $this;
     }
-
+    
+    //Fonction qui va permettre de générer le formulaire
     public function createView()
     {
-      $view = '';
-
+        $view = '';
+        $form = '';
       // On génère un par un les champs du formulaire.
-      foreach ($this->fields as $field)
-      {
-        $view .= $field->buildWidget().'<br />';
-      }
+        foreach ($this->fields as $field)
+        {
+        //$field->buildWidget();
+        //$field correspond à si c'est stringField ou un autre field
+            if($field->buildForm())
+            {
+                $form .= $field->buildForm().'<br />';
+                print_r($form);
+            }
+            else if($field->buildWidget())
+            {
+                $view .= $field->buildWidget().'<br />';
+                print_r($view);
+            }
+        }
       //print_r($view);
       return $view;
     }

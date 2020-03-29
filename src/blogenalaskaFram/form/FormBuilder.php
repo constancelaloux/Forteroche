@@ -6,17 +6,40 @@
  * and open the template in the editor.
  */
 
-namespace blog\HTML;
+namespace blog\form;
 
+use blog\HTML\Entity;
+use blog\HTML\Form3;
 /**
  * Description of FormBuilder
  *
  * @author constancelaloux
  */
-class FormBuilder 
+abstract class FormBuilder 
 {
+    protected $form;
+
+    public function __construct()
+    {
+        $entity = new Entity();
+        $this->setForm(new Form3($entity));
+    }
+
+    abstract public function form();
+
+    public function setForm()
+    {
+        $form = new Form3();
+        $this->form = $form;
+    }
+
+    public function buildform()
+    {
+        //print_r($this->form);
+        return $this->form;
+    }
     //elle prend en paramétre l'objet form
-    public function create()
+    /*public function create()
     {
         
     }
@@ -58,6 +81,6 @@ class FormBuilder
         }
 
         return $view;
-    }
+    }*/
     
 }
