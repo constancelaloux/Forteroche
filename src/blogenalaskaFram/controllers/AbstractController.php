@@ -30,10 +30,17 @@ abstract class AbstractController
     protected $container;
     protected $flashService;
     //private $session;
+    public $request;
+    public $form;
+    
+    public $flash;
+
     
     //Le constructeur instancie page
     public function __construct()
     {
+        $this->request = new \blog\HTTPRequest();
+        $this->form = new \blog\HTML\Form3();
         $this->setContainer();
         $this->renderer = $this->container->get(\blog\HTML\Renderer::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
@@ -101,6 +108,19 @@ abstract class AbstractController
     {
         return new Form();
     }
+    
+    /*protected function getParams($datas)
+    {
+        $request = new \blog\HTTPRequest();
+        return $request->postData($datas);
+        /*if (!is_string($var) || is_numeric($var) || empty($var))
+        {
+            throw new \InvalidArgumentException('Le nom de la variable doit être une chaine de caractères non nulle');
+        }
+
+        $this->vars[$var] = $value;
+    }*/
+ 
     
     /*public function getPage()
     {

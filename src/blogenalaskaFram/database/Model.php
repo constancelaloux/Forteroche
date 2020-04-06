@@ -35,7 +35,7 @@ abstract class Model
     public function hydrate($result)
     {
         //print_r("je suis dans la fonction hydrate de Model");
-        //die('meurs');
+        //die('meurs un autre jour');
         if(empty($result)) 
         {
             throw new ORMException("Aucun résultat n'a été trouvé !");
@@ -62,6 +62,7 @@ abstract class Model
                 break;
             case "string":
                 //print_r("je passe dans string");
+                //print_r($this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value));
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
             case "datetime":
@@ -77,7 +78,6 @@ abstract class Model
      */
     public function getSQLValueByColumn($column)
     {
-        //print_r($column);
         //print_r("je suis dans la fonction getSQLValueByColumn");
         //print_r($this::metadata()["columns"][$column]["property"]);
         $value = $this->{sprintf("get%s", ucfirst($this::metadata()["columns"][$column]["property"]))}();
@@ -110,7 +110,6 @@ abstract class Model
 
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
         //Je vais retourner le getter de l'id
-        //print_r($this->{sprintf("get%s", ucfirst($property))}());
         return $this->{sprintf("get%s", ucfirst($property))}();
     }
 }

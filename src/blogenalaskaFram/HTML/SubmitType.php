@@ -16,7 +16,7 @@ use blog\HTML\Type;
  */
 class SubmitType extends Type
 {
-    public function buildForm()
+    public function buildWidget()
     {
         $widget = '';
         

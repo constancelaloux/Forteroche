@@ -11,12 +11,11 @@ abstract class Field
     use Hydrator;
 
     protected $errorMessage;
+    protected $validators = [];
     protected $label;
     protected $name;
     protected $value;
     protected $type;
-    protected $action;
-    protected $method;
 
     public function __construct(array $options = [])
     {
@@ -31,9 +30,19 @@ abstract class Field
 
     public function isValid()
     {
-        // On écrira cette méthode plus tard.
-    }
+        foreach ($this->validators as $validator)
+        {
+            if (!$validator->isValid($this->value))
+            {
+                $this->errorMessage = $validator->errorMessage();
+                return false;
+            }
+        }
 
+        return true;
+    }
+    
+    //Getters
     public function label()
     {
         return $this->label;
@@ -41,7 +50,7 @@ abstract class Field
 
     public function name()
     {
-        print_r("je passe dans le getter");
+        //print_r("je passe dans le getter");
         //print_r($this->name);
         return $this->name;
     }
@@ -56,16 +65,17 @@ abstract class Field
         return $this->type;
     }   
 
-    public function action()
+    public function length()
     {
-        return $this->action;
+        return $this->length;
     }
     
-    public function method()
+    public function validators()
     {
-        return $this->method;
+        return $this->validators;
     }
 
+    //Setters
     public function setLabel($label)
     {
         if (is_string($label))
@@ -76,7 +86,7 @@ abstract class Field
 
     public function setName($name)
     {
-        print_r("je passe dans le setter");
+        //print_r("je passe dans le setter");
         if (is_string($name))
         {
             $this->name = $name;
@@ -86,6 +96,8 @@ abstract class Field
     public function setValue($value)
     {
         //print_r($value);
+        //print_r($this->value);
+        die("meurs");
         if (is_string($value))
         {
             $this->value = $value;
@@ -101,22 +113,25 @@ abstract class Field
             $this->type = $type;
         }
     }
-  
-    public function setAction($action)
+    
+    public function setLength($length)
     {
-        //print_r($value);
-        if (is_string($action))
+        $length = (int) $length;
+
+        if ($length > 0)
         {
-            $this->action = $action;
+            $this->length = $length;
         }
     }
     
-    public function setMethod($method)
+    public function setValidators(array $validators)
     {
-        //print_r($value);
-        if (is_string($method))
+        foreach ($validators as $validator)
         {
-            $this->method = $method;
+            if ($validator instanceof Validator && !in_array($validator, $this->validators))
+            {
+                $this->validators[] = $validator;
+            }
         }
     }
 }

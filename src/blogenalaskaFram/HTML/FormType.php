@@ -16,7 +16,7 @@ use blog\HTML\Type;
  */
 class FormType  extends Type
 {
-    public function buildForm()
+    public function buildWidget()
     {
         $widgetForm = '';
         
@@ -25,8 +25,8 @@ class FormType  extends Type
           $widgetForm .= $this->errorMessage.'<br />';
         }
         
-        $widgetForm .= '<h1>'.$this->name.'</h1><Form action="'.$this->action.'" method="'.$this->method.'"';
-        
-        return $widgetForm.'</form>';
+        $widgetForm .= /**'<h1>'.$this->name.'</h1>*/'<Form action="'.$this->action.'" method="'.$this->method.'">';
+        return $widgetForm .= '<p>';
+        //return $widgetForm.'</form>';
     }
 }

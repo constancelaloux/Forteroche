@@ -17,3 +17,4 @@ $loader->addNamespace('blog\HTML', __DIR__ . '../../src/blogenalaskaFram/HTML');
 $loader->addNamespace('blog\session', __DIR__ . '../../src/blogenalaskaFram/session');
 $loader->addNamespace('blog\exceptions', __DIR__ . '../../src/blogenalaskaFram/exceptions');
 $loader->addNamespace('blog\form', __DIR__ . '../../src/blogenalaskaFram/form');
+$loader->addNamespace('blog\validator', __DIR__ . '../../src/blogenalaskaFram/validator');

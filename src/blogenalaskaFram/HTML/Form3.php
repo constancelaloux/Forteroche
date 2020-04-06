@@ -9,7 +9,7 @@
 namespace blog\HTML;
 
 use blog\HTML\Entity;
-use blog\HTML\Field;
+//use blog\HTML\Field;
 /**
  * Description of Form3
  *
@@ -44,25 +44,36 @@ class Form3
     public function createView()
     {
         $view = '';
-        $form = '';
-      // On génère un par un les champs du formulaire.
+        // On génère un par un les champs du formulaire.
         foreach ($this->fields as $field)
         {
+            $view .= $field->buildWidget().'<br />';
+        }
+
+        return $view .= '</p></form>';
+        //$form = '';
+        //print_r($field->buildForm());
+            //print_r($field->buildWidget());
+      // On génère un par un les champs du formulaire.
+        /*foreach ($this->fields as $field)
+        { print_r($this->fields);*/
+        ////print_r($field->buildForm());
+            //print_r($field->buildWidget());
         //$field->buildWidget();
         //$field correspond à si c'est stringField ou un autre field
-            if($field->buildForm())
+            /*if($field->buildForm())
             {
                 $form .= $field->buildForm().'<br />';
-                print_r($form);
+                //print_r($form);
             }
             else if($field->buildWidget())
             {
                 $view .= $field->buildWidget().'<br />';
-                print_r($view);
-            }
-        }
+                //print_r($view);
+            }*/
+      /*  }
       //print_r($view);
-      return $view;
+      return $view;*/
     }
 
     public function isValid()
@@ -74,6 +85,8 @@ class Form3
       {
         if (!$field->isValid())
         {
+                      print_r($this->fields);
+          die("meurs");
           $valid = false;
         }
       }

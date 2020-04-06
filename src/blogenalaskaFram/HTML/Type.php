@@ -27,7 +27,7 @@ abstract class Type
         }
     }
 
-    abstract public function buildForm();
+    abstract public function buildWidget();
 
     public function isValid()
     {
@@ -36,7 +36,7 @@ abstract class Type
 
     public function name()
     {
-        print_r("je passe dans le getter");
+        //print_r("je passe dans le getter");
         //print_r($this->name);
         return $this->name;
     }  
@@ -53,7 +53,7 @@ abstract class Type
 
     public function setName($name)
     {
-        print_r("je passe dans le setter");
+        //print_r("je passe dans le setter");
         if (is_string($name))
         {
             $this->name = $name;

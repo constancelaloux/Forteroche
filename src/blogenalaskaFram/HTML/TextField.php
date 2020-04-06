@@ -28,7 +28,7 @@ class TextField extends Field
           $widget .= $this->errorMessage.'<br />';
         }
 
-        $widget .= '<label>'.$this->label.'</label><textarea name="'.$this->name.'"';
+        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><textarea name="'.$this->name.'" id="'.$this->name.'"';
 
         if (!empty($this->cols))
         {

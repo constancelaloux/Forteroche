@@ -19,6 +19,9 @@ use blog\Validator;
 //use blog\HTML\FormBuilder;
 use blog\form\TestForm;
 //use blog\session\PHPSession;
+use blog\database\Author;
+use blog\database\Manager;
+use blog\HTML\ConnectForm;
 /**
  * Description of TestFormController
  *
@@ -26,10 +29,6 @@ use blog\form\TestForm;
  */
 class PostsController extends AbstractController
 {
-    //public $session;
-    
-    public $flash;
-
     //Fonction qui permet de rendre la vue
     public function renderView()
     {
@@ -74,62 +73,84 @@ class PostsController extends AbstractController
         }
     }
     
-    //Fonction qui va me permettre de créer un formulaire
+    //Fonction qui va me permettre de créer un formulaire de création d'auteur
     public function createMyForm()
-    {
+    { 
+        //On créé le formulaire
+        $title = 'mon formulaire de test';
         $formBuilder = new TestForm();
         $form = $formBuilder->buildform($formBuilder->form());
-        return $this->getrender()->render('Form', ['form' => $form->createView()]);
-        //$formBuilder = new FormBuilder();
-        //$form = $formBuilder->createView(TestForm::class);
-        /*$form = new Form3();
+        $url = 'connectForm';
+        // On passe la méthode createView() du formulaire à la vue
+        // afin qu'elle puisse afficher le formulaire toute seule
+        $this->getrender()->render('Form', ['title' => $title,'form' => $form->createView(), 'url' => $url]);                
+    }
     
-        $form->add(new StringField([
-            'label' => 'Auteur',
-            'name' => 'auteur',
-            'maxLength' => 50,
-           ]))
-           ->add(new TextField([
-            'label' => 'Contenu',
-            'name' => 'contenu',
-            'rows' => 7,
-            'cols' => 50,
-           ]));*/
-        //$view = $form->createView();
+    //Fonction qui va valider les données et les récupérer les données du formulaire. 
+    //Puis ensuite les envoyer en base de données.
+    public function getValidateAndSendDatasFromForm()
+    {      
+        if ($this->request->method() == 'POST' && $this->form->isValid())
+        {
+            $authorSurname = $this->request->postData('surname');
+            $authorFirstname = $this->request->postData('firstname');
+            $authorUsername = $this->request->postData('username');
+            $authorPassword = $this->request->postData('password');
+
+            //On créé notre objet Author
+            $author = new Author(
+            [
+                'surname' => $authorSurname,
+                'firstname' => $authorFirstname,
+                'username' => $authorUsername,
+                'password' => password_hash($authorPassword, PASSWORD_DEFAULT)
+            ]);
+            
+            //username = Jean_Forteroche
+            //password = @jeanF38
+            $model = new Manager($author);
+            if($model->exist(['username' => $author->getUsername()]))
+            {
+                unset($model);
+                return $this->redirect('/testFormCreate');
+            }
+            else
+            {
+                $model->persist($author);
+                $this->addFlash('Votre compte a bien été créé');
+                //return $this->getFlash('success');
+                return $this->redirect('/connectForm');
+            }
+        }
+        else
+        {
+            die("je meurs parce que je ne correspond pas à ce qui est demandé");
+        }
     }
-    //Fonction qui va me permettre de créer un formulaire
-    public function CreateNewForm()
+    
+    //Fonction pour créer le formulaire d'identification
+    public function connectForm()
     {
-        /*$form = new Form();
-        $form->open([ 'action' => '/test','method' => 'POST']);
-        $form->label('username','Identifiant');
-        $form->text('login', null, ['class' => 'span2']);
-        $form->label('password','Mot de passe');
-        $form->password('pass', ['id' => 'span3']);
-        $form->submit('Envoyer');
-        $form->close();*/
-        //print_r($form);
-        //$formBuilder->createView($form);
-        //$open = $this->createForm()->open(['method' => 'POST', 'class' => 'form', 'id' => 'id-form']);
-        //$surname = $this->createForm()->text('surname', null, ['class' => 'span2']);
-        //$firstname = $this->createForm()->text('firstname', null, ['class' => 'span2']);
-        $openForm = $this->CreateForm()->open([ 'action' => '/test','method' => 'POST']);
-        $label1 = $this->CreateForm()->label('username','Identifiant');
-        $username = $this->createForm()->text('login', null, ['class' => 'span2']);
-        $label2 = $this->CreateForm()->label('password','Mot de passe');
-        $password = $this->createForm()->password('pass', ['id' => 'span3']);
-        $submitbutton = $this->createForm()->submit('Envoyer');
-        $closeForm = $this->createForm()->close();
-        //$formBuilder = new \blog\HTML\FormBuilder();
-        //$formBuilder->createView();
-        //$//this->createForm()->date('la date', ['id' => 'span4']);
-        //$submitbutton = $this->createForm()->submit('Envoyer');
-        //$this->createForm()->setTextarea('text', 'content', 'contenu');
-        //$this->createForm()->setTsubmit('submit', 'Enregistrer');
-        //$this->createForm()->setFormClose();
-        //print_r($password);
-        return $this->getrender()->render('Form', ['form' =>['openForm' => $openForm, 'labelusername' => $label1,'username' => $username, 'labelpassword' => $label2, 'password' => $password, 'submitButton' => $submitbutton, 'closeForm' => $closeForm]]);
+        //On créé le formulaire
+        $title = 'Veuillez entrer votre mot de passe et votre identifiant';
+        $formBuilder = new ConnectForm();
+        $form = $formBuilder->buildform($formBuilder->form());
+        // On passe la méthode createView() du formulaire à la vue
+        // afin qu'elle puisse afficher le formulaire toute seule
+        $this->getrender()->render('ConnectForm', ['title' => $title,'form' => $form->createView()]);
     }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     //Test de validator. Valider les informations
     public function validateInformations()
@@ -251,6 +272,27 @@ class PostsController extends AbstractController
             ),
         )
       ]);
+        
+                    //print_r($request->method());
+            //$params = $this->getParams($request);
+            //$author = new Author($params);
+            //print_r($author);
+            //die("meurs");
+            //print_r($request->postData('username'));
+            //die("j'ai bien été validé");
+            //print_r($author);
+            //$username = 'username';
+            //$getUsername = $author->getUsername();
+            //print_r($getUsername);
+            //$test = [$username, $getUsername];
+        
+            /*if($model->exists($test))
+            {
+                print_r("j'ai deja ces identifiants en bdd");
+            }
+            else
+            {*/
+            //}
 
         //$render->assign('password', 'hé oui sayé ceci est un test');
         //$render->assign('text', ['name' => '<strong>Mathieu</strong>', 'age' => '13']);
@@ -400,4 +442,55 @@ class PostsController extends AbstractController
         //print_r($_POST);
         //require (__DIR__ . '/../views/category/Blog.php');
     }*/
+    
+            //$formBuilder = new FormBuilder();
+        //$form = $formBuilder->createView(TestForm::class);
+        /*$form = new Form3();
+    
+        $form->add(new StringField([
+            'label' => 'Auteur',
+            'name' => 'auteur',
+            'maxLength' => 50,
+           ]))
+           ->add(new TextField([
+            'label' => 'Contenu',
+            'name' => 'contenu',
+            'rows' => 7,
+            'cols' => 50,
+           ]));*/
+        //$view = $form->createView();
+    
+        //Fonction qui va me permettre de créer un formulaire
+    public function CreateNewForm()
+    {
+        /*$form = new Form();
+        $form->open([ 'action' => '/test','method' => 'POST']);
+        $form->label('username','Identifiant');
+        $form->text('login', null, ['class' => 'span2']);
+        $form->label('password','Mot de passe');
+        $form->password('pass', ['id' => 'span3']);
+        $form->submit('Envoyer');
+        $form->close();*/
+        //print_r($form);
+        //$formBuilder->createView($form);
+        //$open = $this->createForm()->open(['method' => 'POST', 'class' => 'form', 'id' => 'id-form']);
+        //$surname = $this->createForm()->text('surname', null, ['class' => 'span2']);
+        //$firstname = $this->createForm()->text('firstname', null, ['class' => 'span2']);
+        $openForm = $this->CreateForm()->open([ 'action' => '/test','method' => 'POST']);
+        $label1 = $this->CreateForm()->label('username','Identifiant');
+        $username = $this->createForm()->text('login', null, ['class' => 'span2']);
+        $label2 = $this->CreateForm()->label('password','Mot de passe');
+        $password = $this->createForm()->password('pass', ['id' => 'span3']);
+        $submitbutton = $this->createForm()->submit('Envoyer');
+        $closeForm = $this->createForm()->close();
+        //$formBuilder = new \blog\HTML\FormBuilder();
+        //$formBuilder->createView();
+        //$//this->createForm()->date('la date', ['id' => 'span4']);
+        //$submitbutton = $this->createForm()->submit('Envoyer');
+        //$this->createForm()->setTextarea('text', 'content', 'contenu');
+        //$this->createForm()->setTsubmit('submit', 'Enregistrer');
+        //$this->createForm()->setFormClose();
+        //print_r($password);
+        return $this->getrender()->render('Form', ['form' =>['openForm' => $openForm, 'labelusername' => $label1,'username' => $username, 'labelpassword' => $label2, 'password' => $password, 'submitButton' => $submitbutton, 'closeForm' => $closeForm]]);
+    }
 }

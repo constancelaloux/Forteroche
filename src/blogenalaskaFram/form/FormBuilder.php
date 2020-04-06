@@ -25,6 +25,7 @@ abstract class FormBuilder
         $this->setForm(new Form3($entity));
     }
 
+    //référe à la fonction form du formulaire créé en php
     abstract public function form();
 
     public function setForm()
@@ -33,6 +34,7 @@ abstract class FormBuilder
         $this->form = $form;
     }
 
+    //Fonction qui retourne le formulaire que l'on a créé
     public function buildform()
     {
         //print_r($this->form);

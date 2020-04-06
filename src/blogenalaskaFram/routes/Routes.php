@@ -12,12 +12,18 @@ $router->get('/renderView', "Posts#renderView");
 //Route vers fn qui permet de laisser un msg flash et rendre une vue
 $router->get('/flashMessage', "Posts#FlashMessageAndRenderView");
 
-//Route qui amméne vers la fn qui créé un formulaire
+//Route qui amméne vers la fn qui créé un formulaire de création d'auteur
 $router->get('/testFormCreate', "Posts#createMyForm");
+
+//Route qui amméne vers la fn qui valide et gére les données
+$router->post('/test', "Posts#getValidateAndSendDatasFromForm");
+
+//Route qui va vers la fonction qui créé un formulaire de connexion
+$router->get('/connectForm', "Posts#connectForm");
 //$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', "Posts#getPage");
-$router->post('/test', "Posts#getValue");
+
 //$router->get('/test', function(){ echo "Bienvenue sur ma homepage !"; }); 
 //$router->get('/test/:id-:slug', function($id, $slug)
 /*        use($router)
