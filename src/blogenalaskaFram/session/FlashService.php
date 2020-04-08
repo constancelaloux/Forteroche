@@ -2,10 +2,7 @@
 
 namespace blog\session;
 
-//use blog\session\SessionInterface;
 use blog\session\PHPSession;
-
-//use blog\session\PHPSession;
 
 class FlashService 
 {

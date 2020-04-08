@@ -15,8 +15,7 @@ use blog\config\Container;
 use blog\config\ContainerInterface;
 use blog\session\FlashService;
 use blog\session\PHPSession;
-use blog\HTML\Form;
-use blog\HTML\Form2;
+use blog\form\Form;
 /**
  *Controller général qui évite les répétitions dans les controllers spécifiques.
  * Il instancie nottament page.
@@ -40,12 +39,12 @@ abstract class AbstractController
     public function __construct()
     {
         $this->request = new \blog\HTTPRequest();
-        $this->form = new \blog\HTML\Form3();
+        $this->form = new Form();
         $this->setContainer();
         $this->renderer = $this->container->get(\blog\HTML\Renderer::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
         $this->flashService = new FlashService();
-        $this->form = new Form();
+        //$this->form = new Form3;
         //$this->renderer = new Renderer();     
         //$this->page = new Page();
         //$this->setView($view);

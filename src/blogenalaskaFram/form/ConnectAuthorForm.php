@@ -1,13 +1,13 @@
 <?php
 
-namespace blog\HTML;
+namespace blog\form;
 
 
 //use blog\HTML\Form3;
-use blog\HTML\StringField;
-use blog\HTML\TextField;
-use blog\HTML\SubmitType;
-use blog\HTML\FormType;
+use blog\form\StringField;
+use blog\form\TextField;
+use blog\form\SubmitType;
+use blog\form\FormType;
 use blog\form\FormBuilder;
 use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
@@ -17,11 +17,17 @@ use blog\validator\MinLengthValidator;
  *
  * @author constancelaloux
  */
-class ConnectForm extends FormBuilder
+class ConnectAuthorForm extends FormBuilder
 {
     public function form()
     {
-        $this->form->add(new StringField([
+        $this->form->add(new FormType([
+        //'name' => 'mon formulaire de connexion',
+        'action' => '/validateAuthorConnexion',
+        'method' => 'POST'
+        //'nam' => 'Envoyer'
+        ]))  
+        ->add(new StringField([
         'type' => 'text',
         'label' => 'Identifiant',
         'name' => 'username',
@@ -45,6 +51,9 @@ class ConnectForm extends FormBuilder
                                         . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 50),
             new NotNullValidator('Merci de spécifier un mot de passe'),
         ],
+        ]))
+        ->add(new SubmitType([
+        'name' => 'Valider'
         ]));
     }
 }

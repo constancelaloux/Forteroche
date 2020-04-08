@@ -3,7 +3,7 @@
 namespace blog;
 
 use blog\ResponseInterface;
-//use blog\Renderer;
+
 /**
 * Description of HTTPResponse
 * Ce que l'on va renvoyer au client.

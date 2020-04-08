@@ -3,10 +3,10 @@
 namespace blog\form;
 
 //use blog\HTML\Form3;
-use blog\HTML\StringField;
-use blog\HTML\TextField;
-use blog\HTML\SubmitType;
-use blog\HTML\FormType;
+use blog\form\StringField;
+use blog\form\TextField;
+use blog\form\SubmitType;
+use blog\form\FormType;
 use blog\form\FormBuilder;
 use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
@@ -16,7 +16,7 @@ use blog\validator\MinLengthValidator;
  *
  * @author constancelaloux
  */
-class TestForm extends FormBuilder
+class CreateAuthorForm extends FormBuilder
 {
             //->createNamed
         //->setAction($this->generateUrl('target_route'))
@@ -28,7 +28,7 @@ class TestForm extends FormBuilder
         //'name' => 'mon formulaire de test',
         'action' => '/test',
         'method' => 'POST'
-        //'nam' => 'Envoyer'
+        //'name' => 'Envoyer'
         ]))
         ->add(new StringField([
         'type' => 'text',

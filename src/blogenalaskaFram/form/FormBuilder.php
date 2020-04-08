@@ -1,15 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace blog\form;
 
-use blog\HTML\Entity;
-use blog\HTML\Form3;
+use blog\form\Entity;
+use blog\form\Form;
 /**
  * Description of FormBuilder
  *
@@ -22,7 +16,7 @@ abstract class FormBuilder
     public function __construct()
     {
         $entity = new Entity();
-        $this->setForm(new Form3($entity));
+        $this->setForm(new Form($entity));
     }
 
     //référe à la fonction form du formulaire créé en php
@@ -30,7 +24,7 @@ abstract class FormBuilder
 
     public function setForm()
     {
-        $form = new Form3();
+        $form = new Form();
         $this->form = $form;
     }
 

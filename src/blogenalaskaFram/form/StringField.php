@@ -1,14 +1,8 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+namespace blog\form;
 
-namespace blog\HTML;
-
-use blog\HTML\Field;
+use blog\form\Field;
 /**
  * Description of StringField
  *
@@ -44,7 +38,6 @@ class StringField extends Field
         {
             $widget .= ' minlength="'.$this->minLength.'"';
         }
-        //print_r($widget .= ' />');
         return $widget .= ' />';
     }
 
@@ -58,7 +51,7 @@ class StringField extends Field
         }
         else
         {
-          throw new \RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
+            throw new \RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
         }
     }
 }

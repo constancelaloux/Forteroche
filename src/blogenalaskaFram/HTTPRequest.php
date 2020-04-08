@@ -3,7 +3,6 @@
 namespace blog;
 
 use blog\RequestInterface;
-//use blogenalaska\Lib\BlogenalaskaFram\ApplicationComponent;
 
 /**
 * Description of HTTPRequest

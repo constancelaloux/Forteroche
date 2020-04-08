@@ -102,20 +102,15 @@ class DotEnv
         
         while ($this->cursor < $this->end) 
         {
-            //print_r($state);
             switch ($state) 
             {
                 case self::STATE_VARNAME:
                     $name = $this->lexVarname();
-                    //print_r($name);
                     $state = self::STATE_VALUE;
-                    //print_r($state);
                     break;
                 case self::STATE_VALUE:
                     $this->values[$name] = $this->lexValue();
-                    //print_r($this->values[$name]);
                     $state = self::STATE_VARNAME;
-                    //print_r($state);
                     break;
             }
         }
@@ -126,7 +121,6 @@ class DotEnv
         }
         try 
         {
-            //print_r($this->values);
             return $this->values;
         } 
         finally 
@@ -153,7 +147,6 @@ class DotEnv
     {
         $this->cursor += \strlen($text);
         $this->lineno += substr_count($text, "\n");
-        //print_r($this->lineno += substr_count($text, "\n"));
     }
     
     private function lexVarname(): string
@@ -466,13 +459,9 @@ class DotEnv
     {
         $updateLoadedVars = false;
         $loadedVars = array_flip(explode(',', $_SERVER['SYMFONY_DOTENV_VARS'] ?? $_ENV['SYMFONY_DOTENV_VARS'] ?? ''));
-        //print_r($loadedVars);
-       // print_r($values);
+
         foreach ($values as $name => $value) 
         {
-           // print_r($name);
-            //print_r($notHttpName);
-            //print_r($_ENV[$name]);
             // don't check existence with getenv() because of thread safety issues
             if (!isset($loadedVars[$name]) && (isset($_ENV[$name]))) 
             {
@@ -482,32 +471,25 @@ class DotEnv
             if ($this->usePutenv) 
             {
                 putenv("$name=$value");
-                //print_r(putenv("$name=$value"));
             }
             
             $_ENV[$name] = $value;
-            //print_r($_ENV[$name] );
-            //print_r($value);
             
             if (!isset($loadedVars[$name])) 
             {
                 $loadedVars[$name] = $updateLoadedVars = true;
-                //print_r($loadedVars[$name]);
             }
         }
         
         if ($updateLoadedVars) 
         {
-            //print_r($updateLoadedVars);
             unset($loadedVars['']);
             $loadedVars = implode(',', array_keys($loadedVars));
-            //print_r($loadedVars);
+
             $_ENV['SYMFONY_DOTENV_VARS'] = $_SERVER['SYMFONY_DOTENV_VARS'] = $loadedVars;
-            //print_r($loadedVars);
+
             if ($this->usePutenv) 
             {
-                //print_r(putenv('SYMFONY_DOTENV_VARS='.$loadedVars));
-                //print_r('je suis la');
                 putenv('SYMFONY_DOTENV_VARS='.$loadedVars);
 
             }

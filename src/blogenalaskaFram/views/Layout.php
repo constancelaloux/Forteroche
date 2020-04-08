@@ -9,7 +9,7 @@
         <link rel="icon" type="image/png" href="images/favicon.png" />
         
         <!--CSS-->
-        <link href="/blogenalaska/public/css/style.css" rel="stylesheet" />
+        <link href="/public/css/style.css" rel="stylesheet" />
         
         <!--Jquery-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

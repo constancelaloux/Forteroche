@@ -25,10 +25,9 @@ class Renderer implements RendererInterface
     
     public function __construct()
     {
-        //print_r($renderer);
-        //die("meurs un autre day");
         $this->addPath('blog',__DIR__.'/../views');
     }
+    
     /*
     * Permet de rajouter un chemin pour charger les vues
      * @param string $namespace
@@ -58,17 +57,14 @@ class Renderer implements RendererInterface
     //Elle retourne une chaine de caractéres
     public function render(string $view, array $params = [])
     {
-        //print_r($params);
         $this->view = $view;
         
         if($this->hasNamespace($view))
         {
-            //$this->viewpath = $this->replaceNamespace($view).'.html';
             $this->viewpath = $this->replaceNamespace($view).'.html';
         }
         else
         {
-            //$this->viewpath = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.html';
             $this->viewpath = $this->paths[self::DEFAULT_NAMESPACE].DIRECTORY_SEPARATOR.$view.'.html';
         }
         
@@ -87,10 +83,8 @@ class Renderer implements RendererInterface
             }
         }
 
-        //print_r(extract($params));
         foreach ($params as $searchString => $replaceString) 
         {
-            //print_r($replaceString);
             if(!empty($searchString))
             {
                 $this->assignedValues[$searchString] = $replaceString;   
@@ -121,26 +115,17 @@ class Renderer implements RendererInterface
                     //print_r($value);//titre, pays 
                     foreach ($value as $key => $value) 
                     {
-                        print_r($value);
-                        //exit("je sors");
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', $value, $this->tpl);
                         // Parsage des FOR      
                         /*$this->tpl = preg_replace('#\{\%FOR:(\w+)\%\}#', '<?foreach ($value[\'$1\'] as \$_$1_vars): $this->_stack(\$_$1_vars); ?>', $this->tpl);
                         //ENDFOR
                         $this->tpl = preg_replace('#\{\%ENDFOR\%\}#', '<?php $this->_unstack(); endforeach; ?>', $this->tpl);*/
                     }
-
-                    /*}*/
                 }
                 else if(is_object($value))
                 {
-                    print_r("c bien un objet");
-                    print_r($value);
-                    die("meurs");
-                    //print_r(get_object_vars($value));
                     foreach ($value as $key => $value) 
                     {
-                        print_r($value);
                         $this->tpl = str_replace('{{'.$firstkey.'.'.$key.'}}', htmlspecialchars($value), $this->tpl);
                     }
                 }

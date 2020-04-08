@@ -1,26 +1,19 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-namespace blog\HTML;
+namespace blog\form;
 
 // On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
 
 
 abstract class Type 
 {
-    use Hydrator;
+    use \blog\Hydrator;
     protected $name;
     protected $action;
     protected $method;
 
     public function __construct(array $options = [])
     {
-        //print_r($options);
         if (!empty($options))
         {
             $this->hydrate($options);
@@ -36,8 +29,6 @@ abstract class Type
 
     public function name()
     {
-        //print_r("je passe dans le getter");
-        //print_r($this->name);
         return $this->name;
     }  
 
@@ -53,7 +44,6 @@ abstract class Type
 
     public function setName($name)
     {
-        //print_r("je passe dans le setter");
         if (is_string($name))
         {
             $this->name = $name;
@@ -62,7 +52,6 @@ abstract class Type
   
     public function setAction($action)
     {
-        //print_r($value);
         if (is_string($action))
         {
             $this->action = $action;
@@ -71,7 +60,6 @@ abstract class Type
     
     public function setMethod($method)
     {
-        //print_r($value);
         if (is_string($method))
         {
             $this->method = $method;

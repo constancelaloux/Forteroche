@@ -18,7 +18,7 @@ class Author  extends Model
      * Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
      * celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
      */
-    use \blog\HTML\Hydrator;
+    use \blog\Hydrator;
 
     /**
      * @ORM\Column(name="id", type="integer")
@@ -102,7 +102,6 @@ class Author  extends Model
     */
     public function getId()
     {
-        //print_r("je rentre dans getId");
         return $this->id;
     }
 
@@ -137,7 +136,6 @@ class Author  extends Model
     */
     public function setId($id)
     {
-        //print_r("je rentre dans setId");
         $id = (int) $id;
 
         if ($id > 0)

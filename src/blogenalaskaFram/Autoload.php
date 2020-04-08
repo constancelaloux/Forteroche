@@ -5,7 +5,7 @@
  */
 
 require(__DIR__ . '/Autoloader.php');
-//$loader = blog\Autoloader::register();
+
 $loader = new blog\Autoloader();
 $loader->register();
 

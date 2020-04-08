@@ -1,14 +1,16 @@
 <?php
 
-namespace blog\HTML;
+namespace blog\form;
 
 /**
     permet d'hydrater  l'objet field avec les données que l'on a envoyé pour créer un formulaire
  */
 abstract class Field 
 {
-    // On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
-    use Hydrator;
+    /**
+    * On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
+    */
+    use \blog\Hydrator;
 
     protected $errorMessage;
     protected $validators = [];
@@ -19,7 +21,6 @@ abstract class Field
 
     public function __construct(array $options = [])
     {
-        //print_r($options);
         if (!empty($options))
         {
             $this->hydrate($options);
@@ -50,8 +51,6 @@ abstract class Field
 
     public function name()
     {
-        //print_r("je passe dans le getter");
-        //print_r($this->name);
         return $this->name;
     }
 
@@ -86,7 +85,6 @@ abstract class Field
 
     public function setName($name)
     {
-        //print_r("je passe dans le setter");
         if (is_string($name))
         {
             $this->name = $name;
@@ -95,9 +93,6 @@ abstract class Field
 
     public function setValue($value)
     {
-        //print_r($value);
-        //print_r($this->value);
-        die("meurs");
         if (is_string($value))
         {
             $this->value = $value;
@@ -107,7 +102,6 @@ abstract class Field
 
     public function setType($type)
     {
-        //print_r($value);
         if (is_string($type))
         {
             $this->type = $type;
