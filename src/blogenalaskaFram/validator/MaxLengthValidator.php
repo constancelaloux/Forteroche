@@ -14,6 +14,7 @@ class MaxLengthValidator extends Validator
 
     public function __construct($errorMessage, $maxLength)
     {
+        //print_r($errorMessage);
         parent::__construct($errorMessage);
 
         $this->setMaxLength($maxLength);
@@ -21,6 +22,9 @@ class MaxLengthValidator extends Validator
 
     public function isValid($value)
     {
+        //print_r("je passe dans isValid de MAxLengthValidator");
+        //print_r(strlen($value) <= $this->maxLength);
+        //die("meurs");
         return strlen($value) <= $this->maxLength;
     }
 

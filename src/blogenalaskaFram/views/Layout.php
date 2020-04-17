@@ -2,7 +2,7 @@
 <html>
     <head>
         <meta charset="utf-8" />
-        <title><?= $title ?? 'Mon site'?></title>
+        <title><?= $title ?? 'Jean Forteroche'?></title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
@@ -67,11 +67,11 @@
             //echo $session->get('success');
             ?>
         <!--</div>-->
-
-        <div class="container">
+        <?php //require __DIR__.'/../views/Header.php'; ?>
+        <!--<div class="container">-->
             <?= $content ?>  
-        </div>
-        
+        <!--</div>-->
+        <?php //require __DIR__.'/../views/Footer.php'; ?>
     </body>
 
 </html>

@@ -16,11 +16,12 @@ class FormType  extends Type
         
         if (!empty($this->errorMessage))
         {
-          $widgetForm .= $this->errorMessage.'<br />';
+            //print_r("je passe dasns errorMessage n'est pas vide");
+            $widgetForm .= $this->errorMessage.'<br />';
         }
-        
-        //$widgetForm .= '<Form action="" method="POST">';
-        $widgetForm .= /**'<h1>'.$this->name.'</h1>*/'<Form action="'.$this->action.'" method="'.$this->method.'">';
-        return $widgetForm .= '<p>';
+
+        $widgetForm .= '<Form action="'.$this->action.'" method="'.$this->method.'">';
+        //return $widgetForm .= '<p>';
+        return $widgetForm;
     }
 }

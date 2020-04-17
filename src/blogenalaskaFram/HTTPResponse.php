@@ -20,7 +20,7 @@ class HTTPResponse implements ResponseInterface
         */
         public function redirectResponse(string $location)
         {
-            //print_r($location);
+            print_r(header('Location: '.$location));
             //print_r($id);
             header('Location: '.$location);
             exit;

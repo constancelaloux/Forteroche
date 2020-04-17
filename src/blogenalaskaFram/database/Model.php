@@ -21,7 +21,13 @@ class Model
      * @return string
      */
     //public abstract static function getManager();
-    
+        public function __construct(array $donnees = [])
+    {
+        if (!empty($donnees))
+        {
+            $this->hydrate($donnees);
+        }
+    }
     /**
      * @param array $result
      * @return Model
@@ -68,7 +74,7 @@ class Model
      */
     public function getSQLValueByColumn($column)
     {
-        $value = $this->{sprintf("get%s", ucfirst($this::metadata()["columns"][$column]["property"]))}();
+        $value = $this->{sprintf(ucfirst($this::metadata()["columns"][$column]["property"]))}();
         if($value instanceof \DateTime)
         {
             return $value->format("Y-m-d H:i:s");
@@ -95,6 +101,6 @@ class Model
 
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
         //Je vais retourner le getter de l'id
-        return $this->{sprintf("get%s", ucfirst($property))}();
+        return $this->{sprintf(ucfirst($property))}();
     }
 }

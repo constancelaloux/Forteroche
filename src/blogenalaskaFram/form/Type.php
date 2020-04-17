@@ -11,6 +11,8 @@ abstract class Type
     protected $name;
     protected $action;
     protected $method;
+    
+    protected $value;
 
     public function __construct(array $options = [])
     {
@@ -63,6 +65,15 @@ abstract class Type
         if (is_string($method))
         {
             $this->method = $method;
+        }
+    }
+    
+    public function setValue($value)
+    {
+        if (is_string($value))
+        {
+            $this->value = $value;
+            //print_r($this->value);
         }
     }
 }

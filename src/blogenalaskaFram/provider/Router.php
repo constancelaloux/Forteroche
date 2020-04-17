@@ -84,10 +84,9 @@ class Router
     {
         //est ce que une des url correspond
         //montre si c'est en get ou post
-
         //Je fais appel à la fonction method de HTTP request qui va chercher si la methode du server est en get ou post
         $requestMethod = $request->method();
-
+        //print_r($requestMethod);
         //Si il n'y a pas de methode get ou post alors je lance une exception
         //if(!isset($this->routes[$_SERVER['REQUEST_METHOD']]))
         if(!isset($this->routes[$requestMethod]))

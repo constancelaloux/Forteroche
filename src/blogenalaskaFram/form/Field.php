@@ -21,8 +21,11 @@ abstract class Field
 
     public function __construct(array $options = [])
     {
+        //print_r($options);
         if (!empty($options))
         {
+            //print_r($options);
+            //print_r($this->hydrate($options));
             $this->hydrate($options);
         }
     }
@@ -31,10 +34,15 @@ abstract class Field
 
     public function isValid()
     {
+        //print_r("je rentre dans isValid de Field class");
+        //print_r($this->validators);
         foreach ($this->validators as $validator)
         {
+            //print_r("je rentre dans isValid de Field class");
+            //print_r($this->validators);
             if (!$validator->isValid($this->value))
             {
+                //print_r($this->value);
                 $this->errorMessage = $validator->errorMessage();
                 return false;
             }
@@ -71,6 +79,7 @@ abstract class Field
     
     public function validators()
     {
+        //print_r($this->validators);
         return $this->validators;
     }
 
@@ -85,6 +94,7 @@ abstract class Field
 
     public function setName($name)
     {
+        //print_r($name);
         if (is_string($name))
         {
             $this->name = $name;
@@ -93,10 +103,11 @@ abstract class Field
 
     public function setValue($value)
     {
+        //print_r($value);
         if (is_string($value))
         {
+            //print_r($value);
             $this->value = $value;
-            //print_r($this->value);
         }
     }
 

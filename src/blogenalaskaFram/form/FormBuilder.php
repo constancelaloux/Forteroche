@@ -13,18 +13,20 @@ abstract class FormBuilder
 {
     protected $form;
 
-    public function __construct()
+    public function __construct(\blog\database\Model $entity)
     {
-        $entity = new Entity();
+        //$entity = new Entity();
         $this->setForm(new Form($entity));
     }
 
     //référe à la fonction form du formulaire créé en php
     abstract public function form();
 
-    public function setForm()
+    public function setForm(form $form)
     {
-        $form = new Form();
+        //print_r("je passe dans setForm");
+        //$form = new Form();
+        //print_r($this->form);
         $this->form = $form;
     }
 

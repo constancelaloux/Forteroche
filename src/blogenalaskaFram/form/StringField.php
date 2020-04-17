@@ -11,7 +11,7 @@ use blog\form\Field;
 class StringField extends Field
 {
     protected $maxLength;
-    protected $minLength;
+    //protected $minLength;
 
     public function buildWidget()
     {
@@ -22,10 +22,12 @@ class StringField extends Field
             $widget .= $this->errorMessage.'<br />';
         }
 
-        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><input type="'.$this->type.'" name="'.$this->name.'" id="'.$this->name.'"';
+        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="input-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="form-control" id="'.$this->name.'"';
 
         if (!empty($this->value))
         {
+            //print_r($this->value);
+            //die("meurs");
             $widget .= ' value="'.htmlspecialchars($this->value).'"';
         }
 
@@ -34,11 +36,12 @@ class StringField extends Field
             $widget .= ' maxlength="'.$this->maxLength.'"';
         }
         
-        if (!empty($this->minLength))
+        /*if (!empty($this->minLength))
         {
             $widget .= ' minlength="'.$this->minLength.'"';
-        }
-        return $widget .= ' />';
+        }*/
+        return $widget .= ' /><br/></div>';
+        //return $widget .= ' />';
     }
 
     public function setMaxLength($maxLength)

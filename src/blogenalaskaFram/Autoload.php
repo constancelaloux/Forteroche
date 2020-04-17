@@ -18,3 +18,4 @@ $loader->addNamespace('blog\session', __DIR__ . '../../src/blogenalaskaFram/sess
 $loader->addNamespace('blog\exceptions', __DIR__ . '../../src/blogenalaskaFram/exceptions');
 $loader->addNamespace('blog\form', __DIR__ . '../../src/blogenalaskaFram/form');
 $loader->addNamespace('blog\validator', __DIR__ . '../../src/blogenalaskaFram/validator');
+$loader->addNamespace('blog\entity', __DIR__ . '../../src/blogenalaskaFram/entity');

@@ -1,15 +1,16 @@
 <?php
 
-namespace blog\database;
+namespace blog\entity;
 
 use blog\database\Model;
+//use blog\form\Entity;
 
 /**
  * Description of Author
  *  La classePersonnagea pour rôle de représenter un personnage 
  * présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
  */
-class Author  extends Model
+class Author extends Model
 {
     
     /**
@@ -20,47 +21,66 @@ class Author  extends Model
      */
     use \blog\Hydrator;
 
+      public $id,
+            $password,
+            $username,
+            $firstname,
+            $surname;
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
     */
-    private $id;
+    //protected $id;
     
     /**
      * @ORM\Column(name="password", type="string", length=255)
     */
-    private $password;
+    //private $password;
+    //protected $password;
     
     /**
      * @ORM\Column(name="username", type="string", length=255)
     */
-    private $username;
+    //private $username;
+    //protected $username;
     
     /**
      * @ORM\Column(name="surname", type="string", length=255)
     */
-    private $surname;
+    //private $surname;
+    //protected $surname;
     
     /**
      * @ORM\Column(name="firstname", type="string", length=255)
     */
-    private $firstname;
+    //private $firstname;
+    //protected $firstname;
 
+    const PASSWORD_INVALIDE = 1;
+    const USERNAME_INVALIDE = 2;
+    const FIRSTNAME_INVALIDE = 3;
+    const SURNAME_INVALIDE = 4;
     /**
      *Ici, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
      * Il faudra donc lui spécifier en paramétre dans pdoConnection.
      * Il ne manque plus qu'à implémenter le constructeur pour qu'on puisse directement hydrater notre objet lors de l'instanciation de la classe.
      * Pour cela, ajoutez un paramètre :$donnees. Appelez ensuite directement la méthodehydrate().
     */
-    public function __construct($donnees = [])
+   /* public function __construct($donnees = [])
     {
         if (!empty($donnees))
         {
             $this->hydrate($donnees);       
         }
-    }
+    }*/
 
+    public function isValid()
+    {
+        //print_r("form is_valid");
+        return !(empty($this->password) || empty($this->username) || empty($this->surname)|| empty($this->firstname));
+    }
+    
     public static function metadata()
     {
         return [
@@ -100,29 +120,29 @@ class Author  extends Model
     /**
      * Getters
     */
-    public function getId()
+    public function id()
     {
         return $this->id;
     }
 
 
-    public function getPassword()
+    public function password()
     {
         return $this->password;
 
     }
 
-    public function getUsername()
+    public function username()
     {
         return $this->username;
     }
 
-    public function getSurname()
+    public function surname()
     {
         return $this->surname;
     }
 
-    public function getFirstname()
+    public function firstname()
     {
         return $this->firstname;
     }
@@ -147,35 +167,55 @@ class Author  extends Model
     public function setSurname($surname)
     {
         //On vérifie qu'il s'agit bien d'une chaine de caractéres
-        if(is_string($surname))
+        /*if(is_string($surname) || !empty($surname))
         {
             //L'attribut de l'admin manager sera = a $surname. 
             //Il aura la valeur de la variable $surname
             $this->surname = $surname;
+        }*/
+        if(!is_string($surname) || empty($surname))
+        {
+            $this->erreurs[] = self::SURNAME_INVALIDE;
         }
+        $this->surname = $surname;
     }
 
     public function setPassword($password)
     {
-        if(is_string($password))
+        /*if(is_string($password) || !empty($password))
         {
             $this->password = $password;
+        }*/
+        if (!is_string($password) || empty($password))
+        {
+            $this->erreurs[] = self::PASSWORD_INVALIDE;
         }
+        $this->password = $password;
     }
 
     public function setUsername($username)
     {
-        if(is_string($username))
+        /*if(is_string($username) || !empty($username))
         {
             $this->username = $username;
+        }*/
+        if(!is_string($username) || empty($username))
+        {
+            $this->erreurs[] = self::PASSWORD_INVALIDE;
         }
+        $this->username = $username;
     }
 
     public function setFirstname($firstname)
     {
-        if(is_string($firstname))
+        /*if(is_string($firstname) || !empty($firstname))
         {
             $this->firstname = $firstname;
+        }*/
+        if(!is_string($firstname) || empty($firstname))
+        {
+            $this->erreurs[] = self::PASSWORD_INVALIDE;
         }
+        $this->firstname = $firstname;
     }
 }

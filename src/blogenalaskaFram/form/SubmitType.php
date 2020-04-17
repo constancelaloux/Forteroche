@@ -19,8 +19,10 @@ class SubmitType extends Type
           $widget .= $this->errorMessage.'<br />';
         }
         
-        $widget .= '<input type="submit" value="'.$this->name.'"';
+        //$widget .= '<input type="submit" value="'.$this->name.'"';
+        $widget .= '<button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">'.$this->name.'</button>';
         
-        return $widget.'/>';
+        //return $widget.'/>';
+        return $widget;
     }
 }

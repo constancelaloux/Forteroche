@@ -2,7 +2,8 @@
 
 namespace blog\form;
 
-use blog\form\Entity;
+//use blog\form\Entity;
+
 /**
  * Description of Form3
  *
@@ -13,20 +14,29 @@ class Form
     protected $entity;
     protected $fields = [];
 
-    public function __construct()
+    public function __construct(\blog\database\Model $entity)
     {
-        $entity = new Entity();
+        //$entity = new Entity();
         $this->setEntity($entity);
+        //print_r($this);
     }
 
     /**
     * On hydrate l'objet Field avec les valeurs données pour créer un formulaire.
     * Ensuite on assigne la valeur correspondante au champ et on génére un tableau avec les données
     */
-    public function add($field)
+    public function add(Field $field)
     {
+        //print_r("je suis dans add");
         $attr = $field->name(); // On récupère le nom du champ.
+       // print_r($this->entity($attr));
         //$field->setValue($this->entity($attr)); // On assigne la valeur correspondante au champ.
+        $field->setValue($this->entity->$attr);
+        /*if (isset($this->entity->$attr))
+        {
+            die("meurs");
+            $field->setValue($this->entity->$attr);
+        }*/
         $this->fields[] = $field; // On ajoute le champ passé en argument à la liste des champs.
         return $this;
     }
@@ -36,6 +46,7 @@ class Form
     */
     public function createView()
     {
+        //print_r("je passe dans createView");
         $view = '';
         // On génère un par un les champs du formulaire.
         foreach ($this->fields as $field)
@@ -43,7 +54,9 @@ class Form
             $view .= $field->buildWidget().'<br />';
         }
 
-        return $view .= '</p></form>';
+        //return $view .= '</p></form>';
+        //return $view .= '</form>';
+        return $view;
     }
 
     /**
@@ -51,12 +64,16 @@ class Form
     */
     public function isValid()
     {
+       // print_r("je passe dans isValid function");
         $valid = true;
-
+        //print_r($this->fields);
         foreach ($this->fields as $field)
         {
+            //print_r(!$field);
+
             if (!$field->isValid())
             {
+                //print_r("je devrais sortir de cette fonction si c'est vide");
                 $valid = false;
             }
         }
@@ -69,7 +86,7 @@ class Form
         return $this->entity;
     }
 
-    public function setEntity($entity)
+    public function setEntity(\blog\database\Model $entity)
     {
         $this->entity = $entity;
     }

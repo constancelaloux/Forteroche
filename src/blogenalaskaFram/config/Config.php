@@ -4,10 +4,14 @@
  * On va mettre la configuration générale de notre projet
  */
 return [
-    \blog\HTML\Renderer::class => [
+    /*\blog\HTML\Renderer::class => [
         'class' => \blog\HTML\Renderer::class,
         /**/
-            ],
+            //],
+    \blog\HTML\Render::class => [
+        'class' => \blog\HTML\Render::class,
+        /**/
+        ],
     //print_r("je suis dans config.php"),
     \blog\HTTPResponse::class => [
         'class' => \blog\HTTPResponse::class,

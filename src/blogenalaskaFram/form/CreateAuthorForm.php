@@ -2,7 +2,7 @@
 
 namespace blog\form;
 
-//use blog\HTML\Form3;
+
 use blog\form\StringField;
 use blog\form\TextField;
 use blog\form\SubmitType;
@@ -24,21 +24,21 @@ class CreateAuthorForm extends FormBuilder
     //Fonction dans laquelle on créé le formulaire
     public function form()
     {
-        $this->form->add(new FormType([
+        /*->add(new FormType([
         //'name' => 'mon formulaire de test',
-        'action' => '/test',
+        //'action' => '',
         'method' => 'POST'
         //'name' => 'Envoyer'
-        ]))
-        ->add(new StringField([
+        ]))*/
+        $this->form->add(new StringField([
         'type' => 'text',
         'label' => 'Prenom',
         'name' => 'firstname',
-        'maxLength' => 20,
-        'minLength' => 5,
+        'maxLength' => 2,
+        //'minLength' => 5,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 7),
-            new MinLengthValidator('Identifiant trop court', 5),
+            new MaxLengthValidator('Identifiant trop long)', 2),
+            //new MinLengthValidator('Identifiant trop court', 5),
             new NotNullValidator('Veuillez insérer votre identifiant'),
         ],
         ]))
@@ -46,11 +46,11 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'text',
         'label' => 'Nom',
         'name' => 'surname',
-        'maxLength' => 20,
-        'minLength' => 5,
+        'maxLength' => 2,
+        //'minLength' => 5,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 7),
-            new MinLengthValidator('Identifiant trop court', 5),
+            new MaxLengthValidator('Identifiant trop long)', 2),
+            //new MinLengthValidator('Identifiant trop court', 5),
             new NotNullValidator('Veuillez insérer votre identifiant'),
         ],
         ]))
@@ -58,11 +58,11 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'text',
         'label' => 'Identifiant',
         'name' => 'username',
-        'maxLength' => 20,
-        'minLength' => 5,
+        'maxLength' => 2,
+        //'minLength' => 5,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 7),
-            new MinLengthValidator('Identifiant trop court', 5),
+            new MaxLengthValidator('Identifiant trop long)', 2),
+            //new MinLengthValidator('Identifiant trop court', 5),
             new NotNullValidator('Veuillez insérer votre identifiant'),
         ],
         ]))
@@ -70,12 +70,12 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'password',
         'label' => 'Mot de passe',
         'name' => 'password',
-        'maxLength' => 8,
-        'minLength' => 6,
+        'maxLength' => 2,
+        //'minLength' => 6,
         'validators' => [
             new MaxLengthValidator('Mot de passe pas conforme! Votre mot de passe doit '
                                         . "comporter au moins un caractére spécial, un chiffre,"
-                                        . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 50),
+                                        . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 2),
             new NotNullValidator('Merci de spécifier un mot de passe'),
         ],
         ]))
@@ -85,8 +85,8 @@ class CreateAuthorForm extends FormBuilder
         'rows' => 7,
         'cols' => 50,
         ]))*/
-        ->add(new SubmitType([
+        /*->add(new SubmitType([
         'name' => 'Valider'
-        ]));
+        ]))*/;
     }  
 }

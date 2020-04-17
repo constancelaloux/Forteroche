@@ -10,7 +10,8 @@ namespace blog\controllers;
 
 use blog\HTTPResponse;
 //use blog\Page;
-use blog\HTML\Renderer;
+//use blog\HTML\Renderer;
+use blog\HTML\Render;
 use blog\config\Container;
 use blog\config\ContainerInterface;
 use blog\session\FlashService;
@@ -39,9 +40,10 @@ abstract class AbstractController
     public function __construct()
     {
         $this->request = new \blog\HTTPRequest();
-        $this->form = new Form();
+        //$this->form = new Form();
         $this->setContainer();
-        $this->renderer = $this->container->get(\blog\HTML\Renderer::class);
+        //$this->renderer = $this->container->get(\blog\HTML\Renderer::class);
+        $this->renderer = $this->container->get(\blog\HTML\Render::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
         $this->flashService = new FlashService();
         //$this->form = new Form3;
@@ -71,6 +73,7 @@ abstract class AbstractController
     */
     protected function redirect(string $url)
     {
+        //print_r($url);
         return $this->httpResponse->redirectResponse($url);
     }
     
