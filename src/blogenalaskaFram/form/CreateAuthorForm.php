@@ -11,6 +11,7 @@ use blog\form\FormBuilder;
 use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
 use blog\validator\MinLengthValidator;
+use blog\validator\MajValidator;
 /**
  * Description of TestForm
  *
@@ -34,12 +35,12 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'text',
         'label' => 'Prenom',
         'name' => 'firstname',
-        'maxLength' => 2,
+        'maxLength' => 5,
         //'minLength' => 5,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 2),
+            new MaxLengthValidator('Identifiant trop long', 2),
             //new MinLengthValidator('Identifiant trop court', 5),
-            new NotNullValidator('Veuillez insérer votre identifiant'),
+            new NotNullValidator('Veuillez insérer votre prénom'),
         ],
         ]))
         ->add(new StringField([
@@ -51,17 +52,17 @@ class CreateAuthorForm extends FormBuilder
         'validators' => [
             new MaxLengthValidator('Identifiant trop long)', 2),
             //new MinLengthValidator('Identifiant trop court', 5),
-            new NotNullValidator('Veuillez insérer votre identifiant'),
+            new NotNullValidator('Veuillez insérer votre nom'),
         ],
         ]))
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Identifiant',
         'name' => 'username',
-        'maxLength' => 2,
+        'maxLength' => 15,
         //'minLength' => 5,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 2),
+            new MaxLengthValidator('Identifiant trop long)', 15),
             //new MinLengthValidator('Identifiant trop court', 5),
             new NotNullValidator('Veuillez insérer votre identifiant'),
         ],
@@ -70,13 +71,16 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'password',
         'label' => 'Mot de passe',
         'name' => 'password',
-        'maxLength' => 2,
+        'maxLength' => 12,
         //'minLength' => 6,
         'validators' => [
             new MaxLengthValidator('Mot de passe pas conforme! Votre mot de passe doit '
                                         . "comporter au moins un caractére spécial, un chiffre,"
-                                        . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 2),
+                                        . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 8),
             new NotNullValidator('Merci de spécifier un mot de passe'),
+            new MajValidator("Votre mot de passe doit comporter au moins une majuscule"),
+            //new MinValidator("Votre mot de passe doit comporter au moins une majuscule"),
+            //new MinValidator("Votre mot de passe doit comporter au moins un caractére spécial"),
         ],
         ]))
         /*->add(new TextField([

@@ -12,6 +12,8 @@ class Model
      * @var array
      */
     public $originalData = [];
+    
+    protected $erreurs = [];
     /**
      * @return array
      */
@@ -21,7 +23,7 @@ class Model
      * @return string
      */
     //public abstract static function getManager();
-        public function __construct(array $donnees = [])
+    public function __construct($donnees = [])
     {
         if (!empty($donnees))
         {
@@ -37,7 +39,7 @@ class Model
     {
         if(empty($result)) 
         {
-            throw new ORMException("Aucun résultat n'a été trouvé !");
+            //throw new ORMException("Aucun résultat n'a été trouvé !");
         }
         $this->originalData = $result;
         foreach($result as $column => $value) 
@@ -102,5 +104,10 @@ class Model
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
         //Je vais retourner le getter de l'id
         return $this->{sprintf(ucfirst($property))}();
+    }
+    
+    public function erreurs()
+    {
+        return $this->erreurs;
     }
 }

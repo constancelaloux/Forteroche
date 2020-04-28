@@ -19,7 +19,7 @@ class Author extends Model
      * Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
      * celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
      */
-    use \blog\Hydrator;
+    //use \blog\Hydrator;
 
       public $id,
             $password,
@@ -67,17 +67,9 @@ class Author extends Model
      * Il ne manque plus qu'à implémenter le constructeur pour qu'on puisse directement hydrater notre objet lors de l'instanciation de la classe.
      * Pour cela, ajoutez un paramètre :$donnees. Appelez ensuite directement la méthodehydrate().
     */
-   /* public function __construct($donnees = [])
-    {
-        if (!empty($donnees))
-        {
-            $this->hydrate($donnees);       
-        }
-    }*/
 
     public function isValid()
     {
-        //print_r("form is_valid");
         return !(empty($this->password) || empty($this->username) || empty($this->surname)|| empty($this->firstname));
     }
     

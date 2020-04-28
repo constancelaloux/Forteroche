@@ -3,11 +3,11 @@
 namespace blog\controllers;
 
 use blog\controllers\AbstractController;
-use blog\Validator;
 use blog\form\CreateAuthorForm;
 use blog\entity\Author;
-use blog\database\Manager;
+use blog\database\EntityManager;
 use blog\form\ConnectAuthorForm;
+
 /**
  * Description of TestFormController
  *
@@ -15,54 +15,138 @@ use blog\form\ConnectAuthorForm;
  */
 class AuthorController extends AbstractController
 {   
-        //Fonction qui va me permettre de créer un formulaire de création d'auteur
-    // On passe la méthode createView() du formulaire à la vue
-    // afin qu'elle puisse afficher le formulaire toute seule
-    public function createMyForm()
+    /**
+    * Create Author
+    */
+    public function createAuthor()
+    {
+        $title = 'S\'inscrire sur ce site';
+        $url = 'connectForm';
+        $p = 'Connexion';
+        $this->processForm($title,$url,$p);
+    }
+    
+    /**
+    * Fonction qui va me permettre de créer un formulaire de création d'auteur
+     * On passe la méthode createView() du formulaire à la vue
+     * afin qu'elle puisse afficher le formulaire toute seule
+    */
+    public function processForm($title,$url,$p)
     { 
         if ($this->request->method() == 'POST')
-        {
+        {        
             $author = new Author(
             [
                 'surname' => $this->request->postData('surname'),
                 'firstname' => $this->request->postData('firstname'),
                 'username' => $this->request->postData('username'),
                 'password' => $this->request->postData('password'),
-                //'password' => password_hash($authorPassword, PASSWORD_DEFAULT)
             ]);
         }
         else
         {
-          $author = new Author();
+            $author = new Author();
         }
-        
-        $title = 'S\'inscrire sur ce site';
+      
         $formBuilder = new CreateAuthorForm($author);
         $form = $formBuilder->buildform($formBuilder->form());
-        $url = 'connectForm';
-        $p = 'Connexion';
         
-        //print_r($form->isValid());
         if ($this->request->method() == 'POST' && $form->isValid())
         {
-            //die('On enregistre le commentaire');
-            $model = new Manager($author);
+            $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
+            $author->setPassword($password);
+
+            $model = new EntityManager($author);
+
             if($model->exist(['username' => $author->username()]))
             {
                 unset($model);
+                $this->addFlash()->error('Cet identifiant existe déja');
                 return $this->redirect('/');
             }
             else
             {
                 $model->persist($author);
-                $this->addFlash('Votre compte a bien été créé');
-                //return $this->getFlash('success');
+                $this->addFlash()->success('Votre compte a bien été créé');
                 return $this->redirect('/connectForm');
             }
         }
-        //die("meurs a la fin de la fonction");
         $this->getRender()->render('Form', ['title' => $title,'form' => $form->createView(), 'url' => $url, 'p' => $p]);               
     }
+    
+    /**
+    * Fonction pour créer le formulaire d'identification
+    */
+    public function logAuthor()
+    {
+        if ($this->request->method() == 'POST')
+        {
+            $author = new Author(
+            [
+                'username' => $this->request->postData('username'),
+                'password' => $this->request->postData('password')
+            ]); 
+        }
+        else 
+        {
+            $author = new Author();
+        }
+        
+        $formBuilder = new ConnectAuthorForm($author);
+        $form = $formBuilder->buildform($formBuilder->form());
+
+        if ($this->request->method() == 'POST' && $form->isValid())
+        {
+            $model = new EntityManager($author);
+            
+            if($model->exist(['username' => $author->username()]))
+            {
+                $auth = $model->find(['username' => $author->username()]);
+                $idOfAuthor = $auth->id();
+                //$imageOfAuthor = $author->imageComment();
+                $password = $auth->password();
+                $username = $auth->username();
+
+                //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                $authPassword = password_verify($this->request->postData('password'), $password);        
+
+                if ($authPassword)
+                {
+                    session_start();
+                    $_SESSION['clientUsername'] = $username;
+                    $_SESSION['clientPassword'] = $password;
+                    $_SESSION['ClientId'] = $idOfAuthor;
+                    //$_SESSION['imageComment'] = $imageOfAuthor;
+                    $this->addFlash()->success('Vous etes bien enregistrés');
+                    return $this->redirect('/getBackoffice');
+                }
+                else 
+                {
+                    $this->addFlash()->success('Votre mot de passe est incorrect!');
+                    return $this->redirect('/connectForm');
+                }          
+            }
+            else 
+            {
+                unset($model);
+                $this->addFlash()->success('Votre identifiant est incorrect!');
+                return $this->redirect('/connectForm');
+            }
+        }
+        $title = 'Identifiez vous';
+        $p = 'Pas de compte, s\'enregistrer';
+        $this->getrender()->render('Form', ['title' => $title,'form' => $form->createView(), 'p' => $p]);     
+    }
+    
+    
+   
+    
+    
+    
+    
+    
+    
+    
     
     
     
@@ -107,7 +191,7 @@ class AuthorController extends AbstractController
                 'password' => password_hash($authorPassword, PASSWORD_DEFAULT)
             ]);
             
-            $model = new Manager($author);
+            $model = new EntityManager($author);
             if($model->exist(['username' => $author->getUsername()]))
             {
                 unset($model);
@@ -127,33 +211,7 @@ class AuthorController extends AbstractController
         }
     }
     
-    //Fonction pour créer le formulaire d'identification
-    public function connectForm()
-    {
-        if ($this->request->method() == 'POST')
-        {
-            $author = new Author(
-            [
-                'username' => $this->request->postData('username'),
-                'password' => $this->request->postData('password')
-            ]); 
-        }
-        else 
-        {
-            $author = new Author();
-        }
-        $title = 'Identifiez vous';
-        //$formBuilder = new ConnectAuthorForm();
-        $formBuilder = new CreateAuthorForm($author);
-        $form = $formBuilder->buildform($formBuilder->form());
-        $p = 'Pas de compte, s\'enregistrer';
-        if ($this->request->method() == 'POST' && $form->isValid())
-        {
-            //print_r($form->isValid());
-          die('On verifie l auteur');
-        }
-        $this->getrender()->render('Form', ['title' => $title,'form' => $form->createView(), 'p' => $p]);     
-    }
+
     
     //Fonction pour valider la connexion de l'auteur.
     //check if the username and the password has been set
@@ -170,7 +228,7 @@ class AuthorController extends AbstractController
                 'password' => $authorPassword
             ]); 
 
-            $model = new Manager($author);
+            $model = new EntityManager($author);
 
             if($model->exist(['username' => $author->getUsername()]))
             {

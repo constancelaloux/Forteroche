@@ -18,7 +18,6 @@ class Form
     {
         //$entity = new Entity();
         $this->setEntity($entity);
-        //print_r($this);
     }
 
     /**
@@ -27,7 +26,6 @@ class Form
     */
     public function add(Field $field)
     {
-        //print_r("je suis dans add");
         $attr = $field->name(); // On récupère le nom du champ.
        // print_r($this->entity($attr));
         //$field->setValue($this->entity($attr)); // On assigne la valeur correspondante au champ.
@@ -46,7 +44,6 @@ class Form
     */
     public function createView()
     {
-        //print_r("je passe dans createView");
         $view = '';
         // On génère un par un les champs du formulaire.
         foreach ($this->fields as $field)
@@ -64,20 +61,16 @@ class Form
     */
     public function isValid()
     {
-       // print_r("je passe dans isValid function");
         $valid = true;
-        //print_r($this->fields);
+
         foreach ($this->fields as $field)
         {
-            //print_r(!$field);
 
             if (!$field->isValid())
             {
-                //print_r("je devrais sortir de cette fonction si c'est vide");
                 $valid = false;
             }
         }
-
         return $valid;
     }
 

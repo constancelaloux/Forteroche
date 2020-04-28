@@ -14,20 +14,26 @@
 //$router->get('/flashMessage', "Author#FlashMessageAndRenderView");
 
 //Route qui amméne vers la fn qui créé un formulaire de création d'auteur
-$router->get('/', "Author#createMyForm");
-$router->post('/', "Author#createMyForm");
+$router->get('/', "Author#createAuthor");
+$router->post('/', "Author#createAuthor");
 
 //Route qui amméne vers la fn qui valide et gére les données
 //$router->post('/test', "Author#getValidateAndSendDatasFromForm");
 
 //Route qui va vers la fonction qui créé un formulaire de connexion
-$router->get('/connectForm', "Author#connectForm");
-$router->post('/connectForm', "Author#connectForm");
+$router->get('/connectForm', "Author#logAuthor");
+$router->post('/connectForm', "Author#logAuthor");
 
 //Route qui récupére les identifiants de connexion de l'auteur
 //$router->post('/validateAuthorConnexion', "Author#validateConnexion");
 
-//$router->get('/authorFrontPage', "Author#getAuthorFrontPage");
+//Route qui va vers le back office de l'administrateur
+$router->post('/getListOfArticles', "BackOffice#getListOfArticles");
+
+//Route qui va vers le blog
+$router->get('/getBackoffice', "BackOffice#renderBackoffice");
+//Route qui récupére les articles pour le datatables
+$router->get('/Blog', "Blog#renderBlog");
 
 //$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 

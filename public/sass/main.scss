@@ -1,0 +1,33 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 22 avr. 2020, 22:59:47
+    Author     : constancelaloux
+*/
+@import "./utils/variables";
+@import "./bootstrap/bootstrap.scss";
+@import "./layout/form";
+
+/*Formulaire*/
+.h2
+{
+    color:$warning;
+    //border-left: 4px solid #00a0d2;
+    padding: 12px;
+}
+
+button.btn-primary 
+{
+    background-color: $warning;
+    border-color: $transparent-color;
+}
+
+button.btn-primary:hover
+{
+    background-color:$secondary-color;
+    border-color: $transparent-color; 
+}
+

@@ -15,7 +15,6 @@ abstract class FormBuilder
 
     public function __construct(\blog\database\Model $entity)
     {
-        //$entity = new Entity();
         $this->setForm(new Form($entity));
     }
 
@@ -24,9 +23,6 @@ abstract class FormBuilder
 
     public function setForm(form $form)
     {
-        //print_r("je passe dans setForm");
-        //$form = new Form();
-        //print_r($this->form);
         $this->form = $form;
     }
 

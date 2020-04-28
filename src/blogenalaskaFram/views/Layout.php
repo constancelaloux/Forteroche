@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html>
-    <head>
+
+    
         <meta charset="utf-8" />
-        <title><?= $title ?? 'Jean Forteroche'?></title>
+        <title><?= $title ?? 'Jean Forteroche'?></title></>
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         
@@ -24,8 +24,8 @@
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
 
         <!--Bootstrap-->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  crossorigin="anonymous">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
+        <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>-->
         <!--<link href="/blogenalaska/bootstrap-4.0.0/css/bootstrap.min.css"  rel="stylesheet"/>
         <link href="/blogenalaska/bootstrap-4.0.0/js/bootstrap.min.js"  rel="stylesheet"/>-->
         
@@ -40,11 +40,35 @@
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
         <!--<script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
         <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">-->
+        <!--Articles-->
+        <!--<script src="/../../public/js/Backoffice.js"></script>-->
+        <script type="text/javascript" src="/../../public/js/Backoffice.js"></script>
         
-    </head>
+    
     
     <body>
-                
+        <?php
+        //print_r($_SESSION);
+        if($session->get('success'))
+        {
+            ?>
+            <div class="alert alert-success" role="alert">
+        <?php
+            echo $session->get('success');
+        ?>
+            </div>   
+        <?php
+        //return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $flashMessageSuccess]);
+        }
+        else if($session->get('error'))
+        {
+        ?>
+            <div id='#myAlert' class="alert alert-danger">
+        <?php
+            echo $session->get('error');
+        }
+        ?>
+            </div>
         <!-- ce qui doit etre fait normalement pour le message flash -->
 
         <!--<div class="alert alert-success" role="alert">
@@ -74,5 +98,5 @@
         <?php //require __DIR__.'/../views/Footer.php'; ?>
     </body>
 
-</html>
+
 

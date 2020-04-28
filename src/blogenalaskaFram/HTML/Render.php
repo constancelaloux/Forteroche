@@ -3,6 +3,7 @@
 namespace blog\HTML;
 
 use blog\HTML\RendererInterface;
+use blog\session\FlashService;
 
 /**
  * Description of Render
@@ -75,6 +76,8 @@ class Render  implements RendererInterface
         {
             if(file_exists($this->viewpath))
             {
+                $session = new FlashService();
+
                 //Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
                 ob_start();
                 //$renderer = $this;
@@ -88,7 +91,9 @@ class Render  implements RendererInterface
             }
         }
         $content = ob_get_clean();
+        ob_start();
         require __DIR__.'/../views/layout.php';
+        //return ob_get_clean();
     }
 
     /*

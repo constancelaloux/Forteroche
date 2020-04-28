@@ -22,24 +22,6 @@ class EntityManager extends DbConnexion
      * @var array
      */
     private $metadata;
-    /**
-     * Manager constructor.
-     * @param \PDO $pdo
-     * @param $model
-     * @throws ORMException
-     */
-    /*public function __construct(\PDO $pdo, $model)
-    {
-        $this->pdo = $pdo;
-        $reflectionClass = new \ReflectionClass($model);
-        if($reflectionClass->getParentClass()->getName() == Model::class) {
-            $this->model = $model;
-            $this->metadata = $this->model::metadata();
-        }else{
-            throw new ORMException("Cette classe n'est pas une entité.");
-        }
-        $this->model = $model;
-    }*/
     
     //Je récupére dans le constructeur ce que j'ai fait passer à ma class test
     public function __construct(Model $model)
@@ -164,7 +146,7 @@ class EntityManager extends DbConnexion
         return $this->fetchAll();
     }
     
-    public function find($filters)
+    public function find($filters = [])
     {
         return $this->read($filters);
     }
@@ -274,7 +256,9 @@ class EntityManager extends DbConnexion
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        return new $this->model($result);
+        //var_dump($result);
+        return (new $this->model())->hydrate($result);
+        //return (new $this->model($result));
     }
     
     public function exist($filters = [])
