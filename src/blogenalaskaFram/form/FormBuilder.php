@@ -29,7 +29,6 @@ abstract class FormBuilder
     //Fonction qui retourne le formulaire que l'on a créé
     public function buildform()
     {
-        //print_r($this->form);
         return $this->form;
     }
     //elle prend en paramétre l'objet form

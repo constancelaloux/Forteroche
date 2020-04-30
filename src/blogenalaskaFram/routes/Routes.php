@@ -32,8 +32,15 @@ $router->post('/getListOfArticles', "BackOffice#getListOfArticles");
 
 //Route qui va vers le blog
 $router->get('/getBackoffice', "BackOffice#renderBackoffice");
+
+//Route qui va vers ka creation d'articles
+$router->get('/getWriteArticles', "BackOffice#createArticle");
+
 //Route qui récupére les articles pour le datatables
 $router->get('/Blog', "Blog#renderBlog");
+
+//Route qui permet d'uploader une image
+$router->get('/uploadImage', "BackOffice#renderBlog");
 
 //$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 

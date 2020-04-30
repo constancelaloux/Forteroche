@@ -14,7 +14,7 @@ use blog\HTTPResponse;
 use blog\HTML\Render;
 use blog\config\Container;
 use blog\config\ContainerInterface;
-use blog\session\FlashService;
+use blog\error\FlashService;
 use blog\session\PHPSession;
 use blog\form\Form;
 /**

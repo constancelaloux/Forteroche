@@ -3,7 +3,7 @@
 namespace blog\HTML;
 
 use blog\HTML\RendererInterface;
-use blog\session\FlashService;
+use blog\error\FlashService;
 
 /**
  * Description of Render

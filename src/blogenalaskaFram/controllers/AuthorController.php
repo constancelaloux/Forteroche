@@ -71,7 +71,7 @@ class AuthorController extends AbstractController
                 return $this->redirect('/connectForm');
             }
         }
-        $this->getRender()->render('Form', ['title' => $title,'form' => $form->createView(), 'url' => $url, 'p' => $p]);               
+        $this->getRender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'url' => $url, 'p' => $p]);               
     }
     
     /**
@@ -135,7 +135,7 @@ class AuthorController extends AbstractController
         }
         $title = 'Identifiez vous';
         $p = 'Pas de compte, s\'enregistrer';
-        $this->getrender()->render('Form', ['title' => $title,'form' => $form->createView(), 'p' => $p]);     
+        $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p]);     
     }
     
     

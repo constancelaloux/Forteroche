@@ -13,7 +13,7 @@ class Articles extends Model
     /**
      * @var array
      */
-    protected $id,
+    public $id,
       $author,
       $subject,
       $image,

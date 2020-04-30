@@ -12,15 +12,20 @@
         <link href="/public/css/style.css" rel="stylesheet" />
         
         <!--Jquery-->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
         <!--<link href="/blogenalaska/jquery/jquery-ui.min.js"  rel="stylesheet"/>-->
-        
-        <!--Datatables-->
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+       
+    <!--Datatables-->
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
         <script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
         
         <!--Tinymce-->
         <script src="https://cloud.tinymce.com/stable/tinymce.min.js"></script>
+        <script type="text/javascript" src="/../../public/js/Tinymce.js"></script>
+        <script type="text/javascript" src="/../../public/js/fr_FR.js">
         <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
 
         <!--Bootstrap-->
@@ -40,25 +45,26 @@
         <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
         <!--<script src="/blogenalaska/Bootstrap/js/bootstrap.min.js"></script>
         <link href="/blogenalaska/Bootstrap/css/bootstrap.css" rel="stylesheet">-->
+        
         <!--Articles-->
-        <!--<script src="/../../public/js/Backoffice.js"></script>-->
         <script type="text/javascript" src="/../../public/js/Backoffice.js"></script>
         
-    
-    
+        <!--Upload-->
+        <script type="text/javascript" src="/../../public/js/upload.js"></script>
+            
     <body>
+        <!-- ce qui doit etre fait normalement pour le message flash -->
         <?php
         //print_r($_SESSION);
         if($session->get('success'))
         {
-            ?>
+        ?>
             <div class="alert alert-success" role="alert">
         <?php
             echo $session->get('success');
         ?>
             </div>   
         <?php
-        //return $this->getrender()->render('TestSessionFlahMessages',  ['message' => $flashMessageSuccess]);
         }
         else if($session->get('error'))
         {
@@ -69,28 +75,7 @@
         }
         ?>
             </div>
-        <!-- ce qui doit etre fait normalement pour le message flash -->
-
-        <!--<div class="alert alert-success" role="alert">
-          This is a success alert—check it out!
-        </div>
-        <div id='#myAlert' class="alert alert-danger">          
-            {{message}}
-        </div>
-        
-        <!-- un test-->
-        <!--<div class="alert alert-success" role="alert">
-          This is a success alert—check it out!
-        </div>
-        <div id='#myAlert' class="alert alert-danger">   -->       
-            <?php 
-            //use blog\session\PHPSession;
-            //use blog\session\FlashService;
-            //$session = new PHPSession();
-            //$session = new FlashService();
-            //echo $session->get('success');
-            ?>
-        <!--</div>-->
+    
         <?php //require __DIR__.'/../views/Header.php'; ?>
         <!--<div class="container">-->
             <?= $content ?>  

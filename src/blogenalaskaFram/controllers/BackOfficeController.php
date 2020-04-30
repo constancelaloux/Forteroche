@@ -5,6 +5,7 @@ namespace blog\controllers;
 use blog\controllers\AbstractController;
 use blog\database\EntityManager;
 use blog\entity\Articles;
+use blog\form\ArticlesForm;
 
 /**
  * Description of BacOfficeController
@@ -13,10 +14,14 @@ use blog\entity\Articles;
  */
 class BackOfficeController extends AbstractController
 {
+    /**
+     * Afficher le tableau d'articles
+     */
     public function renderBackoffice()
     {
-        $this->getrender()->render('Backoffice');
+        $this->getrender()->render('BackofficeView');
     }
+    
     /**
      * Récupérer des articles pour les afficher au sein de datatables
      */
@@ -29,24 +34,20 @@ class BackOfficeController extends AbstractController
         {
             foreach ($posts as $articles) 
             {
-                //print_r($articles);
-                //print_r($article = $articles->id());
                 $row = array();
                 $row[] = $articles->id();
                 $row[] = $articles->subject();
-
                 $row[] = $articles->createdate();
-
                 $updateArticleDate = $articles->updatedate();
 
                 if (is_null($updateArticleDate))
-                    {
-                        $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
-                    }
+                {
+                    $row[] = "Vous n'avez pas fait de modifications sur cet article pour l'instant";
+                }
                 else 
-                    {
-                        $row[] = $updateArticleDate;
-                    }
+                {
+                    $row[] = $updateArticleDate;
+                }
 
                 $row[] = $articles->status();
                 $data[] = $row;
@@ -54,17 +55,26 @@ class BackOfficeController extends AbstractController
                             
             // Structure des données à retourner
             $json_data = array
-                (
-                    "data" => $data
-                );
+            (
+                "data" => $data
+            );
             echo json_encode($json_data);
-            //$this->getrender()->render('Backoffice',['title' => json_encode($json_data)]);
-            //require_once (__DIR__.'/../views/Backoffice.php');
         }
         else
         {
-            //require_once (__DIR__.'/../views/Backoffice.php');
-            $this->getrender()->render('Backoffice');
+            $this->getrender()->render('BackofficeView');
         }
+    }
+    
+    /**
+     * Créer un article
+     */
+    public function createArticle()
+    {
+        $articles = new Articles(); 
+        $formBuilder = new ArticlesForm($articles);
+        $form = $formBuilder->buildform($formBuilder->form());
+        $title = "création d'un article";
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
     }
 }

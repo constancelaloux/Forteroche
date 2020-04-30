@@ -1,7 +1,7 @@
 <?php
 
 /* 
- * Liste des namespaces
+ * List of namespaces
  */
 
 require(__DIR__ . '/Autoloader.php');
@@ -19,3 +19,5 @@ $loader->addNamespace('blog\exceptions', __DIR__ . '../../src/blogenalaskaFram/e
 $loader->addNamespace('blog\form', __DIR__ . '../../src/blogenalaskaFram/form');
 $loader->addNamespace('blog\validator', __DIR__ . '../../src/blogenalaskaFram/validator');
 $loader->addNamespace('blog\entity', __DIR__ . '../../src/blogenalaskaFram/entity');
+$loader->addNamespace('blog\file', __DIR__ . '../../src/blogenalaskaFram/file');
+$loader->addNamespace('blog\error', __DIR__ . '../../src/blogenalaskaFram/error');

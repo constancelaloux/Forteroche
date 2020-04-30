@@ -1,6 +1,6 @@
 <?php
 
-namespace blog\session;
+namespace blog\error;
 
 use blog\session\PHPSession;
 

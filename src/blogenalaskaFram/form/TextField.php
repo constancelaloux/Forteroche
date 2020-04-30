@@ -22,7 +22,7 @@ class TextField extends Field
           $widget .= $this->errorMessage.'<br />';
         }
 
-        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><textarea name="'.$this->name.'" id="'.$this->name.'"';
+        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><textarea name="'.$this->name.'" class="form-control form-control-sm" id="'.$this->name.'"';
 
         if (!empty($this->cols))
         {
@@ -38,10 +38,11 @@ class TextField extends Field
 
         if (!empty($this->value))
         {
-          $widget .= htmlspecialchars($this->value);
+          $widget .=  ' value="'.htmlspecialchars($this->value);
         }
 
-        return $widget.'</textarea>';
+        //return $widget.'</textarea>';
+        return $widget .= ' </textarea><br/></div>';
     }
 
     public function setCols($cols)
