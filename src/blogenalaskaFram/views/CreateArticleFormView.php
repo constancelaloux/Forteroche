@@ -1,4 +1,4 @@
- <<section class="createAuthorForm">
+<section class="createAuthorForm">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8 col-sm-12">
@@ -8,7 +8,6 @@
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
                     <?php echo $form ?>
-                    <!--<button type="button" class="btn btn-info" data-toggle="modal" data-target="#uploadModal">Upload file</button>-->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Upload file</button>
                     <div class="preview">
                         <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
@@ -21,7 +20,7 @@
         </div>
     </div>
 </section>
- 
+
 
 <!-- The Modal -->
 <div class="modal" id="uploadModal" role="dialog">

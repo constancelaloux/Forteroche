@@ -42,7 +42,7 @@ class TextField extends Field
         }
 
         //return $widget.'</textarea>';
-        return $widget .= ' </textarea><br/></div>';
+        return $widget .= ' </textarea></div>';
     }
 
     public function setCols($cols)

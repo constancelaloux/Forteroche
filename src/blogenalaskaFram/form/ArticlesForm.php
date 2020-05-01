@@ -35,8 +35,8 @@ class ArticlesForm extends FormBuilder
         ->add(new TextField([
         'label' => 'Contenu de l\'article',
         'name' => 'content',
-        'rows' => 1000,
-        'cols' => 45,
+        //'rows' => 300,
+        //'cols' => 45,
         'validators' => [
             //new MaxLengthValidator('Identifiant trop long)', 7),
             //new MinLengthValidator('Identifiant trop court', 5),
