@@ -1,5 +1,9 @@
 @charset "UTF-8";
 /* 
+    Created on : 22 avr. 2020, 22:59:47
+    Author     : constancelaloux
+*/
+/* 
     Created on : 23 avr. 2020, 17:11:06
     Author     : constancelaloux
 */
@@ -9902,6 +9906,87 @@ button.btn-primary {
 button.btn-primary:hover {
   background-color: #e83e36c9;
   border-color: transparent;
+}
+
+.navbar-light .navbar-brand {
+  /*color: #c34336;*/
+  color: #f70f0f;
+  font-size: 1.35rem;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  font-size: 1.05rem;
+  color: #111;
+  letter-spacing: 0.0925em;
+}
+
+.navbar-light .navbar-nav .nav-link.disabled {
+  font-size: 1.05rem;
+  color: #111;
+  letter-spacing: 0.0925em;
+}
+
+.navbar-light .navbar-nav .show > .nav-link, .navbar-light .navbar-nav .active > .nav-link, .navbar-light .navbar-nav .nav-link.show, .navbar-light .navbar-nav .nav-link.active {
+  font-size: 1.05rem;
+  color: #111;
+  letter-spacing: 0.0925em;
+}
+
+.btn-outline-success {
+  color: #f70f0f;
+  border-color: #f70f0f;
+}
+
+.jumbotron {
+  background-color: #1d1a19;
+}
+
+h3.card-title {
+  /* margin-bottom: 0.75rem; */
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  letter-spacing: 4px;
+}
+
+a.stretched-link {
+  border-color: #333;
+  border-radius: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  color: #333;
+  background-color: transparent;
+  padding: 15px 0px;
+  letter-spacing: 1px;
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+  -ms-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+  border: none;
+  border-bottom: 3px solid;
+  font-size: 13px;
+}
+
+p.card-text {
+  font-size: 13px;
+  line-height: 26px;
+}
+
+.text-muted {
+  font-size: 12px;
+  margin-right: 20px;
+  font-weight: 300;
+  text-transform: uppercase;
+}
+
+h3.card-title {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 22px;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-weight: 700;
 }
 
 /*# sourceMappingURL=style.css.map */

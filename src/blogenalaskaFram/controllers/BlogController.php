@@ -14,4 +14,9 @@ class BlogController extends AbstractController
     {
         $this->getrender()->render('BlogView');
     }
+    
+    public function renderArticle()
+    {
+        $this->getrender()->render('ArticleView');
+    }
 }

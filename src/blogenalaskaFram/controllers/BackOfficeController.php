@@ -9,7 +9,6 @@ use blog\form\ArticlesForm;
 
 /**
  * Description of BacOfficeController
- *
  * @author constancelaloux
  */
 class BackOfficeController extends AbstractController
