@@ -1,9 +1,9 @@
-<footer class="blog-footer">
-    <div class="container-fluid bg-dark">
+<footer class="blog-footer bg-dark"><!-- style="height: 200px;">-->
+    <div class="container-fluid text-white rounded p-4">
         <div class="row mb-2 justify-content-center">
-            <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+            <p>Blog template built for <a href="https://getbootstrap.com/" class="text-warning">Bootstrap</a> by <a href="https://twitter.com/mdo" class="text-warning">@mdo</a>.</p>
             <p>
-                <a href="#">Back to top</a>
+                <a href="#" class="text-white">Back to top</a>
             </p>
         </div>
     </div>

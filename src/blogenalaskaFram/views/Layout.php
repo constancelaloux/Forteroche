@@ -53,6 +53,9 @@
 <!--Upload-->
 <script type="text/javascript" src="/../../public/js/upload.js"></script>
 
+<!--Scroll nav-->
+<script type="text/javascript" src="/../../public/js/scrollnav.js"></script>
+
 <body>
     <!-- ce qui doit etre fait normalement pour le message flash -->
     <?php

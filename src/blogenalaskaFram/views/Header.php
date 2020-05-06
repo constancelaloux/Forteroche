@@ -11,13 +11,13 @@
         <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
             <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="#">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Link</a>
+                    <a class="nav-link" href="#">Les chapitres</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Contact</a>
                 </li>
             </ul>
             <form class="form-inline my-2 my-lg-0">
@@ -26,25 +26,8 @@
             </form>
         </div>
     </nav>
-</header>
-<script>
-// navbar background color change on scroll
-    $(window).scroll(function(){
-        var scroll = $(window).scrollTop();
-        if(scroll < 200){
-        console.log("je passe la");
-            $('#navbar').css('background', 'transparent');
-            $('a.nav-link').css('color', '#111');
-        } else{
-            $('#navbar').css('background', '#1d1919');
-            $('a.nav-link').css('color', 'white');
-        }
-        //rgba(45, 69, 96, 1)
-        //rgb(7, 8, 8)
-        //rgba(33, 37, 41, 1)
-        //#1d1919;
-    });
-</script>
+<!--</header>-->
+
 <?php
 //print_r($_SESSION['ClientId']);
 ?>
