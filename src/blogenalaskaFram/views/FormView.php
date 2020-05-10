@@ -14,7 +14,7 @@
                 </form>
 
                 <a class="text-primary" href="<?php echo $url ?>"><?php echo $p ?></a>
-                <a class="text-primary border-left" href="/Blog">Retour vers le blog</a>
+                <a class="text-primary border-left" href="/">Retour vers le blog</a>
                 <p>username = Jean_Forteroche
                 password = @jeanF38</p>
             </div>

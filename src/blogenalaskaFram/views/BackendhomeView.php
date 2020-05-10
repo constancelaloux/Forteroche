@@ -5,10 +5,13 @@
                 <div class="text-center mb-4">
                     <h1>Articles</h1> 
                 </div>
+                
                 <!--Buttons-->
-                <button id="hideSaveDatas">Liste des articles publiés</button>
-                <button id="hidePublishedDatas">Liste des articles sauvegardés</button>
-                <button id="reset">Liste compléte</button>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button type="button" class="btn btn-success m-3" id="hideSaveDatas">Liste des articles publiés</button>
+                    <button type="button" class="btn btn-primary m-3" id="hidePublishedDatas">Liste des articles sauvegardés</button>
+                    <button type="button" class="btn btn-info m-3" id="listofpost">Liste compléte</button>
+                </div>
                 
                 <!--Board-->
                 <table id="displayarticles" class="cell-border compact stripe" style="width:100%">

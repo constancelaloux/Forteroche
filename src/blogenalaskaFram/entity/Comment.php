@@ -7,7 +7,7 @@ namespace blog\entity;
  *
  * @author constancelaloux
  */
-class Comments 
+class Comment 
 {
     //put your code here
 }

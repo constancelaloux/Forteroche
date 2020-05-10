@@ -32,124 +32,141 @@
                     <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
                 </ol>
                 <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.</p>
-            </div><!-- /.blog-post --> 
+                
+                <nav class="blog-pagination text-center">
+                    <a class="btn btn-outline-primary" href="#">Précédent</a>
+                    <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Suivant</a>
+                </nav>
+                
+                <div class="comments">
+                    <h2>Commentaires</h2>
+                    <div class="media mt-3">
+                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">Top-aligned media</h5>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        </div>
+                    </div>
+                    <div class="media mt-3">
+                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt=".image 2" width="100" height="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">Top-aligned media</h5>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        </div>
+                    </div>
+                    <div class="media mt-3">
+                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 3" width="100" height="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">Top-aligned media</h5>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        </div>
+                    </div>
+                    <div class="media mt-3">
+                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 4" width="100" height="50">
+                        <div class="media-body">
+                            <h5 class="mt-0">Top-aligned media</h5>
+                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                        </div>
+                    </div>
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" tabindex="-1">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item active">
+                                <a class="page-link" href="#">2 <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item">
+                                <a class="page-link" href="#">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+
+                </div>
+                <div class="form mb-4">
+                    <h5>Laissez votre commentaire</h5>
+                            <form action="" method="post">
+                                <!--<p>-->
+                                <div class="text-center mb-4">
+                                    <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php //echo $title ?></h1>
+                                </div>
+                                    <?php //echo $form ?>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Your email">
+                                    <textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Upload file</button>
+                                <div class="preview">
+                                    <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
+                                </div>
+                                <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>
+                                <!--</p>-->
+                            </form>
+                </div><!-- /.blog-post --> 
+            </div>
+            
             <div class="col-lg-3 ml-auto">
                 <aside class="sidebar">
-                  <div class="card mb-4">
-                    <div class="card-body">
-                      <h4 class="card-title">About</h4>
-                      <p class="card-text">Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam <a href="#">semper libero</a>, sit amet adipiscing sem neque sed ipsum. </p>
+                    <h4>Les derniers chapitres</h4>
+                    <div class="card mb-4">
+                        <img src="/../../public/images/kayak.jpg" class="card-img-top" alt="image 1">
+                        <div class="card-body">
+                            <h5 class="card-title">Chapitre 1</h5>
+                        </div>
                     </div>
-                  </div><!-- /.card -->
+                    <div class="card mb-4">
+                        <img src="/../../public/images/presentation.jpg" class="card-img-top" alt="image 2">
+                        <div class="card-body">
+                            <h5 class="card-title">Chapitre 2</h5>
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <img src="/../../public/images/lacsalaska.jpg" class="card-img-top" alt="image 3">
+                        <div class="card-body">
+                            <h5 class="card-title">Chapitre 3</h5>
+                        </div>
+                    </div>
                 </aside>
-
-                <aside class="sidebar sidebar-sticky">
-                  <div class="card mb-4">
-                    <div class="card-body">
-                      <h4 class="card-title">Tags</h4>
-                      <a class="btn btn-light btn-sm mb-1" href="page-category.html">Journey</a>
-                      <a class="btn btn-light btn-sm mb-1" href="page-category.html">Work</a>
-                      <a class="btn btn-light btn-sm mb-1" href="page-category.html">Lifestype</a>
-                      <a class="btn btn-light btn-sm mb-1" href="page-category.html">Photography</a>
-                      <a class="btn btn-light btn-sm mb-1" href="page-category.html">Food &amp; Drinks</a>
-                    </div>
-                  </div><!-- /.card -->
-                  <div class="card mb-4">
-                    <div class="card-body">
-                      <h4 class="card-title">Popular stories</h4>
-
-                      <a href="post-image.html" class="d-inline-block">
-                        <h4 class="h6">The blind man</h4>
-                        <img class="card-img" src="img/articles/2.jpg" alt="">
-                      </a>
-                      <time class="timeago" datetime="2019-10-03 20:00" timeago-id="7">7 months ago</time> in Lifestyle
-
-                      <a href="post-image.html" class="d-inline-block mt-3">
-                        <h4 class="h6">Crying on the news</h4>
-                        <img class="card-img" src="img/articles/3.jpg" alt="">
-                      </a>
-                      <time class="timeago" datetime="2019-07-16 20:00" timeago-id="8">9 months ago</time> in Work
-
-                    </div>
-                  </div><!-- /.card -->
+                <aside class="sidebar">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Suivez moi</h4>
+                            <!--Facebook-->
+                            <a class="fb-ic ml-0">
+                                <i class="fab fa-facebook white-text mr-4"> </i>
+                            </a>
+                            <!--Twitter-->
+                            <a class="tw-ic">
+                                <i class="fab fa-twitter white-text mr-4"> </i>
+                            </a>
+                            <!--Google +-->
+                            <a class="vkon-ic">
+                                <i class="fab fa-vk white-text mr-4"> </i>
+                            </a>
+                            <!--Linkedin-->
+                            <a class="li-ic">
+                                <i class="fab fa-linkedin white-text mr-4"> </i>
+                            </a>
+                            <!--Instagram-->
+                            <a class="ins-ic">
+                                <i class="fab fa-instagram white-text mr-lg-4"> </i>
+                            </a>
+                        </div>
+                    </div><!-- /.card -->
                 </aside>
-            </div>
-            
-            <div class="row">
-                <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                     <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                </nav>
-            </div>
-            
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <h2>Commentaires</h2>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="media col-lg-9">
-                        <img src="/../../public/images/personnage.png" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
+                <aside class="sidebar">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <h4 class="card-title">Les nouveautés</h4>
                         </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="media col-lg-9">
-                        <img src="/../../public/images/personnage.png" class="align-self-start mr-3 img-thumbnail" alt=".image 2" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="media col-lg-9">
-                        <img src="/../../public/images/personnage.png" class="align-self-start mr-3 img-thumbnail" alt="image 3" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="media col-lg-9">
-                        <img src="/../../public/images/personnage.png" class="align-self-start mr-3 img-thumbnail" alt="image 4" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <nav class="blog-pagination">
-                        <a class="btn btn-outline-primary" href="#">Older</a>
-                         <a class="btn btn-outline-secondary disabled" href="#" tabindex="-1" aria-disabled="true">Newer</a>
-                    </nav>
-                </div>
-            </div>
-
-            <div class="mt-5">
-                <h5>Write a response</h5>
-                <div class="row">
-                    <div class="col-lg-9">
-                        <div class="col-lg-12">
-                             <input type="text" class="form-control" id="name" name="name" placeholder="Your name">
-                        </div>
-                        <div class="col-lg-12">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Your email">
-                        </div>
-                    <textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
-                    <a href="#" class="btn btn-success mt-3">Publish</a>
-                    </div>
-                </div>
+                        <img src="/../../public/images/livre.png" class="card-img-bottom" alt="image 3">
+                    </div><!-- /.card -->
+                </aside>
             </div>
         </div>
     </div>

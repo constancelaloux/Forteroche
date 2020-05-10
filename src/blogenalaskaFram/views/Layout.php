@@ -14,11 +14,14 @@
 <!--Jquery-->
 <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
 <!--<link href="/blogenalaska/jquery/jquery-ui.min.js"  rel="stylesheet"/>-->
-<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<!--<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
 <!--Datatables-->
-<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+<!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>-->
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 <!--Tinymce-->
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
@@ -57,33 +60,42 @@
 <script type="text/javascript" src="/../../public/js/scrollnav.js"></script>
 
 <body>
-    <!-- ce qui doit etre fait normalement pour le message flash -->
-    <?php
-    //print_r($_SESSION);
-    if($session->get('success'))
-    {
-    ?>
-        <div class="alert alert-success" role="alert">
-    <?php
-        echo $session->get('success');
-    ?>
-        </div>   
-    <?php
-    }
-    else if($session->get('error'))
-    {
-    ?>
-        <div id='#myAlert' class="alert alert-danger">
-    <?php
-        echo $session->get('error');
-    }
-    ?>
-        </div>
 
     <?php require __DIR__.'/../views/Header.php'; ?>
-    <!--<div class="container">-->
-        <?= $content ?>  
-    <!--</div>-->
+
+    <!--Main layout-->
+    <main role="main" class="main">				
+        <!--Main container-->
+        <div id="spy" data-spy="scroll" data-target="#navbar" data-offset="0">
+        <div class="container-fluid" id="main-container">
+            <!-- ce qui doit etre fait normalement pour le message flash -->
+            <?php
+            //print_r($_SESSION);
+            if($session->get('success'))
+            {
+            ?>
+                <div class="alert alert-success mt-5" role="alert">
+            <?php
+                echo $session->get('success');
+            ?>
+                </div>   
+            <?php
+            }
+            else if($session->get('error'))
+            {
+            ?>
+                <div id='#myAlert' class="alert alert-danger mt-5">
+            <?php
+                echo $session->get('error');
+            }
+            ?>
+                </div>
+            <?= $content ?> 			
+        </div>
+        </div>
+        <!--Main container-->				
+    </main>
+    <!--Main layout-->
     <?php require __DIR__.'/../views/Footer.php'; ?>
 </body>
 

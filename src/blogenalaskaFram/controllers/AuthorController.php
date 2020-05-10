@@ -21,7 +21,7 @@ class AuthorController extends AbstractController
     public function createAuthor()
     {
         $title = 'S\'inscrire sur ce site';
-        $url = 'connectForm';
+        $url = 'connectform';
         $p = 'Connexion';
         $this->processForm($title,$url,$p);
     }
@@ -62,13 +62,13 @@ class AuthorController extends AbstractController
             {
                 unset($model);
                 $this->addFlash()->error('Cet identifiant existe déja');
-                return $this->redirect('/');
+                return $this->redirect('/createauthor');
             }
             else
             {
                 $model->persist($author);
                 $this->addFlash()->success('Votre compte a bien été créé');
-                return $this->redirect('/connectForm');
+                return $this->redirect('/connectform');
             }
         }
         $this->getRender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'url' => $url, 'p' => $p]);               
@@ -101,7 +101,8 @@ class AuthorController extends AbstractController
             
             if($model->exist(['username' => $author->username()]))
             {
-                $auth = $model->find(['username' => $author->username()]);
+                //$auth = $model->find(['username' => $author->username()]);
+                $auth = $model->findOneBy(['username' => $author->username()]);
                 $idOfAuthor = $auth->id();
                 //$imageOfAuthor = $author->imageComment();
                 $password = $auth->password();
@@ -118,19 +119,19 @@ class AuthorController extends AbstractController
                     $_SESSION['ClientId'] = $idOfAuthor;
                     //$_SESSION['imageComment'] = $imageOfAuthor;
                     $this->addFlash()->success('Vous etes bien enregistrés');
-                    return $this->redirect('/getBackoffice');
+                    return $this->redirect('/backoffice');
                 }
                 else 
                 {
                     $this->addFlash()->success('Votre mot de passe est incorrect!');
-                    return $this->redirect('/connectForm');
+                    return $this->redirect('/connectform');
                 }          
             }
             else 
             {
                 unset($model);
                 $this->addFlash()->success('Votre identifiant est incorrect!');
-                return $this->redirect('/connectForm');
+                return $this->redirect('/connectform');
             }
         }
         $title = 'Identifiez vous';

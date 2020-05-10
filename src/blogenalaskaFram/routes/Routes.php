@@ -1,49 +1,72 @@
 <?php
 
 /* 
- *Liste de mes routes à écrire
+ *Liste de mes routes du Fontend à écrire
  */
 
-//Route vers fn qui permet de rediriger vers une vue
-//$router->get('/', "Author#redirectView");
+//Route qui récupére les aricles sur la page d'accueil du blog
+$router->get('/', "Frontend#renderHomepage");
 
-//Route vers fn qui permet de rendre une vue
-//$router->get('/renderView', "Author#renderView");
+//Route qui va vers un article du frontend
+$router->get('/article', "Frontend#renderArticle");
 
-//Route vers fn qui permet de laisser un msg flash et rendre une vue
-//$router->get('/flashMessage', "Author#FlashMessageAndRenderView");
+//Route qui permet de créer un commentaire
+$router->get('/createcomment', "Frontend#createComment");
+
+//Route qui permet de créer un commentaire
+$router->get('/updatecomment', "Frontend#updateComment");
+
+//Route qui permet de créer un commentaire
+$router->get('/deletecomment', "Frontend#deleteComment");
+
+/* 
+ *Liste de mes routes administrateur
+ */
 
 //Route qui amméne vers la fn qui créé un formulaire de création d'auteur
-$router->get('/', "Author#createAuthor");
-$router->post('/', "Author#createAuthor");
-
-//Route qui amméne vers la fn qui valide et gére les données
-//$router->post('/test', "Author#getValidateAndSendDatasFromForm");
+$router->get('/createauthor', "Author#createAuthor");
+$router->post('/createauthor', "Author#createAuthor");
 
 //Route qui va vers la fonction qui créé un formulaire de connexion
-$router->get('/connectForm', "Author#logAuthor");
-$router->post('/connectForm', "Author#logAuthor");
+$router->get('/connectform', "Author#logAuthor");
+$router->post('/connectform', "Author#logAuthor");
+
+$router->get('/createclient', "Author#createClient");
+$router->post('/createclient', "Author#createClient");
+
+//Route qui va vers le formulaire de connexion du client
+$router->get('/connectclientform', "Client#logClient");
+$router->post('/connectclientform', "Client#logClient");
+
+/* 
+ *Liste de mes routes du Backend à écrire
+ */
+
+//Route qui va vers le backend
+$router->get('/backoffice', "Backend#renderHomepage");
+
+//Route qui va récupére les articles du datatables
+$router->post('/listofarticles', "Backend#getListOfArticles");
+
+//Route qui créé un article
+$router->get('/createpost', "Backend#createPost");
+$router->post('/createpost', "Backend#createPost");
+
+//Route qui permet d'uploader une image
+$router->get('/uploadimage', "Backend#renderBlog");
+
+//Route qui permet de mettre à jour un article
+$router->get('/updatepost', "Backend#updatePost");
+
+//Route qui permet de supprimer un article
+$router->post('/deletepost', "Backend#deletePost");
+
+//Route qui redirige si le post a bien été supprimé
+$router->get('/confirmdeletepost', "Backend#confirmDeletedPost");
+
 
 //Route qui récupére les identifiants de connexion de l'auteur
 //$router->post('/validateAuthorConnexion', "Author#validateConnexion");
-
-//Route qui va vers le back office de l'administrateur
-$router->post('/getListOfArticles', "BackOffice#getListOfArticles");
-
-//Route qui va vers le blog
-$router->get('/getBackoffice', "BackOffice#renderBackoffice");
-
-//Route qui va vers ka creation d'articles
-$router->get('/getWriteArticles', "BackOffice#createArticle");
-
-//Route qui permet d'uploader une image
-$router->get('/uploadImage', "BackOffice#renderBlog");
-
-//Route qui récupére les articles pour le datatables
-$router->get('/Blog', "Blog#renderBlog");
-
-//Route qui va vers un article
-$router->get('/article', "Blog#renderArticle");
 
 //$router->get('/t', function(){ echo "Bienvenue !"; }); 
 //$router->get('/', function(){ echo "Bienvenue !"; }); 
@@ -59,3 +82,14 @@ $router->get('/article', "Blog#renderArticle");
 //$router->post('/posts/:id', "Posts#traitment");
 /*$router->post('/post/:id', function($id){echo"poster tous les articles".$id.'<pre>'.print_r($_POST, true).'</pre>';});*/
 
+//Route vers fn qui permet de rediriger vers une vue
+//$router->get('/', "Author#redirectView");
+
+//Route vers fn qui permet de rendre une vue
+//$router->get('/renderView', "Author#renderView");
+
+//Route vers fn qui permet de laisser un msg flash et rendre une vue
+//$router->get('/flashMessage', "Author#FlashMessageAndRenderView");
+
+//Route qui amméne vers la fn qui valide et gére les données
+//$router->post('/test', "Author#getValidateAndSendDatasFromForm");

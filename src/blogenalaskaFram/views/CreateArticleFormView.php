@@ -12,8 +12,8 @@
                     <div class="preview">
                         <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
                     </div>
-                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>
-                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Sauvegarder</button>
+                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate">Valider</button>
+                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save">Sauvegarder</button>
                     <!--</p>-->
                 </form>
             </div>

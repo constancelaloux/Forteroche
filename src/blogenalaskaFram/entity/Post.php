@@ -8,7 +8,7 @@ use blog\database\Model;
  *
  * @author constancelaloux
  */
-class Articles extends Model
+class Post extends Model
 {
     /**
      * @var array
@@ -25,22 +25,22 @@ class Articles extends Model
     public static function metadata()
     {
         return [
-            "table"             => "articles",
+            "table"             => "post",
             "primaryKey"        => "id",
             "columns"           => [
                 "id"            => [
                     "type"      => "integer",
                     "property"  => "id"
                 ],
-                "id_author"            => [
+                /*"id_author"            => [
                     "type"      => "integer",
                     "property"  => "author"
-                ],
-                "create_date"            => [
+                ],*/
+                "create_date"    => [
                     "type"      => "string",
                     "property"  => "createdate"
                 ],
-                "update_date"            => [
+                "update_date"    => [
                     "type"      => "string",
                     "property"  => "updatedate"
                 ],
@@ -99,6 +99,8 @@ class Articles extends Model
 
     public function createdate()
         {
+        print_r($this->createdate);
+        //print_r("je pars");
             return $this->createdate;
         }
 
@@ -164,10 +166,14 @@ class Articles extends Model
 
     //public function setCreatedate(DateTime $createdate)
     public function setCreatedate($createdate)
-        {              
+        {   
+            print_r($createdate);
+            //die("meurs");
+            
             if(is_string($createdate))
             {
                 $this->createdate = $createdate;
+                //print_r($this->createdate);
             }
         }
 

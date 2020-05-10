@@ -47,12 +47,12 @@ class ArticlesForm extends FormBuilder
         'type' => 'hidden',
         'label' => 'Ajouter une image',
         'name' => 'image',
-        'validators' => [
+        /*'validators' => [
             /*new MaxLengthValidator('Mot de passe pas conforme! Votre mot de passe doit '
                                         . "comporter au moins un caractére spécial, un chiffre,"
                                         . "une majuscule et minuscule, et doit etre entre 6 caractéres minimum et 8 maximum", 50),*/
-            new NotNullValidator('Veuillez insérer une image'),
-        ],
+            //new NotNullValidator('Veuillez insérer une image'),
+        //],
         ]))
         ;
     }
