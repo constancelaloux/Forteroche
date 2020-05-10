@@ -10089,4 +10089,14 @@ h2.display-4.font-italic {
   padding-top: 80px;
 }
 
+/*La publicité de Tinymce est cachée*/
+.mce-notification.mce-has-close {
+  display: none;
+}
+
+/*La page du backend qui liste les articles*/
+.articles {
+  padding-top: 80px;
+}
+
 /*# sourceMappingURL=style.css.map */
