@@ -10,11 +10,12 @@ use blog\database\Model;
  */
 class Post extends Model
 {
+
     /**
-     * @var array
+     * @var type 
      */
     public $id,
-      $author,
+      $idauthor,
       $subject,
       $image,
       $content,
@@ -22,6 +23,10 @@ class Post extends Model
       $updatedate
      ;
 
+    /**
+     * Architecture de la base de données
+     * @return type
+     */
     public static function metadata()
     {
         return [
@@ -32,16 +37,16 @@ class Post extends Model
                     "type"      => "integer",
                     "property"  => "id"
                 ],
-                /*"id_author"            => [
+                "id_author"            => [
                     "type"      => "integer",
-                    "property"  => "author"
-                ],*/
+                    "property"  => "idauthor"
+                ],
                 "create_date"    => [
-                    "type"      => "string",
+                    "type"      => "datetime",
                     "property"  => "createdate"
                 ],
                 "update_date"    => [
-                    "type"      => "string",
+                    "type"      => "datetime",
                     "property"  => "updatedate"
                 ],
                 "subject"    => [
@@ -66,53 +71,76 @@ class Post extends Model
     
     /**
      * Getters
+     * //Actuellement, les attributs de nos objets sont inaccessibles. 
+     * //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
+     * Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
+     * un getter est une méthode chargée de renvoyer la valeur d'un attribut
     */
-    //Actuellement, les attributs de nos objets sont inaccessibles. 
-    //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
-    // Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
-    // un getter est une méthode chargée de renvoyer la valeur d'un attribut
+    
+    /**
+     * 
+     * @return type
+     */
     public function id()
-        {
-            return $this->id;
-        }
+    {
+        return $this->id;
+    }
 
-
-    public function author()
-        {
-            return $this->author;
-        }
-
+    /**
+     * @return type
+     */
+    public function idauthor()
+    {
+        return $this->idauthor;
+    }
+    
+    /**
+     * @return type
+     */
     public function subject()
-        {
-            return $this->subject;
-        }
-
+    {
+        return $this->subject;
+    }
+        
+    /**
+     * @return type
+     */
     public function image()
-        {
-            return $this->image;
-        }
+    {
+        return $this->image;
+    }
 
+    /**
+     * @return type
+     */
     public function content()
-        {
-            return $this->content;
-        }
+    {
+        return $this->content;
+    }
 
+    /**
+     * @return type
+     */
     public function createdate()
-        {
-        print_r($this->createdate);
-        //print_r("je pars");
-            return $this->createdate;
-        }
+    {
+        return $this->createdate;
+    }
 
+    /**
+     * @return type
+     */
     public function updatedate()
-        {
-            return $this->updatedate;
-        }
+    {
+        return $this->updatedate;
+    }
 
+    /**
+     * @return type
+     */
     public function status()
-        {
-            return $this->status;
-        }
+    {
+        return $this->status;
+    }
 
     /**
      * Setters
@@ -121,75 +149,95 @@ class Post extends Model
      * sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le 
      * principe d'encapsulation).
     */
+        
+    /**
+     * @param type $id
+     */
     public function setId($id)
+    {
+        $id = (int) $id;
+
+        if ($id > 0)
         {
-            $id = (int) $id;
-
-            if ($id > 0)
-            {
-                $this->id = $id;
-            }
+            $this->id = $id;
         }
+    }
 
-    public function setAuthor($author)
+    /**
+     * @param type $idauthor
+     */
+    public function setIdauthor($idauthor)
+    {
+        $idauthor = (int)$idauthor;
+        if ($idauthor > 0)
         {
-            //On vérifie qu'il s'agit bien d'une chaine de caractéres
-            if(is_string($author))
-            {
-                $this->author = $author;
-            }
+            $this->idauthor = $idauthor;
         }
+    }
 
+    /**
+     * @param type $subject
+     */
     public function setSubject($subject)
+    {
+        if(is_string($subject))
         {
-            if(is_string($subject))
-            {
-                $this->subject = $subject;
-            }
+            $this->subject = $subject;
         }
+    }
 
+    /**
+     * @param type $image
+     */
     public function setImage($image)
+    {
+        if(is_string($image))
         {
-            if(is_string($image))
-            {
-                $this->image = $image;
-            }
+            $this->image = $image;
         }
+    }
 
+    /**
+     * @param type $content
+     */
     public function setContent($content)
+    {
+        if(is_string($content))
         {
-            if(is_string($content))
-            {
-                $this->content = $content;
-            }
+            $this->content = $content;
         }
+    }
 
-    //public function setCreatedate(DateTime $createdate)
+    /**
+     * @param type $createdate
+     */
     public function setCreatedate($createdate)
-        {   
-            print_r($createdate);
-            //die("meurs");
-            
-            if(is_string($createdate))
-            {
-                $this->createdate = $createdate;
-                //print_r($this->createdate);
-            }
+    {   
+        if(is_string($createdate))
+        {
+            $this->createdate = new \DateTime($createdate);
         }
+    }
 
+    /**
+     * @param type $updatedate
+     */
     public function setUpdatedate($updatedate)
+    {
+        if(is_string($updatedate))
         {
-            if(is_string($updatedate))
-            {
-                $this->updatedate = $updatedate;
-            }
+            $this->updatedate = new \DateTime($updatedate);
         }
+    }
 
+    /**
+     * @param type $status
+     */
     public function setStatus($status)
+    {
+        if(is_string($status))
         {
-            if(is_string($status))
-            {
-                $this->status = $status;
-            }
+            $this->status = $status;
         }
+    }
 }

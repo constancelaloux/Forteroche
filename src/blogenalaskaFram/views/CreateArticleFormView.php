@@ -12,8 +12,10 @@
                     <div class="preview">
                         <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
                     </div>
-                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate">Valider</button>
-                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save">Sauvegarder</button>
+                    <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
+                    <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="Sauvegarder"/>
+                    <!--<button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="valider">Valider</button>
+                    <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="sauvegarder">Sauvegarder</button>-->
                     <!--</p>-->
                 </form>
             </div>

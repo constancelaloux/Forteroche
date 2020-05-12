@@ -3,24 +3,15 @@
 namespace blog\entity;
 
 use blog\database\Model;
-//use blog\form\Entity;
 
 /**
- * Description of Author
- *  La class auteur a pour rôle de représenter un auteur
+ * Description of Client
+ * La class client a pour rôle de représenter un client
  * présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
+ * @author constancelaloux
  */
-class Author extends Model
+class Client extends Model
 {
-    
-    /**
-     * On utilise le trait Hydrator afin que notre objet Author puisse être hydraté
-     * Hydratation = assigner des valeurs aux attributs passées en paramétres. 
-     * Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
-     * celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
-     */
-    //use \blog\Hydrator;
-
       public $id,
             $password,
             $username,
@@ -36,32 +27,27 @@ class Author extends Model
     /**
      * @ORM\Column(name="password", type="string", length=255)
     */
-    //private $password;
     //protected $password;
     
     /**
      * @ORM\Column(name="username", type="string", length=255)
     */
-    //private $username;
     //protected $username;
     
     /**
      * @ORM\Column(name="surname", type="string", length=255)
     */
-    //private $surname;
     //protected $surname;
     
     /**
      * @ORM\Column(name="firstname", type="string", length=255)
     */
-    //private $firstname;
     //protected $firstname;
 
     const PASSWORD_INVALIDE = 1;
     const USERNAME_INVALIDE = 2;
     const FIRSTNAME_INVALIDE = 3;
     const SURNAME_INVALIDE = 4;
-    
     /**
      *Ici, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
      * Il faudra donc lui spécifier en paramétre dans pdoConnection.
@@ -77,7 +63,7 @@ class Author extends Model
     public static function metadata()
     {
         return [
-            "table"             => "author",
+            "table"             => "client",
             "primaryKey"        => "id",
             "columns"           => [
                 "id"            => [
@@ -103,7 +89,7 @@ class Author extends Model
             ]
         ];
     }
-
+    
     /**
      * Getters
      * Actuellement, les attributs de nos objets sont inaccessibles. 
@@ -126,7 +112,6 @@ class Author extends Model
     public function password()
     {
         return $this->password;
-
     }
 
     /**
@@ -179,13 +164,6 @@ class Author extends Model
      */
     public function setSurname($surname)
     {
-        //On vérifie qu'il s'agit bien d'une chaine de caractéres
-        /*if(is_string($surname) || !empty($surname))
-        {
-            //L'attribut de l'admin manager sera = a $surname. 
-            //Il aura la valeur de la variable $surname
-            $this->surname = $surname;
-        }*/
         if(!is_string($surname) || empty($surname))
         {
             $this->erreurs[] = self::SURNAME_INVALIDE;
@@ -198,10 +176,6 @@ class Author extends Model
      */
     public function setPassword($password)
     {
-        /*if(is_string($password) || !empty($password))
-        {
-            $this->password = $password;
-        }*/
         if (!is_string($password) || empty($password))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
@@ -214,10 +188,6 @@ class Author extends Model
      */
     public function setUsername($username)
     {
-        /*if(is_string($username) || !empty($username))
-        {
-            $this->username = $username;
-        }*/
         if(!is_string($username) || empty($username))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
@@ -230,10 +200,6 @@ class Author extends Model
      */
     public function setFirstname($firstname)
     {
-        /*if(is_string($firstname) || !empty($firstname))
-        {
-            $this->firstname = $firstname;
-        }*/
         if(!is_string($firstname) || empty($firstname))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;

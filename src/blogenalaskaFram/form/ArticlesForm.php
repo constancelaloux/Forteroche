@@ -24,7 +24,7 @@ class ArticlesForm extends FormBuilder
         'type' => 'text',
         'label' => 'Titre de l\'article',
         'name' => 'subject',
-        'maxLength' => 20,
+        'maxLength' => 50,
         'minLength' => 5,
         'validators' => [
             //new MaxLengthValidator('Identifiant trop long)', 7),

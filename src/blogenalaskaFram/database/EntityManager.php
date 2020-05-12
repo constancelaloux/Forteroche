@@ -26,6 +26,7 @@ class EntityManager extends DbConnexion
     //Je récupére dans le constructeur ce que j'ai fait passer à ma class test
     public function __construct(Model $model)
     {
+        //print_r($model);
         //Je me connecte à la base de données
         $this->pdo = $this->connect();
         
@@ -59,6 +60,7 @@ class EntityManager extends DbConnexion
      */
     public function persist(Model $model)
     {
+        //print_r("je passe dans persist");
         if($model->getPrimaryKey()) 
         {
             $this->update($model);
@@ -87,14 +89,17 @@ class EntityManager extends DbConnexion
             $model->orignalData[$column] = $sqlValue;
             //$model->originalData[$column];
             $parameters[$column] = $sqlValue;
-            //print_r($parameters);
+            //print_r($parameters[$column]);
             $set[] = sprintf("%s = :%s", $column, $column);
             //}
+            //print_r($model);
         }
         if(count($set)) 
         {
             $sqlQuery = sprintf("UPDATE %s SET %s WHERE %s = :id", $this->metadata["table"], implode(", ", $set), $this->metadata["primaryKey"]);
             $statement = $this->pdo->prepare($sqlQuery);
+            //print_r($parameters);
+            //die("meurs");
             //$statement->execute(["id" => $model->getPrimaryKey()]);
             $statement->execute($parameters);
             //print_r($statement->execute(["id" => $model->getPrimaryKey()]));
@@ -107,20 +112,23 @@ class EntityManager extends DbConnexion
      */
     private function insert(Model &$model)
     {
-        print_r($model);
+        //print_r($model);
+        //print_r("je passe dans insert");
+        //print_r($model);
         $set = [];
         $parameters = [];
 
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
+            //print_r($column);
             $sqlValue = $model->getSQLValueByColumn($column);
-
+            //print_r($sqlValue);
             $model->orignalData[$column] = $sqlValue;
-
             $parameters[$column] = $sqlValue;
-            //print_r($parameters);
+            //print_r($parameters[$column]);
 
             $set[] = sprintf("%s = :%s", $column, $column);
+            //print_r($set);
         }
         
         $sqlQuery = sprintf("INSERT INTO %s SET %s", $this->metadata["table"], implode(",", $set));
@@ -128,6 +136,7 @@ class EntityManager extends DbConnexion
         $statement = $this->pdo->prepare($sqlQuery);
 
         $statement->execute($parameters);
+        //print_r($statement->execute($parameters));
 
         $model->setPrimaryKey($this->pdo->lastInsertId());
     }

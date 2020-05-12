@@ -55,6 +55,8 @@ class Model
      */
     private function hydrateProperty($column, $value)
     {
+        //print_r($value);
+        //print_r($column);
         //print_r($this::metadata()["columns"]);
         switch($this::metadata()["columns"][$column]["type"]) 
         {
@@ -66,10 +68,15 @@ class Model
                 break;
             case "datetime":
                 //print_r($column);
-                //print_r($value);
-                $datetime = \DateTime::createFromFormat("Y-m-d H:i:s", $value);
+                //$datetime = new \DateTime;
+                //$date = $datetime->createFromFormat("Y-m-d", "H:i:s");
+                //$datetime = \DateTime::createFromFormat("Y-m-d H:i:s", $value);
+                //print_r($datetime);
+                //$datetime = new \DateTime();
+                //$date = $datetime->format('d/m/Y');
+                //print_r($date);
                 //print_r($this::metadata()["columns"][$column]["property"]($datetime));
-                $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($datetime);
+                $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
         }
     }

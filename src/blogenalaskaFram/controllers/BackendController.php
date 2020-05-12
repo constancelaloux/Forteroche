@@ -37,7 +37,7 @@ class BackendController extends AbstractController
                 $row = array();
                 $row[] = $articles->id();
                 $row[] = $articles->subject();
-                $row[] = $articles->createdate();
+                $row[] = $articles->createdate()->format('Y-m-d');
                 $updateArticleDate = $articles->updatedate();
 
                 if (is_null($updateArticleDate))
@@ -46,7 +46,7 @@ class BackendController extends AbstractController
                 }
                 else 
                 {
-                    $row[] = $updateArticleDate;
+                    $row[] = $updateArticleDate->format('Y-m-d');
                 }
 
                 $row[] = $articles->status();
@@ -98,7 +98,37 @@ class BackendController extends AbstractController
     public function createPost()
     {
         $title = "Ecrire un article";
-        $this->processForm($title);
+        //$this->processForm($title);
+        if ($this->request->method() == 'POST')
+        {
+            $post = new Post(
+            [
+                'subject' =>  $this->request->postData('subject'),
+                'content' =>  $this->request->postData('content'),
+                'image' =>  $this->request->postData('image'),
+                'status' =>  $this->request->postData('validate'),
+                'create_date' => date("Y-m-d H:i:s"),
+                'update_date' => null,
+                'id_author' => 1
+            ]);
+        }
+        else
+        {
+            $post = new Post();
+        }
+            
+        $formBuilder = new ArticlesForm($post);
+        $form = $formBuilder->buildform($formBuilder->form());
+        
+        if ($this->request->method() == 'POST' && $form->isValid())
+        {  
+            $model = new EntityManager($post);
+            $model->persist($post);
+            $this->addFlash()->success('La news a bien été ajoutée !');
+            return $this->redirect('/backoffice');
+        }
+        
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
     }
     
     /**
@@ -106,7 +136,38 @@ class BackendController extends AbstractController
      */
     public function savePost()
     {
-
+        $title = "Ecrire un article";
+        //$this->processForm($title);
+        if ($this->request->method() == 'POST')
+        {
+            $post = new Post(
+            [
+                'subject' =>  $this->request->postData('subject'),
+                'content' =>  $this->request->postData('content'),
+                'image' =>  $this->request->postData('image'),
+                'status' =>  $this->request->postData('save'),
+                'create_date' => date("Y-m-d H:i:s"),
+                'update_date' => null,
+                'id_author' => 1
+            ]);
+        }
+        else
+        {
+            $post = new Post();
+        }
+            
+        $formBuilder = new ArticlesForm($post);
+        $form = $formBuilder->buildform($formBuilder->form());
+        
+        if ($this->request->method() == 'POST' && $form->isValid())
+        {  
+            $model = new EntityManager($post);
+            $model->persist($post);
+            $this->addFlash()->success('La news a bien été ajoutée !');
+            return $this->redirect('/backoffice');
+        }
+        
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
     }
     
     /**
@@ -115,15 +176,64 @@ class BackendController extends AbstractController
     public function updatePost()
     {
         $title = "Ecrire un article";
-        $this->processForm($title);
+        /*if ($this->request->method() == 'GET')
+        {*/
+            $post = new Post(
+            [
+                'id' =>  $this->request->getData('id'),
+            ]);
+            $model = new EntityManager($post);
+            $getPostById = $model->findById($post->id());
+
+            if (null === $getPostById) 
+            {
+                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+            }
+            else
+            {
+                if($this->request->method() == 'POST') 
+                {
+                    $post = new Post(
+                    [
+                        'id' => $getPostById->id(),
+                        'subject' =>  $this->request->postData('subject'),
+                        'content' =>  $this->request->postData('content'),
+                        'image' =>  $this->request->postData('image'),
+                        'status' =>  $this->request->postData('validate'),
+                        'create_date' => date("Y-m-d H:i:s"),
+                        'update_date' => date("Y-m-d H:i:s"),
+                        'id_author' => $getPostById->idauthor()
+                    ]);
+                }
+                
+                $formBuilder = new ArticlesForm($getPostById);
+                $form = $formBuilder->buildform($formBuilder->form());
+                
+                if ($this->request->method() == 'POST' && $form->isValid())
+                {   
+                    $model = new EntityManager($post);
+                    $model->persist($post);
+                    $this->addFlash()->success('La news a bien été modifié !');
+                    return $this->redirect('/backoffice');
+                }
+                $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+            }
+    }    
+}
+        /*$date = new \DateTime();
+        echo $date->format('d/m/Y');
+        echo "\n";
+        $time = time();
+        print_r(date('d/m/Y', $time));*/
+
+        //$this->processForm($title);
             // On récupère l'annonce $id
-        $advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
+        /*$advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
 
         if (null === $advert) 
         {
             throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }
-    }
+        }*/
 
     
     /**
@@ -131,25 +241,27 @@ class BackendController extends AbstractController
      * @param type $title
      * @return type
      */
-    public function processForm($title)
+    /*public function processForm($title)
     {
         if ($this->request->method() == 'POST')
-        {  
+        {
             $post = new Post(
             [
                 'subject' =>  $this->request->postData('subject'),
                 'content' =>  $this->request->postData('content'),
                 'image' =>  $this->request->postData('image'),
                 'status' =>  $this->request->postData('validate'),
-                'create_date' => "NOW()",
+                'create_date' => 'NULL',
+                //'create_date' => new \Datetime(),
                 'update_date' => 'NULL',
+                'id_author' => 1
             ]);
         }
         else
         {
             $post = new Post();
         }
-        
+            
         $formBuilder = new ArticlesForm($post);
         $form = $formBuilder->buildform($formBuilder->form());
         
@@ -164,7 +276,4 @@ class BackendController extends AbstractController
         }
         
         $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
-    }
-    
-    
-}
+    }*/

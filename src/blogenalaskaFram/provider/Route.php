@@ -39,30 +39,34 @@ class Route
     //Je vérifie si dans le tableau des routes il y a une route qui correspond à l'url
     public function match($request)
     {
+        //print_r($request);
         //on enléve les / initiaux et finaux de l'url
         //Supprime les espaces (ou d'autres caractères) en début et fin de chaîne
         $request = trim($request, '/');
+        //print_r($request);
 
         //On remplace le :id par une expression réguliére
         //attention si j'ai un paramétre il faut le remplacer par une expression réguliére
         //On veut le remplacer par n'importe quoi qui ne soit pas un slash / et on le remplace dans le path qui soit en paramétre
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
-        
+        //print_r($path);
         //On veut transformer ca en expression réguliére qui vérifiera la chaine
         //i = case sensitive
         //Le drapeau i permet de vérifier les maj et les minuscules
         $regex = "#^$path$#i";
+        //print_r($regex);
         
         //si l'url ne correspond pas
         if(!preg_match($regex, $request, $matches))
         {
+            //print_r("c'est ici que je passe");
             return false;
         }
         
         //sinon il détecte l'url
         array_shift($matches);
         $this->matches = $matches;  // On sauvegarde les paramètre dans l'instance pour plus tard
-
+        
         //Si l'url correspond, je retourne true
         return true;
     }

@@ -49,6 +49,14 @@ class Router
         return $this->add($path, $callable, $name, 'POST');
     }
     
+    //on test une des fonctions en get et en post dans mes routes
+    public function match($path, $callable, $name = null)
+    {
+        //print_r($this->add($path, $callable, $name, 'GET|POST'));
+        return $this->add($path, $callable, $name, 'GET|POST');
+    }
+    
+    
     //On a un tableau qui sauvegarde les différentes routes
     //Je vais ajouter une nouvelle route
     private function add($path, $callable, $name, $method)
@@ -71,7 +79,6 @@ class Router
             //je stocke dans $routes les routes qui ont un callable.
             $this->namedRoutes[$name] = $route;
         }
-        
         return $route; // On retourne les routes pour "enchainer" les méthodes 
     }
     
@@ -86,11 +93,14 @@ class Router
         //montre si c'est en get ou post
         //Je fais appel à la fonction method de HTTP request qui va chercher si la methode du server est en get ou post
         $requestMethod = $request->method();
-        //print_r($requestMethod);
+        
+        //print_r($this->routes[$requestMethod]);
         //Si il n'y a pas de methode get ou post alors je lance une exception
         //if(!isset($this->routes[$_SERVER['REQUEST_METHOD']]))
+        //print_r($this->routes[$requestMethod]);
         if(!isset($this->routes[$requestMethod]))
         {
+            //print_r("hello world");
             throw new RouterException('REQUEST_METHOD does not exist');
         }
         else
@@ -99,9 +109,11 @@ class Router
         //foreach($this->routes[$_SERVER['REQUEST_METHOD']] as $routes)
             foreach($this->routes[$requestMethod] as $allroutes)
             {
+                //print_r($allroutes);
                 //Si dans le tableau des routes il y a une route qui correspond à l'url qui a ete tapé
                 if($allroutes->match($this->request))
                 {
+                   // print_r("le probléme se trouve la");
                     //Alors je retourne une route et je fais appel à la fonction call
                     return $allroutes->call();
                 }

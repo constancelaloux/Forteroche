@@ -56,7 +56,8 @@ $router->post('/createpost', "Backend#createPost");
 $router->get('/uploadimage', "Backend#renderBlog");
 
 //Route qui permet de mettre à jour un article
-$router->get('/updatepost', "Backend#updatePost");
+$router->get('/updatepost:id', "Backend#updatePost");
+$router->post('/updatepost:id', "Backend#updatePost");
 
 //Route qui permet de supprimer un article
 $router->post('/deletepost', "Backend#deletePost");
