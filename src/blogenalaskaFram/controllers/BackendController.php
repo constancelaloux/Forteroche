@@ -28,6 +28,7 @@ class BackendController extends AbstractController
     {
         $post = new Post();
         $model = new EntityManager($post);
+        // Retrouver tous les articles
         $posts = $model->findAll();
 
         if (!empty ($posts))
@@ -73,6 +74,7 @@ class BackendController extends AbstractController
     {
         if ($this->request->method() == 'POST')
         {  
+            //$id = $this->request->postData('id');
             $post = new Post(
             [
                 'id' =>  $this->request->postData('id'),
@@ -98,8 +100,8 @@ class BackendController extends AbstractController
     public function createPost()
     {
         $title = "Ecrire un article";
-        //$this->processForm($title);
-        if ($this->request->method() == 'POST')
+        $this->processForm($title);
+        /*if ($this->request->method() == 'POST')
         {
             $post = new Post(
             [
@@ -128,7 +130,7 @@ class BackendController extends AbstractController
             return $this->redirect('/backoffice');
         }
         
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);*/
     }
     
     /**
@@ -137,8 +139,8 @@ class BackendController extends AbstractController
     public function savePost()
     {
         $title = "Ecrire un article";
-        //$this->processForm($title);
-        if ($this->request->method() == 'POST')
+        $this->processForm($title);
+        /*if ($this->request->method() == 'POST')
         {
             $post = new Post(
             [
@@ -167,7 +169,7 @@ class BackendController extends AbstractController
             return $this->redirect('/backoffice');
         }
         
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);*/
     }
     
     /**
@@ -176,9 +178,11 @@ class BackendController extends AbstractController
     public function updatePost()
     {
         $title = "Ecrire un article";
+        
+        $this->processForm($title);
         /*if ($this->request->method() == 'GET')
         {*/
-            $post = new Post(
+            /*$post = new Post(
             [
                 'id' =>  $this->request->getData('id'),
             ]);
@@ -217,8 +221,61 @@ class BackendController extends AbstractController
                     return $this->redirect('/backoffice');
                 }
                 $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+            }*/
+    }
+
+    public function processForm($title)
+    {
+        //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+        if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
+        {
+            $post = new Post();
+            $model = new EntityManager($post);
+        }
+        else
+        {
+            //Si il y a un id en post ou en get
+            //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+            $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
+            $post = new Post(
+                [
+                    'id' =>  $id,
+                ]);
+            $model = new EntityManager($post);
+            
+            //Dans le cas ou il n'y pas l'id en base de données
+            // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+            if(!($post = $model->findById($post->id())))
+            {
+                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
-    }    
+        }
+ 
+        if($this->request->method() == 'POST')
+        {
+            $post->setSubject($this->request->postData('subject'));
+            $post->setContent($this->request->postData('content'));
+            $post->setImage($this->request->postData('image'));
+            $post->setStatus($this->request->postData('validate'));
+            $post->setCreatedate(date("Y-m-d H:i:s"));
+            $post->setUpdatedate(date("Y-m-d H:i:s"));
+            $post->setIdauthor($this->request->postData('idauthor'));
+            //$post->setIdauthor($_SESSION['id']);
+        }
+        
+        $formBuilder = new ArticlesForm($post);
+        $form = $formBuilder->buildform($formBuilder->form());
+        
+        if($this->request->method() == 'POST' && $form->isValid())
+        {
+            // On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
+            //$post->User = $user;
+            $model->persist($post);
+            $this->addFlash()->success('La news a bien été modifié !');
+            return $this->redirect('/backoffice');
+        }
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+    }
 }
         /*$date = new \DateTime();
         echo $date->format('d/m/Y');

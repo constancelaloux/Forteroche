@@ -3,6 +3,7 @@
 namespace blog\session;
 
 use blog\session\SessionInterface;
+
 /**
  * Description of PHPSession
  *
@@ -11,9 +12,9 @@ use blog\session\SessionInterface;
 class PHPSession implements SessionInterface
 { 
     /**
-    * Vérifie/Assure que la session est démarrée
-     * Ca ne chargera la session que lorsque l'on en aura besoin.
-    */
+     * Vérifie/Assure que la session est démarrée
+     * Ca ne chargera la session que lorsque l'on en aura besoin
+     */
     private function ensureSarted()
     {   
         if(session_status() === PHP_SESSION_NONE)
@@ -22,15 +23,14 @@ class PHPSession implements SessionInterface
         }
     }
     
-   /**
-    * Récupére une information en session
-    * @param string $key
-    * @param $default
-    * @return mixed
-    */
+    /**
+     * Récupére une information en session
+     * @param string $key
+     * @param type $default
+     * @return type
+     */
     public function get(string $key, $default = null)
     {
-        //print_r($key);
         $this->ensureSarted();
         if(array_key_exists($key, $_SESSION))
         {
@@ -40,21 +40,20 @@ class PHPSession implements SessionInterface
     }
 
     /**
-    * Ajoute une information en session
-    * @param $value
-    * @return mixed
-    */
+     * Ajoute une information en session
+     * @param string $key
+     * @param type $value
+     */
     public function set(string $key, $value)
     {
         $this->ensureSarted();
         $_SESSION[$key] = $value;
-        //print_r($_SESSION[$key]);
     }
 
     /**
-    * Supprime une clef en session
-    * @param string $key
-    */
+     * Supprime une clef en session
+     * @param string $key
+     */
     public function delete(string $key)
     {
         $this->ensureSarted();

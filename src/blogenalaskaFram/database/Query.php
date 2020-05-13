@@ -15,7 +15,7 @@ use PDO;
  *
  * @author constancelaloux
  */
-class Query 
+class Query
 {
     private $select;
     
@@ -135,6 +135,17 @@ class Query
     public function params(array $params):self
     {
         $this->params = $params;
+        return $this;
+    }
+    
+    /**
+     * 
+     * @param string $entity
+     * @return \self
+     */
+    public function into(string $entity): self
+    {
+        $this->entity = $entity;
         return $this;
     }
     

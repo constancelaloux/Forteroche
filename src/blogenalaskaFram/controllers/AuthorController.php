@@ -8,13 +8,30 @@ use blog\entity\Author;
 use blog\database\EntityManager;
 use blog\form\ConnectAuthorForm;
 
+use blog\session\PHPSession;
+
 /**
  * Description of TestFormController
  *
  * @author constancelaloux
  */
 class AuthorController extends AbstractController
-{   
+{ 
+    /**
+     *
+     * @var type 
+     */
+    private $session;
+    
+    /**
+     * je fais un session start
+     */
+    /*public function __construct()
+    {
+        //$this->session = new ArraySession();
+        $this->session = new PHPSession();
+    }*/
+    
     /**
     * Create Author
     */
@@ -114,9 +131,9 @@ class AuthorController extends AbstractController
                 if ($authPassword)
                 {
                     session_start();
-                    $_SESSION['clientUsername'] = $username;
-                    $_SESSION['clientPassword'] = $password;
-                    $_SESSION['ClientId'] = $idOfAuthor;
+                    $_SESSION['authorUsername'] = $username;
+                    $_SESSION['authorPassword'] = $password;
+                    $_SESSION['authorId'] = $idOfAuthor;
                     //$_SESSION['imageComment'] = $imageOfAuthor;
                     $this->addFlash()->success('Vous etes bien enregistrés');
                     return $this->redirect('/backoffice');
@@ -137,6 +154,34 @@ class AuthorController extends AbstractController
         $title = 'Identifiez vous';
         $p = 'Pas de compte, s\'enregistrer';
         $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p]);     
+    }
+    
+    /**
+     * Function to log out the user
+     */
+    public function logOut(): void
+    {
+        //session_start();
+        // Suppression des variables de session et de la session
+        // Réinitialisation du tableau de session
+        // On le vide intégralement
+        $_SESSION = array();
+        
+        //on détruit les variables de notre session
+        //session_unset();
+        //session_destroy();
+        $this->session->delete($this->sessionKey);
+        
+        if(!session_id())
+        {
+            return $this->redirect('/connectform');
+        }
+        else
+        {
+            $this->addFlash()->success('Vous n\'étes pas déconnectés');
+        }
+        
+            
     }
     
     

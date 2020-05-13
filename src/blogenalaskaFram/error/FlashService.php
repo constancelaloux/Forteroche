@@ -11,10 +11,21 @@ class FlashService
     */
     private $session;
     
+    /**
+     *
+     * @var type 
+     */
     private $messages;
     
+    /**
+     *
+     * @var type 
+     */
     private $sessionKey = 'flash';
     
+    /**
+     * Je fais une connexion à la session
+     */
     public function __construct()
     {
         //$this->session = new ArraySession();
@@ -22,16 +33,20 @@ class FlashService
     }
     
     /**
-    * Je stocke les informations en session
-    */
+     * Je stocke les informations en session
+     * @param string $message
+     */
     public function success(string $message)
     {
         $flash = $this->session->get($this->sessionKey, []);
         $flash['success'] = $message;
         $this->session->set($this->sessionKey, $flash);
-        //print_r($this->session->set($this->sessionKey, $flash));
     }
     
+    /**
+     * 
+     * @param string $message
+     */
     public function error(string $message)
     {
         $flash = $this->session->get($this->sessionKey, []);
@@ -40,11 +55,10 @@ class FlashService
     }
     
     /**
-    * Récupére une information en session
-    * @param string $key
-    * @param $default
-    * @return mixed
-    */
+     * Récupére une information en session
+     * @param string $type
+     * @return type
+     */
     public function get(string $type)
     {
         if(is_null($this->messages))
@@ -54,23 +68,8 @@ class FlashService
         }
         if(array_key_exists($type, $this->messages))
         {
-            //print_r($this->messages);
             return $this->messages[$type];
         }
         return null;
-        //$type correspond à success ou error
-        /*if(is_null($this->messages))
-        {
-            //print_r("je ne passe pas la et pourtant je devrais");
-            $this->messages = $this->session->get($this->sessionKey, []);
-            $this->session->delete($this->sessionKey);
-        }
-        //$flash = $this->session->get($this->sessionKey, []);
-        if(array_key_exists($type, $this->messages))
-        {
-            //print_r("je passe pas la et pourtant je devrais pas");
-            return $this->messages[$type];
-        }
-        return null;*/
     }
 }

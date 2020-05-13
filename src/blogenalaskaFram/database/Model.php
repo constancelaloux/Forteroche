@@ -64,9 +64,11 @@ class Model
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}((int) $value);
                 break;
             case "string":
+                //print_r($value);
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                 break;
             case "datetime":
+                //print_r($value);
                 //print_r($column);
                 //$datetime = new \DateTime;
                 //$date = $datetime->createFromFormat("Y-m-d", "H:i:s");

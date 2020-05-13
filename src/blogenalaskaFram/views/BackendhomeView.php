@@ -1,3 +1,8 @@
+<?php  if(!isset($_SESSION))
+        {
+            session_start();
+            print_r($_SESSION['authorId']);
+        }?>
 <section class="articles">
     <div class="container">
         <div class="row">

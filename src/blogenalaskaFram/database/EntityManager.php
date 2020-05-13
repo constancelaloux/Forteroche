@@ -214,7 +214,8 @@ class EntityManager extends DbConnexion
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        return (new $this->model())->hydrate($result);
+        //return (new $this->model())->hydrate($result);
+        return (new $this->model($result));
         //return (new $this->model())->hydrate($result);
     }
     

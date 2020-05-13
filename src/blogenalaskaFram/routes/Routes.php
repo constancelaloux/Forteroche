@@ -1,7 +1,7 @@
 <?php
 
 /* 
- *Liste de mes routes du Fontend à écrire
+ *Liste de mes routes du Fontend
  */
 
 //Route qui récupére les aricles sur la page d'accueil du blog
@@ -39,7 +39,7 @@ $router->get('/connectclientform', "Client#logClient");
 $router->post('/connectclientform', "Client#logClient");
 
 /* 
- *Liste de mes routes du Backend à écrire
+ *Liste de mes routes du Backend
  */
 
 //Route qui va vers le backend
