@@ -1,3 +1,4 @@
+<?php print_r($_SESSION); ?>
 <section class="createAuthorForm">
     <div class="container">
         <div class="row justify-content-center">

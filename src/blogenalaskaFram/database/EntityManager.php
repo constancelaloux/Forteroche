@@ -279,7 +279,8 @@ class EntityManager extends DbConnexion
      * @return type
      */
     private function fetchAll($filters = [] ,$sorting = [], $length = null, $start = null)
-    {
+    {   print_r($sorting);
+        print_r($filters);
         $sqlQuery = sprintf("SELECT * FROM %s %s %s %s", $this->metadata["table"], $this->where($filters), $this->orderBy($sorting), $this->limit($length, $start));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);

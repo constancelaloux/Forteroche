@@ -25,7 +25,8 @@ class Author extends Model
             $password,
             $username,
             $firstname,
-            $surname;
+            $surname,
+            $status;
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -61,6 +62,7 @@ class Author extends Model
     const USERNAME_INVALIDE = 2;
     const FIRSTNAME_INVALIDE = 3;
     const SURNAME_INVALIDE = 4;
+    const STATUS_INVALIDE = 5;
     
     /**
      *Ici, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
@@ -99,6 +101,10 @@ class Author extends Model
                 "password"    => [
                     "type"      => "string",
                     "property"  => "password"
+                ],
+                "status"    => [
+                    "type"      => "string",
+                    "property"  => "status"
                 ],
             ]
         ];
@@ -151,6 +157,14 @@ class Author extends Model
     public function firstname()
     {
         return $this->firstname;
+    }
+    
+    /**
+     * @return type
+     */
+    public function status()
+    {
+        return $this->status;
     }
 
     /**
@@ -239,5 +253,21 @@ class Author extends Model
             $this->erreurs[] = self::PASSWORD_INVALIDE;
         }
         $this->firstname = $firstname;
+    }
+    
+    /**
+     * @param type $status
+     */
+    public function setStatus($status)
+    {
+        /*if(is_string($firstname) || !empty($firstname))
+        {
+            $this->firstname = $firstname;
+        }*/
+        if(!is_string($status) || empty($status))
+        {
+            $this->erreurs[] = self::STATUS_INVALIDE;
+        }
+        $this->status = $status;
     }
 }

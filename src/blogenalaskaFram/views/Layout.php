@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-
-    
+   
 <meta charset="utf-8" />
 <title><?= $title ?? 'Jean Forteroche'?></title></>
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -60,7 +59,12 @@
 <script type="text/javascript" src="/../../public/js/scrollnav.js"></script>
 
 <body>
-
+    <?php 
+    //if (session_status() === PHP_SESSION_NONE)
+   /* {
+        session_start();
+    } */
+?>
     <?php require __DIR__.'/../views/Header.php'; ?>
 
     <!--Main layout-->
@@ -90,7 +94,7 @@
             }
             ?>
                 </div>
-            <?= $content ?> 			
+            <?= $content ?> 
         </div>
         </div>
         <!--Main container-->				

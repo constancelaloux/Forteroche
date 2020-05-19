@@ -1,3 +1,12 @@
+<?php /*session_start();
+    // Vérifiez si l'utilisateur est connecté, sinon redirigez-le vers la page de connexion
+    if(!$_SESSION["status"] === 'client' || session_status() === PHP_SESSION_NONE)
+    {
+        $this->addFlash()->error('Votre compte a bien été créé');
+        return $this->redirect('/connectform');
+    }*/
+print_r($_SESSION);
+?>
 <div class="section-article">
     <div class="container">
         <div class="row">

@@ -34,6 +34,7 @@ class FlashService
     
     /**
      * Je stocke les informations en session
+     * set un message de success
      * @param string $message
      */
     public function success(string $message)
@@ -44,7 +45,7 @@ class FlashService
     }
     
     /**
-     * 
+     * set un message d'erreur
      * @param string $message
      */
     public function error(string $message)
@@ -66,6 +67,7 @@ class FlashService
             $this->messages = $this->session->get($this->sessionKey, []);
             $this->session->delete($this->sessionKey);
         }
+        
         if(array_key_exists($type, $this->messages))
         {
             return $this->messages[$type];

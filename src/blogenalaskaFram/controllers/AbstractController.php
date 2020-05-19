@@ -17,6 +17,7 @@ use blog\config\ContainerInterface;
 use blog\error\FlashService;
 use blog\session\PHPSession;
 use blog\form\Form;
+use blog\user\UserSession;
 /**
  *Controller général qui évite les répétitions dans les controllers spécifiques.
  * Il instancie nottament page.
@@ -34,6 +35,7 @@ abstract class AbstractController
     public $form;
     
     public $flash;
+    public $userSession;
 
     
     //Le constructeur instancie page
@@ -46,6 +48,7 @@ abstract class AbstractController
         $this->renderer = $this->container->get(\blog\HTML\Render::class);
         $this->httpResponse = $this->container->get(HTTPResponse::class);
         $this->flashService = new FlashService();
+        $this->userSession = new UserSession();
         //$this->form = new Form3;
         //$this->renderer = new Renderer();     
         //$this->page = new Page();
@@ -109,6 +112,14 @@ abstract class AbstractController
     protected function createForm()
     {
         return new Form();
+    }
+    
+    /**
+     * return a user session
+     */
+    protected function userSession()
+    {
+        return $this->userSession;
     }
     
     /*protected function getParams($datas)

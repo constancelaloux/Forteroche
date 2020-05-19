@@ -4,7 +4,7 @@ namespace blog\HTML;
 
 use blog\HTML\RendererInterface;
 use blog\error\FlashService;
-
+use blog\user\UserSession;
 /**
  * Description of Render
  *
@@ -77,7 +77,11 @@ class Render  implements RendererInterface
             if(file_exists($this->viewpath))
             {
                 $session = new FlashService();
-
+                
+                if (session_status() === PHP_SESSION_NONE)
+                {
+                    session_start();
+                } 
                 //Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
                 ob_start();
                 //$renderer = $this;

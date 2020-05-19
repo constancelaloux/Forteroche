@@ -21,3 +21,4 @@ $loader->addNamespace('blog\validator', __DIR__ . '../../src/blogenalaskaFram/va
 $loader->addNamespace('blog\entity', __DIR__ . '../../src/blogenalaskaFram/entity');
 $loader->addNamespace('blog\file', __DIR__ . '../../src/blogenalaskaFram/file');
 $loader->addNamespace('blog\error', __DIR__ . '../../src/blogenalaskaFram/error');
+$loader->addNamespace('blog\user', __DIR__ . '../../src/blogenalaskaFram/user');

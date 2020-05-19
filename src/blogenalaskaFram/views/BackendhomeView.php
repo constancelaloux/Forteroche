@@ -1,8 +1,22 @@
-<?php  if(!isset($_SESSION))
+<?php 
+//session_start();
+/*if (session_status() === PHP_SESSION_NONE)
+{
+    session_start();
+} */
+//On récupére l'instance de l'authentification et ensuite on fait appel à la méthode require Role
+//$user = App::getAuth()->requireRole('admin');
+//$auth = new blog\controllers\AuthorController();
+//$role = $auth->requireRole('admin');
+//print_r($role);
+print_r($_SESSION);
+?>
+<p>Réservé à l'admin</p>
+<?php  /*if(!isset($_SESSION))
         {
             session_start();
-            print_r($_SESSION['authorId']);
-        }?>
+            //print_r($_SESSION['authorId']);
+        }*/?>
 <section class="articles">
     <div class="container">
         <div class="row">

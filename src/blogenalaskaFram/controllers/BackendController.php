@@ -18,7 +18,15 @@ class BackendController extends AbstractController
      */
     public function renderHomepage()
     {
-        $this->getrender()->render('BackendhomeView');
+        if($this->userSession()->requireRole('admin'))
+        {
+            $this->getrender()->render('BackendhomeView');
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }
     }
     
     /**
@@ -90,8 +98,16 @@ class BackendController extends AbstractController
      */
     public function confirmDeletedPost()
     {
-        $this->addFlash()->success('La news a bien été supprimée !');
-        return $this->redirect('/backoffice'); 
+        if($this->userSession()->requireRole('admin'))
+        {
+            $this->addFlash()->success('La news a bien été supprimée !');
+            return $this->redirect('/backoffice'); 
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }
     }
     
     /**
@@ -260,7 +276,6 @@ class BackendController extends AbstractController
             $post->setCreatedate(date("Y-m-d H:i:s"));
             $post->setUpdatedate(date("Y-m-d H:i:s"));
             $post->setIdauthor($this->request->postData('idauthor'));
-            //$post->setIdauthor($_SESSION['id']);
         }
         
         $formBuilder = new ArticlesForm($post);
@@ -271,10 +286,26 @@ class BackendController extends AbstractController
             // On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
             //$post->User = $user;
             $model->persist($post);
-            $this->addFlash()->success('La news a bien été modifié !');
-            return $this->redirect('/backoffice');
+            if($this->userSession()->requireRole('admin'))
+            {
+                $this->addFlash()->success('La news a bien été modifié !');
+                return $this->redirect('/backoffice');
+            }
+            else 
+            {
+                $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+                return $this->redirect('/connectform');
+            }
         }
+        if($this->userSession()->requireRole('admin'))
+        {
         $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }
     }
 }
         /*$date = new \DateTime();

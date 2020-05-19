@@ -13,12 +13,31 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/connectclientform">Connexion</a>
+                <li>
+                    <a class="nav-link" href="/createpost">Ecrire un article</a>
                 </li>
-                <!--<li class="nav-item">
-                    <a class="nav-link" href="#contact" tabindex="-1" aria-disabled="true">Contact</a>
-                </li>-->
+                <?php if (isset($_SESSION['authorId']))
+                { ?>
+                <div class="navbar-test">Connecté en tant que <?php echo $_SESSION['authorUsername'] ?></div>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profil</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/updateuser">Modifier son profil</a>
+                        <a class="dropdown-item" href="/deleteuser">Supprimer son profil</a>
+                        <form class="nav-item active pr-1" method="post" action = "/logout">
+                            <button class="btn btn-outline-success my-2 my-sm-0">Se déconnecter</button>
+                        </form>
+                    </div>
+                </li>
+                <?php 
+                }
+            else
+            { ?>
+                <li>
+                    <a class="nav-link" href="/connectform">Connexion</a>
+                </li>
+            <?php 
+            } ?>
             </ul>
             <form class="form-inline my-2 my-lg-0">
                 <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

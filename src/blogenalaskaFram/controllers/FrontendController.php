@@ -5,6 +5,7 @@ namespace blog\controllers;
 use blog\controllers\AbstractController;
 use blog\entity\Comment;
 use blog\database\EntityManager;
+use blog\entity\Post;
 /**
  * Description of BlogController
  *
@@ -12,11 +13,35 @@ use blog\database\EntityManager;
  */
 class FrontendController extends AbstractController
 {
+    private $perPage;
     /*
      * Fonction qui permet de rendre la page d'accueil
      */
     public function renderhomepage()
     {
+        /*$this->perPage = (int)12;
+        print_r($this->perPage);
+        //$currentPage = $_GET['page'];
+        //print_r($currentPage);
+                die('meurs');
+        //$currentPage = URL::getPositiveInt('page', 1);
+        $post = new Post();
+        $model = new EntityManager($post);
+        $count = $model->exist();
+        print_r($count);
+        $pages = ceil($count / $this->perPage);
+        if($currentPage > $pages)
+        {
+            throw new Exception("Cette page n'existe pas");
+        }
+        $offset = $this->perPage * ($currentPage - 1);
+        $posts = $model->findBy($this->perPage, $offset);
+        die("meurs");*/
+        // Retrouver tous les articles
+        //$post = new Post();
+        //$model = new EntityManager($post);
+        //$posts = $model->findAll();
+        //$this->getrender()->render('FrontendhomeView',['posts' => $posts]);
         $this->getrender()->render('FrontendhomeView');
     }
     
@@ -26,6 +51,39 @@ class FrontendController extends AbstractController
     public function renderArticle()
     {
         $this->getrender()->render('ArticleView');
+    }
+    
+    /**
+     * pagination et rendre articles
+     */
+    public function renderPaginatedArticles()
+    {
+        $this->perPage = (int)12;
+        //print_r($this->perPage);
+        $currentPage = $_GET['page'];
+        //print_r($currentPage);
+
+        //$currentPage = URL::getPositiveInt('page', 1);
+        $post = new Post();
+        $model = new EntityManager($post);
+        $count = $model->exist();
+        //print_r($count);
+        $pages = ceil($count / $this->perPage);
+        //print_r($pages);
+        
+        if($currentPage > $pages)
+        {
+            throw new Exception("Cette page n'existe pas");
+        }
+        $offset = $this->perPage * ($currentPage - 1);
+        $posts = $model->findBy($this->perPage,$offset);
+        print_r($posts);
+        die('meurs');
+        /*$post = new Post();
+        $model = new EntityManager($post);
+        // Retrouver tous les articles
+        $posts = $model->findAll();*/
+        $this->getrender()->render('FrontendhomeView',['posts' => $posts]);
     }
     
     /*
@@ -48,7 +106,7 @@ class FrontendController extends AbstractController
         }
         else
         {
-            $post = new Comment();
+            $comment = new Comment();
         }
         
         if ($this->request->method() == 'POST' && $form->isValid())
@@ -59,7 +117,16 @@ class FrontendController extends AbstractController
             return $this->redirect('/backoffice');
         }
         
-        //$this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+        if($this->userSession()->requireRole('client', 'admin'))
+        {
+        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+            
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }
         
     }
     

@@ -58,5 +58,6 @@ class PHPSession implements SessionInterface
     {
         $this->ensureSarted();
         unset($_SESSION[$key]);
+        //session_destroy();
     }
 }

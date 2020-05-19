@@ -7,6 +7,9 @@
 //Route qui récupére les aricles sur la page d'accueil du blog
 $router->get('/', "Frontend#renderHomepage");
 
+//Route qui renvoi les articles de la pagination
+$router->get('/articles:page', "Frontend#renderPaginatedArticles");
+
 //Route qui va vers un article du frontend
 $router->get('/article', "Frontend#renderArticle");
 
@@ -27,9 +30,15 @@ $router->get('/deletecomment', "Frontend#deleteComment");
 $router->get('/createauthor', "Author#createAuthor");
 $router->post('/createauthor', "Author#createAuthor");
 
+$router->post('/logout', "Author#logOut");
+
 //Route qui va vers la fonction qui créé un formulaire de connexion
 $router->get('/connectform', "Author#logAuthor");
 $router->post('/connectform', "Author#logAuthor");
+
+//Routes qui suppriment et met à jour un utilisateur
+$router->post('/updateuser', "Author#updateUser");
+$router->post('/deleteuser', "Author#deleteUser");
 
 $router->get('/createclient', "Author#createClient");
 $router->post('/createclient', "Author#createClient");
