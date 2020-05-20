@@ -233,8 +233,9 @@ print_r($_SESSION);
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
+                        <?php echo $previouslink ?>
                         <?php //if($currentPage > 1): ?>
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $prevPage ?>">Prévious</a></li>
+                        <!--<li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php $prevPage ?>">Prévious</a></li>-->
                         <?php //endif; ?>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=1">1</a></li>
                         <li class="page-item active" aria-current="page">
@@ -245,8 +246,9 @@ print_r($_SESSION);
                         </li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=3">3</a></li>
                         <?php //if($currentPage < $pages): ?>
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $nextPage?>">Next</a></li>
+                        <!--<li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php //$nextPage?>">Next</a></li>-->
                         <?php //endif; ?>
+                        <?php echo $nextlink ?>
                     </ul>
                 </nav>
             </div>
