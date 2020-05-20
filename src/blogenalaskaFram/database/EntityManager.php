@@ -162,7 +162,8 @@ class EntityManager extends DbConnexion
         $sqlQuery = sprintf("SELECT COUNT(*) FROM %s %s ", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
-        return (bool) $statement->fetchColumn();
+        //return (bool) $statement->fetchColumn();
+        return $statement->fetchColumn();
     }
     
     /**
@@ -262,7 +263,8 @@ class EntityManager extends DbConnexion
     {
         if(preg_match("/^findOneBy([A-Za-z]+)$/", $name, $matches)) {
             return $this->findOneBy([$matches[1] => $arguments[0]]);
-        }elseif(preg_match("/^findBy([A-Za-z]+)$/", $name, $matches)) {
+        }
+        elseif(preg_match("/^findBy([A-Za-z]+)$/", $name, $matches)) {
             $arguments[1] = $arguments[1] ?? [];
             $arguments[2] = $arguments[2] ?? null;
             $arguments[3] = $arguments[3] ?? null;
@@ -279,11 +281,14 @@ class EntityManager extends DbConnexion
      * @return type
      */
     private function fetchAll($filters = [] ,$sorting = [], $length = null, $start = null)
-    {   print_r($sorting);
-        print_r($filters);
+    {   
+        //print_r($filters);
+        //print_r($sorting);
+        //print_r($length);
         $sqlQuery = sprintf("SELECT * FROM %s %s %s %s", $this->metadata["table"], $this->where($filters), $this->orderBy($sorting), $this->limit($length, $start));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
+        //print_r($statement);
         $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
         $data = [];
         

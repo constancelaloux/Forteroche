@@ -6,6 +6,7 @@ use blog\controllers\AbstractController;
 use blog\entity\Comment;
 use blog\database\EntityManager;
 use blog\entity\Post;
+use Exception;
 /**
  * Description of BlogController
  *
@@ -58,31 +59,63 @@ class FrontendController extends AbstractController
      */
     public function renderPaginatedArticles()
     {
-        $this->perPage = (int)12;
-        //print_r($this->perPage);
-        $currentPage = $_GET['page'];
-        //print_r($currentPage);
+        $page = $currentPage = $_GET['page'] ?? 1;
 
+        if(!filter_var($page, FILTER_VALIDATE_INT))
+        {
+            throw new Exception("Numéro de page invalide");
+        }
+        
+        /*if($page === '1')
+        {
+            http_response_code(301);
+            return $this->redirect('/');
+        }*/
+        
+        //Les numéros de pages en paramétre dans l'url
+        $currentPage = (int)$page;
+        $prevPage = $currentPage - 1;
+        $nextPage = $currentPage + 1;
+
+        /*if($currentPage <= 0)
+        {
+            throw new Exception("Numéro de page invalide");
+        }*/
         //$currentPage = URL::getPositiveInt('page', 1);
+        
+        //On compte le nombre d'articles en base de données
         $post = new Post();
         $model = new EntityManager($post);
         $count = $model->exist();
-        //print_r($count);
+
+        //Par page on souhaite 9 articles
+        $this->perPage = (int)9;
+
+        //On obtient le nombre de pages que l'on va avoir
         $pages = ceil($count / $this->perPage);
-        //print_r($pages);
         
+        //Si le numéro de page dans l'url est supérieur au nombre de pages que l'on devrait avoir on met une exception
         if($currentPage > $pages)
         {
             throw new Exception("Cette page n'existe pas");
         }
+        
+        if($prevPage < 1)
+        {
+            $prevPage = $pages;
+        }
+        
+        if($nextPage > $pages)
+        {
+            $nextPage = 1;
+        }
+        
         $offset = $this->perPage * ($currentPage - 1);
-        $posts = $model->findBy($this->perPage,$offset);
-        print_r($posts);
-        die('meurs');
-        /*$post = new Post();
-        $model = new EntityManager($post);
+        //$posts = $model->findBy(null,'created_at',$offset);
+        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
+
         // Retrouver tous les articles
-        $posts = $model->findAll();*/
+        //$posts = $model->findAll();
         $this->getrender()->render('FrontendhomeView',['posts' => $posts]);
     }
     

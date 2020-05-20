@@ -7,7 +7,6 @@ print_r($_SESSION["status"]);
         return $this->redirect('/connectform');
     }*/
 print_r($_SESSION);
-print_r($posts);
 ?>
 <header class="head" id="head">
     <div class="container-fluid">   
@@ -22,7 +21,7 @@ print_r($posts);
         <div class="row mb-4">
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="/../../public/images/presentation.jpg" alt="">
+                    <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre1.jpg" alt="">
                     <strong class="d-inline-block mb-2 text-danger">Derniers aricles</strong>
                     <h3>Shooting</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -31,7 +30,7 @@ print_r($posts);
             </div>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="/../../public/images/kayak.jpg" alt="">
+                    <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre2.jpg" alt="">
                     <strong class="d-inline-block mb-2 text-danger">Derniers articles</strong>
                     <h3>Videos</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -40,7 +39,7 @@ print_r($posts);
             </div>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="/../../public/images/lacsalaska.jpg" alt="">
+                    <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre3.jpg" alt="">
                     <strong class="d-inline-block mb-2 text-danger">Derniers articles</strong>
                     <h3>Editing</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
@@ -61,17 +60,32 @@ print_r($posts);
             </div>
 
             <div class="row mb-4">
+                <?php          
+                if (empty($posts))
+                {
+                ?>
+                <p>Aucun article n'a encore été posté. Soyez le premier à en laisser un !</p>
+                <?php
+                }
+                ?>
+                
+                <?php
+                foreach ($posts as $post) 
+                {
+                //print_r($value);
+                //print_r($post->subject());
+                 ?>
                 <div class="col-lg-4">
                     <div class="cards h-100">
                         <div class="overlay-image">
-                            <img class="card-img-top img-responsive w-100" src="https://res.cloudinary.com/sepuckett86/image/upload/v1513176680/IMG_5837_xicdt5.jpg" alt="Card image cap">
+                            <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
                             <div class="overlay-item-caption smoothie"></div>
                             <div class="hover-item-caption smoothie">
                                 <h3 class="text"><a href="/article" class="stretched-link" title="view article">View</a></h3>
                             </div>
                         </div>
                         <div class="card-body">
-                            <strong class="d-inline-block mb-2 text-danger">Chapitre 1</strong>
+                            <strong class="d-inline-block mb-2 text-danger"><?= $post->subject ?></strong>
                             <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
@@ -79,7 +93,10 @@ print_r($posts);
                         </div>
                     </div>  
                 </div>
-                <div class="col-lg-4">
+                <?php
+                }
+                ?>
+                <!--<div class="col-lg-4">
                     <div class="cards h-100">
                         <div class="overlay-image">
                             <img class="card-img-top" src="https://res.cloudinary.com/sepuckett86/image/upload/v1513095416/IMG_7240_q9dadh.jpg" alt="Card image cap" alt="Card image cap">
@@ -87,7 +104,7 @@ print_r($posts);
                             <div class="hover-item-caption smoothie">
                                 <h3 class="text"><a href="/article" class="stretched-link" title="view article">View</a></h3>
                                 <!--<div class="texte">Hello World</div>-->
-                            </div>
+                            <!--</div>
                         </div>
                         <div class="card-body">
                             <strong class="d-inline-block mb-2 text-danger">Chapitre 2</strong>
@@ -95,7 +112,7 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -113,11 +130,11 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
-            </div>
-            <div class="row mb-4">
+            </div>-->
+            <!--<div class="row mb-4">
                 <div class="col-lg-4">
                     <div class="cards h-100">
                         <div class="overlay-image">
@@ -126,7 +143,7 @@ print_r($posts);
                             <div class="hover-item-caption smoothie">
                                 <h3 class="text"><a href="/article" class="stretched-link" title="view article">View</a></h3>
                                 <!--<div class="texte">Hello World</div>-->
-                            </div>
+                            <!--</div>
                         </div>
                         <div class="card-body">
                             <strong class="d-inline-block mb-2 text-danger">Chapitre 4</strong>
@@ -134,7 +151,7 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>  
                 </div>
                 <div class="col-lg-4">
@@ -145,7 +162,7 @@ print_r($posts);
                             <div class="hover-item-caption smoothie">
                                 <h3 class="text"><a href="/article" class="stretched-link" title="view article">View</a></h3>
                                 <!--<div class="texte">Hello World</div>-->
-                            </div>
+                            <!--</div>
                         </div>
                         <div class="card-body">
                             <strong class="d-inline-block mb-2 text-danger">Chapitre 5</strong>
@@ -153,7 +170,7 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -171,9 +188,9 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
-                    </div>
-                </div>
+                        <!--</div>
+                    </div>-->
+                <!--</div>
             </div>
             <div class="row mb-4">
                 <div class="col-lg-4">
@@ -185,7 +202,7 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -197,7 +214,7 @@ print_r($posts);
                             <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
                             <!--<p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="#" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
                 <div class="col-lg-4">
@@ -209,23 +226,27 @@ print_r($posts);
                             <div class="mb-1 text-muted">Nov 12</div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                             <a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
+                        <!--</div>
                     </div>
                 </div>
-            </div>
+            </div>-->
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link text-danger" href="#">Prévious</a></li>
+                        <?php //if($currentPage > 1): ?>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $prevPage ?>">Prévious</a></li>
+                        <?php //endif; ?>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=1">1</a></li>
                         <li class="page-item active" aria-current="page">
-                            <span class="page-link text-danger">
+                            <a class="page-link text-danger" href="/articles&page=2">
                                 2
                                 <span class="sr-only">(current)</span>
-                            </span>
+                            </a>
                         </li>
-                        <li class="page-item"><a class="page-link text-danger" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link text-danger" href="#">Next</a></li>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=3">3</a></li>
+                        <?php //if($currentPage < $pages): ?>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $nextPage?>">Next</a></li>
+                        <?php //endif; ?>
                     </ul>
                 </nav>
             </div>
