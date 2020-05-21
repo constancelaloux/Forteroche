@@ -59,19 +59,37 @@ class FrontendController extends AbstractController
      */
     public function renderPaginatedArticles()
     {
+        $lastsposts = $this->getLastsPosts();
+        //print_r($lastsposts);
+        //die('meurs maintenant');
         $post = new Post();
         $perPage = 9;
         $paginatedQuery = new \blog\Paginate($post, $perPage);
         //print_r($posts);
-        $link = '/articles';
+        //$link = '/articles';
         $posts = $paginatedQuery->getItems();
-        $previouslink = $paginatedQuery->previouslink($link);
-        $nextlink = $paginatedQuery->nextlink($link);
+        //$previouslink = $paginatedQuery->previouslink($link);
+        //$nextlink = $paginatedQuery->nextlink($link);
         //print_r($previouslink);
-
+        $previouslink = $paginatedQuery->previouslink();
+        $nextlink = $paginatedQuery->nextlink();
+        
         // Retrouver tous les articles
         //$posts = $model->findAll();
-        $this->getrender()->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $previouslink, 'nextlink' => $nextlink]);
+        $this->getrender()->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $previouslink, 'nextlink' => $nextlink, 'lastsposts' => $lastsposts]);
+    }
+    
+    /**
+     * Je vais chercher les 3 derniers articles
+     */
+    public function getLastsPosts()
+    {
+        $post = new Post();
+        $this->model = new EntityManager($post);
+        $lastsposts = $this->model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
+        //print_r($lastsposts);
+        return $lastsposts;
+        //$getLastArticle = $this->_db->prepare("SELECT * FROM articles  WHERE status = :status ORDER BY ID DESC LIMIT 0, 2");
     }
     
     /*

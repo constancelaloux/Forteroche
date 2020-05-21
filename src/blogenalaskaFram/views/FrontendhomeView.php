@@ -7,6 +7,7 @@ print_r($_SESSION["status"]);
         return $this->redirect('/connectform');
     }*/
 print_r($_SESSION);
+//echo $lastsposts->image;
 ?>
 <header class="head" id="head">
     <div class="container-fluid">   
@@ -19,15 +20,22 @@ print_r($_SESSION);
 <section class="services-section pb-4" id="lastnews">
     <div class="container">
         <div class="row mb-4">
+            <?php
+            foreach ($lastsposts as $post) 
+            {
+            ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre1.jpg" alt="">
+                    <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers aricles</strong>
                     <h3>Shooting</h3>
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                         magna aliqua. Quis ipsum suspendisse ultrices gravida.<a href="/article" class="text-danger">Lire la suite</a></p>
                 </div>
             </div>
+            <?php
+            }
+            ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
                     <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre2.jpg" alt="">
@@ -87,7 +95,8 @@ print_r($_SESSION);
                         <div class="card-body">
                             <strong class="d-inline-block mb-2 text-danger"><?= $post->subject ?></strong>
                             <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
-                            <div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>
+                            <!--<div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>-->
+                            <div class="mb-1 text-muted"><?=$post->createdate->format('Y-m-d')?> Posté par <?=$post->idauthor?></div>
                             <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
                             <!--<a href="/article" class="stretched-link">Continue reading</a>-->
                         </div>
@@ -233,10 +242,7 @@ print_r($_SESSION);
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <?php echo $previouslink ?>
-                        <?php //if($currentPage > 1): ?>
-                        <!--<li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php $prevPage ?>">Prévious</a></li>-->
-                        <?php //endif; ?>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $previouslink ?>">Prévious</a></li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=1">1</a></li>
                         <li class="page-item active" aria-current="page">
                             <a class="page-link text-danger" href="/articles&page=2">
@@ -245,10 +251,7 @@ print_r($_SESSION);
                             </a>
                         </li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=3">3</a></li>
-                        <?php //if($currentPage < $pages): ?>
-                        <!--<li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php //$nextPage?>">Next</a></li>-->
-                        <?php //endif; ?>
-                        <?php echo $nextlink ?>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $nextlink ?>">Next</a></li>
                     </ul>
                 </nav>
             </div>

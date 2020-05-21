@@ -245,9 +245,9 @@ class EntityManager extends DbConnexion
      * @param type $start
      * @return type
      */
-    public function findBy($filters = [], $orderBy = [], $length = null, $start = null)
+    public function findBy($filters = [], $orderBy = [], $desc = null, $length = null, $start = null)
     {
-        return $this->fetchAll($filters, $orderBy, $length, $start);
+        return $this->fetchAll($filters, $orderBy, $desc, $length, $start);
     }
     
     /**
@@ -331,9 +331,12 @@ class EntityManager extends DbConnexion
             $sorts = [];
             foreach($sorting as $property => $value) 
             {
+                //print_r($property);
                 $sorts[] = sprintf("%s %s",$this->getColumnByProperty($property), $value);
+                //print_r($sorts);
             }
-            return sprintf("ORDER BY %s", implode($sorts, ","));
+            return sprintf("ORDER BY %s DESC", implode($sorts, ","));
+            //return sprintf("ORDER BY %", implode($sorts, ","));
         }
         return "";
     }

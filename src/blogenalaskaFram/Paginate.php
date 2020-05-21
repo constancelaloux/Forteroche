@@ -33,7 +33,7 @@ class Paginate
         $currentPage = (int)$page;*/
         $currentPage = $this->getCurrentPage();
         
-       // $pages = $this->getPages();
+        $pages = $this->getPages();
         
         //Si le numéro de page dans l'url est supérieur au nombre de pages que l'on devrait avoir on met une exception
         /*if($currentPage > $pages)
@@ -47,13 +47,22 @@ class Paginate
     }
     
     /**
-     * 
+     * Lien suivant
      * @param string $link
      * @return string
      */
-    public function nextlink(string $link): string
+    public function nextlink()//string $link)
     {
-        $currentPage = $this->getCurrentPage();
+        $nextPage = $this->getCurrentPage() + 1;
+        
+        //Si la page suivante est supérieure au nombre de pages possibles
+        if($nextPage > $this->getPages())
+        {
+            //On revient à la page numéro 1
+            return $nextPage = 1;
+        }
+        return $nextPage;
+        /*$currentPage = $this->getCurrentPage();
         $pages = $this->getPages();
         if($currentPage >= $pages)
         {
@@ -61,35 +70,42 @@ class Paginate
         }
         $link .= "&page=" . ($currentPage + 1);
         return
-        '<a href="'.$link.'" class="btn btn-primary">&laquo; Page précédente </a>';
-                /*if($currentPage <= 1)
-        {
-            print_r("je passse la");
-            return NULL;
-        }*/
+        '<a href="'.$link.'" class="btn btn-primary">&laquo; Page précédente </a>';*/
     }
     
     /**
-     * 
+     * Lien précédent
      * @param string $link
      * @return string
      */
-    public function previouslink(string $link): string
+    public function previouslink()//string $link) //: string
     {
-        $currentPage = $this->getCurrentPage();
+        $prevPage = $this->getCurrentPage() - 1;
+        //print_r($prevPage);
+        //print_r($this->getPages());
+        //die("meurs");
+        if($prevPage < 1)
+        {
+            return $prevPage = $this->getPages();
+            //return null;
+        }
+        return $prevPage;
+        
+        /*if($prevPage >= 1)
+        {
+            return $prevPage = $this->getPages();
+        }*/
+        /*$currentPage = $this->getCurrentPage();
         if($currentPage <= 1)
         {
             return null;
-            //print_r($currentPage);
-            //print_r($link);
         }
         if($currentPage > 2)
         {
-            $link .= "&page=" . ($currentPage -1);
-            //print_r("je passse la");
+            $link.= "&page=" . ($currentPage -1);
         }
         return
-        '<a href="'.$link.'" class="btn btn-primary">&laquo; Page suivante </a>';
+        '<a href="'.$link.'" class="btn btn-primary">&laquo; Page suivante </a>';*/
     }
     
     
@@ -111,7 +127,7 @@ class Paginate
     }
     
     /**
-     * 
+     * On souhaite obtenir un nombre de pages à avoir
      * @return int
      */
     private function getPages(): int
