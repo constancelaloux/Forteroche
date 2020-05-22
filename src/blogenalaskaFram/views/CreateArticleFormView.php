@@ -5,7 +5,7 @@
         $this->addFlash()->success('Votre compte a bien été créé');
         return $this->redirect('/connectform');
     }*/
-print_r($_SESSION);
+//print_r($_SESSION);
 ?>
 <section class="createAuthorForm">
     <div class="container">

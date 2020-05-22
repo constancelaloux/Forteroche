@@ -8,13 +8,16 @@
 $router->get('/', "Frontend#renderHomepage");
 
 //Route qui renvoi les articles de la pagination
-$router->get('/articles:page', "Frontend#renderPaginatedArticles");
+$router->get('/articles:page', "Frontend#renderPaginatedposts");
 
 //Route qui va vers un article du frontend
-$router->get('/article', "Frontend#renderArticle");
+$router->get('/article:id:page', "Frontend#renderPost");
 
 //Route qui permet de créer un commentaire
-$router->get('/createcomment', "Frontend#createComment");
+$router->post('/article:id', "Frontend#createComment");
+
+//$router->get('/createcomment', "Frontend#createComment");
+$router->post('/createcomment', "Frontend#createComment");
 
 //Route qui permet de créer un commentaire
 $router->get('/updatecomment', "Frontend#updateComment");

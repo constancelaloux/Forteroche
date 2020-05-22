@@ -32,7 +32,7 @@ class Comment extends Model
     public static function metadata()
     {
         return [
-            "table"             => "comment",
+            "table"             => "comments",
             "primaryKey"        => "id",
             "columns"           => [
                 "id"            => [
@@ -112,7 +112,7 @@ class Comment extends Model
      */
     public function idpost()
     {
-        return $this->idpost();
+        return $this->idpost;
     }
 
     /**
@@ -179,10 +179,12 @@ class Comment extends Model
      */
     public function setIdclient($idclient)
     {
+        //print_r($idclient);
         $idclient = (int)$idclient;
         if ($idclient > 0)
         {
             $this->idclient = $idclient;
+            //print_r($this->idclient);
         }
     }
     
@@ -194,7 +196,8 @@ class Comment extends Model
         $idpost = (int)$idpost;
         if ($idpost > 0)
         {
-            $this->idclient = $idpost;
+            $this->idpost = $idpost;
+            //print_r($this->idpost);
         }
     }
     

@@ -55,8 +55,6 @@ class Model
      */
     private function hydrateProperty($column, $value)
     {
-        //print_r($value);
-        //print_r($column);
         //print_r($this::metadata()["columns"]);
         switch($this::metadata()["columns"][$column]["type"]) 
         {

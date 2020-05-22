@@ -6,7 +6,7 @@ print_r($_SESSION["status"]);
         //$this->addFlash()->error('Votre compte a bien été créé');
         return $this->redirect('/connectform');
     }*/
-print_r($_SESSION);
+//print_r($_SESSION);
 //echo $lastsposts->image;
 ?>
 <header class="head" id="head">
@@ -27,16 +27,28 @@ print_r($_SESSION);
             <div class="col-lg-4">
                 <div class="services-item p-2">
                     <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
-                    <strong class="d-inline-block mb-2 text-danger">Derniers aricles</strong>
-                    <h3>Shooting</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                        magna aliqua. Quis ipsum suspendisse ultrices gravida.<a href="/article" class="text-danger">Lire la suite</a></p>
+                    <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
+                    <h3><?= $post->subject ?></h3>
+                    <p><?php if (strlen($post->content) <= 400)
+                        {
+                            echo $post->content;
+                        }
+                    else
+                        {
+                            //Returns the portion of string specified by the start and length parameters.
+                            $debut = substr($post->content(), 0, 400);
+                            $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+
+                            echo $debut;
+                        }?>
+                        
+                    <a href="/article&id=<?=$post->id?>" class="text-danger">Lire la suite</a></p>
                 </div>
             </div>
             <?php
             }
             ?>
-            <div class="col-lg-4">
+            <!--<div class="col-lg-4">
                 <div class="services-item p-2">
                     <img class="card-img-top img-responsive w-100" src="/../../public/images/chapitre2.jpg" alt="">
                     <strong class="d-inline-block mb-2 text-danger">Derniers articles</strong>
@@ -53,7 +65,7 @@ print_r($_SESSION);
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                     magna aliqua. Quis ipsum suspendisse ultrices gravida.<a href="/article" class="text-danger">Lire la suite</a></p>
                 </div>
-            </div>
+            </div>-->
         </div>
     </div>
 </section>
@@ -72,37 +84,37 @@ print_r($_SESSION);
                 if (empty($posts))
                 {
                 ?>
-                <p>Aucun article n'a encore été posté. Soyez le premier à en laisser un !</p>
+                    <p>Aucun article n'a encore été posté. Soyez le premier à en laisser un !</p>
                 <?php
                 }
-                ?>
-                
-                <?php
-                foreach ($posts as $post) 
+                else 
                 {
-                //print_r($value);
-                //print_r($post->subject());
-                 ?>
-                <div class="col-lg-4">
-                    <div class="cards h-100">
-                        <div class="overlay-image">
-                            <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
-                            <div class="overlay-item-caption smoothie"></div>
-                            <div class="hover-item-caption smoothie">
-                                <h3 class="text"><a href="/article" class="stretched-link" title="view article">View</a></h3>
+                ?>           
+                    <?php
+                    foreach ($posts as $post) 
+                    {
+                     ?>
+                    <div class="col-lg-4">
+                        <div class="cards h-100">
+                            <div class="overlay-image">
+                                <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
+                                <div class="overlay-item-caption smoothie"></div>
+                                <div class="hover-item-caption smoothie">
+                                    <h3 class="text"><a href="/article&id=<?=$post->id?>" class="stretched-link" title="view article">View</a></h3>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <strong class="d-inline-block mb-2 text-danger"><?= $post->subject ?></strong>
-                            <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
-                            <!--<div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>-->
-                            <div class="mb-1 text-muted"><?=$post->createdate->format('Y-m-d')?> Posté par <?=$post->idauthor?></div>
-                            <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
-                            <!--<a href="/article" class="stretched-link">Continue reading</a>-->
-                        </div>
-                    </div>  
-                </div>
-                <?php
+                            <div class="card-body">
+                                <strong class="d-inline-block mb-2 text-danger"><?= $post->subject ?></strong>
+                                <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
+                                <!--<div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>-->
+                                <div class="mb-1 text-muted"><?=$post->createdate->format('Y-m-d')?> Posté par <?=$post->idauthor?></div>
+                                <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
+                                <!--<a href="/article" class="stretched-link">Continue reading</a>-->
+                            </div>
+                        </div>  
+                    </div>
+                    <?php
+                    }
                 }
                 ?>
                 <!--<div class="col-lg-4">
@@ -237,8 +249,8 @@ print_r($_SESSION);
                             <a href="/article" class="stretched-link">Continue reading</a>-->
                         <!--</div>
                     </div>
-                </div>
-            </div>-->
+                </div>-->
+            </div>
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
