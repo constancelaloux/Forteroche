@@ -15,6 +15,18 @@ use Exception;
 class FrontendController extends AbstractController
 {
     private $perPage;
+    
+    public $post;
+    
+    public $comment;
+    
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->post = new Post();
+        $this->comment = new Comment();
+    }
+    
     /*
      * Fonction qui permet de rendre la page d'accueil
      */
@@ -29,10 +41,11 @@ class FrontendController extends AbstractController
     public function renderPaginatedPosts()
     {
         $lastsposts = $this->getLastsPosts();
-        $post = new Post();
+        $model = new EntityManager($this->post);
         $perPage = 9;
-        $paginatedQuery = new \blog\Paginate($post, $perPage);
-        $posts = $paginatedQuery->getItems();
+        $paginatedQuery = new \blog\Paginate($this->post, $perPage);
+        $offset = $paginatedQuery->getItems();
+        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
         $previouslink = $paginatedQuery->previouslink();
         $nextlink = $paginatedQuery->nextlink();
         $this->getrender()->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $previouslink, 'nextlink' => $nextlink, 'lastsposts' => $lastsposts]);
@@ -43,23 +56,21 @@ class FrontendController extends AbstractController
      */
     public function renderPost()
     {
-        //Je vais chercher les derniers articles
-        $lastsposts = $this->getLastsPosts();
-        
         //J'affiche les commentaires
         $comments = $this->renderPaginatedComments($_GET['id']);
+        //Je vais chercher les derniers articles
+        $lastsposts = $this->getLastsPosts();
         
         //J'affiche le formulaire pour écrire les commentaires
         $commentform = $this->createComment();
         
         //J'affiche l'article en fonction de l'id
-        $post = new Post();
-        $model = new EntityManager($post);
+        $model = new EntityManager($this->post);
         $postfromid = $model->findById($_GET['id']);
         
         //j'affiche la pagination de l'article
         $perPage = 1;
-        $paginatedQuery = new \blog\Paginate($post, $perPage);
+        $paginatedQuery = new \blog\Paginate($this->post, $perPage);
         $previouslink = $paginatedQuery->previouslink();
         $nextlink = $paginatedQuery->nextlink();
         $posts = $paginatedQuery->getItems();
@@ -73,8 +84,7 @@ class FrontendController extends AbstractController
      */
     public function getLastsPosts()
     {
-        $post = new Post();
-        $model = new EntityManager($post);
+        $model = new EntityManager($this->post);
         $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
         //$getLastArticle = $this->_db->prepare("SELECT * FROM articles  WHERE status = :status ORDER BY ID DESC LIMIT 0, 2");
@@ -85,11 +95,31 @@ class FrontendController extends AbstractController
      */
     public function renderPaginatedComments($id)
     {
-        $comment = new Comment();
+        //print_r($id);
         $perPage = 5;
-        $paginatedQuery = new \blog\Paginate($comment, $perPage);
-        $comments = $paginatedQuery->getItems();
-        return $comments;
+        $paginatedQuery = new \blog\Paginate($this->comment, $perPage);
+        $offset = $paginatedQuery->getItems();
+        $this->comment->setIdpost($id);
+        $this->comment->setStatus('Valider');
+        //$model = new EntityManager($this->comment);
+        if($model->exist(['idpost'=>$this->comment->idpost()]))
+        { 
+            /*("SELECT a.subject subject, "
+                        . "c.id id, c.create_date create_date, c.update_date update_date, c.content content, c.countclicks countclicks "
+                        . "FROM articles a "
+                        . "INNER JOIN comments c ON a.id = c.id_From_Article "
+                        . "WHERE c.status = :status order by countclicks DESC");*/
+            $query = (new \blog\database\Query())->from($this->comment)->select('*')
+                    ->join('author', $condition)
+                    ->where(['idpost' => $this->comment->idpost()])
+                    ->order('create_date')->limit($perPage, $offset);
+                    //->offset($offset)
+            $query->execute();
+            $comments = $query->fetchAll();
+            $test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
+            //$comments = $model->findBy(['idpost' => $this->comment->idpost(), 'status' => $this->comment->status()], [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
+            return $comments;
+        }
     }
     
     /*
@@ -122,23 +152,24 @@ class FrontendController extends AbstractController
         //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
-            $comment = new Comment();
-            $model = new EntityManager($comment);
+            //$comment = new Comment();
+            $model = new EntityManager($this->comment);
         }
         else
         {
             //Si il y a un id en post ou en get
             //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
-            $comment = new Comment(
+           /* $this->comment(
                 [
                     'id' =>  $id,
-                ]);
-            $model = new EntityManager($comment);
+                ]);*/
+            $this->comment->setId($id);
+            $model = new EntityManager($this->comment);
             
             //Dans le cas ou il n'y pas l'id en base de données
             // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
-            if(!($comment = $model->findById($comment->id())))
+            if(!($this->comment = $model->findById($this->comment->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -146,24 +177,24 @@ class FrontendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $comment->setSubject($this->request->postData('subject'));
-            $comment->setContent($this->request->postData('content'));
+            $this->comment->setSubject($this->request->postData('subject'));
+            $this->commentt->setContent($this->request->postData('content'));
             //$post->setImage($this->request->postData('image'));
-            $comment->setStatus($this->request->postData('validate'));
-            $comment->setCreatedate(date("Y-m-d H:i:s"));
-            $comment->setUpdatedate(date("Y-m-d H:i:s"));
-            $comment->setCountclicks(NULL);
-            $comment->setIdclient($_SESSION['authorId']);
-            $comment->setIdpost($this->request->postData('idpost'));
+            $this->comment->setStatus($this->request->postData('validate'));
+            $this->comment->setCreatedate(date("Y-m-d H:i:s"));
+            $this->comment->setUpdatedate(date("Y-m-d H:i:s"));
+            $this->comment->setCountclicks(NULL);
+            $this->comment->setIdclient($_SESSION['authorId']);
+            $this->comment->setIdpost($this->request->postData('idpost'));
         }
         
-        $formBuilder = new \blog\form\CommentsForm($comment);
+        $formBuilder = new \blog\form\CommentsForm($this->comment);
         $form = $formBuilder->buildform($formBuilder->form());
         
         if ($this->request->method() == 'POST' && $form->isValid())
         {  
-            $model = new EntityManager($comment);
-            $model->persist($comment);
+            $model = new EntityManager($this->comment);
+            $model->persist($this->comment);
             $this->addFlash()->success('Votre commentairea bien été ajoutée !');
             $id = $this->request->postData('idpost');
             return $this->redirect("/article&id=$id");
@@ -171,9 +202,9 @@ class FrontendController extends AbstractController
         
         if($this->userSession()->requireRole('client', 'admin'))
         {
-        //$title = "Créer un commentaire";
-        return $form->createView();
-        //$this->getrender()->render('ArticleView',['title' => $title, 'form' => $form->createView()]);
+            //$title = "Créer un commentaire";
+            return $form->createView();
+            //$this->getrender()->render('ArticleView',['title' => $title, 'form' => $form->createView()]);
             
         }
         else 
@@ -192,18 +223,19 @@ class FrontendController extends AbstractController
         {
             if($this->userSession()->requireRole('client', 'admin'))
             {
-                $comment = new Comment(
+                /*$this->comment(
                 [
                     'id' =>  $this->request->postData('id'),
-                ]);
-                $model = new EntityManager($comment);
-                $model->remove($comment);
+                ]);*/
+                $this->comment->setId($this->request->postData('id'));
+                $model = new EntityManager($this->comment);
+                $model->remove($this->comment);
             }
             else
             {
                 $this->addFlash()->error('Vous ne pouvez pas supprimer ce commentaire!');
-                $id = $this->request->postData('idpost');
-                return $this->redirect("/article&id=$id");
+                $postid = $this->request->postData('idpost');
+                return $this->redirect("/article&id=$postid");
             }
         }  
     }  

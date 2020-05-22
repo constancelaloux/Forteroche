@@ -1,21 +1,16 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace blog\database;
 
 use PDO;
+use blog\database\DbConnexion;
 
 /**
  * Description of Query
  *
  * @author constancelaloux
  */
-class Query
+class Query extends DbConnexion
 {
     private $select;
     
@@ -81,6 +76,21 @@ class Query
         $this->limit = "$offset, $length";
         return $this;
     }
+    
+        /**
+     * 
+     * @param int $offset
+     * @return \self
+     */
+    /*public function offset(int $offset): self
+    {
+        if($this->limit === null)
+        {
+            throw new Exception("impossible de définir un offset sans définir de limites");
+        }
+        $this->offset = $offset;
+        return $this;
+    }*/
     
     /**
      * Spécifie l'odre de récupération

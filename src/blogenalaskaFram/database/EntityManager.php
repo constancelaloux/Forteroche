@@ -159,6 +159,7 @@ class EntityManager extends DbConnexion
      */
     public function exist($filters = [])
     {
+        //print_r($filters);
         $sqlQuery = sprintf("SELECT COUNT(*) FROM %s %s ", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
@@ -211,9 +212,13 @@ class EntityManager extends DbConnexion
      */
     public function fetch($filters = [])
     {
+        //print_r($this->where($filters));
+        //WHERE username = :usernamemeurs
+        //die("meurs");
         $sqlQuery = sprintf("SELECT * FROM %s %s LIMIT 0,1", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
+        //print_r($statement);
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
         //return (new $this->model())->hydrate($result);
         return (new $this->model($result));
@@ -280,13 +285,17 @@ class EntityManager extends DbConnexion
      * @param type $start
      * @return type
      */
-    private function fetchAll($filters = [] ,$sorting = [], $length = null, $start = null)
+    private function fetchAll($filters = [], $sorting = [], $length = null, $start = null)
     {   
         //print_r($filters);
+        //print_r($this->where($filters));
+        //WHERE username = :username
+        //die("meurs");
         //print_r($sorting);
         //print_r($length);
         $sqlQuery = sprintf("SELECT * FROM %s %s %s %s", $this->metadata["table"], $this->where($filters), $this->orderBy($sorting), $this->limit($length, $start));
         $statement = $this->pdo->prepare($sqlQuery);
+        //print_r($statement);
         $statement->execute($filters);
         //print_r($statement);
         $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
@@ -307,6 +316,7 @@ class EntityManager extends DbConnexion
      */
     private function where($filters = [])
     {
+        //print_r($filters);
         if(!empty($filters))
         {
             $conditions = [];
@@ -314,6 +324,8 @@ class EntityManager extends DbConnexion
             {
                 $conditions[] = sprintf("%s = :%s",$this->getColumnByProperty($property), $property);
             }
+            //print_r(implode($conditions, " AND "));
+            //print_r(sprintf("WHERE %s", implode($conditions, " AND ")));
             return sprintf("WHERE %s", implode($conditions, " AND "));
         }
         return "";

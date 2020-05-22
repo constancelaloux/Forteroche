@@ -181,6 +181,8 @@ class AuthorController extends AbstractController
             {   
                 //On trouve l'utilisateur corresppondant au username
                 $auth = $model->findOneBy(['username' => $author->username()]);
+                //print_r($author->username());
+                //die("meurs");
 
                 //On vérifie que l'utilisateur corresponde.
                 //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD

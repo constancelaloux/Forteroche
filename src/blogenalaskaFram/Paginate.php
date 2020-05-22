@@ -21,7 +21,7 @@ class Paginate
         $this->model = new EntityManager($entity);
     }
     
-    public function getItems():array
+    public function getItems(): int//:array
     {
         /*$page = $_GET['page'] ?? 1;
         if(!filter_var($page, FILTER_VALIDATE_INT))
@@ -33,7 +33,7 @@ class Paginate
         $currentPage = (int)$page;*/
         $currentPage = $this->getCurrentPage();
         
-        $pages = $this->getPages();
+        //$pages = $this->getPages();
         
         //Si le numéro de page dans l'url est supérieur au nombre de pages que l'on devrait avoir on met une exception
         /*if($currentPage > $pages)
@@ -42,8 +42,10 @@ class Paginate
         }*/
         
         $offset = $this->perPage * ($currentPage - 1);
-        $posts = $this->model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
-        return $posts;
+        
+        return $offset;
+        //$posts = $this->model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
+        //return $posts;
     }
     
     /**
