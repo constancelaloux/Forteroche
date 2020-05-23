@@ -2,7 +2,7 @@
 
 namespace blog\database;
 
-use PDO;
+//use PDO;
 use blog\database\DbConnexion;
 
 /**
@@ -12,6 +12,11 @@ use blog\database\DbConnexion;
  */
 class Query extends DbConnexion
 {
+    /**
+     * @var \PDO
+     */
+    protected $pdo;
+    
     private $select;
     
     private $from;
@@ -26,13 +31,14 @@ class Query extends DbConnexion
     
     private $joins;
     
-    private $pdo;
+    //private $pdo;
     
     private $params;
     
-    public function __construct(\PDO $pdo = null)
+    public function __construct()//\PDO $pdo = null)
     {
-        $this->pdo = $pdo;
+        //Je me connecte à la base de données
+        $this->pdo = $this->connect();
     }
     
     /**

@@ -101,7 +101,7 @@ class FrontendController extends AbstractController
         $offset = $paginatedQuery->getItems();
         $this->comment->setIdpost($id);
         $this->comment->setStatus('Valider');
-        //$model = new EntityManager($this->comment);
+        $model = new EntityManager($this->comment);
         if($model->exist(['idpost'=>$this->comment->idpost()]))
         { 
             /*("SELECT a.subject subject, "
@@ -109,14 +109,18 @@ class FrontendController extends AbstractController
                         . "FROM articles a "
                         . "INNER JOIN comments c ON a.id = c.id_From_Article "
                         . "WHERE c.status = :status order by countclicks DESC");*/
-            $query = (new \blog\database\Query())->from($this->comment)->select('*')
-                    ->join('author', $condition)
-                    ->where(['idpost' => $this->comment->idpost()])
-                    ->order('create_date')->limit($perPage, $offset);
+            $query = (new \blog\database\Query())->from('comments', 'c')
+                    ->select('*')
+                    ->join('author as a', 'c.id_client = a.id', 'inner')
+                    ->where('idpost 102')
+                    ->order('create_date')
+                    ->limit($perPage, $offset);
                     //->offset($offset)
             $query->execute();
+            //SELECT * FROM comments c INNER JOIN author AS a ON c.id_client = a.id WHERE id_post = 102
+            //=> $this->comment->idpost()
             $comments = $query->fetchAll();
-            $test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
+            //$test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
             //$comments = $model->findBy(['idpost' => $this->comment->idpost(), 'status' => $this->comment->status()], [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
             return $comments;
         }
