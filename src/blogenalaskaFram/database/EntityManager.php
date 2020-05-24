@@ -326,7 +326,7 @@ class EntityManager extends DbConnexion
             }
             //print_r(implode($conditions, " AND "));
             //print_r(sprintf("WHERE %s", implode($conditions, " AND ")));
-            return sprintf("WHERE %s", implode($conditions, " AND "));
+            return sprintf("WHERE %s", implode(" AND ", $conditions));
         }
         return "";
     }
@@ -347,7 +347,7 @@ class EntityManager extends DbConnexion
                 $sorts[] = sprintf("%s %s",$this->getColumnByProperty($property), $value);
                 //print_r($sorts);
             }
-            return sprintf("ORDER BY %s DESC", implode($sorts, ","));
+            return sprintf("ORDER BY %s DESC", implode(",", $sorts));
             //return sprintf("ORDER BY %", implode($sorts, ","));
         }
         return "";

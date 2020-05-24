@@ -26,7 +26,8 @@ class Author extends Model
             $username,
             $firstname,
             $surname,
-            $status;
+            $status,
+            $image;
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -106,6 +107,10 @@ class Author extends Model
                     "type"      => "string",
                     "property"  => "status"
                 ],
+                "image"    => [
+                    "type"      => "string",
+                    "property"  => "image"
+                ],
             ]
         ];
     }
@@ -165,6 +170,15 @@ class Author extends Model
     public function status()
     {
         return $this->status;
+    }
+    
+    /**
+     * 
+     * @return type
+     */
+    public function image()
+    {
+        return $this->image;
     }
 
     /**
@@ -237,6 +251,22 @@ class Author extends Model
             $this->erreurs[] = self::PASSWORD_INVALIDE;
         }
         $this->username = $username;
+    }
+    
+        /**
+     * @param type $username
+     */
+    public function setImage($image)
+    {
+        /*if(is_string($username) || !empty($username))
+        {
+            $this->username = $username;
+        }*/
+        if(!is_string($image) || empty($image))
+        {
+            $this->erreurs[] = self::IMAGE_INVALIDE;
+        }
+        $this->image = $image;
     }
 
     /**

@@ -53,8 +53,9 @@ class Model
      * @param string $column
      * @param mixed $value
      */
-    private function hydrateProperty($column, $value)
+    private function hydrateProperty($column, $value): void
     {
+        //print_r($value);
         //print_r($this::metadata()["columns"]);
         switch($this::metadata()["columns"][$column]["type"]) 
         {

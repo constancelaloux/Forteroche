@@ -32,6 +32,7 @@ class FrontendController extends AbstractController
      */
     public function renderhomepage()
     {
+        //die("meurs");
         return $this->redirect("/articles:page=1");
     }
     

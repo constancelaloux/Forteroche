@@ -6,7 +6,7 @@
 
 //Route qui récupére les aricles sur la page d'accueil du blog
 $router->get('/', "Frontend#renderHomepage");
-
+//$router->get('/test', "Frontend#renderPaginatedposts");
 //Route qui renvoi les articles de la pagination
 $router->get('/articles:page', "Frontend#renderPaginatedposts");
 

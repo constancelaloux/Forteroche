@@ -76,6 +76,8 @@ abstract class AbstractController
     */
     protected function redirect(string $url)
     {
+        //print_r("je passe la");
+        
         //print_r($url);
         return $this->httpResponse->redirectResponse($url);
     }
