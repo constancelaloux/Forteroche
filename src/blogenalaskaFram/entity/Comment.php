@@ -23,6 +23,7 @@ class Comment extends Model
       $content,
       $status,
       $countclicks
+      //$image
      ;
 
     /**
@@ -153,6 +154,14 @@ class Comment extends Model
     {
         return $this->countclicks;
     }
+    
+    /**
+     * @return type
+     */
+    /*public function image()
+    {
+        return $this->image;
+    }*/
 
     /**
      * Setters
@@ -264,4 +273,12 @@ class Comment extends Model
             $this->status = $status;
         }
     }
+    
+    /*public function setImage($image)
+    {
+        if(is_string($image))
+        {
+            $this->image = $image;
+        }
+    }*/
 }

@@ -44,21 +44,26 @@
                 <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.--></p>
                 
                 <nav class="blog-pagination text-center">
-                    <a class="btn btn-outline-primary" href="<?=$previouslink?>">Précédent</a>
-                    <a class="btn btn-outline-secondary disabled" href="<?=$nextlink?>" tabindex="-1" aria-disabled="true">Suivant</a>
+                    <a class="btn btn-outline-primary" href="<?php echo $previouslink?>">Précédent</a>
+                    <a class="btn btn-outline-secondary" href="<?php echo $nextlink?>" tabindex="-1" aria-disabled="true">Suivant</a>
                 </nav>
                 
                 <div class="comments">
                     <h2>Commentaires</h2>
+         
                     <?php
                     foreach ($comments as $comment) 
                     {
+                        //print_r($comment);
+                        //print_r($comment->image);
+                        //print_r($comment->image);
+                        //die('meurs');
                     ?>
                     <div class="media mt-3">
-                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
+                        <img src="<?php echo $comment->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
                         <div class="media-body">
-                            <h5 class="mt-0"><?php echo $comment->subject ?></h5>
-                            <p><?php echo $comment->content ?></p>
+                            <h5 class="mt-0"><?php echo $comment->subject?></h5>
+                            <p><?php echo $comment->content?></p>
                             <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                             <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
                         </div>
@@ -92,8 +97,8 @@
                     </div>-->
                     <nav aria-label="...">
                         <ul class="pagination">
-                            <li class="page-item disabled">
-                                <a class="page-link" href="<?=$previouslink?>" tabindex="-1">Previous</a>
+                            <li class="page-item">
+                                <a class="page-link" href="/article&id=<?=$post->id?>&page=<?php echo $previouslink?>" tabindex="-1">Previous</a>
                             </li>
                             <li class="page-item"><a class="page-link" href="/article&id=<?=$post->id?>&page=1">1</a></li>
                             <li class="page-item active">
@@ -101,7 +106,7 @@
                             </li>
                             <li class="page-item"><a class="page-link" href="/article&id=<?=$post->id?>&page=3">3</a></li>
                             <li class="page-item">
-                                <a class="page-link" href="<?=$nextlink?>">Next</a>
+                                <a class="page-link" href="/article&id=<?=$post->id?>&page=<?php echo $nextlink?>">Next</a>
                             </li>
                         </ul>
                     </nav>

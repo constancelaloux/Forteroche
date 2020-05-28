@@ -7,6 +7,8 @@ use blog\entity\Comment;
 use blog\database\EntityManager;
 use blog\entity\Post;
 use Exception;
+use blog\database\Query;
+use blog\Paginate;
 /**
  * Description of BlogController
  *
@@ -19,6 +21,12 @@ class FrontendController extends AbstractController
     public $post;
     
     public $comment;
+    
+    public $paginateQuery;
+    
+    public $previousLink;
+    
+    public $nextLink;
     
     public function __construct() 
     {
@@ -59,6 +67,7 @@ class FrontendController extends AbstractController
     {
         //J'affiche les commentaires
         $comments = $this->renderPaginatedComments($_GET['id']);
+        
         //Je vais chercher les derniers articles
         $lastsposts = $this->getLastsPosts();
         
@@ -70,14 +79,14 @@ class FrontendController extends AbstractController
         $postfromid = $model->findById($_GET['id']);
         
         //j'affiche la pagination de l'article
-        $perPage = 1;
-        $paginatedQuery = new \blog\Paginate($this->post, $perPage);
-        $previouslink = $paginatedQuery->previouslink();
-        $nextlink = $paginatedQuery->nextlink();
-        $posts = $paginatedQuery->getItems();
+        //$perPage = 1;
+        //$paginatedQuery = new \blog\Paginate($this->post, $perPage);
+        //$previouslink = $this->paginateQuery->previouslink();
+        //$nextlink = $this->paginateQuery->nextlink();
+        //$posts = $paginatedQuery->getItems();
         
         //J'affiche la page avec tous les composants
-        $this->getrender()->render('ArticleView', ['post' => $postfromid, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $previouslink, 'nextlink' => $nextlink, 'posts' => $posts, 'comments' => $comments]);
+        $this->getrender()->render('ArticleView', ['post' => $postfromid, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $this->previousLink, 'nextlink' => $this->nextLink, /*'posts' => $posts,*/ 'comments' => $comments]);
     }
     
     /**
@@ -96,13 +105,15 @@ class FrontendController extends AbstractController
      */
     public function renderPaginatedComments($id)
     {
-        //print_r($id);
+        $query = NULL;
         $perPage = 5;
-        $paginatedQuery = new \blog\Paginate($this->comment, $perPage);
-        $offset = $paginatedQuery->getItems();
+        $this->paginateQuery = new Paginate($this->comment, $perPage);
+        $offset = $this->paginateQuery->getItems();
+        
         $this->comment->setIdpost($id);
         $this->comment->setStatus('Valider');
         $model = new EntityManager($this->comment);
+        
         if($model->exist(['idpost'=>$this->comment->idpost()]))
         { 
             /*("SELECT a.subject subject, "
@@ -110,20 +121,37 @@ class FrontendController extends AbstractController
                         . "FROM articles a "
                         . "INNER JOIN comments c ON a.id = c.id_From_Article "
                         . "WHERE c.status = :status order by countclicks DESC");*/
-            $query = (new \blog\database\Query())->from('comments', 'c')
-                    ->select('*')
+            $author = new \blog\entity\Author();
+            $comments = $query = (new Query($this->comment,$author))
+                    ->from('comments', 'c')
+                    ->select()
                     ->join('author as a', 'c.id_client = a.id', 'inner')
-                    ->where('idpost 102')
-                    ->order('create_date')
-                    ->limit($perPage, $offset);
-                    //->offset($offset)
-            $query->execute();
+                    //->join('$author->getTable() as a', 'c.id_client = a.id', 'inner')
+                    ->where('id_post = :idpost')
+                    ->setParam('idpost', $this->comment->idpost())
+                    ->orderBy('create_date', 'ASC')
+                    ->limit($perPage, $offset)
+                    ->fetchAll();
+                /*$commen = [];
+                foreach ($comments as $comment)
+                {
+                    //print_r($comment);
+                    //die('meurs');
+                    $commen[] = new Comment($comment);
+                    $commen[] = new \blog\entity\Author($comment);
+                    //print_r($listOfComments);
+                    //print_r($AttributesOfAuthors);
+                }*/
+            //$comments->closeCursor();
+            $this->previousLink = $this->paginateQuery->previouslink();
+            $this->nextLink = $this->paginateQuery->nextlink();
+            return $comments;
             //SELECT * FROM comments c INNER JOIN author AS a ON c.id_client = a.id WHERE id_post = 102
             //=> $this->comment->idpost()
-            $comments = $query->fetchAll();
+            //$comments = $query->fetchAll();
             //$test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
             //$comments = $model->findBy(['idpost' => $this->comment->idpost(), 'status' => $this->comment->status()], [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
-            return $comments;
+            //return $comments;
         }
     }
     
