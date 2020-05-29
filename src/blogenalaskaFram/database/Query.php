@@ -250,19 +250,26 @@ class Query extends DbConnexion
         }*///;
         return $sql;
     }
-    
+   
     public function fetchAll(): ?array
     {
+        //$test = array();
+        //$test[] = $models;
+        //print_r($test);
         $query = $this->toSQL();
         //print_r($query);
         if($this->params)
         {
             $query = $this->pdo->prepare($query);
+            
             $query->execute($this->params);
             //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Author::class);
             //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Comment::class);
             //$results = $query->fetchAll(\PDO::FETCH_ASSOC);
-            $results = $query->fetchAll(\PDO::FETCH_CLASS);
+            //$results = $query->fetchAll(\PDO::FETCH_CLASS);
+            $results = $query->fetchAll(\PDO::FETCH_OBJ);
+        }
+            //$results = $query->fetchAll(\PDO::FETCH_GROUP|\PDO::FETCH_CLASS, '\blog\entity\Comment'); 
             //$results = $query->fetchAll(\PDO::FETCH_OBJ);
             //$results = $query->fetchAll();
             //echo "<pre>";
@@ -276,22 +283,22 @@ class Query extends DbConnexion
                 print_r($results);
                 echo '</pre>';*/
                 
-            //print_r($results);
-            //DIE("MEURS");
-            return $results;
-            /*$data = [];*/
+            /*$data = [];
         
-            /*foreach($results as $result) 
+            foreach($results as $result) 
             {
                 $data[] = (new $this->model())->hydrate($result);
-            }
-            print_r($this->model);*/
+                $data[] = $models->hydrate($result);
+                //$data[] = (new $this->model())->hydrate($result);
+            }*/
+            /*print_r($this->model);*/
            /* return $data;*/
-        }
+            //print_r($data);
+            //DIE("MEURS");
+            return $results;
+    }
         //return (new $this->model($result));
         //return NULL;
-        
-    }
     
     /**
      * Construit le from a as b ....

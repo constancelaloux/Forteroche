@@ -63,6 +63,7 @@ class EntityManager extends DbConnexion
         //print_r("je passe dans persist");
         if($model->getPrimaryKey()) 
         {
+            //print_r($model);
             $this->update($model);
         }
         else
@@ -79,7 +80,7 @@ class EntityManager extends DbConnexion
     {
         $set = [];
         $parameters = [];
-        
+        //die('meursici dans update');
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
             $sqlValue = $model->getSQLValueByColumn($column);
@@ -87,20 +88,27 @@ class EntityManager extends DbConnexion
             /*if($sqlValue !== $model->originalData[$column]) 
             {*/
             $model->orignalData[$column] = $sqlValue;
-            //$model->originalData[$column];
-            $parameters[$column] = $sqlValue;
-            //print_r($parameters[$column]);
-            $set[] = sprintf("%s = :%s", $column, $column);
-            //}
-            //print_r($model);
+
+            if(!empty($sqlValue))
+            {
+                $parameters[$column] = $sqlValue;
+            }
+
+            if(!empty($parameters[$column]))
+            {
+                $set[] = sprintf("%s = :%s", $column, $column);
+            }
+            //print_r($model->originalData[$column]);
+            
         }
         if(count($set)) 
         {
+            //print_r($this->metadata["primaryKey"]); //return id
             $sqlQuery = sprintf("UPDATE %s SET %s WHERE %s = :id", $this->metadata["table"], implode(", ", $set), $this->metadata["primaryKey"]);
             $statement = $this->pdo->prepare($sqlQuery);
-            //print_r($parameters);
-            //die("meurs");
-            //$statement->execute(["id" => $model->getPrimaryKey()]);
+            //print_r($this->metadata["table"]);//return comments
+            //print_r(implode(", ", $set)); //return id = :id, id_client = :id_client, id_post = :id_post, create_date = :create_date, update_date = :update_date, subject = :subject, content = :content, status = :status, countclicks = :countclicks
+            //print_r($parameters); //return Array ( [id] => 15 [id_client] => 134 [id_post] => 102 [create_date] => 2020-05-29 12:49:23 [update_date] => 2020-05-29 12:49:23 [subject] => le titre [content] =>le commentaire[status] => Valider [countclicks] => 13 )
             $statement->execute($parameters);
             //print_r($statement->execute(["id" => $model->getPrimaryKey()]));
         }
@@ -222,6 +230,7 @@ class EntityManager extends DbConnexion
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
         //return (new $this->model())->hydrate($result);
         return (new $this->model($result));
+        //return (new $this->model())->hydrate($result);
         //return (new $this->model())->hydrate($result);
     }
     

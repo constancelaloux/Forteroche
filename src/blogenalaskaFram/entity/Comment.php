@@ -152,6 +152,7 @@ class Comment extends Model
      */
     public function countclicks()
     {
+        //print_r($this->countclicks);
         return $this->countclicks;
     }
     
@@ -226,8 +227,9 @@ class Comment extends Model
      */
     public function setCountclicks($countclicks)
     {
-        $countclicks = (int)$countclicks;
-        $this->countclicks = $countclicks;
+        //print_r($countclicks);
+        $countclick = (int)$countclicks;
+        $this->countclicks = $countclick;
     }
 
     /**

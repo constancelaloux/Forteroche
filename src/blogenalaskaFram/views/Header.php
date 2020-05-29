@@ -16,6 +16,9 @@
                 <li>
                     <a class="nav-link" href="/createpost">Ecrire un article</a>
                 </li>
+                <li>
+                    <a class="nav-link" href="/rendercommentspage">Commentaires</a>
+                </li>
                 <?php if (isset($_SESSION['authorId']))
                 { ?>
                 <div class="navbar-test">Connecté en tant que <?php echo $_SESSION['authorUsername'] ?></div>

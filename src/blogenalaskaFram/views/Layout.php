@@ -58,6 +58,9 @@
 <!--Scroll nav-->
 <script type="text/javascript" src="/../../public/js/scrollnav.js"></script>
 
+<!--List of comments backend-->
+<script type="text/javascript" src="/../../public/js/CommentsBackend.js"></script>
+
 <body>
     <?php 
     //if (session_status() === PHP_SESSION_NONE)

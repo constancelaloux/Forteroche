@@ -55,11 +55,11 @@ class Model
      */
     private function hydrateProperty($column, $value): void
     {
-        //print_r($value);
         //print_r($this::metadata()["columns"]);
         switch($this::metadata()["columns"][$column]["type"]) 
         {
             case "integer":
+                //print_r($value);
                 $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}((int) $value);
                 break;
             case "string":
@@ -112,8 +112,11 @@ class Model
     {
         //Je récupére le nom de la clé primaire 'id
         $primaryKeyColumn = $this::metadata()["primaryKey"];
+        //print_r($primaryKeyColumn);
+        //die("meurs");
 
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
+
         //Je vais retourner le getter de l'id
         return $this->{sprintf(ucfirst($property))}();
     }

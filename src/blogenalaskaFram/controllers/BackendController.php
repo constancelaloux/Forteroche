@@ -6,6 +6,7 @@ use blog\controllers\AbstractController;
 use blog\database\EntityManager;
 use blog\entity\Post;
 use blog\form\ArticlesForm;
+use blog\entity\Comment;
 
 /**
  * Description of BacOfficeController
@@ -300,6 +301,94 @@ class BackendController extends AbstractController
         if($this->userSession()->requireRole('admin'))
         {
         $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }
+    }
+    
+    //On va vers la page des commentaires
+    public function renderCommentsPage()
+    {
+        if($this->userSession()->requireRole('admin'))
+        {
+            $this->getrender()->render('CommentsView');
+        }
+        else 
+        {
+            $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+            return $this->redirect('/connectform');
+        }  
+    }
+    
+    //On affiche le datatables des commentaires
+    public function getListOfComments()
+    {
+        $comment = new Comment();
+        $model = new EntityManager($comment);
+        // Retrouver tous les articles
+        $comments = $model->findAll();
+
+        if (!empty ($comments))
+        {
+            foreach ($comments as $comment) 
+            {
+                $row = array();
+                $row[] = $comment->id();
+                $row[] = $comment->idpost();
+                $row[] = $comment->subject();
+                $row[] = $comment->createdate()->format('Y-m-d');
+                //$updateCommentDate = $comment->updatedate()->format('Y-m-d');
+
+                if (is_null($comment->updatedate()))
+                {
+                    $row[] = "Pas de modifications sur ce commentaire pour l'instant";
+                }
+                else 
+                {
+                    $row[] = $comment->updatedate()->format('Y-m-d');
+                }
+
+                $row[] = $comment->countclicks();
+                $data[] = $row;
+            }
+                            
+            // Structure des données à retourner
+            $json_data = array
+            (
+                "data" => $data
+            );
+            echo json_encode($json_data);
+        }
+        else
+        {
+            $this->getrender()->render('CommentView');
+        }  
+    }
+    
+    //Je supprime un commentaire du datatables
+    public function deleteComments()
+    {
+        if ($this->request->method() == 'POST')
+        {  
+            $comment = new Comment(
+            [
+                'id' =>  $this->request->postData('id'),
+            ]);
+            $model = new EntityManager($comment);
+            $model->remove($comment);
+        }
+    }
+    
+    //Je confirme et redirige apres que le commentaire ai été supprimé
+    public function confirmDeletedComments()
+    {
+        if($this->userSession()->requireRole('admin'))
+        {
+            $this->addFlash()->success('La news a bien été supprimée !');
+            return $this->redirect('/listofcomments'); 
         }
         else 
         {

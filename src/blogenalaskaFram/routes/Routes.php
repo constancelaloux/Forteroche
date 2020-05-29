@@ -25,6 +25,9 @@ $router->get('/updatecomment', "Frontend#updateComment");
 //Route qui permet de créer un commentaire
 $router->get('/deletecomment', "Frontend#deleteComment");
 
+$router->post('/unwantedcomments', "Frontend#unwantedComment");
+//:idarticle
+
 /* 
  *Liste de mes routes administrateur
  */
@@ -76,6 +79,18 @@ $router->post('/deletepost', "Backend#deletePost");
 
 //Route qui redirige si le post a bien été supprimé
 $router->get('/confirmdeletepost', "Backend#confirmDeletedPost");
+
+//Route qui rend la page avec les commentaires
+$router->get('/rendercommentspage', "Backend#renderCommentsPage");
+
+//Route qui récupére les commentaires au sein du tableau datatables
+$router->post('/listofcomments', "Backend#getListOfComments");
+
+//Route qui supprime un commentaire au sein du datatables
+$router->post('/deletecommentfrombackend', "Backend#deleteComments");
+
+//Route qui redirige apres avoir supprimé un commentaire du datatables
+$router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
 
 
 //Route qui récupére les identifiants de connexion de l'auteur

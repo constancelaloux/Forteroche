@@ -11,11 +11,11 @@
     <div class="container">
         <div class="row">
             <div class="blog-post col-lg-9">
-                <h2 class="blog-post-title"><?=$post->subject ?></h2>
-                <p class="blog-post-meta"><?= $post->createdate->format('Y-m-d') ?> by <a href="#">Mark</a></p>
+                <h2 class="blog-post-title"><?=$post->subject()?></h2>
+                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> by <a href="#">Mark</a></p>
                 <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
-                <img class="card-img" src="<?=$post->image ?>" alt="image article">
-                <p><?=$post->content ?><!--This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
+                <img class="card-img" src="<?=$post->image() ?>" alt="image article">
+                <p><?=$post->content() ?><!--This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
                 <hr>
                 <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
                 <blockquote>
@@ -52,17 +52,17 @@
                     <h2>Commentaires</h2>
          
                     <?php
+                    //print_r($comments->image());
                     foreach ($comments as $comment) 
                     {
-                        //print_r($comment);
-                        //print_r($comment->image);
-                        //print_r($comment->image);
-                        //die('meurs');
+                        print_r($comment->id);
                     ?>
                     <div class="media mt-3">
                         <img src="<?php echo $comment->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
                         <div class="media-body">
+                            <button class="reportComment" id=<?php echo $comment->id ?>>Signaler à l'administrateur</button>
                             <h5 class="mt-0"><?php echo $comment->subject?></h5>
+                            <p><?php echo $comment->create_date?></p>
                             <p><?php echo $comment->content?></p>
                             <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                             <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
@@ -95,6 +95,27 @@
                             <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
                         </div>
                     </div>-->
+                                    <script>
+                    count=1;
+                    $('.reportComment').click(function() 
+                        { 
+                            event.preventDefault();
+                            var id = $(this).attr('id');
+                            var number = count;
+
+                            $.ajax
+                                ({
+                                    url: "/unwantedcomments",
+                                    type: 'POST',
+                                    data: {number:number, id:id}, // An object with the key 'submit' and value 'true;
+                                    success: function (result) 
+                                        {
+                                            console.log("test");
+                                        }
+                                });  
+                        });
+                        //&idarticle=<?php //echo $comment->id ?>",
+                </script>
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item">
@@ -155,9 +176,15 @@
                     {
                     ?>
                     <div class="card mb-4">
-                        <img src="<?= $post->image ?>" class="card-img-top" alt="image 1">
+                        <div class="overlay-image">
+                            <img src="<?= $post->image()?>" class="card-img-top" alt="image 1">
+                            <div class="overlay-item-caption smoothie"></div>
+                            <div class="hover-item-caption smoothie">
+                                <h3 class="text"><a href="/article&id=<?=$post->id?>" class="stretched-link" title="view article">View</a></h3>
+                            </div>
+                        </div>
                         <div class="card-body">
-                            <h5 class="card-title"><?= $post->subject ?></h5>
+                            <h5 class="card-title"><?= $post->subject() ?></h5>
                         </div>
                     </div>
                     <?php
