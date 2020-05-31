@@ -210,6 +210,11 @@ class AuthorController extends AbstractController
                         $this->addFlash()->success('Vous etes bien identifié');
                         return $this->redirect('/backoffice');
                     }
+                    elseif ($this->userSession()->requireRole('client')) 
+                    {
+                        $this->addFlash()->success('Vous etes bien identifié');
+                        return $this->redirect('/');
+                    }
                     else 
                     {
                         $this->addFlash()->error('Vous n\avez pas acces à cette page!');

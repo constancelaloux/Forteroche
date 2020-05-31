@@ -68,7 +68,10 @@ $router->get('/createpost', "Backend#createPost");
 $router->post('/createpost', "Backend#createPost");
 
 //Route qui permet d'uploader une image
-$router->get('/uploadimage', "Backend#renderBlog");
+$router->post('/uploadimage', "Backend#uploadImage");
+
+//Route qui permet d'insérer le chemin du fichier
+$router->get('/iGetImageIntoFormFromUploadPath&data', "Backend#getImagePath");
 
 //Route qui permet de mettre à jour un article
 $router->get('/updatepost:id', "Backend#updatePost");

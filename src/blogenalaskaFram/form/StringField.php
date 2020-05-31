@@ -22,7 +22,7 @@ class StringField extends Field
             $widget .= $this->errorMessage.'<br />';
         }
                                   
-        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="form-control form-control-sm" id="'.$this->name.'"';
+        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="form-control-file form-control-sm" id="'.$this->name.'"';
 
         if (!empty($this->value))
         {

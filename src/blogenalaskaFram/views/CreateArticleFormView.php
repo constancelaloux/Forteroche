@@ -11,18 +11,33 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-8 col-sm-12">
-                <form action="" method="post">
+                <form action="" method="post" enctype="multipart/form-data">
                     <!--<p>-->
                     <div class="text-center mb-4">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
                     <?php echo $form ?>
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Upload file</button>
-                    <div class="preview">
+                    <!--<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Upload file</button>-->
+                    <!--<div class="preview">
                         <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
-                    </div>
+                    </div>-->
+                    <?php if(isset($image))
+                    {
+                        print_r($image);
+                        foreach ($image as $imageValue) 
+                        {
+                    ?>
+                            <img class="card-img" src="<?=$imageValue->image() ?>" alt="image article">
+                    <?php
+                        }
+                    }
+                    ?>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="Sauvegarder"/>
+                    <!--<div class="form-group">
+                        <label for="exampleFormControlFile1">Example file input</label>
+                            <input type="file" class="form-control-file" id="exampleFormControlFile1">
+                    </div>-->
                     <!--<button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="valider">Valider</button>
                     <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="sauvegarder">Sauvegarder</button>-->
                     <!--</p>-->

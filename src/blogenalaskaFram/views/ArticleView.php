@@ -12,7 +12,7 @@
         <div class="row">
             <div class="blog-post col-lg-9">
                 <h2 class="blog-post-title"><?=$post->subject()?></h2>
-                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> by <a href="#">Mark</a></p>
+                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche<!--<a href="#">Jean Forteroche</a>--></p>
                 <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
                 <img class="card-img" src="<?=$post->image() ?>" alt="image article">
                 <p><?=$post->content() ?><!--This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>

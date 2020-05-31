@@ -53,7 +53,8 @@
 <script type="text/javascript" src="/../../public/js/Backoffice.js"></script>
 
 <!--Upload-->
-<script type="text/javascript" src="/../../public/js/upload.js"></script>
+<!--<script type="text/javascript" src="/../../public/js/upload.js"></script>-->
+<script type="text/javascript" src="/../../public/js/UploadFile.js"></script>
 
 <!--Scroll nav-->
 <script type="text/javascript" src="/../../public/js/scrollnav.js"></script>
@@ -68,7 +69,16 @@
         session_start();
     } */
 ?>
-    <?php require __DIR__.'/../views/Header.php'; ?>
+    <?php 
+        if ($_SESSION['status'] === 'admin')
+        {
+            require __DIR__.'/../views/AdminHeader.php';
+        }
+        else 
+        {
+            require __DIR__.'/../views/Header.php'; 
+        }
+    ?>
 
     <!--Main layout-->
     <main role="main" class="main">				

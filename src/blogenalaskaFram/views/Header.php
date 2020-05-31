@@ -13,13 +13,14 @@
                 <li class="nav-item active">
                     <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                 </li>
-                <li>
+                <!--<li>
                     <a class="nav-link" href="/createpost">Ecrire un article</a>
                 </li>
                 <li>
                     <a class="nav-link" href="/rendercommentspage">Commentaires</a>
-                </li>
-                <?php if (isset($_SESSION['authorId']))
+                </li>-->
+                <?php 
+                if (isset($_SESSION['authorId'])|| (isset($_SESSION['client'])))
                 { ?>
                 <div class="navbar-test">Connecté en tant que <?php echo $_SESSION['authorUsername'] ?></div>
                 <li class="nav-item dropdown">

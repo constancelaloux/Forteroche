@@ -112,6 +112,22 @@ class BackendController extends AbstractController
     }
     
     /**
+     * Je charge une image pour l'uploder
+     */
+    public function uploadImage()
+    {
+        //$upload = new \blog\file\PostUpload();
+        //print_r(current($_FILES));
+        //print_r($_FILES['file']['tmp_name']);
+        $upload = new \blog\file\PostUpload();
+        $image = $upload->upload($_FILES);
+        $this->getrender()->render('CreateArticleFormView',['image' => $image]);
+        //$upload = new \blog\file\Upload(__DIR__.'/../../../public/images');
+        //$upload->upload($_FILES);
+        die('meurs ma belle au bois dormant');
+    }
+    
+    /**
      * Create post
      */
     public function createPost()
@@ -298,9 +314,10 @@ class BackendController extends AbstractController
                 return $this->redirect('/connectform');
             }
         }
+        
         if($this->userSession()->requireRole('admin'))
         {
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+            $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
         }
         else 
         {

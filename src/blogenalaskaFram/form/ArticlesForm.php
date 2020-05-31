@@ -10,6 +10,8 @@ use blog\form\TextField;
 
 use blog\validator\NotNullValidator;
 
+use blog\validator\ImageValidator;
+
 /**
  * Description of ArticlesForm
  *
@@ -44,9 +46,23 @@ class ArticlesForm extends FormBuilder
         ],
         ]))
         ->add(new StringField([
+        'type' => 'file',
+        'label' => 'Ajouter une image',
+        'name' => 'image',
+        'validators' => [
+            new NotNullValidator('Le format n\'est pas valide'),
+            new ImageValidator('Veuillez insérer votre image'),
+            new ImageValidator('Vous devez télécharger un fichier'),
+        ],
+        /*->add(new StringField([
         'type' => 'hidden',
         'label' => 'Ajouter une image',
         'name' => 'image',
+        'validators' => [
+            new NotNullValidator('Le format n\'est pas valide'),
+            new ImageValidator('Veuillez insérer votre image'),
+            new ImageValidator('Vous devez télécharger un fichier'),
+        ],*/
         /*'validators' => [
             /*new MaxLengthValidator('Mot de passe pas conforme! Votre mot de passe doit '
                                         . "comporter au moins un caractére spécial, un chiffre,"
