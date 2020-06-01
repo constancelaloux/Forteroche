@@ -10,9 +10,17 @@ $(document).ready(function() {
             contentType: false,
             cache: false,
             processData:false,
-            success: function(data){
+            success: function(data)
+            {
+                //$("#preview").html(data).fadeIn();
+                $('#preview').html(data);
+                //$("#form")[0].reset();
                 //console.log("je passe la");
-                console.log(data);
+                //console.log(data);
+            },
+            error: function(xhr, ajaxOptions, thrownError) 
+            {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     });

@@ -21,7 +21,11 @@
                     <!--<div class="preview">
                         <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
                     </div>-->
-                    <?php if(isset($image))
+                    <!--<input type="hidden" class="valueHidden" name="image" value=""/>
+                    <input type="hidden" id="newFile" name="newFile" value=""/>-->
+                    <!--<div class="preview"><img class="image" src="/../../../public/images/upload.png" /> </div>-->
+                     <!--<div class="preview"><img id="image" src="/blogenalaska/public/images/upload.png" /> </div>-->
+                    <?php /*if(isset($image))
                     {
                         print_r($image);
                         foreach ($image as $imageValue) 
@@ -30,8 +34,10 @@
                             <img class="card-img" src="<?=$imageValue->image() ?>" alt="image article">
                     <?php
                         }
-                    }
+                    }*/
                     ?>
+                    <!--<div id="preview"><img src="/../../../public/images/86716189_2996327917095311_6384907101017210880_o_copy_copy_copy.jpg" /> </div><br>-->
+                    <div id="preview"><img src="/../../../public/images/upload.png" /></div><br>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="Sauvegarder"/>
                     <!--<div class="form-group">

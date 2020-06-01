@@ -25,7 +25,8 @@ class Upload
     protected $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
 
     // Images upload path
-    protected $imageFolder = "Forteroche/Public/images/";
+    //protected $imageFolder = "Forteroche/Public/images/";
+    protected $imageFolder = __DIR__."/../../../public/images/";
     
     protected $tmp;
     
@@ -106,7 +107,13 @@ class Upload
     {
         if(move_uploaded_file($this->tmp['tmp_name'], $targetPath))
         {
-              echo 'Transfert réussi';
+        /**
+         * Je génére le format de l'image
+         */
+            $this->generateFormats($targetPath);
+            //print_r($test);
+            //die("meurs");
+              //echo 'Transfert réussi';
         }
         else
         {
@@ -127,7 +134,7 @@ class Upload
         /**
          * On vérifie si le vieux fichier existe
          */
-        print_r($oldFile);
+        //print_r($oldFile);
         $this->delete($oldFile);
         
         /**
@@ -155,8 +162,7 @@ class Upload
          * J'envoi l'image avec son chemin dans le fichier cible
          */
         $this->moveTo($targetPath);
-        //$file->moveTo($targetPath);
-        
+
         /**
          * On récupére le nom du fichier + l'extension (ex: test.php)
          */
@@ -234,15 +240,16 @@ class Upload
      */
     private function generateFormats($targetPath)
     {
-        foreach ($this->formats as $format => $size) 
+        //print_r('je passe dans generate formats');
+        /*foreach ($this->formats as $format => $size) 
         {
             $manager = new ImageManager(['driver' => 'gd']);
             $destination = $this->getPathWithSuffix($targetPath, $format);
             [$width, $height] = $size;
             $manager->make($targetPath)->fit($width, $height)->save($destination);
-        }
+        }*/                //{
         //Je vais chercher la taille de mon image
-        /*$size = getimagesize($imageFolder. $temp['name']);
+        $size = getimagesize($targetPath);
 
         $uploadImageType = $size[2];
 
@@ -251,12 +258,50 @@ class Upload
         $height = $size[1];
 
         //Je propose une hauteur et une largeur à ma nouvelle image
-        $newwidth = 550;
+        $newwidth = 150;
         $Reduction = ( ($newwidth * 100)/$width);
         $newheight= ( ($height * $Reduction)/100 );
 
         //Je créé une image miniature vide
         //imagecreatetruecolor crée une nouvelle image en couleurs vraies, autrement dit une image noire dont il faudra préciser la largeur et la hauteur.
-        $miniature = imagecreatetruecolor($newwidth,$newheight);*/
+        $miniature = imagecreatetruecolor($newwidth, $newheight);
+
+        switch ($uploadImageType) 
+        {
+            case IMAGETYPE_JPEG:
+                //La photo est la source
+                $image = ImageCreateFromJpeg($this->path . $this->tmp['name']);
+
+                //Je créé la miniature
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+
+                ////J'upload l'image dans le fichier
+                //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
+                //non seulement de sauvegarder notre nouvelle image dans un fichier, 
+                //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                ImageJpeg($miniature, $this->imageFolder . $this->tmp['name'], 100 );
+
+                //imagedestroy($miniature);
+                //imagedestroy($image);
+            break;
+
+            case IMAGETYPE_GIF:
+                //La photo est la source
+                $image = imagecreatefromgif($this->path . $this->tmp['name']);
+
+                //Je créé la miniature
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                imageGif($miniature, $this->path .$this->tmp['name'], 100 );
+            break;
+
+            case IMAGETYPE_PNG:
+                $image = imagecreatefrompng($this->path .$this->tmp['name']);
+                //Je créé la miniature
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+
+                imagePng($miniature, $this->path .$this->tmp['name'], 9 );
+            break; 
+        }
     }
 }

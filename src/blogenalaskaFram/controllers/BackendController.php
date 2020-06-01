@@ -121,10 +121,14 @@ class BackendController extends AbstractController
         //print_r($_FILES['file']['tmp_name']);
         $upload = new \blog\file\PostUpload();
         $image = $upload->upload($_FILES);
-        $this->getrender()->render('CreateArticleFormView',['image' => $image]);
+        $showImage = "/../../../public/images/$image";
+        echo "<img src='$showImage' />";
+        //<img src="/../../../public/images/upload.png" /></div>
+        //echo "<img src='$target' />";
+        //$this->getrender()->render('CreateArticleFormView',['image' => $image]);
         //$upload = new \blog\file\Upload(__DIR__.'/../../../public/images');
         //$upload->upload($_FILES);
-        die('meurs ma belle au bois dormant');
+        //die('meurs ma belle au bois dormant');
     }
     
     /**
