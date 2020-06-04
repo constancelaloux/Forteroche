@@ -14,9 +14,7 @@ $(document).ready(function() {
             {
                 //$("#preview").html(data).fadeIn();
                 $('#preview').html(data);
-                //$("#form")[0].reset();
-                //console.log("je passe la");
-                //console.log(data);
+                $('.slugimage').attr("value",data);
             },
             error: function(xhr, ajaxOptions, thrownError) 
             {

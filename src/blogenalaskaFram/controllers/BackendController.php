@@ -14,6 +14,7 @@ use blog\entity\Comment;
  */
 class BackendController extends AbstractController
 {
+    protected $image = [];
     /**
      * Show posts board
      */
@@ -116,13 +117,15 @@ class BackendController extends AbstractController
      */
     public function uploadImage()
     {
+        //print_r($_FILES);
         //$upload = new \blog\file\PostUpload();
         //print_r(current($_FILES));
         //print_r($_FILES['file']['tmp_name']);
-        $upload = new \blog\file\PostUpload();
-        $image = $upload->upload($_FILES);
-        $showImage = "/../../../public/images/$image";
-        echo "<img src='$showImage' />";
+            $upload = new \blog\file\PostUpload();
+            $this->image = $upload->upload($_FILES);
+            return $this->image;
+        //$showImage = "/../../../public/images/upload/posts/$this->image";
+        //echo "<img src='$showImage' />";
         //<img src="/../../../public/images/upload.png" /></div>
         //echo "<img src='$target' />";
         //$this->getrender()->render('CreateArticleFormView',['image' => $image]);
@@ -290,13 +293,20 @@ class BackendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
+            //print_r($this->userSession()->user()->id());
+            //print_r($_SESSION['authorId']);
+            //print_r($this->request->postData('image2'));
+            //die("meurs");
             $post->setSubject($this->request->postData('subject'));
             $post->setContent($this->request->postData('content'));
-            $post->setImage($this->request->postData('image'));
+            /*if(!empty($this->uploadImage()))
+            {*/
+            $post->setImage($this->uploadImage());
+            //}
             $post->setStatus($this->request->postData('validate'));
             $post->setCreatedate(date("Y-m-d H:i:s"));
             $post->setUpdatedate(date("Y-m-d H:i:s"));
-            $post->setIdauthor($this->request->postData('idauthor'));
+            $post->setIdauthor($this->userSession()->user()->id());
         }
         
         $formBuilder = new ArticlesForm($post);
@@ -309,7 +319,7 @@ class BackendController extends AbstractController
             $model->persist($post);
             if($this->userSession()->requireRole('admin'))
             {
-                $this->addFlash()->success('La news a bien été modifié !');
+                $this->addFlash()->success('L\'article a bien été envoyé !');
                 return $this->redirect('/backoffice');
             }
             else 

@@ -132,11 +132,18 @@ class EntityManager extends DbConnexion
             $sqlValue = $model->getSQLValueByColumn($column);
             //print_r($sqlValue);
             $model->orignalData[$column] = $sqlValue;
-            $parameters[$column] = $sqlValue;
+            
+            if(!empty($sqlValue))
+            {
+                $parameters[$column] = $sqlValue;
+            }
             //print_r($parameters[$column]);
 
-            $set[] = sprintf("%s = :%s", $column, $column);
+            if(!empty($parameters[$column]))
+            {
+                $set[] = sprintf("%s = :%s", $column, $column);
             //print_r($set);
+            }
         }
         
         $sqlQuery = sprintf("INSERT INTO %s SET %s", $this->metadata["table"], implode(",", $set));

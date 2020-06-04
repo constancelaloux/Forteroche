@@ -22,7 +22,7 @@ class TextField extends Field
           $widget .= $this->errorMessage.'<br />';
         }
 
-        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><textarea name="'.$this->name.'" class="form-control form-control-sm" id="'.$this->name.'"';
+        $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><textarea name="'.$this->name.'" class="form-control form-control-sm" id="'.$this->name.'">';
 
         if (!empty($this->cols))
         {
@@ -33,14 +33,17 @@ class TextField extends Field
         {
           $widget .= ' rows="'.$this->rows.'"';
         }
-
-        $widget .= '>';
-
+        
+        //$widget .= '/>';
+       // $widget .= ' </textarea></div>';
+        
         if (!empty($this->value))
         {
-          $widget .=  ' value="'.htmlspecialchars($this->value);
+          //$widget .=  ' value="'.htmlspecialchars($this->value);
+          //$widget .= ' value="'.htmlspecialchars($this->value).'"';
+            $widget .= '<value>'.htmlspecialchars($this->value).'';
         }
-
+//$widget .= '/>';
         //return $widget.'</textarea>';
         return $widget .= ' </textarea></div>';
     }

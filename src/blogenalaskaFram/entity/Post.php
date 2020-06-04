@@ -22,7 +22,8 @@ class Post extends Model
       $image,
       $content,
       $createdate,
-      $updatedate
+      $updatedate,
+      $slugimage
      ;
 
     /**
@@ -111,6 +112,14 @@ class Post extends Model
     {
         return $this->image;
     }
+    
+        /**
+     * @return type
+     */
+    public function slugimage()
+    {
+        return $this->slugimage;
+    }
 
     /**
      * @return type
@@ -170,6 +179,7 @@ class Post extends Model
      */
     public function setIdauthor($idauthor)
     {
+        //print_r($idauthor);
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
         {
@@ -196,6 +206,18 @@ class Post extends Model
         if(is_string($image))
         {
             $this->image = $image;
+        }
+    }
+    
+    
+        /**
+     * @param type $slugimage
+     */
+    public function setSlugimage($slugimage)
+    {
+        if(is_string($slugimage))
+        {
+            $this->slugimage = $slugimage;
         }
     }
 

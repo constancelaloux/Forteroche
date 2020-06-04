@@ -52,6 +52,11 @@ class Upload
             //die("meurs dans le construct");
             $this->path = $path;
         }
+        
+        if(isset($this->newwidth))
+        {
+            $this->newwidth;
+        }
     }
     
     /**
@@ -87,7 +92,7 @@ class Upload
                 header("HTTP/1.1 400 Invalid file name.");
                 return;
             } 
-            
+
             // Verify extension
             if(!in_array(strtolower(pathinfo($this->tmp['name'], PATHINFO_EXTENSION)), array("gif", "jpg", "png")))
             {
@@ -111,14 +116,13 @@ class Upload
          * Je génére le format de l'image
          */
             $this->generateFormats($targetPath);
-            //print_r($test);
-            //die("meurs");
               //echo 'Transfert réussi';
         }
-        else
+        else 
         {
-            echo 'erreur dans l\'envoi<br />';
-        }
+            // Notify editor that the upload failed
+            header("HTTP/1.1 500 Server Error");
+        } 
        // move_uploaded_file($this->tmp['tmp_name'], $this->path . $this->filename);
     }
     
@@ -131,54 +135,68 @@ class Upload
      */
     public function upload($file, ?string $oldFile = null)//, ?string $oldFile): string//UploadedFileInterface $file, ?string $oldFile = null): string
     {
-        /**
-         * On vérifie si le vieux fichier existe
-         */
-        //print_r($oldFile);
-        $this->delete($oldFile);
-        
-        /**
-         * Je récupére le nom du fichier
-         */
-        $this->filename = $this->getClientFilename($file);
-        //$filename = $file->getClientFilename();
+            //print_r($file);
+            /**
+             * On vérifie si le vieux fichier existe
+             */
+            //print_r($oldFile);
+            $this->delete($oldFile);
 
-        /**
-         * J'ajoute l'image dans le chemin cible et une copie avec l'extension copy si l'image existe déja
-         */
-        $targetPath = $this->addCopySuffix($this->path .DIRECTORY_SEPARATOR . $this->filename);
+            /**
+             * Je récupére le nom du fichier
+             */
+            $this->filename = $this->getClientFilename($file);
+            //$filename = $file->getClientFilename();
 
-        /**
-         * Avant d'uploader il faut que je vérifie si le dossier existe
-         */
-        $dirname = pathinfo($targetPath, PATHINFO_DIRNAME);
+            /**
+             * J'ajoute l'image dans le chemin cible et une copie avec l'extension copy si l'image existe déja
+             */
+            $targetPath = $this->addCopySuffix($this->path .DIRECTORY_SEPARATOR . $this->filename);
 
-        if(!file_exists($dirname))
-        {
-            mkdir($dirname, 777, TRUE);
-        }
-        
-        /**
-         * J'envoi l'image avec son chemin dans le fichier cible
-         */
-        $this->moveTo($targetPath);
+            /**
+             * Avant d'uploader il faut que je vérifie si le dossier existe
+             */
+            $dirname = pathinfo($targetPath, PATHINFO_DIRNAME);
+            
+            if(!file_exists($dirname))
+            {
+                //mkdir($dirname, 777, TRUE);
+            }
 
-        /**
-         * On récupére le nom du fichier + l'extension (ex: test.php)
-         */
-        $path_parts = pathinfo($targetPath);
+            /**
+             * J'envoi l'image avec son chemin dans le fichier cible
+             */
+            $this->moveTo($targetPath);
 
-        //print_r($path_parts['basename']);
-        return $path_parts['basename'];
-        //return pathinfo($targetPath['basename']);
-        //return $filename;
+            /**
+             * On récupére le nom du fichier + l'extension (ex: test.php)
+             */
+            $path_parts = pathinfo($targetPath);
+
+            $image = $path_parts['basename'];
+
+            //print_r($targetPath);
+            //$showImage = "/../../../public/images/upload/posts/$test";
+            //echo "<img src='$test'/>";
+            
+            if(!empty($this->filename))
+            {
+                $showImage = "/../../../public/images/upload/posts/$image";
+
+                echo "<img src='$showImage' />";
+                return $path_parts['basename'];
+            }
+            //print_r($path_parts['basename']);;
+            //return pathinfo($targetPath['basename']);
+            //return $filename;
+            //return null;
     }
     
     /**
      * Vérifie si le fichier existe
      * @param string $targetPath
      */
-    private function addCopySuffix(string $targetPath): string
+    private function addCopySuffix(?string $targetPath): ?string
     {
         if(file_exists($targetPath))
         {
@@ -224,15 +242,18 @@ class Upload
         }
     }
     
-    private function getPathWithSuffix(string $path, string $suffix): string
+    private function getPathWithSuffix(?string $path, ?string $suffix)//: ?string
     {
         $info = pathinfo($path);
-        //Je construit un nouveau chemin
-        return $info['dirname'] . 
-                DIRECTORY_SEPARATOR . 
-                $info['filename'] . 
-                '_'. $suffix.'.' .
-                $info['extension'];
+        if(isset($info['extension']))
+        {
+            //Je construit un nouveau chemin
+            return $info['dirname'] . 
+                    DIRECTORY_SEPARATOR . 
+                    $info['filename'] . 
+                    '_'. $suffix.'.' .
+                    $info['extension'];
+        }
     }
     
     /**
@@ -258,31 +279,33 @@ class Upload
         $height = $size[1];
 
         //Je propose une hauteur et une largeur à ma nouvelle image
-        $newwidth = 150;
-        $Reduction = ( ($newwidth * 100)/$width);
+        //$this->newwidth;
+        $Reduction = ( ($this->newwidth * 100)/$width);
         $newheight= ( ($height * $Reduction)/100 );
 
         //Je créé une image miniature vide
         //imagecreatetruecolor crée une nouvelle image en couleurs vraies, autrement dit une image noire dont il faudra préciser la largeur et la hauteur.
-        $miniature = imagecreatetruecolor($newwidth, $newheight);
-
+        $miniature = imagecreatetruecolor($this->newwidth, $newheight);
+        //print_r($miniature);
+        
         switch ($uploadImageType) 
         {
             case IMAGETYPE_JPEG:
                 //La photo est la source
-                $image = ImageCreateFromJpeg($this->path . $this->tmp['name']);
+                //$image = ImageCreateFromJpeg($this->path . $this->tmp['name']);
+                $image = ImageCreateFromJpeg($targetPath);
 
                 //Je créé la miniature
-                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $this->newwidth, $newheight, $width, $height );
 
                 ////J'upload l'image dans le fichier
                 //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
                 //non seulement de sauvegarder notre nouvelle image dans un fichier, 
                 //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
-                ImageJpeg($miniature, $this->imageFolder . $this->tmp['name'], 100 );
+                ImageJpeg($miniature, $targetPath, 100 );
 
-                //imagedestroy($miniature);
-                //imagedestroy($image);
+                imagedestroy($miniature);
+                imagedestroy($image);
             break;
 
             case IMAGETYPE_GIF:

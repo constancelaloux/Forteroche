@@ -10,10 +10,11 @@ use blog\file\Upload;
  */
 class PostUpload extends Upload
 {
-    protected $path = __DIR__.'/../../../public/images';
+    protected $path = __DIR__.'/../../../public/images/upload/posts';
     
-    protected $formats = 
+    /*protected $formats = 
             [
                 'thumb' => [320, 180]
-            ];
+            ];*/
+    protected $newwidth = 150;
 }

@@ -11,16 +11,16 @@ use blog\validator\Validator;
  */
 class ImageValidator extends Validator
 {
-    private const MIME_TYPES =
+    /*private const MIME_TYPES =
     [
         'jpg' => 'image/jpeg',
         'png' => 'image/png',
         'pdf' => 'application/pdf'
-    ];
+    ];*/
 
-    public function isValid($value)
+    public function isValid($file)
     {
-
+        return $file != '';
     }
 
     public function checkImage()
@@ -66,7 +66,7 @@ class ImageValidator extends Validator
     /**
      * Vérifie le format de fichier
      * @param string $key
-     * @param array $extension
+ * @param array $extension
      * @return \self
      */
     public function extension(string $key, array $extensions): self
