@@ -110,12 +110,12 @@ class Upload
      */
     public function moveTo($targetPath)
     {
-        if(move_uploaded_file($this->tmp['tmp_name'], $targetPath))
+        if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         {
         /**
          * Je génére le format de l'image
          */
-            $this->generateFormats($targetPath);
+            $this->generateFormats(__DIR__.$targetPath);
               //echo 'Transfert réussi';
         }
         else 
@@ -181,8 +181,9 @@ class Upload
             
             if(!empty($this->filename))
             {
-                $showImage = "/../../../public/images/upload/posts/$image";
-
+                $showImage = $this->path.DIRECTORY_SEPARATOR.$image;
+                
+                //echo $image;
                 echo "<img src='$showImage' />";
                 return $path_parts['basename'];
             }

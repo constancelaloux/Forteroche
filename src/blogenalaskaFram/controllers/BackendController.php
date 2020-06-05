@@ -121,9 +121,9 @@ class BackendController extends AbstractController
         //$upload = new \blog\file\PostUpload();
         //print_r(current($_FILES));
         //print_r($_FILES['file']['tmp_name']);
-            $upload = new \blog\file\PostUpload();
-            $this->image = $upload->upload($_FILES);
-            return $this->image;
+        $upload = new \blog\file\PostUpload();
+        $this->image = $upload->upload($_FILES);
+        return $this->image;
         //$showImage = "/../../../public/images/upload/posts/$this->image";
         //echo "<img src='$showImage' />";
         //<img src="/../../../public/images/upload.png" /></div>
@@ -279,7 +279,9 @@ class BackendController extends AbstractController
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
             $post = new Post(
                 [
-                    'id' =>  $id,
+                    'id' =>  $id
+                    //'update_date' => date("Y-m-d H:i:s")
+                    
                 ]);
             $model = new EntityManager($post);
             
@@ -293,20 +295,31 @@ class BackendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            //print_r($this->userSession()->user()->id());
-            //print_r($_SESSION['authorId']);
-            //print_r($this->request->postData('image2'));
-            //die("meurs");
             $post->setSubject($this->request->postData('subject'));
             $post->setContent($this->request->postData('content'));
-            /*if(!empty($this->uploadImage()))
-            {*/
-            $post->setImage($this->uploadImage());
-            //}
-            $post->setStatus($this->request->postData('validate'));
-            $post->setCreatedate(date("Y-m-d H:i:s"));
-            $post->setUpdatedate(date("Y-m-d H:i:s"));
-            $post->setIdauthor($this->userSession()->user()->id());
+            $post->setImage($this->request->postData('image'));
+            if($this->request->postData('validate'))
+            {
+                $post->setStatus($this->request->postData('validate'));
+            }
+            else if($this->request->postData('save'))
+            {
+                $post->setStatus($this->request->postData('save'));
+            }
+            
+            if($id)
+            {
+                $post->setUpdatedate(date("Y-m-d H:i:s"));
+            }
+            else
+            {
+                $post->setCreatedate(date("Y-m-d H:i:s"));
+            }
+
+            if(!is_null($this->userSession()->user()->id()))
+            {
+                $post->setIdauthor($this->userSession()->user()->id());
+            }
         }
         
         $formBuilder = new ArticlesForm($post);
@@ -331,7 +344,8 @@ class BackendController extends AbstractController
         
         if($this->userSession()->requireRole('admin'))
         {
-            $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
+            //$image = preg_replace('(src="(.*?)")','src="/../../../public/images/upload.png" data-echo="$1"', $this->request->postData('image'));
+            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $post->image()]);
         }
         else 
         {

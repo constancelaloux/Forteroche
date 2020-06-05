@@ -25,6 +25,8 @@ class Post extends Model
       $updatedate,
       $slugimage
      ;
+    
+    //private $path = "/../../../public/images/";
 
     /**
      * Architecture de la base de données

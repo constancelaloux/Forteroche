@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#image').change(function(){
-        var file_data = $('#image').prop('files')[0];   
+    $('#slugimage').change(function(){
+        var file_data = $('#slugimage').prop('files')[0];   
         var form_data = new FormData();                  
         form_data.append('file', file_data);
         $.ajax({
@@ -14,7 +14,7 @@ $(document).ready(function() {
             {
                 //$("#preview").html(data).fadeIn();
                 $('#preview').html(data);
-                $('.slugimage').attr("value",data);
+                $('.image').attr("value",data);
             },
             error: function(xhr, ajaxOptions, thrownError) 
             {

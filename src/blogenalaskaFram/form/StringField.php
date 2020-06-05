@@ -21,14 +21,20 @@ class StringField extends Field
         {
             $widget .= $this->errorMessage.'<br />';
         }
+        
         if($this->type === 'hidden')   
         {
-            $widget .= '<div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="image2" id="'.$this->name.'"';
+            $widget .= '<div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="image" id="'.$this->name.'"';
         }
         else
         {
             $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="form-control-file form-control-sm" id="'.$this->name.'"';
         }
+        
+        /*if(!empty($this->value) && $this->type === 'hidden')
+        {
+            $widget .= string_replace('<div id="preview"><img src="/../../../public/images/upload.png" /></div>', 'value="'.htmlspecialchars($this->value).'"');
+        }*/
         
         if (!empty($this->value))
         {

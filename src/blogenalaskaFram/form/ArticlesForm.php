@@ -48,17 +48,17 @@ class ArticlesForm extends FormBuilder
         ->add(new StringField([
         'type' => 'hidden',
         'label' => 'nom de l\'image',
-        'name' => 'slugimage',
-        /*'validators' => [
+        'name' => 'image',
+        'validators' => [
             //new NotNullValidator('Le format n\'est pas valide'),
             new ImageValidator('Veuillez insérer votre image'),
             //new ImageValidator('Vous devez télécharger un fichier'),
-        ],*/
+        ],
         ]))
         ->add(new StringField([
         'type' => 'file',
         'label' => 'Ajouter une image',
-        'name' => 'image',
+        'name' => 'slugimage',
         /*'validators' => [
             new NotNullValidator('Veuillez insérer votre image'),
             //new ImageValidator('Veuillez insérer votre image'),
