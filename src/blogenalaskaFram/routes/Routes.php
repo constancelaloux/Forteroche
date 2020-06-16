@@ -6,27 +6,33 @@
 
 //Route qui récupére les aricles sur la page d'accueil du blog
 $router->get('/', "Frontend#renderHomepage");
-//$router->get('/test', "Frontend#renderPaginatedposts");
+
 //Route qui renvoi les articles de la pagination
 $router->get('/articles:page', "Frontend#renderPaginatedposts");
 
 //Route qui va vers un article du frontend
 $router->get('/article:id:page', "Frontend#renderPost");
 
+//Route qui va vers un article du frontend et vers le commentaire qui peut etre modifié
+$router->get('/article:id:idcomment', "Frontend#renderPost");
+
 //Route qui permet de créer un commentaire
 $router->post('/article:id', "Frontend#createComment");
 
-//$router->get('/createcomment', "Frontend#createComment");
-$router->post('/createcomment', "Frontend#createComment");
+//Route qui permet de modifier un commentaire
+$router->post('/updatecomment:id:idcomment', "Frontend#updateComment");
 
-//Route qui permet de créer un commentaire
-$router->get('/updatecomment', "Frontend#updateComment");
+//$router->post('/updatcomment:id', "Frontend#updateComment");
 
-//Route qui permet de créer un commentaire
-$router->get('/deletecomment', "Frontend#deleteComment");
+//Route qui permet de supprimer un commentaire
+$router->post('/deletecomment:id:idcomment:', "Frontend#deleteComment");
 
+//Route qui va gérer les clicks pour les commentaires indésirables
 $router->post('/unwantedcomments', "Frontend#unwantedComment");
 //:idarticle
+//$router->get('/createcomment', "Frontend#createComment");
+//$router->post('/createcomment', "Frontend#createComment");
+//$router->get('/test', "Frontend#renderPaginatedposts");
 
 /* 
  *Liste de mes routes administrateur

@@ -12,6 +12,7 @@ use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
 use blog\validator\MinLengthValidator;
 use blog\validator\MajValidator;
+use blog\validator\ImageValidator;
 /**
  * Description of TestForm
  *
@@ -82,6 +83,26 @@ class CreateAuthorForm extends FormBuilder
             //new MinValidator("Votre mot de passe doit comporter au moins une majuscule"),
             //new MinValidator("Votre mot de passe doit comporter au moins un caractére spécial"),
         ],
+        ])) 
+        ->add(new StringField([
+        'type' => 'hidden',
+        'label' => 'nom de l\'image',
+        'name' => 'image',
+        'validators' => [
+            //new NotNullValidator('Le format n\'est pas valide'),
+            new ImageValidator('Veuillez insérer votre image'),
+            //new ImageValidator('Vous devez télécharger un fichier'),
+        ],
+        ])) 
+        ->add(new StringField([
+        'type' => 'file',
+        'label' => 'Ajouter une image',
+        'name' => 'slugimage',
+        /*'validators' => [
+            new NotNullValidator('Veuillez insérer votre image'),
+            //new ImageValidator('Veuillez insérer votre image'),
+            //new ImageValidator('Vous devez télécharger un fichier'),
+        ],*/
         ]))
         /*->add(new TextField([
         'label' => 'Contenu',

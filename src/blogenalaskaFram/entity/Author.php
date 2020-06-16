@@ -27,7 +27,8 @@ class Author extends Model
             $firstname,
             $surname,
             $status,
-            $image;
+            $image,
+            $slugimage;
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -182,6 +183,13 @@ class Author extends Model
     }
 
     /**
+     * @return type
+     */
+    public function slugimage()
+    {
+        return $this->slugimage;
+    }
+    /**
      * Setters
      * un setter est une méthode chargée d'assigner une valeur à un 
      * attribut en vérifiant son intégrité (si vous assignez la valeur 
@@ -299,5 +307,16 @@ class Author extends Model
             $this->erreurs[] = self::STATUS_INVALIDE;
         }
         $this->status = $status;
+    }
+    
+    /**
+     * @param type $slugimage
+     */
+    public function setSlugimage($slugimage)
+    {
+        if(is_string($slugimage))
+        {
+            $this->slugimage = $slugimage;
+        }
     }
 }

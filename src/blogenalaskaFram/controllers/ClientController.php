@@ -21,9 +21,9 @@ class ClientController extends AbstractController
      */
     public function createClient()
     {
-        $title = 'S\'inscrire sur ce site';
-        $url = 'connectform';
-        $p = 'Connexion';
+        $title = 'Créer un compte';
+        $url = '/createauthor';
+        $p = 'Créer un compte';
         $this->processForm($title,$url,$p);
     }
     

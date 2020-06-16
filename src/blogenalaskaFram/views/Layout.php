@@ -62,6 +62,9 @@
 <!--List of comments backend-->
 <script type="text/javascript" src="/../../public/js/CommentsBackend.js"></script>
 
+<!--Countclicks-->
+<script type="text/javascript" src="/../../public/js/Countclicks.js"></script>
+
 <body>
     <?php 
     //if (session_status() === PHP_SESSION_NONE)

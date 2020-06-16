@@ -115,7 +115,7 @@ class Post extends Model
         return $this->image;
     }
     
-        /**
+    /**
      * @return type
      */
     public function slugimage()
@@ -212,7 +212,7 @@ class Post extends Model
     }
     
     
-        /**
+    /**
      * @param type $slugimage
      */
     public function setSlugimage($slugimage)

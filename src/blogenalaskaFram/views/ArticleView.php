@@ -56,6 +56,7 @@
                     foreach ($comments as $comment) 
                     {
                         print_r($comment->id);
+                        //print_r($comment);
                     ?>
                     <div class="media mt-3">
                         <img src="<?php echo $comment->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
@@ -64,6 +65,22 @@
                             <h5 class="mt-0"><?php echo $comment->subject?></h5>
                             <p><?php echo $comment->create_date?></p>
                             <p><?php echo $comment->content?></p>
+                            
+                            <?php 
+                                    if($comment->id_client == $_SESSION['authorId'])
+                                    {
+                            ?>
+                                        <form action="/updatecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
+                                            <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonModfifyComment">Modifier</button>-->
+                                            <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="modify" value="Modifier"/>
+                                        </form>
+                                        <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?=$comment->id ?>" method="post">
+                                            <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonDeleteComment">Supprimer</button>-->
+                                            <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
+                                        </form>
+                            <?php
+                                    }
+                            ?>
                             <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                             <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
                         </div>
@@ -95,27 +112,7 @@
                             <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
                         </div>
                     </div>-->
-                                    <script>
-                    count=1;
-                    $('.reportComment').click(function() 
-                        { 
-                            event.preventDefault();
-                            var id = $(this).attr('id');
-                            var number = count;
 
-                            $.ajax
-                                ({
-                                    url: "/unwantedcomments",
-                                    type: 'POST',
-                                    data: {number:number, id:id}, // An object with the key 'submit' and value 'true;
-                                    success: function (result) 
-                                        {
-                                            console.log("test");
-                                        }
-                                });  
-                        });
-                        //&idarticle=<?php //echo $comment->id ?>",
-                </script>
                     <nav aria-label="...">
                         <ul class="pagination">
                             <li class="page-item">
@@ -137,6 +134,7 @@
                     <h5>Laissez votre commentaire</h5>
                         <?php if (isset($form))
                         {
+                            ///updatcomment&id=<?=$post->id"
                         ?>
                             <form action="" method="post">
                                 <!--<p>-->
@@ -242,4 +240,3 @@
         </div>
     </div>
 </div>
-

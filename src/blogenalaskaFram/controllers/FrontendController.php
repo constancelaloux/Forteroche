@@ -39,7 +39,6 @@ class FrontendController extends AbstractController
      */
     public function renderhomepage()
     {
-        //die("meurs");
         return $this->redirect("/articles:page=1");
     }
     
@@ -120,7 +119,7 @@ class FrontendController extends AbstractController
         { 
             $comments = $query = (new Query($this->comment))
                     ->from('comments', 'c')
-                    ->select('c.id id','c.subject subject', 'a.image image', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
+                    ->select('c.id id','c.subject subject', 'a.image image', 'c.id_client id_client', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
                     ->join('author as a', 'c.id_client = a.id', 'inner')
                     //->join('$author->getTable() as a', 'c.id_client = a.id', 'inner')
                     ->where('id_post = :idpost')
@@ -131,38 +130,6 @@ class FrontendController extends AbstractController
             $this->previousLink = $this->paginateQuery->previouslink();
             $this->nextLink = $this->paginateQuery->nextlink();
             return $comments;
-            /*("SELECT a.subject subject, "
-            . "c.id id, c.create_date create_date, c.update_date update_date, c.content content, c.countclicks countclicks "
-            . "FROM articles a "
-            . "INNER JOIN comments c ON a.id = c.id_From_Article "
-            . "WHERE c.status = :status order by countclicks DESC");*/
-                    //print_r($comments);
-                //$commen = [];
-                /*foreach ($comments as $comment)
-                {
-                    //$arrayComments = NULL;
-                    print_r($comment);
-                    $author = new \blog\entity\Author();
-                    $arrayComments = $author->setId($comment->id);
-                    $arrayComments = $author->setImage($comment->image);
-                    $arrayComments = $author->setUsername($comment->username);
-                    
-                    $arrayComments = $this->comment->setSubject($comment->subject);
-                    $arrayComments = $this->comment->setContent($comment->content);
-                    $arrayComments = $this->comment->setCreatedate($comment->create_date);
-                    //print_r($comment);
-                    //$comment->id;
-                    //print_r($comment->id);
-                    //die('meurs');
-                    //print_r($listOfComments);
-                }*/
-            //$comments->closeCursor();
-            //SELECT * FROM comments c INNER JOIN author AS a ON c.id_client = a.id WHERE id_post = 102
-            //=> $this->comment->idpost()
-            //$comments = $query->fetchAll();
-            //$test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
-            //$comments = $model->findBy(['idpost' => $this->comment->idpost(), 'status' => $this->comment->status()], [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
-            //return $comments;
         }
     }
     
@@ -184,14 +151,13 @@ class FrontendController extends AbstractController
         $this->comment->setCountclicks($clicksIncremented);
         $this->comment->setId($comment->id());
         $model->persist($this->comment);
-        die("je suis la et je peux faire du traitement");
     }
     /*
      * Fonction qui me permet de créer un commentaire
      */
     public function createComment()
     {
-        $this->processForm();
+        return $this->processForm();
     }
     
     /*
@@ -201,6 +167,9 @@ class FrontendController extends AbstractController
     {
         if($this->userSession()->requireRole('client', 'admin'))
         {
+            //print_r($_GET['idcomment']);
+            //print_r($_POST);
+            //die("meurs ici");
             $this->processForm();
         }
         else
@@ -211,10 +180,16 @@ class FrontendController extends AbstractController
         }
     }
     
+    /**
+     * J'affiche le formulaire et j'appelle la fonction qui envoi les commentaires en base de données
+     * @return type
+     * @throws NotFoundHttpException
+     */
     public function processForm()
     { 
-        //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
-        if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
+        //print_r($_GET['idcomment']);
+        //Si il n'y a pas d'id en post ni en get, je créé un nouveau commentaire
+        if(is_null($this->request->getData('idcomment')) && is_null($this->request->postData('idcomment')))
         {
             //$comment = new Comment();
             $model = new EntityManager($this->comment);
@@ -223,19 +198,19 @@ class FrontendController extends AbstractController
         {
             //Si il y a un id en post ou en get
             //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
-            $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
+            $idComment = $this->request->postData('idcomment') ? $this->request->postData('idcomment') : $this->request->getData('idcomment');
            /* $this->comment(
                 [
                     'id' =>  $id,
-                ]);*/
-            $this->comment->setId($id);
+                ]);*/;
+            $this->comment->setId($idComment);
             $model = new EntityManager($this->comment);
             
             //Dans le cas ou il n'y pas l'id en base de données
             // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
             if(!($this->comment = $model->findById($this->comment->id())))
             {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+                throw new NotFoundHttpException("L'annonce d'id ".$idComment." n'existe pas.");
             }
         }
  
@@ -243,12 +218,24 @@ class FrontendController extends AbstractController
         {
             $this->comment->setSubject($this->request->postData('subject'));
             $this->comment->setContent($this->request->postData('content'));
-            //$post->setImage($this->request->postData('image'));
             $this->comment->setStatus($this->request->postData('validate'));
-            $this->comment->setCreatedate(date("Y-m-d H:i:s"));
-            $this->comment->setUpdatedate(date("Y-m-d H:i:s"));
+            
+            if($idComment)
+            {
+                $this->comment->setUpdatedate(date("Y-m-d H:i:s"));
+            }
+            else
+            {
+                $this->comment->setCreatedate(date("Y-m-d H:i:s"));
+            }
+            
             $this->comment->setCountclicks(NULL);
-            $this->comment->setIdclient($_SESSION['authorId']);
+            //$this->comment->setIdclient($_SESSION['authorId']);
+            if(!is_null($this->userSession()->user()->id()))
+            {
+                $this->comment->setIdclient($this->userSession()->user()->id());
+            }
+            
             $this->comment->setIdpost($this->request->postData('idpost'));
         }
         
@@ -259,14 +246,24 @@ class FrontendController extends AbstractController
         {  
             $model = new EntityManager($this->comment);
             $model->persist($this->comment);
-            $this->addFlash()->success('Votre commentairea bien été ajoutée !');
+            $this->addFlash()->success('Votre commentaire a bien été ajoutée !');
             $id = $this->request->postData('idpost');
-            return $this->redirect("/article&id=$id");
+            
+            if(!is_null($this->request->getData('idcomment')))
+            {   
+                $id = $this->request->getData('id');
+                return $this->redirect("/article&id=$id&idcomment=$idComment");
+            }
+            else
+            {
+                return $this->redirect("/article&id=$id");
+            }
         }
         
         if($this->userSession()->requireRole('client', 'admin'))
         {
             //$title = "Créer un commentaire";
+            //$this->getrender()->render('',['form' => $form->createView()]);
             return $form->createView();
             //$this->getrender()->render('ArticleView',['title' => $title, 'form' => $form->createView()]);
             
@@ -303,7 +300,44 @@ class FrontendController extends AbstractController
             }
         }  
     }  
-}         /*if ($this->request->method() == 'POST')
+}   
+            /*("SELECT a.subject subject, "
+            . "c.id id, c.create_date create_date, c.update_date update_date, c.content content, c.countclicks countclicks "
+            . "FROM articles a "
+            . "INNER JOIN comments c ON a.id = c.id_From_Article "
+            . "WHERE c.status = :status order by countclicks DESC");*/
+                    //print_r($comments);
+                //$commen = [];
+                /*foreach ($comments as $comment)
+                {
+                    //$arrayComments = NULL;
+                    print_r($comment);
+                    $author = new \blog\entity\Author();
+                    $arrayComments = $author->setId($comment->id);
+                    $arrayComments = $author->setImage($comment->image);
+                    $arrayComments = $author->setUsername($comment->username);
+                    
+                    $arrayComments = $this->comment->setSubject($comment->subject);
+                    $arrayComments = $this->comment->setContent($comment->content);
+                    $arrayComments = $this->comment->setCreatedate($comment->create_date);
+                    //print_r($comment);
+                    //$comment->id;
+                    //print_r($comment->id);
+                    //die('meurs');
+                    //print_r($listOfComments);
+                }*/
+            //$comments->closeCursor();
+            //SELECT * FROM comments c INNER JOIN author AS a ON c.id_client = a.id WHERE id_post = 102
+            //=> $this->comment->idpost()
+            //$comments = $query->fetchAll();
+            //$test = (new \blog\database\QueryBuilder())->from($this->comment)->select('*')->join('author', $condition);
+            //$comments = $model->findBy(['idpost' => $this->comment->idpost(), 'status' => $this->comment->status()], [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
+            //return $comments;
+
+
+
+
+/*if ($this->request->method() == 'POST')
         {
             print_r($_POST);
             print_r($this->request->postData('idpost'));
