@@ -102,7 +102,7 @@ class ClientController extends AbstractController
             
             if($model->exist(['username' => $client->username()]))
             {
-                $auth = $model->findOneBy(['username' => $author->username()]);
+                $auth = $model->findOneBy(['username' => $client->username()]);
                 $idOfAuthor = $auth->id();
                 //$imageOfAuthor = $author->imageComment();
                 $password = $auth->password();

@@ -212,7 +212,7 @@ class EntityManager extends DbConnexion
      * La méthodefindOneBy(array $criteria, array $orderBy = null)
      * fonctionne sur le même principe que la méthodefindBy(), 
      * sauf qu'elle ne retourne qu'une seule entité. 
-     * Les argumentslimitetoffsetn'existent donc pas. 
+     * Les argumentslimitetoffset n'existent donc pas. 
      * @param type $filters
      * @return type
      */
@@ -271,6 +271,26 @@ class EntityManager extends DbConnexion
         return $this->fetchAll($filters, $orderBy, $desc, $length, $start);
     }
     
+    public function get($filters)
+    {
+        //print_r($filters);
+        $sqlQuery = "SELECT * FROM %s WHERE subject LIKE '%:subject%' OR content LIKE '%:content%",$this->metadata["table"];
+        $statement = $this->pdo->prepare($sqlQuery);
+        print_r($statement);
+        $statement->execute([':subject' => $filters, ':content' => $filters]);
+        die('meurs');
+        $results = $statement->fetch(\PDO::FETCH_ASSOC);
+        return (new $this->model($results));
+        /*$data = [];
+        
+        foreach($results as $result) 
+        {
+            $data[] = (new $this->model())->hydrate($result);
+            //return (new $this->model())->hydrate($result);
+        }
+        return $data;*/
+    }
+    
     /**
      * Vous connaissez le principe des méthodes magiques, 
      * comme__call()qui émule des méthodes. Ces méthodes émulées 
@@ -303,17 +323,9 @@ class EntityManager extends DbConnexion
      */
     private function fetchAll($filters = [], $sorting = [], $length = null, $start = null)
     {   
-        //print_r($filters);
-        //print_r($this->where($filters));
-        //WHERE username = :username
-        //die("meurs");
-        //print_r($sorting);
-        //print_r($length);
         $sqlQuery = sprintf("SELECT * FROM %s %s %s %s", $this->metadata["table"], $this->where($filters), $this->orderBy($sorting), $this->limit($length, $start));
         $statement = $this->pdo->prepare($sqlQuery);
-        //print_r($statement);
         $statement->execute($filters);
-        //print_r($statement);
         $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
         $data = [];
         

@@ -26,12 +26,12 @@ print_r($_SESSION["status"]);
             ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
+                    <img class="card-img-top img-responsive w-100" src="<?= $post->image() ?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
-                    <h3><?= $post->subject ?></h3>
-                    <p><?php if (strlen($post->content) <= 400)
+                    <h3><?= $post->subject() ?></h3>
+                    <p><?php if (strlen($post->content()) <= 400)
                         {
-                            echo $post->content;
+                            echo $post->content();
                         }
                     else
                         {
@@ -42,7 +42,7 @@ print_r($_SESSION["status"]);
                             echo $debut;
                         }?>
                         
-                    <a href="/article&id=<?=$post->id?>" class="text-danger">Lire la suite</a></p>
+                    <a href="/article&id=<?=$post->id()?>" class="text-danger">Lire la suite</a></p>
                 </div>
             </div>
             <?php
@@ -81,7 +81,7 @@ print_r($_SESSION["status"]);
 
             <div class="row mb-4">
                 <?php          
-                if (empty($posts))
+                if(empty($posts))
                 {
                 ?>
                     <p>Aucun article n'a encore été posté. Soyez le premier à en laisser un !</p>
@@ -91,23 +91,23 @@ print_r($_SESSION["status"]);
                 {
                 ?>           
                     <?php
-                    foreach ($posts as $post) 
+                    foreach($posts as $post) 
                     {
                      ?>
                     <div class="col-lg-4">
                         <div class="cards h-100">
                             <div class="overlay-image">
-                                <img class="card-img-top img-responsive w-100" src="<?= $post->image ?>" alt="Card image cap">
+                                <img class="card-img-top img-responsive w-100" src="<?= $post->image() ?>" alt="Card image cap">
                                 <div class="overlay-item-caption smoothie"></div>
                                 <div class="hover-item-caption smoothie">
-                                    <h3 class="text"><a href="/article&id=<?=$post->id?>" class="stretched-link" title="view article">View</a></h3>
+                                    <h3 class="text"><a href="/article&id=<?=$post->id()?>" class="stretched-link" title="view article">View</a></h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-danger"><?= $post->subject ?></strong>
+                                <strong class="d-inline-block mb-2 text-danger"><?= $post->subject() ?></strong>
                                 <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
                                 <!--<div class="mb-1 text-muted">12 Novembre 2020 Posted by Coach</div>-->
-                                <div class="mb-1 text-muted"><?=$post->createdate->format('Y-m-d')?> Posté par <?=$post->idauthor?></div>
+                                <div class="mb-1 text-muted"><?=$post->createdate()->format('Y-m-d')?> Posté par Jean Forteroche</div>
                                 <!--<p class="card-text mb-4">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>-->
                                 <!--<a href="/article" class="stretched-link">Continue reading</a>-->
                             </div>

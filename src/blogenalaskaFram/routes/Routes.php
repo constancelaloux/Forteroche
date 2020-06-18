@@ -101,6 +101,10 @@ $router->post('/deletecommentfrombackend', "Backend#deleteComments");
 //Route qui redirige apres avoir supprimé un commentaire du datatables
 $router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
 
+/**
+ * search articles
+ */
+$router->post('/searchPosts', "Search#search");
 
 //Route qui récupére les identifiants de connexion de l'auteur
 //$router->post('/validateAuthorConnexion', "Author#validateConnexion");

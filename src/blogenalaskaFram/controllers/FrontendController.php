@@ -47,7 +47,9 @@ class FrontendController extends AbstractController
      */
     public function renderPaginatedPosts()
     {
+        //Je récupére les derniers articles
         $lastsposts = $this->getLastsPosts();
+        //Pagination
         $model = new EntityManager($this->post);
         $perPage = 9;
         $paginatedQuery = new \blog\Paginate($this->post, $perPage);
@@ -167,9 +169,6 @@ class FrontendController extends AbstractController
     {
         if($this->userSession()->requireRole('client', 'admin'))
         {
-            //print_r($_GET['idcomment']);
-            //print_r($_POST);
-            //die("meurs ici");
             $this->processForm();
         }
         else

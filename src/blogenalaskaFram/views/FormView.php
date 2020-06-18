@@ -9,13 +9,13 @@
                         <img class="mb-1" src="/../../public/images/logo.png" alt="photo de montagne">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
-                    <?php if(isset($form))
-                        {
-                            echo $form;
-                        }
+                    <?php   if(isset($form))
+                            {
+                                echo $form;
+                            }
                     ?>
                     <div id="preview">
-                        <?php  if(isset($image))
+                        <?php   if(isset($image))
                                 {
                                     echo $image;
                                 }
