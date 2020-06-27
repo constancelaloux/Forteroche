@@ -8,6 +8,7 @@ use blog\database\EntityManager;
 use blog\entity\Post;
 use blog\database\Query;
 use blog\Paginate;
+use blog\entity\Author;
 /**
  * Description of BlogController
  *
@@ -21,6 +22,8 @@ class FrontendController extends AbstractController
     
     public $comment;
     
+    public $author;
+    
     public $paginateQuery;
     
     public $previousLink;
@@ -32,6 +35,7 @@ class FrontendController extends AbstractController
         parent::__construct();
         $this->post = new Post();
         $this->comment = new Comment();
+        $this->author = new Author();
     }
     
     /*
@@ -119,18 +123,21 @@ class FrontendController extends AbstractController
         
         if($model->exist(['idpost'=>$this->comment->idpost()]))
         { 
-            $comments = $query = (new Query($this->comment))
+            $comments = $query = (new Query($this->comment, $this->author))
+            //$comments = $query = (new Query(array($this->comment, $this->author)))
                     ->from('comments', 'c')
                     ->select('c.id id','c.subject subject', 'a.image image', 'c.id_client id_client', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
                     ->join('author as a', 'c.id_client = a.id', 'inner')
                     //->join('$author->getTable() as a', 'c.id_client = a.id', 'inner')
                     ->where('id_post = :idpost')
-                    ->setParam('idpost', $this->comment->idpost())
+                    ->setParams(array('idpost' => $this->comment->idpost()))
                     ->orderBy('create_date', 'ASC')
                     ->limit($perPage, $offset)
                     ->fetchAll();
+            //print_r($comments);
             $this->previousLink = $this->paginateQuery->previouslink();
             $this->nextLink = $this->paginateQuery->nextlink();
+            //print_r($comments);
             return $comments;
         }
     }
@@ -186,7 +193,6 @@ class FrontendController extends AbstractController
      */
     public function processForm()
     { 
-        //print_r($_GET['idcomment']);
         //Si il n'y a pas d'id en post ni en get, je créé un nouveau commentaire
         if(is_null($this->request->getData('idcomment')) && is_null($this->request->postData('idcomment')))
         {
@@ -201,7 +207,7 @@ class FrontendController extends AbstractController
            /* $this->comment(
                 [
                     'id' =>  $id,
-                ]);*/;
+                ]);*/
             $this->comment->setId($idComment);
             $model = new EntityManager($this->comment);
             
@@ -283,18 +289,17 @@ class FrontendController extends AbstractController
         {
             if($this->userSession()->requireRole('client', 'admin'))
             {
-                /*$this->comment(
-                [
-                    'id' =>  $this->request->postData('id'),
-                ]);*/
-                $this->comment->setId($this->request->postData('id'));
+                $this->comment->setId($this->request->getData('idcomment'));
                 $model = new EntityManager($this->comment);
                 $model->remove($this->comment);
+                $this->addFlash()->error('Votre commentaire a été supprimé!');
+                $postid = $this->request->getData('id');
+                return $this->redirect("/article&id=$postid");
             }
             else
             {
                 $this->addFlash()->error('Vous ne pouvez pas supprimer ce commentaire!');
-                $postid = $this->request->postData('idpost');
+                $postid = $this->request->getData('id');
                 return $this->redirect("/article&id=$postid");
             }
         }  

@@ -11,11 +11,11 @@ namespace blog\controllers;
 use blog\HTTPResponse;
 //use blog\Page;
 //use blog\HTML\Renderer;
-use blog\HTML\Render;
+//use blog\HTML\Render;
 use blog\config\Container;
-use blog\config\ContainerInterface;
+//use blog\config\ContainerInterface;
 use blog\error\FlashService;
-use blog\session\PHPSession;
+//use blog\session\PHPSession;
 use blog\form\Form;
 use blog\user\UserSession;
 /**
@@ -67,7 +67,6 @@ abstract class AbstractController
     {
         $services   = include __DIR__.'/../config/Config.php';
         $this->container = new Container($services);
-        //print_r($configFile);
         return $this->container;
     }
     
@@ -76,9 +75,6 @@ abstract class AbstractController
     */
     protected function redirect(string $url)
     {
-        //print_r("je passe la");
-        
-        //print_r($url);
         return $this->httpResponse->redirectResponse($url);
     }
     

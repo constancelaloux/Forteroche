@@ -1,3 +1,7 @@
+<?php
+
+print_r($_SESSION);
+?>
 <div class="listOfSearch">
     <?php
         if (empty($mySearchResults))
@@ -8,15 +12,24 @@
         }
         else
         {
+        ?>
+        <p>Le résultat de la racherche donne les articles suivants: </p>
+        <?php
             if (!empty ($mySearchResults))
             {
-                foreach ($mySearchResults as $results) 
+                foreach ($mySearchResults as $mySearchResult) 
                 {
+                //print_r($mySearchResults);
+                /*foreach ($mySearchResults as $results) 
+                {*/
                     //$searchResult = $result->subject();
                     //$idsearchresultArticle = $result->id();
                     //echo '<div id="mySearchResult">','<a href='.$searchResult.'', "\n", '</div>';
                     ?>
-                    <p> <a href="/article&id=<?php echo $results->id() ?>,"> <?php echo htmlspecialchars($results->subject())?></a></p>
+                    
+                    <p> <a href="/article&id=<?php echo $mySearchResult->id() ?>,"> <?php echo htmlspecialchars($mySearchResult->subject())?></a></p>
+                    <?php echo $mySearchResult->createdate()->format('Y-m-d')?>
+                    <?php echo $mySearchResult->id() ?>
                 <?php
                 }
             }
@@ -36,6 +49,4 @@
         }
                 ?>
 </div>
-<?php $content = ob_get_clean(); ?>
-<?php require('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Template.php');
 

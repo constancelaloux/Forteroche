@@ -5,12 +5,13 @@
         $this->addFlash()->error('Votre compte a bien été créé');
         return $this->redirect('/connectform');
     }*/
-//print_r($_SESSION);
+print_r($_SESSION);
 ?>
 <div class="section-article">
     <div class="container">
         <div class="row">
             <div class="blog-post col-lg-9">
+                <?=print_r($post->id()); ?>
                 <h2 class="blog-post-title"><?=$post->subject()?></h2>
                 <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche<!--<a href="#">Jean Forteroche</a>--></p>
                 <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
@@ -53,41 +54,49 @@
          
                     <?php
                     //print_r($comments->image());
-                    foreach ($comments as $comment) 
+                    if (isset($comments))
                     {
-                        print_r($comment->id);
-                        //print_r($comment);
-                    ?>
-                    <div class="media mt-3">
-                        <img src="<?php echo $comment->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
-                        <div class="media-body">
-                            <button class="reportComment" id=<?php echo $comment->id ?>>Signaler à l'administrateur</button>
-                            <h5 class="mt-0"><?php echo $comment->subject?></h5>
-                            <p><?php echo $comment->create_date?></p>
-                            <p><?php echo $comment->content?></p>
-                            
-                            <?php 
-                                    if($comment->id_client == $_SESSION['authorId'])
+                        foreach ($comments as $comment) 
+                        {
+                            //print_r($comment);
+                        ?>
+                        <div class="media mt-3">
+                            <img src="<?php echo $comment->originalData->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
+                            <div class="media-body">
+                                <button class="reportComment" id=<?php echo $comment->id() ?>>Signaler à l'administrateur</button>
+                                <h5 class="mt-0"><?php echo $comment->subject()?></h5>
+                                <p><?php echo $comment->createdate()->format('Y-m-d')?></p>
+                                <p><?php echo $comment->content()?></p>
+
+                                <?php 
+                                    if($comment->idclient() == $_SESSION['authorId'])
                                     {
-                            ?>
-                                        <form action="/updatecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
-                                            <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonModfifyComment">Modifier</button>-->
-                                            <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="modify" value="Modifier"/>
-                                        </form>
-                                        <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?=$comment->id ?>" method="post">
-                                            <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonDeleteComment">Supprimer</button>-->
-                                            <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
-                                        </form>
-                            <?php
+                                ?>
+                                    <form action="/updatecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
+                                        <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonModfifyComment">Modifier</button>-->
+                                        <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="modify" value="Modifier"/>
+                                    </form>
+                                    <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
+                                        <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonDeleteComment">Supprimer</button>-->
+                                        <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
+                                    </form>
+                                <?php
                                     }
-                            ?>
-                            <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
+                                ?>
+                                <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                                <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
+                            </div>
                         </div>
-                    </div>
+                        <?php
+                        }
+                    }
+                    else 
+                    {
+                    ?>
+                    <p>Il n'y a aucun commentaire pour cet article</p>
                     <?php
                     }
-                    ?>
+                        ?>
                     <!--<div class="media mt-3">
                         <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt=".image 2" width="100" height="50">
                         <div class="media-body">

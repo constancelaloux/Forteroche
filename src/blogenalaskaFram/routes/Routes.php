@@ -25,7 +25,7 @@ $router->post('/updatecomment:id:idcomment', "Frontend#updateComment");
 //$router->post('/updatcomment:id', "Frontend#updateComment");
 
 //Route qui permet de supprimer un commentaire
-$router->post('/deletecomment:id:idcomment:', "Frontend#deleteComment");
+$router->post('/deletecomment:id:idcomment', "Frontend#deleteComment");
 
 //Route qui va gérer les clicks pour les commentaires indésirables
 $router->post('/unwantedcomments', "Frontend#unwantedComment");
@@ -49,8 +49,9 @@ $router->get('/connectform', "Author#logAuthor");
 $router->post('/connectform', "Author#logAuthor");
 
 //Routes qui suppriment et met à jour un utilisateur
+$router->get('/updateuser', "Author#updateUser");
 $router->post('/updateuser', "Author#updateUser");
-$router->post('/deleteuser', "Author#deleteUser");
+$router->get('/deleteuser', "Author#deleteUser");
 
 $router->get('/createclient', "Author#createClient");
 $router->post('/createclient', "Author#createClient");

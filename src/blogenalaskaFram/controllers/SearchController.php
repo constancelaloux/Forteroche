@@ -3,6 +3,7 @@
 namespace blog\controllers;
 
 use blog\controllers\AbstractController;
+use blog\database\Query;
 /**
  * Description of SearchController
  *
@@ -13,29 +14,35 @@ class SearchController extends AbstractController
 //JE RECHERCHE UN ARTICLE DANS LE BLOG            
     function search()
     {
-        /*if (isset($_POST['whatImSearching']))
-        {*/
             if(!is_null($this->request->postData('userSearch')))
-            //if (!empty($_POST['whatImSearching']))
             {
-                //print_r($this->request->postData('userSearch'));
-                //$mySearchWords = $this->request->postData('userSearch');
                 $post = new \blog\entity\Post();
-                $model = new \blog\database\EntityManager($post);
+                $mySearchResults = (new Query($post))
+                        ->from('post')
+                        ->select('*')
+                        ->where('subject LIKE :subject OR content LIKE :content')
+                        //->where('content LIKE :content')
+                        ->setParams(array('subject' => '%'.$this->request->postData('userSearch').'%', 'content' => '%'.$this->request->postData('userSearch').'%'))
+                        //->setParam('content', '%'.$this->request->postData('userSearch').'%')
+                        ->fetchAll();
+                //print_r($mySearchResults);
+                //die('meurs');
+                //$model = new \blog\database\EntityManager($post);
 
-                $mySearchResults = $model->get($this->request->postData('userSearch'));
-                print_r($mySearchResults);
-                die("je meurs ici");
-                $this->getrender()->render('FrontendhomeView',['SearchResultView' => $mySearchResults]);
+                //$mySearchResults = $model->get($this->request->postData('userSearch'));
+                if($this->userSession()->requireRole('admin','client'))
+                {
+                    $this->getrender()->render('SearchResultView',['mySearchResults' => $mySearchResults]);
+                }
+                else 
+                {
+                    $this->addFlash()->error('Vous n\avez pas acces à cette page!');
+                    return $this->redirect('/connectform');
+                }
             }
             else 
             {
                 $this->addFlash()->error('Vous n\'avez pas fait de recherche!');
             }
-        /*}
-        else
-        {
-            $this->addFlash()->error('Vous n\'avez pas fait de recherche!');
-        }*/
     }
 }

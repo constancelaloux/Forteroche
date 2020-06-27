@@ -273,22 +273,19 @@ class EntityManager extends DbConnexion
     
     public function get($filters)
     {
-        //print_r($filters);
-        $sqlQuery = "SELECT * FROM %s WHERE subject LIKE '%:subject%' OR content LIKE '%:content%",$this->metadata["table"];
+        $sqlQuery = sprintf("SELECT * FROM %s %s", $this->metadata["table"], $this->where($filters));
+        //$sqlQuery = sprintf("SELECT * FROM %s %s WHERE subject LIKE :subject OR content LIKE :content", $this->metadata["table"]);
         $statement = $this->pdo->prepare($sqlQuery);
-        print_r($statement);
-        $statement->execute([':subject' => $filters, ':content' => $filters]);
-        die('meurs');
-        $results = $statement->fetch(\PDO::FETCH_ASSOC);
-        return (new $this->model($results));
-        /*$data = [];
+        $statement->execute($filters);
+        //$statement->execute(array(':subject' => '%'.$filters.'%', ':content' => '%'.$filters.'%'));
+        $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
+        $data = [];
         
         foreach($results as $result) 
         {
             $data[] = (new $this->model())->hydrate($result);
-            //return (new $this->model())->hydrate($result);
         }
-        return $data;*/
+        return $data;
     }
     
     /**

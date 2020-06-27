@@ -65,6 +65,7 @@ class Author extends Model
     const FIRSTNAME_INVALIDE = 3;
     const SURNAME_INVALIDE = 4;
     const STATUS_INVALIDE = 5;
+    const IMAGE_INVALIDE = 6;
     
     /**
      *Ici, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 

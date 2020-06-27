@@ -55,37 +55,63 @@ class Query extends DbConnexion
     /**
      * @var type 
      */
-    private $params;
+    private $params = [];
     
     /**
      * @var type 
      */
-    private $model;
+    private $model = [];
     
     /**
      * @param Model $model
      * @throws ORMException
      */
-    public function __construct(Model $model)
+    public function __construct(Model $model)//$model = [])
     {
         //Je me connecte à la base de données
         $this->pdo = $this->connect();
         
         //Ensuite je récupare le nom de la class objet
-        $reflectionClass = new \ReflectionClass($model);
-        
-        if($reflectionClass->getParentClass()->getName() == Model::class) 
-        {
-            $this->model = $model;
-            //Je récupére si chaque composants de ma class test est un int ou un string, etc
-            $this->metadata = $this->model::metadata();
-        }
-        else
-        {
-            throw new ORMException("Cette classe n'est pas une entité.");
-        }
-        $this->model = $model;
+        /*foreach ($model as $models) 
+        {*/
+            $reflectionClass = new \ReflectionClass($model);
+            if($reflectionClass->getParentClass()->getName() == Model::class) 
+            {
+                $this->model = $model;
+                //print_r($this->model);
+                //Je récupére si chaque composants de ma class test est un int ou un string, etc
+                $this->metadata = $this->model::metadata();
+                //print_r($this->metadata);
+            }
+            else
+            {
+                throw new ORMException("Cette classe n'est pas une entité.");
+            }
+            //$this->model = $models;
+        //}
     }
+    
+    /*public function __construct($model = [])
+    {
+        //Je me connecte à la base de données
+        $this->pdo = $this->connect();
+        
+        //Ensuite je récupare le nom de la class objet
+        foreach ($model as $models) 
+        {
+            $reflectionClass = new \ReflectionClass($model);
+            if($reflectionClass->getParentClass()->getName() == Model::class) 
+            {
+                $this->model = $model;
+                //Je récupére si chaque composants de ma class test est un int ou un string, etc
+                $this->metadata = $this->model::metadata();
+            }
+            else
+            {
+                throw new ORMException("Cette classe n'est pas une entité.");
+            }
+        }
+    }*/
     
 
     /**
@@ -159,7 +185,7 @@ class Query extends DbConnexion
      * @param string $where
      * @return \self
      */
-    public function where(string $where): self
+    public function where(string ...$where): self
     {
         $this->where = $where;
         return $this;
@@ -185,6 +211,27 @@ class Query extends DbConnexion
     {
         $this->params[$key] = $value;
         return $this;
+    }
+    
+     /**
+     * 
+     * @param string $key
+     * @param type $value
+     * @return \self
+     */
+    public function setParams(array ...$params)
+    {
+        $this->params = $params;
+        //print_r($this);
+        return $this;
+        /*foreach ($params as $key => $value) 
+        {
+            $this->params[$key] = $value;
+            print_r($this);
+            //implode(',' , $choix);
+            //print_r($this->params[$key]);
+            return $this;
+        }*/
     }
     
     /**
@@ -234,7 +281,10 @@ class Query extends DbConnexion
         }
         if($this->where)
         {
-            $sql .= " WHERE " . $this->where;
+            foreach ($this->where as $value) 
+            {
+                $sql .= " WHERE " . $value;
+            }
         }
         if(!empty($this->order))
         {
@@ -261,14 +311,42 @@ class Query extends DbConnexion
         if($this->params)
         {
             $query = $this->pdo->prepare($query);
-            
-            $query->execute($this->params);
+            //print_r($this->params);
+            if(is_array($this->params))
+            {
+                foreach ($this->params as $values)
+                {
+                    $query->execute($values);
+                }
+            }
+            else 
+            {
+                $query->execute($this->params);
+            }
+            //$query->execute($this->params);
+            //$results = $query->fetchAll(\PDO::FETCH_OBJ);
+            $results = $query->fetchAll(\PDO::FETCH_OBJ);
+  
+            $data = [];
+        
+            /*print_r($this->model);
+            foreach ($this->model as $namemodel)
+                {
+                    //print_r($namemodel);
+                }*/
+                //die('meurs');
+            foreach($results as $result) 
+            {
+                //print_r($result);
+                //print_r($this->model);
+                $data[] = (new $this->model)->hydrate($result);
+                //print_r(new $this->model);
+            }
+        }
             //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Author::class);
             //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Comment::class);
             //$results = $query->fetchAll(\PDO::FETCH_ASSOC);
             //$results = $query->fetchAll(\PDO::FETCH_CLASS);
-            $results = $query->fetchAll(\PDO::FETCH_OBJ);
-        }
             //$results = $query->fetchAll(\PDO::FETCH_GROUP|\PDO::FETCH_CLASS, '\blog\entity\Comment'); 
             //$results = $query->fetchAll(\PDO::FETCH_OBJ);
             //$results = $query->fetchAll();
@@ -295,7 +373,8 @@ class Query extends DbConnexion
            /* return $data;*/
             //print_r($data);
             //DIE("MEURS");
-            return $results;
+            return $data;
+            //return $results;
     }
         //return (new $this->model($result));
         //return NULL;
@@ -319,6 +398,14 @@ class Query extends DbConnexion
             }
         }
         return join(', ', $from);
+    }
+    
+    /**
+     * Closes the \PDO connection to the database
+     */
+    public function close(): void
+    {
+        $this->pdo = null;
     }
 }
 
