@@ -4,6 +4,7 @@ namespace blog\config;
 use blog\config\ContainerInterface;
 use blog\exceptions\ServiceNotFoundException;
 use Exception;
+
 /**
  * Description of Container
  *
@@ -18,7 +19,6 @@ class Container implements ContainerInterface
     public function __construct(array $services = [])
     {
         $this->services = $services;
-        //PRINT_R($this->services);
         $this->serviceStore = [];
     }
 
@@ -33,13 +33,17 @@ class Container implements ContainerInterface
             //throw new ServiceNotFoundException('Service not found: '.$name);
         }
 
-        // If we haven't created it, create it and save to store
+        /**
+         * If we haven't created it, create it and save to store
+         */
         if (!isset($this->serviceStore[$name])) 
         {
             $this->serviceStore[$name] = $this->createService($name);
         }
 
-        // Return service from store
+        /**
+         * Return service from store
+         */
         return $this->serviceStore[$name];
     }
 
@@ -48,7 +52,6 @@ class Container implements ContainerInterface
      */
     public function has($name)
     {
-        //print_r($this->services[$name]);
         return isset($this->services[$name]);
     }
 
@@ -60,8 +63,10 @@ class Container implements ContainerInterface
         $tokens  = explode('.', $name);
         $context = $this->parameters;
 
-        while (null !== ($token = array_shift($tokens))) {
-            if (!isset($context[$token])) {
+        while (null !== ($token = array_shift($tokens))) 
+        {
+            if (!isset($context[$token])) 
+            {
                 throw new ParameterNotFoundException('Parameter not found: '.$name);
             }
 
@@ -76,9 +81,12 @@ class Container implements ContainerInterface
      */
     public function hasParameter($name)
     {
-        try {
+        try 
+        {
             $this->getParameter($name);
-        } catch (ParameterNotFoundException $exception) {
+        } 
+        catch (ParameterNotFoundException $exception) 
+        {
             return false;
         }
 
@@ -97,28 +105,28 @@ class Container implements ContainerInterface
     private function createService($name)
     {
         $entry = &$this->services[$name];
-        //print_r($entry);
-        if (!is_array($entry) || !isset($entry['class'])) {
+        if (!is_array($entry) || !isset($entry['class'])) 
+        {
             //throw new ContainerException($name.' service entry must be an array containing a \'class\' key');
-        } elseif (!class_exists($entry['class'])) {
+        } 
+        elseif (!class_exists($entry['class'])) 
+        {
             //throw new ContainerException($name.' service class does not exist: '.$entry['class']);
-        } elseif (isset($entry['lock'])) {
+        } 
+        elseif (isset($entry['lock'])) 
+        {
             //throw new ContainerException($name.' contains circular reference');
         }
 
         $entry['lock'] = true;
 
         $arguments = isset($entry['arguments']) ? $this->resolveArguments($entry['arguments']) : [];
-        //print_r($arguments);
         $reflector = new \ReflectionClass($entry['class']);
-        //print_r($reflector);
         $service = $reflector->newInstanceArgs($arguments);
-        //print_r($service);
-        //die("meurs");
-        if (isset($entry['calls'])) {
+        if (isset($entry['calls'])) 
+        {
             $this->initializeService($service, $name, $entry['calls']);
         }
-        //print_r($service);
         return $service;
     }
 
@@ -135,16 +143,22 @@ class Container implements ContainerInterface
     {
         $arguments = [];
 
-        foreach ($argumentDefinitions as $argumentDefinition) {
-            if ($argumentDefinition instanceof ServiceReference) {
+        foreach ($argumentDefinitions as $argumentDefinition) 
+        {
+            if ($argumentDefinition instanceof ServiceReference) 
+            {
                 $argumentServiceName = $argumentDefinition->getName();
 
                 $arguments[] = $this->get($argumentServiceName);
-            } elseif ($argumentDefinition instanceof ParameterReference) {
+            } 
+            elseif ($argumentDefinition instanceof ParameterReference) 
+            {
                 $argumentParameterName = $argumentDefinition->getName();
 
                 $arguments[] = $this->getParameter($argumentParameterName);
-            } else {
+            } 
+            else 
+            {
                 $arguments[] = $argumentDefinition;
             }
         }
@@ -163,10 +177,14 @@ class Container implements ContainerInterface
      */
     private function initializeService($service, $name, array $callDefinitions)
     {
-        foreach ($callDefinitions as $callDefinition) {
-            if (!is_array($callDefinition) || !isset($callDefinition['method'])) {
+        foreach ($callDefinitions as $callDefinition) 
+        {
+            if (!is_array($callDefinition) || !isset($callDefinition['method'])) 
+            {
                 throw new ContainerException($name.' service calls must be arrays containing a \'method\' key');
-            } elseif (!is_callable([$service, $callDefinition['method']])) {
+            } 
+            elseif (!is_callable([$service, $callDefinition['method']])) 
+            {
                 throw new ContainerException($name.' service asks for call to uncallable method: '.$callDefinition['method']);
             }
 

@@ -116,6 +116,70 @@ class UserSession
             return TRUE;
         }*/    
     }
+    
+    public function expiredSession()
+    {
+        /*if(isset($_SESSION['username']))
+        {*/
+            //include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/Header.php');
+        $expireAfter = 60;
+        //print_r("je suis la");
+        //print_r($_SESSION);
+
+        //Check to see if our "last action" session
+        //variable has been set.
+        if(isset($_SESSION['last_action']))
+        {
+            //Figure out how many seconds have passed
+            //since the user was last active.
+            $secondsInactive = time() - $_SESSION['last_action'];
+
+            //Convert our minutes into seconds.
+            $expireAfterSeconds = $expireAfter * 60;
+            //print_r($secondsInactive);
+            //print_r("je suis");
+            //print_r($expireAfterSeconds);
+
+            //die('meurs');
+
+            //Check to see if they have been inactive for too long.
+            if($secondsInactive >= $expireAfterSeconds)
+            {
+                //die('meurs');
+                //session_start();
+                //User has been inactive for too long.
+                //Kill their session.
+                session_unset();
+                session_destroy();
+                require __DIR__.'/../views/AdminHeader.php';
+                //return AbstractController::redirect("/connectform");
+                
+                //header('Location: /blogenalaska/index.php?action=getTheFormAdminConnexionBackend');
+            }
+        }
+        
+    /*    }
+    else 
+        {
+            include('/Applications/MAMP/htdocs/Forteroche/blogenalaska/Frontend/frontendViews/ClientsHeader.php');       
+        }*/
+    }
+    public function timeoutSession()
+    {
+        $timeout = $_SERVER['REQUEST_TIME'];
+        /**
+         * for a 1 minute timeout, specified in seconds
+        */
+        $timeout_duration = 60;
+        $_SESSION['LAST_ACTIVITY'] = $timeout;
+
+        if (isset($_SESSION['LAST_ACTIVITY']) && ($timeout - $_SESSION['LAST_ACTIVITY']) > $timeout_duration) 
+        {
+            session_unset();
+            session_destroy();
+            session_start();
+        }
+    }
 
     /*public function user(): Author
     {

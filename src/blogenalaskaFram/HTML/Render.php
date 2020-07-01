@@ -5,6 +5,7 @@ namespace blog\HTML;
 use blog\HTML\RendererInterface;
 use blog\error\FlashService;
 use blog\user\UserSession;
+
 /**
  * Description of Render
  *
@@ -19,45 +20,54 @@ class Render  implements RendererInterface
     private $paths = array();
     
     private $viewpath;
+    
     //variables accessibles sur toutes les vues
     private $globals = [];
     
     private $assignedValues = array();
     private $renderer;
     
+    /**
+     * I give the view path into the construct
+     */
     public function __construct()
     {
         $this->addPath('blog',__DIR__.'/../views');
     }
     
     /*
-    * Permet de rajouter un chemin pour charger les vues
+     * Permet de rajouter un chemin pour charger les vues
      * @param string $namespace
      * @param null/string $path
     */
     public function addPath(string $namespace, string $path = null)
     {
         if(is_null($path))
-        //Si le nom de chemin et le chemin ne sont pas définis alors il utilise un namespace
-        //comme chemin et cette constante comme namespace par default
+        /**
+         *Si le nom de chemin et le chemin ne sont pas définis alors il utilise un namespace
+         * comme chemin et cette constante comme namespace par default
+         */
         {
             $this->paths[self::DEFAULT_NAMESPACE] = $namespace;
         }
         else
-        //si je défini un nom de chemin et un chemin
+        /**
+         * si je défini un nom de chemin et un chemin
+         */
         {
             $this->paths[$namespace] = $path;      
         }
     }
 
-    //ok
-    /*
-    * Permet de rendre une vue et ses variables
+    /**
+     * Permet de rendre une vue et ses variables
      * Le chemin peut etre précisé avec des namespaces rajoutés via le addPath()
      * $this->render('@blog/view')
      * $this->render('view')
     */
-    //Elle retourne une chaine de caractéres
+    /**
+     * Elle retourne une chaine de caractéres
+     */
     public function render(string $view, array $params = [])
     {
         $this->view = $view;
@@ -81,10 +91,16 @@ class Render  implements RendererInterface
                 if (session_status() === PHP_SESSION_NONE)
                 {
                     session_start();
-                } 
-                //Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
+                }   
+                else if ($_SESSION['status'] === 'admin')
+                {
+                    $usersession = new UserSession();
+                    $usersession->timeoutSession();
+                }
+                /**
+                 * Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
+                 */
                 ob_start();
-                //$renderer = $this;
                 extract($this->globals);
                 extract($params);
                 require($this->viewpath);
@@ -97,12 +113,10 @@ class Render  implements RendererInterface
         $content = ob_get_clean();
         ob_start();
         require __DIR__.'/../views/layout.php';
-        //return ob_get_clean();
     }
 
-    /*
-    * Permet de rajouter des variables globales à toutes les vues
-     * 
+    /**
+     * Permet de rajouter des variables globales à toutes les vues
      * @param string $key
      * @param mixed $value
     */
@@ -111,21 +125,29 @@ class Render  implements RendererInterface
         $this->globals[$key] = $value;
     }
     
-    //ok
-    //Est ce que j'ai un namespace
+    /**
+     * Est ce que j'ai un namespace
+     */
     private function hasNamespace(string $view): bool
     {
         return $view[0] === '@';
-       //substr($view, 1, strpos($view, '/')-1);
     }
     
-    //ok
+    /**
+     * 
+     * @param string $view
+     * @return string
+     */
     private function getNamespace(string $view):string
     {
         return substr($view, 1, strpos($view, '/')-1);
     }
     
-    //ok
+    /**
+     * 
+     * @param string $view
+     * @return string
+     */
     private function replaceNamespace(string $view): string
     {
         $namespace = $this->getNamespace($view);

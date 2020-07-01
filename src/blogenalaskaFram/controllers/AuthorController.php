@@ -8,8 +8,6 @@ use blog\entity\Author;
 use blog\database\EntityManager;
 use blog\form\ConnectAuthorForm;
 
-//use blog\session\PHPSession;
-
 /**
  * Description of TestFormController
  *
@@ -53,26 +51,26 @@ class AuthorController extends AbstractController
      */
     public function processForm($title,$url,$p)
     {
-        //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+        /**
+         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
-            //$this->author = new Author();
             $model = new EntityManager($this->author);
         }
         else
         {
-            //Si il y a un id en post ou en get
-            //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+            /**
+             * Si il y a un id en post ou en get
+             */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
-            /*$author = new Author(
-                [s
-                    'id' =>  $id,
-                ]);*/
             $this->author->setId($id);
             $model = new EntityManager($this->author);
             
-            //Dans le cas ou il n'y pas l'id en base de données
-            // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+            /**
+             * Dans le cas ou il n'y pas l'id en base de données
+             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             */
             if(!($this->author = $model->findById($this->author->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
@@ -147,11 +145,17 @@ class AuthorController extends AbstractController
             
             if($model->exist(['username' => $author->username()]))
             {   
-                //On trouve l'utilisateur corresppondant au username
+                /**
+                 * On trouve l'utilisateur corresppondant au username
+                 */
                 $auth = $model->findOneBy(['username' => $author->username()]);
 
-                //On vérifie que l'utilisateur corresponde.
-                //On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                /**
+                 * On vérifie que l'utilisateur corresponde.
+                 */
+                /**
+                 * On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                 */
                 $authPassword = password_verify($this->request->postData('password'), $auth->password());        
 
                 if ($authPassword)
@@ -164,10 +168,6 @@ class AuthorController extends AbstractController
                     $_SESSION['authorUsername'] = $auth->username();
                     $_SESSION['authorId'] = $auth->id();
                     $_SESSION['status'] = $auth->status();
-                    //$_SESSION['imageComment'] = $imageOfAuthor;
-                    //$this->userSession()->setUser($auth->status());
-                    //$this->userSession()->setUser($auth->id());
-                    //$this->userSession()->setUser($auth->username());
                     
                     if($this->userSession()->requireRole('admin'))
                     {
@@ -248,28 +248,27 @@ class AuthorController extends AbstractController
         $title = 'modifier son profil';
         $url = 'connectform';
         $p = 'Connexion';
-        //$this->processForm($title,$url,$p);
-        //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+
+        /**
+         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
-            //$this->author = new Author();
             $model = new EntityManager($this->author);
         }
         else
         {
-            //Si il y a un id en post ou en get
-            //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+            /**
+             * Si il y a un id en post ou en get
+             */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
-            /*$author = new Author(
-                [s
-                    'id' =>  $id,
-                ]);*/
-            print_r($id);
             $this->author->setId($id);
             $model = new EntityManager($this->author);
             
-            //Dans le cas ou il n'y pas l'id en base de données
-            // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+            /**
+             * Dans le cas ou il n'y pas l'id en base de données
+             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             */
             if(!($this->author = $model->findById($this->author->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");

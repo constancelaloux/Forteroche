@@ -15,6 +15,7 @@ use blog\entity\Comment;
 class BackendController extends AbstractController
 {
     protected $image = [];
+    
     /**
      * Show posts board
      */
@@ -38,7 +39,9 @@ class BackendController extends AbstractController
     {
         $post = new Post();
         $model = new EntityManager($post);
-        // Retrouver tous les articles
+        /**
+         * Retrouver tous les articles
+         */
         $posts = $model->findAll();
 
         if (!empty ($posts))
@@ -64,7 +67,9 @@ class BackendController extends AbstractController
                 $data[] = $row;
             }
                             
-            // Structure des données à retourner
+            /**
+             * Structure des données à retourner
+             */
             $json_data = array
             (
                 "data" => $data
@@ -84,7 +89,6 @@ class BackendController extends AbstractController
     {
         if ($this->request->method() == 'POST')
         {  
-            //$id = $this->request->postData('id');
             $post = new Post(
             [
                 'id' =>  $this->request->postData('id'),
@@ -117,21 +121,9 @@ class BackendController extends AbstractController
      */
     public function uploadImage()
     {
-        //print_r($_FILES);
-        //$upload = new \blog\file\PostUpload();
-        //print_r(current($_FILES));
-        //print_r($_FILES['file']['tmp_name']);
         $upload = new \blog\file\PostUpload();
         $this->image = $upload->upload($_FILES);
         return $this->image;
-        //$showImage = "/../../../public/images/upload/posts/$this->image";
-        //echo "<img src='$showImage' />";
-        //<img src="/../../../public/images/upload.png" /></div>
-        //echo "<img src='$target' />";
-        //$this->getrender()->render('CreateArticleFormView',['image' => $image]);
-        //$upload = new \blog\file\Upload(__DIR__.'/../../../public/images');
-        //$upload->upload($_FILES);
-        //die('meurs ma belle au bois dormant');
     }
     
     /**
@@ -141,36 +133,6 @@ class BackendController extends AbstractController
     {
         $title = "Ecrire un article";
         $this->processForm($title);
-        /*if ($this->request->method() == 'POST')
-        {
-            $post = new Post(
-            [
-                'subject' =>  $this->request->postData('subject'),
-                'content' =>  $this->request->postData('content'),
-                'image' =>  $this->request->postData('image'),
-                'status' =>  $this->request->postData('validate'),
-                'create_date' => date("Y-m-d H:i:s"),
-                'update_date' => null,
-                'id_author' => 1
-            ]);
-        }
-        else
-        {
-            $post = new Post();
-        }
-            
-        $formBuilder = new ArticlesForm($post);
-        $form = $formBuilder->buildform($formBuilder->form());
-        
-        if ($this->request->method() == 'POST' && $form->isValid())
-        {  
-            $model = new EntityManager($post);
-            $model->persist($post);
-            $this->addFlash()->success('La news a bien été ajoutée !');
-            return $this->redirect('/backoffice');
-        }
-        
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);*/
     }
     
     /**
@@ -180,36 +142,6 @@ class BackendController extends AbstractController
     {
         $title = "Ecrire un article";
         $this->processForm($title);
-        /*if ($this->request->method() == 'POST')
-        {
-            $post = new Post(
-            [
-                'subject' =>  $this->request->postData('subject'),
-                'content' =>  $this->request->postData('content'),
-                'image' =>  $this->request->postData('image'),
-                'status' =>  $this->request->postData('save'),
-                'create_date' => date("Y-m-d H:i:s"),
-                'update_date' => null,
-                'id_author' => 1
-            ]);
-        }
-        else
-        {
-            $post = new Post();
-        }
-            
-        $formBuilder = new ArticlesForm($post);
-        $form = $formBuilder->buildform($formBuilder->form());
-        
-        if ($this->request->method() == 'POST' && $form->isValid())
-        {  
-            $model = new EntityManager($post);
-            $model->persist($post);
-            $this->addFlash()->success('La news a bien été ajoutée !');
-            return $this->redirect('/backoffice');
-        }
-        
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);*/
     }
     
     /**
@@ -220,53 +152,13 @@ class BackendController extends AbstractController
         $title = "Ecrire un article";
         
         $this->processForm($title);
-        /*if ($this->request->method() == 'GET')
-        {*/
-            /*$post = new Post(
-            [
-                'id' =>  $this->request->getData('id'),
-            ]);
-            $model = new EntityManager($post);
-            $getPostById = $model->findById($post->id());
-
-            if (null === $getPostById) 
-            {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-            }
-            else
-            {
-                if($this->request->method() == 'POST') 
-                {
-                    $post = new Post(
-                    [
-                        'id' => $getPostById->id(),
-                        'subject' =>  $this->request->postData('subject'),
-                        'content' =>  $this->request->postData('content'),
-                        'image' =>  $this->request->postData('image'),
-                        'status' =>  $this->request->postData('validate'),
-                        'create_date' => date("Y-m-d H:i:s"),
-                        'update_date' => date("Y-m-d H:i:s"),
-                        'id_author' => $getPostById->idauthor()
-                    ]);
-                }
-                
-                $formBuilder = new ArticlesForm($getPostById);
-                $form = $formBuilder->buildform($formBuilder->form());
-                
-                if ($this->request->method() == 'POST' && $form->isValid())
-                {   
-                    $model = new EntityManager($post);
-                    $model->persist($post);
-                    $this->addFlash()->success('La news a bien été modifié !');
-                    return $this->redirect('/backoffice');
-                }
-                $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
-            }*/
     }
 
     public function processForm($title)
     {
-        //Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+        /**
+         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
             $post = new Post();
@@ -274,19 +166,21 @@ class BackendController extends AbstractController
         }
         else
         {
-            //Si il y a un id en post ou en get
-            //$id = isset($_POST['id']) ? $_POST['id'] : $_GET['id'];
+            /**
+             * Si il y a un id en post ou en get
+             */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
             $post = new Post(
                 [
                     'id' =>  $id
-                    //'update_date' => date("Y-m-d H:i:s")
                     
                 ]);
             $model = new EntityManager($post);
             
-            //Dans le cas ou il n'y pas l'id en base de données
-            // Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+            /**
+             * Dans le cas ou il n'y pas l'id en base de données
+             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             */
             if(!($post = $model->findById($post->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
@@ -327,8 +221,9 @@ class BackendController extends AbstractController
         
         if($this->request->method() == 'POST' && $form->isValid())
         {
-            // On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
-            //$post->User = $user;
+            /**
+             * On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
+             */
             $model->persist($post);
             if($this->userSession()->requireRole('admin'))
             {
@@ -344,7 +239,6 @@ class BackendController extends AbstractController
         
         if($this->userSession()->requireRole('admin'))
         {
-            //$image = preg_replace('(src="(.*?)")','src="/../../../public/images/upload.png" data-echo="$1"', $this->request->postData('image'));
             $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $post->image()]);
         }
         else 
@@ -354,7 +248,9 @@ class BackendController extends AbstractController
         }
     }
     
-    //On va vers la page des commentaires
+    /**
+     * On va vers la page des commentaires
+     */
     public function renderCommentsPage()
     {
         if($this->userSession()->requireRole('admin'))
@@ -368,12 +264,16 @@ class BackendController extends AbstractController
         }  
     }
     
-    //On affiche le datatables des commentaires
+    /**
+     * On affiche le datatables des commentaires
+     */
     public function getListOfComments()
     {
         $comment = new Comment();
         $model = new EntityManager($comment);
-        // Retrouver tous les articles
+        /**
+         * Retrouver tous les articles
+         */
         $comments = $model->findAll();
 
         if (!empty ($comments))
@@ -385,7 +285,6 @@ class BackendController extends AbstractController
                 $row[] = $comment->idpost();
                 $row[] = $comment->subject();
                 $row[] = $comment->createdate()->format('Y-m-d');
-                //$updateCommentDate = $comment->updatedate()->format('Y-m-d');
 
                 if (is_null($comment->updatedate()))
                 {
@@ -400,7 +299,9 @@ class BackendController extends AbstractController
                 $data[] = $row;
             }
                             
-            // Structure des données à retourner
+            /**
+             * Structure des données à retourner
+             */
             $json_data = array
             (
                 "data" => $data
@@ -413,7 +314,9 @@ class BackendController extends AbstractController
         }  
     }
     
-    //Je supprime un commentaire du datatables
+    /**
+     * Je supprime un commentaire du datatables
+     */
     public function deleteComments()
     {
         if ($this->request->method() == 'POST')
@@ -427,7 +330,9 @@ class BackendController extends AbstractController
         }
     }
     
-    //Je confirme et redirige apres que le commentaire ai été supprimé
+    /**
+     * Je confirme et redirige apres que le commentaire ai été supprimé
+     */
     public function confirmDeletedComments()
     {
         if($this->userSession()->requireRole('admin'))
@@ -442,60 +347,3 @@ class BackendController extends AbstractController
         }
     }
 }
-        /*$date = new \DateTime();
-        echo $date->format('d/m/Y');
-        echo "\n";
-        $time = time();
-        print_r(date('d/m/Y', $time));*/
-
-        //$this->processForm($title);
-            // On récupère l'annonce $id
-        /*$advert = $em->getRepository('OCPlatformBundle:Advert')->find($id);
-
-        if (null === $advert) 
-        {
-            throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-        }*/
-
-    
-    /**
-     * Show the form and check if the form is valid
-     * @param type $title
-     * @return type
-     */
-    /*public function processForm($title)
-    {
-        if ($this->request->method() == 'POST')
-        {
-            $post = new Post(
-            [
-                'subject' =>  $this->request->postData('subject'),
-                'content' =>  $this->request->postData('content'),
-                'image' =>  $this->request->postData('image'),
-                'status' =>  $this->request->postData('validate'),
-                'create_date' => 'NULL',
-                //'create_date' => new \Datetime(),
-                'update_date' => 'NULL',
-                'id_author' => 1
-            ]);
-        }
-        else
-        {
-            $post = new Post();
-        }
-            
-        $formBuilder = new ArticlesForm($post);
-        $form = $formBuilder->buildform($formBuilder->form());
-        
-        if ($this->request->method() == 'POST' && $form->isValid())
-        {
-            $model = new EntityManager($post);
-            if($model->persist($post))
-            {
-                $this->addFlash()->success('La news a bien été ajoutée !');
-                return $this->redirect('/createpost');
-            }
-        }
-        
-        $this->getrender()->render('CreateArticleFormView',['title' => $title,'form' => $form->createView()]);
-    }*/

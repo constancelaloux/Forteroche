@@ -26,9 +26,8 @@ interface RendererInterface
     public function render(string $view);
     
     
-    /*
-    * Permet de rajouter des variables globales à toutes les vues
-     * 
+    /**
+     * Permet de rajouter des variables globales à toutes les vues
      * @param string $key
      * @param mixed $value
     */

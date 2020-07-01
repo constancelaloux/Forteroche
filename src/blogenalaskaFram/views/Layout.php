@@ -71,11 +71,24 @@
    /* {
         session_start();
     } */
+use blog\user\UserSession;
 ?>
     <?php 
         if ($_SESSION['status'] === 'admin')
         {
-            require __DIR__.'/../views/AdminHeader.php';
+            /*$usersession = new UserSession();
+            $expired = $usersession->expiredSession();
+            if($expired)
+            {
+                //die('meurs');
+                //require __DIR__.'/../views/AdminHeader.php';
+                //$response = new \blog\HTTPResponse();
+                //return $response->redirectResponse("/connectform");
+            }
+            else
+            {*/
+                require __DIR__.'/../views/AdminHeader.php';
+            //}
         }
         else 
         {

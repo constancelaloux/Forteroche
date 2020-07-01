@@ -11,7 +11,9 @@ use blog\database\Query;
  */
 class SearchController extends AbstractController
 {
-//JE RECHERCHE UN ARTICLE DANS LE BLOG            
+    /**
+     * JE RECHERCHE UN ARTICLE DANS LE BLOG            
+     */
     function search()
     {
             if(!is_null($this->request->postData('userSearch')))
@@ -21,15 +23,8 @@ class SearchController extends AbstractController
                         ->from('post')
                         ->select('*')
                         ->where('subject LIKE :subject OR content LIKE :content')
-                        //->where('content LIKE :content')
                         ->setParams(array('subject' => '%'.$this->request->postData('userSearch').'%', 'content' => '%'.$this->request->postData('userSearch').'%'))
-                        //->setParam('content', '%'.$this->request->postData('userSearch').'%')
                         ->fetchAll();
-                //print_r($mySearchResults);
-                //die('meurs');
-                //$model = new \blog\database\EntityManager($post);
-
-                //$mySearchResults = $model->get($this->request->postData('userSearch'));
                 if($this->userSession()->requireRole('admin','client'))
                 {
                     $this->getrender()->render('SearchResultView',['mySearchResults' => $mySearchResults]);

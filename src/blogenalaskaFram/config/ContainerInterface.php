@@ -8,12 +8,6 @@ namespace blog\config;
  */
 interface ContainerInterface 
 {
-     /**
-     * Define an object or a value in the container.
-     *
-     * @param string $name Entry name
-     */
-    //public function set($key, callable $resolver);
     
      /**
      * Returns an entry of the container by its name.
