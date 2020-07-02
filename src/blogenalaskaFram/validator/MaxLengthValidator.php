@@ -3,6 +3,7 @@
 namespace blog\validator;
 
 use blog\validator\Validator;
+
 /**
  * Description of MaxLengthValidator
  *
@@ -12,6 +13,11 @@ class MaxLengthValidator extends Validator
 {
     protected $maxLength;
 
+    /**
+     * 
+     * @param type $errorMessage
+     * @param type $maxLength
+     */
     public function __construct($errorMessage, $maxLength)
     {
         parent::__construct($errorMessage);
@@ -19,11 +25,21 @@ class MaxLengthValidator extends Validator
         $this->setMaxLength($maxLength);
     }
 
+    /**
+     * 
+     * @param type $value
+     * @return type
+     */
     public function isValid($value)
     {
         return strlen($value) <= $this->maxLength;
     }
 
+    /**
+     * 
+     * @param type $maxLength
+     * @throws \RuntimeException
+     */
     public function setMaxLength($maxLength)
     {
         $maxLength = (int) $maxLength;

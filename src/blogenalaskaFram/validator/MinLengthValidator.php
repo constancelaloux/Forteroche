@@ -13,6 +13,11 @@ class MinLengthValidator extends Validator
 {
     protected $minLength;
 
+    /**
+     * 
+     * @param type $errorMessage
+     * @param type $minLength
+     */
     public function __construct($errorMessage, $minLength)
     {
         parent::__construct($errorMessage);
@@ -20,11 +25,21 @@ class MinLengthValidator extends Validator
         $this->setMinLength($minLength);
     }
 
+    /**
+     * 
+     * @param type $value
+     * @return type
+     */
     public function isValid($value)
     {
         return strlen($value) <= $this->minLength;
     }
 
+    /**
+     * 
+     * @param type $minLength
+     * @throws \RuntimeException
+     */
     public function setMinLength($minLength)
     {
         $minLength = (int) $minLength;

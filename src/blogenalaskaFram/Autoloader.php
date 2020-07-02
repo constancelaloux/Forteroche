@@ -1,5 +1,7 @@
 <?php
-//namespace, permet de dire "je travaille dans ce dossier"
+/**
+ * namespace, permet de dire "je travaille dans ce dossier"
+ */
 namespace blog;
 
 /**
@@ -41,21 +43,29 @@ class Autoloader
     public function addNamespace($prefix, $base_dir, $prepend = false)
     {
 
-        // normalize namespace prefix
-        //un / est rajouté au préfix (ex: blog/)
+        /**
+         * normalize namespace prefix
+         * un / est rajouté au préfix (ex: blog/)
+         */
         $prefix = trim($prefix, '\\') . '\\';
 
-        // normalize the base directory with a trailing separator
-        //un / est rajouté à la fin du chemin
+        /**
+         * normalize the base directory with a trailing separator
+         * un / est rajouté à la fin du chemin
+         */
         $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
 
-        // initialize the namespace prefix array
+        /**
+         * initialize the namespace prefix array
+         */
         if (isset($this->prefixes[$prefix]) === false) 
         {
             $this->prefixes[$prefix] = array();
         }
 
-        // retain the base directory for the namespace prefix
+        /**
+         * retain the base directory for the namespace prefix
+         */
         if ($prepend) 
         {
             array_unshift($this->prefixes[$prefix], $base_dir);
@@ -75,21 +85,31 @@ class Autoloader
      */
     public function loadClass($class)
     {
-        // the current namespace prefix
+        /**
+         * the current namespace prefix
+         */
         $prefix = $class;
 
-        // work backwards through the namespace names of the fully-qualified
-        // class name to find a mapped file name
+        /**
+         * work backwards through the namespace names of the fully-qualified
+         * class name to find a mapped file name
+         */
         while (false !== $pos = strrpos($prefix, '\\')) 
         {
 
-            // retain the trailing namespace separator in the prefix
+            /**
+             * retain the trailing namespace separator in the prefix
+             */
             $prefix = substr($class, 0, $pos + 1);
 
-            // the rest is the relative class name
+            /**
+             * the rest is the relative class name
+             */
             $relative_class = substr($class, $pos + 1);
 
-            // try to load a mapped file for the prefix and relative class
+            /**
+             * try to load a mapped file for the prefix and relative class
+             */
             $mapped_file = $this->loadMappedFile($prefix, $relative_class);
 
             if ($mapped_file) 
@@ -97,11 +117,15 @@ class Autoloader
                 return $mapped_file;
             }
 
-            // remove the trailing namespace separator for the next iteration
+            /**
+             * remove the trailing namespace separator for the next iteration
+             */
             $prefix = rtrim($prefix, '\\');
         }
 
-        // never found a mapped file
+        /**
+         * never found a mapped file
+         */
         return false;
     }
 
@@ -115,31 +139,43 @@ class Autoloader
      */
     protected function loadMappedFile($prefix, $relative_class)
     {
-        // are there any base directories for this namespace prefix?
+        /**
+         * are there any base directories for this namespace prefix?
+         */
         if (isset($this->prefixes[$prefix]) === false) 
         {
             return false;
         }
 
-        // look through base directories for this namespace prefix
+        /**
+         * look through base directories for this namespace prefix
+         */
         foreach ($this->prefixes[$prefix] as $base_dir) 
         {
 
-            // replace the namespace prefix with the base directory,
-            // replace namespace separators with directory separators
-            // in the relative class name, append with .php
+            /**
+             * replace the namespace prefix with the base directory,
+             * replace namespace separators with directory separators
+             * in the relative class name, append with .php
+             */
             $file = $base_dir
                   . str_replace('\\', '/', $relative_class)
                   . '.php';
 
-            // if the mapped file exists, require it
+            /**
+             * if the mapped file exists, require it
+             */
             if ($this->requireFile($file)) 
             {
-                // yes, we're done
+                /**
+                 * yes, we're done
+                 */
                 return $file;
             }
         }
-        // never found it
+        /**
+         * never found it
+         */
         return false;
     }
 
@@ -158,26 +194,4 @@ class Autoloader
         }
         return false;
     }
-    
-    
-    /*static function register()
-    {
-        //On met en paramétres du tableau deux choses
-        //Je vais chercher la fonction autoload dans la class Autoloader
-        spl_autoload_register(array(__CLASS__,'autoload'));
-    }
-    
-    static function autoload($class_name)
-    {
-        if (strpos($class_name, __NAMESPACE__ . '\\') === 0)
-        {
-            //Je transforme mon chemin.
-            //deux antislash parce qu'il ya des doubles quotes.
-            $class_name = str_replace(__NAMESPACE__.'\\', '', $class_name);
-
-            $class_name = str_replace('\\', '/', $class_name);
-            //Je vais chercher la class correspondante
-            require (__DIR__ . '/'.$class_name.'.php');
-        }
-    }*/
 }

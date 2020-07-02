@@ -11,12 +11,6 @@ use blog\validator\Validator;
  */
 class ImageValidator extends Validator
 {
-    /*private const MIME_TYPES =
-    [
-        'jpg' => 'image/jpeg',
-        'png' => 'image/png',
-        'pdf' => 'application/pdf'
-    ];*/
 
     public function isValid($file)
     {
@@ -28,16 +22,22 @@ class ImageValidator extends Validator
         switch ($uploadImageType) 
         {
             case IMAGETYPE_JPEG:
-                //La photo est la source
+                /**
+                 * La photo est la source
+                 */
                 $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
 
-                //Je créé la miniature
+                /**
+                 * Je créé la miniature
+                 */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
 
-                ////J'upload l'image dans le fichier
-                //Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
-                //non seulement de sauvegarder notre nouvelle image dans un fichier, 
-                //mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                /**
+                 * J'upload l'image dans le fichier
+                 * Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
+                 * non seulement de sauvegarder notre nouvelle image dans un fichier, 
+                 * mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                 */
                 ImageJpeg($miniature, $imageFolder . $temp['name'], 100 );
 
                 imagedestroy($miniature);
@@ -45,10 +45,14 @@ class ImageValidator extends Validator
             break;
 
             case IMAGETYPE_GIF:
-                //La photo est la source
+                /**
+                 * La photo est la source
+                 */
                 $image = imagecreatefromgif($imageFolder .$temp['name']);
 
-                //Je créé la miniature
+                /**
+                 * Je créé la miniature
+                 */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
                 imageGif($miniature, $imageFolder . $temp['name'], 100 );
@@ -56,7 +60,9 @@ class ImageValidator extends Validator
 
             case IMAGETYPE_PNG:
                 $image = imagecreatefrompng($imageFolder .$temp['name']);
-                //Je créé la miniature
+                /**
+                 * Je créé la miniature
+                 */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
                 imagePng($miniature, $imageFolder . $temp['name'], 9 );

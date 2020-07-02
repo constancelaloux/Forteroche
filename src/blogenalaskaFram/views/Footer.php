@@ -1,9 +1,12 @@
-<footer class="blog-footer bg-dark"><!-- style="height: 200px;">-->
+<footer class="blog-footer bg-dark">
     <div class="container-fluid text-white rounded p-4">
         <div class="row mb-2 justify-content-center">
             <p>Blog template built with <a href="https://getbootstrap.com/" class="text-warning">Bootstrap</a> by <a href="/connectform" class="text-warning">@Jean Forteroche</a>.</p>
             <p>
                 <a href="#" class="text-white">Back to top</a>
+            </p>
+            <p>
+                Mentions légales
             </p>
             <div class="col-md-6 col-lg-7 text-center text-md-right">
                 <!--Facebook-->
@@ -30,11 +33,5 @@
         </div>
     </div>
 </footer>
-<!--<div class="footer">
-    <a class="dropdown-item" href="/getTheFormAdminConnexionBackend">Connexion au backend</a>
-    <p>
-        Mentions légales
-    </p>
-</div>-->
 
 

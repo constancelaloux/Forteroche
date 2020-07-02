@@ -19,12 +19,6 @@ print_r($_SESSION);
             {
                 foreach ($mySearchResults as $mySearchResult) 
                 {
-                //print_r($mySearchResults);
-                /*foreach ($mySearchResults as $results) 
-                {*/
-                    //$searchResult = $result->subject();
-                    //$idsearchresultArticle = $result->id();
-                    //echo '<div id="mySearchResult">','<a href='.$searchResult.'', "\n", '</div>';
                     ?>
                     
                     <p> <a href="/article&id=<?php echo $mySearchResult->id() ?>,"> <?php echo htmlspecialchars($mySearchResult->subject())?></a></p>
@@ -39,13 +33,6 @@ print_r($_SESSION);
                     <p>pas d'articles trouvés</p>
                 <?php
             }
-            /*foreach ($mySearchResult as $searchResult) 
-                {
-                    $searchResultToDisplay = $searchResult->mySearchWords(); 
-
-
-                    echo '<div id="mySearchResult">', '<h3>', $searchResult , '</h3>', "\n", '</div>';
-                }*/
         }
                 ?>
 </div>

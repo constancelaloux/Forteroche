@@ -33,7 +33,6 @@ class UserSession
     public function __construct()//(string $loginPath)
     {
         $this->session = new PHPSession();
-        //$this->loginPath = $loginPath;
     }
     
     /**

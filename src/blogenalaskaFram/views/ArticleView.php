@@ -1,10 +1,4 @@
-<?php /*session_start();
-    // Vérifiez si l'utilisateur est connecté, sinon redirigez-le vers la page de connexion
-    if(!$_SESSION["status"] === 'client' || session_status() === PHP_SESSION_NONE)
-    {
-        $this->addFlash()->error('Votre compte a bien été créé');
-        return $this->redirect('/connectform');
-    }*/
+<?php
 print_r($_SESSION);
 ?>
 <div class="section-article">
@@ -13,36 +7,9 @@ print_r($_SESSION);
             <div class="blog-post col-lg-9">
                 <?=print_r($post->id()); ?>
                 <h2 class="blog-post-title"><?=$post->subject()?></h2>
-                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche<!--<a href="#">Jean Forteroche</a>--></p>
-                <!--<p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>-->
+                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche</p>
                 <img class="card-img" src="<?=$post->image() ?>" alt="image article">
-                <p><?=$post->content() ?><!--This blog post shows a few different types of content that’s supported and styled with Bootstrap. Basic typography, images, and code are all supported.</p>
-                <hr>
-                <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-                <blockquote>
-                    <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-                </blockquote>
-                <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-                <h2>Heading</h2>
-                <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
-                <h3>Sub-heading</h3>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                <pre><code>Example code block</code></pre>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa.</p>
-                <h3>Sub-heading</h3>
-                <p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aenean lacinia bibendum nulla sed consectetur. Etiam porta sem malesuada magna mollis euismod. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-                <ul>
-                    <li>Praesent commodo cursus magna, vel scelerisque nisl consectetur et.</li>
-                    <li>Donec id elit non mi porta gravida at eget metus.</li>
-                    <li>Nulla vitae elit libero, a pharetra augue.</li>
-                </ul>
-                <p>Donec ullamcorper nulla non metus auctor fringilla. Nulla vitae elit libero, a pharetra augue.</p>
-                <ol>
-                    <li>Vestibulum id ligula porta felis euismod semper.</li>
-                    <li>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</li>
-                    <li>Maecenas sed diam eget risus varius blandit sit amet non magna.</li>
-                </ol>
-                <p>Cras mattis consectetur purus sit amet fermentum. Sed posuere consectetur est at lobortis.--></p>
+                <p><?=$post->content() ?></p>
                 
                 <nav class="blog-pagination text-center">
                     <a class="btn btn-outline-primary" href="<?php echo $previouslink?>">Précédent</a>
@@ -53,12 +20,10 @@ print_r($_SESSION);
                     <h2>Commentaires</h2>
          
                     <?php
-                    //print_r($comments->image());
                     if (isset($comments))
                     {
                         foreach ($comments as $comment) 
                         {
-                            //print_r($comment);
                         ?>
                         <div class="media mt-3">
                             <img src="<?php echo $comment->originalData->image?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
@@ -73,18 +38,14 @@ print_r($_SESSION);
                                     {
                                 ?>
                                     <form action="/updatecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
-                                        <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonModfifyComment">Modifier</button>-->
                                         <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="modify" value="Modifier"/>
                                     </form>
                                     <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
-                                        <!--<button type="button" class="btn btn-primary btn-round btn-lg" id="buttonDeleteComment">Supprimer</button>-->
                                         <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
                                     </form>
                                 <?php
                                     }
                                 ?>
-                                <!--<p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                                <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>-->
                             </div>
                         </div>
                         <?php
@@ -97,30 +58,6 @@ print_r($_SESSION);
                     <?php
                     }
                         ?>
-                    <!--<div class="media mt-3">
-                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt=".image 2" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>
-                    <div class="media mt-3">
-                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 3" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>
-                    <div class="media mt-3">
-                        <img src="/../../public/images/personne.png" class="align-self-start mr-3 img-thumbnail" alt="image 4" width="100" height="50">
-                        <div class="media-body">
-                            <h5 class="mt-0">Top-aligned media</h5>
-                            <p>Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
-                            <p>Donec sed odio dui. Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p>
-                        </div>
-                    </div>-->
 
                     <nav aria-label="...">
                         <ul class="pagination">
@@ -143,7 +80,6 @@ print_r($_SESSION);
                     <h5>Laissez votre commentaire</h5>
                         <?php if (isset($form))
                         {
-                            ///updatcomment&id=<?=$post->id"
                         ?>
                             <form action="" method="post">
                                 <!--<p>-->
@@ -151,16 +87,8 @@ print_r($_SESSION);
                                     <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php //echo $title ?></h1>
                                 </div>
                                     <?php echo $form ?>
-                                    <!--<input type="text" class="form-control" id="name" name="name" placeholder="Your name">
-                                    <input type="email" class="form-control" id="email" name="email" placeholder="Your email">
-                                    <textarea class="form-control mt-3" rows="3" placeholder="Write a response.."></textarea>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#uploadModal">Upload file</button>
-                                <div class="preview">
-                                    <img class="mb-1" id="image" src="/../../public/images/upload.png"  alt="photo de montagne"> 
-                                </div>-->
                                 <input type="hidden" id="newFile" name="idpost" value="<?php echo $post->id?>"/>
                                 <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
-                                <!--<button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>-->
                                 <!--</p>-->
                             </form>
                         <?php    
@@ -197,18 +125,7 @@ print_r($_SESSION);
                     <?php
                     }
                     ?>
-                    <!--<div class="card mb-4">
-                        <img src="/../../public/images/presentation.jpg" class="card-img-top" alt="image 2">
-                        <div class="card-body">
-                            <h5 class="card-title">Chapitre 2</h5>
-                        </div>
-                    </div>
-                    <div class="card mb-4">
-                        <img src="/../../public/images/lacsalaska.jpg" class="card-img-top" alt="image 3">
-                        <div class="card-body">
-                            <h5 class="card-title">Chapitre 3</h5>
-                        </div>
-                    </div>-->
+                    
                 </aside>
                 <aside class="sidebar">
                     <div class="card mb-4">

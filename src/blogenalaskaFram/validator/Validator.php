@@ -10,25 +10,38 @@ abstract class Validator
 {
     protected $errorMessage;
   
+    /**
+     * 
+     * @param type $errorMessage
+     */
     public function __construct($errorMessage)
     {
         $this->setErrorMessage($errorMessage);
     }
   
+    /**
+     * 
+     */
     abstract public function isValid($value);
   
+    /**
+     * 
+     * @param type $errorMessage
+     */
     public function setErrorMessage($errorMessage)
     {
-        //print_r($errorMessage);
         if (is_string($errorMessage))
         {
           $this->errorMessage = $errorMessage;
         }
     }
   
+    /**
+     * 
+     * @return type
+     */
     public function errorMessage()
     {
-        //print_r($this->errorMessage);
         return $this->errorMessage;
     }  
 }

@@ -16,10 +16,14 @@ class DotEnv
     const STATE_VARNAME = 0;
     const VARNAME_REGEX = '(?i:[A-Z][A-Z0-9_]*+)';
     const STATE_VALUE = 1;
-    //public $db_host;
-    //Le chemin de .env
+
+    /**
+     * Le chemin de .env
+     */
     private $path;
-    //Les données récupérées de .env
+    /**
+     * Les données récupérées de .env
+     */
     private $data;
     
     private $cursor;
@@ -36,63 +40,45 @@ class DotEnv
     {
         $this->usePutenv = $usePutenv;
     }
-    
-    
-    /*public function load(string $path, bool $overrideExistingVars)
-    {
-        //$this->db_host = $path;
-        //Si le fichier n'est pas lisible ou si il n'existe pas, et su 
-        if (!is_readable($path) || is_dir($path)) 
-        {
-            throw new PathException($path);
-        }
-        else 
-        {
-            //Dans le cas contraire je récupére les données provenant du fichier
-            $data = file_get_contents($path);
-            $this->data = $data;
-            //print_r($data);
-
-            //Et ensuite j'envoi les données parsées a la fonction populate qui va 
-            //définir les valeurs en tant que variables d'environnement (via putenv, $_ENV, and $_SERVER)
-            //$this->populate($this->parse($this->data));
-            $this->populate($this->parse(file_get_contents($path), $path), $overrideExistingVars);
-            //print_r($this->populate($this->parse(file_get_contents($path), $path), $overrideExistingVars));
-        
-            print_r($this->parse(file_get_contents($path), $path), $overrideExistingVars);
-        }
-    }*/
-
-    
+  
     public function load(string $path)
     {
-        //Si le fichier n'est pas lisible ou si il n'existe pas, et si ce n'est pas un directory
+        /**
+         * Si le fichier n'est pas lisible ou si il n'existe pas, et si ce n'est pas un directory
+         */
         if (!is_readable($path) || is_dir($path)) 
         {
-            //Alors je lance une exception
+            /**
+             * Alors je lance une exception
+             */
             throw new PathException($path);
         }
         
-        //file_get_contents : Dans le cas contraire je récupére les données provenant du fichier
-        //Et ensuite j'envoi les données parsées a la fonction populate qui va 
-        //définir les valeurs en tant que variables d'environnement (via putenv, $_ENV, and $_SERVER)
+        /**
+         * file_get_contents : Dans le cas contraire je récupére les données provenant du fichier Et ensuite 
+         * j'envoi les données parsées a la fonction populate qui va définir les valeurs en tant que variables 
+         * d'environnement (via putenv, $_ENV, and $_SERVER)
+         */
         $this->populate($this->parse(file_get_contents($path), $path));
-        //print_r($this->parse(file_get_contents($path), $path));
-        //print_r(getenv('DB_USER'));
     }
     
     public function parse(string $data, string $path = '.env'): array
     {
-        //Le chemin vers src
+        /**
+         * Le chemin vers src
+         */
         $this->path = $path;
-        //Les données de src
-        //$this->data = str_replace(["\r\n", "\r"], "\n", $data);
+        /**
+         * Les données de src
+         */
         $this->data = $data;
         
         $this->lineno = 1;
         $this->cursor = 0;
         
-        //retourne la taille d'une chaine
+        /**
+         * retourne la taille d'une chaine
+         */
         $this->end = \strlen($this->data);
         
         $state = self::STATE_VARNAME;
@@ -131,7 +117,9 @@ class DotEnv
         }
     }
     
-    //Cette fonction va permettre de générer juste les clés sans les valeurs
+    /**
+     * Cette fonction va permettre de générer juste les clés sans les valeurs
+     */
     public function skipEmptyLines()
     {
         if (preg_match('/(?:\s*+(?:#[^\n]*+)?+)++/A', $this->data, $match, 0, $this->cursor)) 
@@ -141,8 +129,10 @@ class DotEnv
         
     }
     
-    //Expliquer cette fonction
-    //$text contient les noms des clés
+    /**
+     * Expliquer cette fonction
+     * $text contient les noms des clés
+     */
     private function moveCursor(string $text)
     {
         $this->cursor += \strlen($text);
@@ -151,7 +141,9 @@ class DotEnv
     
     private function lexVarname(): string
     {
-        // var name + optional export
+        /**
+         * var name + optional export
+         */
         if (!preg_match('/(export[ \t]++)?('.self::VARNAME_REGEX.')/A', $this->data, $matches, 0, $this->cursor)) 
         {
             throw $this->createFormatException('Invalid character in variable name');
