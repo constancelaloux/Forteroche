@@ -2,9 +2,6 @@
 
 namespace blog\form;
 
-// On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
-
-
 abstract class Type 
 {
     use \blog\Hydrator;
@@ -73,7 +70,6 @@ abstract class Type
         if (is_string($value))
         {
             $this->value = $value;
-            //print_r($this->value);
         }
     }
 }

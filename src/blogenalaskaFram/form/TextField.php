@@ -3,6 +3,7 @@
 namespace blog\form;
 
 use blog\form\Field;
+
 /**
  * Description of TextField
  *
@@ -33,18 +34,11 @@ class TextField extends Field
         {
           $widget .= ' rows="'.$this->rows.'"';
         }
-        
-        //$widget .= '/>';
-       // $widget .= ' </textarea></div>';
-        
+
         if (!empty($this->value))
         {
-          //$widget .=  ' value="'.htmlspecialchars($this->value);
-          //$widget .= ' value="'.htmlspecialchars($this->value).'"';
             $widget .= '<value>'.htmlspecialchars($this->value).'';
         }
-//$widget .= '/>';
-        //return $widget.'</textarea>';
         return $widget .= ' </textarea></div>';
     }
 

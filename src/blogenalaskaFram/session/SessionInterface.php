@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\session;
+
 /**
  * Manage Flash Messages
  * @author constancelaloux

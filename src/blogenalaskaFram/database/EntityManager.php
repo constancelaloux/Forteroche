@@ -23,23 +23,28 @@ class EntityManager extends DbConnexion
      */
     private $metadata;
     
-    //Je récupére dans le constructeur ce que j'ai fait passer à ma class test
+    /**
+     * Je récupére dans le constructeur ce que j'ai fait passer à ma class test
+     */
     public function __construct(Model $model)
     {
-        //print_r($model);
-        //Je me connecte à la base de données
+        /**
+         * Je me connecte à la base de données
+         */
         $this->pdo = $this->connect();
         
-        //Ensuite je récupare le nom de la class objet
+        /**
+         * Ensuite je récupare le nom de la class objet
+         */
         $reflectionClass = new \ReflectionClass($model);
         
         if($reflectionClass->getParentClass()->getName() == Model::class) 
         {
             $this->model = $model;
-            //print_r($this->model);
-            //Je récupére si chaque composants de ma class test est un int ou un string, etc
+            /**
+             * Je récupére si chaque composants de ma class test est un int ou un string, etc
+             */
             $this->metadata = $this->model::metadata();
-            //print_r($this->metadata);
         }
         else
         {
@@ -60,10 +65,8 @@ class EntityManager extends DbConnexion
      */
     public function persist(Model $model)
     {
-        //print_r("je passe dans persist");
         if($model->getPrimaryKey()) 
         {
-            //print_r($model);
             $this->update($model);
         }
         else
@@ -80,13 +83,11 @@ class EntityManager extends DbConnexion
     {
         $set = [];
         $parameters = [];
-        //die('meursici dans update');
+
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
             $sqlValue = $model->getSQLValueByColumn($column);
             
-            /*if($sqlValue !== $model->originalData[$column]) 
-            {*/
             $model->orignalData[$column] = $sqlValue;
 
             if(!empty($sqlValue))
@@ -97,20 +98,13 @@ class EntityManager extends DbConnexion
             if(!empty($parameters[$column]))
             {
                 $set[] = sprintf("%s = :%s", $column, $column);
-            }
-            //print_r($model->originalData[$column]);
-            
+            }       
         }
         if(count($set)) 
         {
-            //print_r($this->metadata["primaryKey"]); //return id
             $sqlQuery = sprintf("UPDATE %s SET %s WHERE %s = :id", $this->metadata["table"], implode(", ", $set), $this->metadata["primaryKey"]);
             $statement = $this->pdo->prepare($sqlQuery);
-            //print_r($this->metadata["table"]);//return comments
-            //print_r(implode(", ", $set)); //return id = :id, id_client = :id_client, id_post = :id_post, create_date = :create_date, update_date = :update_date, subject = :subject, content = :content, status = :status, countclicks = :countclicks
-            //print_r($parameters); //return Array ( [id] => 15 [id_client] => 134 [id_post] => 102 [create_date] => 2020-05-29 12:49:23 [update_date] => 2020-05-29 12:49:23 [subject] => le titre [content] =>le commentaire[status] => Valider [countclicks] => 13 )
             $statement->execute($parameters);
-            //print_r($statement->execute(["id" => $model->getPrimaryKey()]));
         }
     }
     
@@ -120,29 +114,22 @@ class EntityManager extends DbConnexion
      */
     private function insert(Model &$model)
     {
-        //print_r($model);
-        //print_r("je passe dans insert");
-        //print_r($model);
         $set = [];
         $parameters = [];
 
         foreach(array_keys($this->metadata["columns"]) as $column)
         {
-            //print_r($column);
             $sqlValue = $model->getSQLValueByColumn($column);
-            //print_r($sqlValue);
             $model->orignalData[$column] = $sqlValue;
             
             if(!empty($sqlValue))
             {
                 $parameters[$column] = $sqlValue;
             }
-            //print_r($parameters[$column]);
 
             if(!empty($parameters[$column]))
             {
                 $set[] = sprintf("%s = :%s", $column, $column);
-            //print_r($set);
             }
         }
         
@@ -151,7 +138,6 @@ class EntityManager extends DbConnexion
         $statement = $this->pdo->prepare($sqlQuery);
 
         $statement->execute($parameters);
-        //print_r($statement->execute($parameters));
 
         $model->setPrimaryKey($this->pdo->lastInsertId());
     }
@@ -174,11 +160,9 @@ class EntityManager extends DbConnexion
      */
     public function exist($filters = [])
     {
-        //print_r($filters);
         $sqlQuery = sprintf("SELECT COUNT(*) FROM %s %s ", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
-        //return (bool) $statement->fetchColumn();
         return $statement->fetchColumn();
     }
     
@@ -227,18 +211,11 @@ class EntityManager extends DbConnexion
      */
     public function fetch($filters = [])
     {
-        //print_r($this->where($filters));
-        //WHERE username = :usernamemeurs
-        //die("meurs");
         $sqlQuery = sprintf("SELECT * FROM %s %s LIMIT 0,1", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
-        //print_r($statement);
         $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        //return (new $this->model())->hydrate($result);
         return (new $this->model($result));
-        //return (new $this->model())->hydrate($result);
-        //return (new $this->model())->hydrate($result);
     }
     
     /**
@@ -274,10 +251,8 @@ class EntityManager extends DbConnexion
     public function get($filters)
     {
         $sqlQuery = sprintf("SELECT * FROM %s %s", $this->metadata["table"], $this->where($filters));
-        //$sqlQuery = sprintf("SELECT * FROM %s %s WHERE subject LIKE :subject OR content LIKE :content", $this->metadata["table"]);
         $statement = $this->pdo->prepare($sqlQuery);
         $statement->execute($filters);
-        //$statement->execute(array(':subject' => '%'.$filters.'%', ':content' => '%'.$filters.'%'));
         $results = $statement->fetchAll(\PDO::FETCH_ASSOC);
         $data = [];
         
@@ -329,7 +304,6 @@ class EntityManager extends DbConnexion
         foreach($results as $result) 
         {
             $data[] = (new $this->model())->hydrate($result);
-            //return (new $this->model())->hydrate($result);
         }
         return $data;
     }
@@ -341,7 +315,6 @@ class EntityManager extends DbConnexion
      */
     private function where($filters = [])
     {
-        //print_r($filters);
         if(!empty($filters))
         {
             $conditions = [];
@@ -349,8 +322,6 @@ class EntityManager extends DbConnexion
             {
                 $conditions[] = sprintf("%s = :%s",$this->getColumnByProperty($property), $property);
             }
-            //print_r(implode($conditions, " AND "));
-            //print_r(sprintf("WHERE %s", implode($conditions, " AND ")));
             return sprintf("WHERE %s", implode(" AND ", $conditions));
         }
         return "";
@@ -368,12 +339,9 @@ class EntityManager extends DbConnexion
             $sorts = [];
             foreach($sorting as $property => $value) 
             {
-                //print_r($property);
                 $sorts[] = sprintf("%s %s",$this->getColumnByProperty($property), $value);
-                //print_r($sorts);
             }
             return sprintf("ORDER BY %s DESC", implode(",", $sorts));
-            //return sprintf("ORDER BY %", implode($sorts, ","));
         }
         return "";
     }
@@ -411,22 +379,5 @@ class EntityManager extends DbConnexion
             return sprintf("LIMIT %s", $length);
         }
         return "";
-    }
-    
-    /*public function find($filters = [])
-    {
-        return $this->read($filters);
-    }
-           
-    private function read($filters = [])
-    {
-        $sqlQuery = sprintf("SELECT * FROM %s %s", $this->metadata["table"], $this->where($filters));
-        $statement = $this->pdo->prepare($sqlQuery);
-        $statement->execute($filters);
-        $result = $statement->fetch(\PDO::FETCH_ASSOC);
-        //var_dump($result);
-        return (new $this->model())->hydrate($result);
-        //return (new $this->model($result));
-    } */
-    
+    }  
 }

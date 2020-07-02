@@ -14,15 +14,11 @@ class Model
     public $originalData = [];
     
     protected $erreurs = [];
-    /**
-     * @return array
-     */
-    //public function metadata();
     
     /**
-     * @return string
+     * 
+     * @param type $donnees
      */
-    //public abstract static function getManager();
     public function __construct($donnees = [])
     {
         if (!empty($donnees))
@@ -30,6 +26,7 @@ class Model
             $this->hydrate($donnees);
         }
     }
+    
     /**
      * @param array $result
      * @return Model
@@ -37,24 +34,16 @@ class Model
      */
     public function hydrate($result, ?array $model = null)
     {
-        print_r($model);
         if(empty($result)) 
         {
             //throw new ORMException("Aucun résultat n'a été trouvé !");
         }
         $this->originalData = $result;
-        /*foreach($result as $column => $value) 
-        {
-            $this->hydrateProperty($column, $value);
-        }*/
-        //print_r($this->originalData);
+
         foreach($this->originalData as $column => $value) 
         {
-            //print_r($column);
-
             $this->hydrateProperty($column, $value);
         }
-        //print_r($this);
         return $this;
     }
     
@@ -64,40 +53,23 @@ class Model
      */
     private function hydrateProperty($column, $value): void
     {
-        //print_r($this::metadata()["table"]);
         if(isset($this::metadata()["table"]))
         {
-            /*foreach ($this::metadata()["table"] as $valuetables) 
-            {
-                print_r($valuetables);*/
                 if(isset($this::metadata()["columns"][$column]))
                 {
                     switch($this::metadata()["columns"][$column]["type"]) 
                     {
                         case "integer":
-                            //print_r($value);
                             $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}((int) $value);
                             break;
                         case "string":
-                            //print_r($value);
                             $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                             break;
                         case "datetime":
-                            //print_r($value);
-                            //print_r($column);
-                            //$datetime = new \DateTime;
-                            //$date = $datetime->createFromFormat("Y-m-d", "H:i:s");
-                            //$datetime = \DateTime::createFromFormat("Y-m-d H:i:s", $value);
-                            //print_r($datetime);
-                            //$datetime = new \DateTime();
-                            //$date = $datetime->format('d/m/Y');
-                            //print_r($date);
-                            //print_r($this::metadata()["columns"][$column]["property"]($datetime));
                             $this->{sprintf("set%s", ucfirst($this::metadata()["columns"][$column]["property"]))}($value);
                             break;
                     }
                 }
-            //}
         }
     }
     
@@ -129,14 +101,16 @@ class Model
      */
     public function getPrimaryKey()
     {
-        //Je récupére le nom de la clé primaire 'id
+        /**
+         * Je récupére le nom de la clé primaire 'id
+         */
         $primaryKeyColumn = $this::metadata()["primaryKey"];
-        //print_r($primaryKeyColumn);
-        //die("meurs");
 
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
 
-        //Je vais retourner le getter de l'id
+        /**
+         * Je vais retourner le getter de l'id
+         */
         return $this->{sprintf(ucfirst($property))}();
     }
     

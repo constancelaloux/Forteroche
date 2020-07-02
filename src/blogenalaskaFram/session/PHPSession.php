@@ -9,6 +9,7 @@ use blog\session\SessionInterface;
  *
  * @author constancelaloux
  */
+
 class PHPSession implements SessionInterface
 { 
     /**

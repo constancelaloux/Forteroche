@@ -45,7 +45,9 @@ abstract class Field
         return true;
     }
     
-    //Getters
+    /**
+     * Getters
+     */
     public function label()
     {
         return $this->label;
@@ -76,7 +78,9 @@ abstract class Field
         return $this->validators;
     }
 
-    //Setters
+    /**
+     * Setters
+     */
     public function setLabel($label)
     {
         if (is_string($label))

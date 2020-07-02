@@ -28,7 +28,6 @@ class FlashService
      */
     public function __construct()
     {
-        //$this->session = new ArraySession();
         $this->session = new PHPSession();
     }
     

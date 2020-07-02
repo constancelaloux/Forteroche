@@ -3,6 +3,7 @@
 namespace blog\form;
 
 use blog\form\Field;
+
 /**
  * Description of StringField
  *
@@ -11,7 +12,6 @@ use blog\form\Field;
 class StringField extends Field
 {
     protected $maxLength;
-    //protected $minLength;
 
     public function buildWidget()
     {
@@ -31,11 +31,6 @@ class StringField extends Field
             $widget .= '<label for="'.$this->name.'">'.$this->label.'</label><br/><div class="form-label-group"><br/><input type="'.$this->type.'" name="'.$this->name.'" class="form-control-file form-control-sm" id="'.$this->name.'"';
         }
         
-        /*if(!empty($this->value) && $this->type === 'hidden')
-        {
-            $widget .= string_replace('<div id="preview"><img src="/../../../public/images/upload.png" /></div>', 'value="'.htmlspecialchars($this->value).'"');
-        }*/
-        
         if (!empty($this->value))
         {
             $widget .= ' value="'.htmlspecialchars($this->value).'"';
@@ -46,10 +41,6 @@ class StringField extends Field
             $widget .= ' maxlength="'.$this->maxLength.'"';
         }
         
-        /*if (!empty($this->minLength))
-        {
-            $widget .= ' minlength="'.$this->minLength.'"';
-        }*/
         return $widget .= ' /><br/></div>';
     }
 

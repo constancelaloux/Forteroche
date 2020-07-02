@@ -2,8 +2,6 @@
 
 namespace blog\form;
 
-//use blog\form\Entity;
-
 /**
  * Description of Form3
  *
@@ -16,7 +14,6 @@ class Form
 
     public function __construct(\blog\database\Model $entity)
     {
-        //$entity = new Entity();
         $this->setEntity($entity);
     }
 
@@ -26,16 +23,16 @@ class Form
     */
     public function add(Field $field)
     {
-        $attr = $field->name(); // On récupère le nom du champ.
-       // print_r($this->entity($attr));
-        //$field->setValue($this->entity($attr)); // On assigne la valeur correspondante au champ.
+        $attr = $field->name(); /**
+         * On récupère le nom du champ.
+         */
+        /**
+         * On assigne la valeur correspondante au champ.
+         */
         $field->setValue($this->entity->$attr);
-        /*if (isset($this->entity->$attr))
-        {
-            die("meurs");
-            $field->setValue($this->entity->$attr);
-        }*/
-        $this->fields[] = $field; // On ajoute le champ passé en argument à la liste des champs.
+        $this->fields[] = $field; /**
+         *  On ajoute le champ passé en argument à la liste des champs.
+         */
         return $this;
     }
     
@@ -45,14 +42,13 @@ class Form
     public function createView()
     {
         $view = '';
-        // On génère un par un les champs du formulaire.
+        /**
+         * On génère un par un les champs du formulaire.
+         */
         foreach ($this->fields as $field)
         {
             $view .= $field->buildWidget().'<br />';
         }
-
-        //return $view .= '</p></form>';
-        //return $view .= '</form>';
         return $view;
     }
 

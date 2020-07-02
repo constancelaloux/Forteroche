@@ -66,52 +66,32 @@ class Query extends DbConnexion
      * @param Model $model
      * @throws ORMException
      */
-    public function __construct(Model $model)//$model = [])
-    {
-        //Je me connecte à la base de données
-        $this->pdo = $this->connect();
-        
-        //Ensuite je récupare le nom de la class objet
-        /*foreach ($model as $models) 
-        {*/
-            $reflectionClass = new \ReflectionClass($model);
-            if($reflectionClass->getParentClass()->getName() == Model::class) 
-            {
-                $this->model = $model;
-                //print_r($this->model);
-                //Je récupére si chaque composants de ma class test est un int ou un string, etc
-                $this->metadata = $this->model::metadata();
-                //print_r($this->metadata);
-            }
-            else
-            {
-                throw new ORMException("Cette classe n'est pas une entité.");
-            }
-            //$this->model = $models;
-        //}
-    }
     
-    /*public function __construct($model = [])
+    public function __construct(Model $model)
     {
-        //Je me connecte à la base de données
+        /**
+         * Je me connecte à la base de données
+         */
         $this->pdo = $this->connect();
         
-        //Ensuite je récupare le nom de la class objet
-        foreach ($model as $models) 
-        {
+        /**
+         * Ensuite je récupére le nom de la class objet
+         */
             $reflectionClass = new \ReflectionClass($model);
             if($reflectionClass->getParentClass()->getName() == Model::class) 
             {
                 $this->model = $model;
-                //Je récupére si chaque composants de ma class test est un int ou un string, etc
+
+                /**
+                 * Je récupére si chaque composants de ma class test est un int ou un string, etc
+                 */
                 $this->metadata = $this->model::metadata();
             }
             else
             {
                 throw new ORMException("Cette classe n'est pas une entité.");
             }
-        }
-    }*/
+    }
     
 
     /**
@@ -222,16 +202,7 @@ class Query extends DbConnexion
     public function setParams(array ...$params)
     {
         $this->params = $params;
-        //print_r($this);
         return $this;
-        /*foreach ($params as $key => $value) 
-        {
-            $this->params[$key] = $value;
-            print_r($this);
-            //implode(',' , $choix);
-            //print_r($this->params[$key]);
-            return $this;
-        }*/
     }
     
     /**
@@ -270,11 +241,8 @@ class Query extends DbConnexion
         {
             foreach ($this->joins as $type => $joins) 
             {
-                //foreach ($joins as $table => $condition) 
                 foreach ($joins as $condition) 
-                    //print_r($condition[0]);
                 {
-                    //print_r(strtoupper($type).' '."JOIN $table ON $condition");
                     $sql .= ' '.strtoupper($type).' '. "JOIN $condition[0] ON $condition[1]";
                 }
             }
@@ -294,24 +262,15 @@ class Query extends DbConnexion
         {
             $sql .= " LIMIT " . $this->limit;
         }  
-        /*if($this->offset !== null)
-        {
-            $sql .= " OFFSET " . $this->offset;
-        }*///;
         return $sql;
     }
    
     public function fetchAll(): ?array
     {
-        //$test = array();
-        //$test[] = $models;
-        //print_r($test);
         $query = $this->toSQL();
-        //print_r($query);
         if($this->params)
         {
             $query = $this->pdo->prepare($query);
-            //print_r($this->params);
             if(is_array($this->params))
             {
                 foreach ($this->params as $values)
@@ -323,61 +282,17 @@ class Query extends DbConnexion
             {
                 $query->execute($this->params);
             }
-            //$query->execute($this->params);
-            //$results = $query->fetchAll(\PDO::FETCH_OBJ);
             $results = $query->fetchAll(\PDO::FETCH_OBJ);
   
             $data = [];
-        
-            /*print_r($this->model);
-            foreach ($this->model as $namemodel)
-                {
-                    //print_r($namemodel);
-                }*/
-                //die('meurs');
+
             foreach($results as $result) 
             {
-                //print_r($result);
-                //print_r($this->model);
                 $data[] = (new $this->model)->hydrate($result);
-                //print_r(new $this->model);
             }
         }
-            //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Author::class);
-            //$query->setFetchMode(\PDO::FETCH_CLASS, \blog\entity\Comment::class);
-            //$results = $query->fetchAll(\PDO::FETCH_ASSOC);
-            //$results = $query->fetchAll(\PDO::FETCH_CLASS);
-            //$results = $query->fetchAll(\PDO::FETCH_GROUP|\PDO::FETCH_CLASS, '\blog\entity\Comment'); 
-            //$results = $query->fetchAll(\PDO::FETCH_OBJ);
-            //$results = $query->fetchAll();
-            //echo "<pre>";
-            //var_dump($results);
-            //die('meurs');
-            //$results = $query->fetchAll(\PDO::FETCH_ASSOC);
-            //$results = $query->fetchAll(\PDO::FETCH_CLASS | \PDO::FETCH_CLASSTYPE);
-            //$resultat = $query->fetchAll(\PDO::FETCH_ASSOC);
-                
-                /*echo '<pre>';
-                print_r($results);
-                echo '</pre>';*/
-                
-            /*$data = [];
-        
-            foreach($results as $result) 
-            {
-                $data[] = (new $this->model())->hydrate($result);
-                $data[] = $models->hydrate($result);
-                //$data[] = (new $this->model())->hydrate($result);
-            }*/
-            /*print_r($this->model);*/
-           /* return $data;*/
-            //print_r($data);
-            //DIE("MEURS");
             return $data;
-            //return $results;
     }
-        //return (new $this->model($result));
-        //return NULL;
     
     /**
      * Construit le from a as b ....
@@ -408,147 +323,3 @@ class Query extends DbConnexion
         $this->pdo = null;
     }
 }
-
-    /**
-     * 
-     * @return type
-     */
-    /*private function execute()
-    {
-        //$query = $this->__toString();
-        $query = $this->toSQL();
-        if($this->params)
-        {
-            $statement = $this->pdo->prepare($query);
-            $statement->execute($this->params);
-            return $statement;
-        }
-        return $this->pdo->query($query);
-    }*/
-
-
-
-   /**
-     * 
-     * @return type
-     */
-    /*public function __toString() 
-    {
-        $parts = ['SELECT'];
-        if ($this->select)
-        {
-            $parts[] = join(', ', $this->select);
-        }
-        else 
-        {
-            $parts[] = '*';
-        }
-        $parts[] = 'FROM';
-        $parts[] = $this->buildFrom();
-        if(!empty($this->joins))
-        {
-            foreach($this->joins as $type => $joins)   
-            {
-                foreach ($joins as $table => $condition) 
-                {
-                    $parts[] = strtoupper($type) . " $table ON $condition";
-                }
-            }
-        }
-        
-        if(!empty($this->joins))
-        {
-            foreach ($this->joins as $type => $joins) 
-            {
-                foreach ($joins as $table => $condition) 
-                {
-                    $parts[] = strtoupper($type). "JOIN $table ON $condition";
-                }
-            }
-        }
-        
-        if(!empty($this->where))
-        {
-            $parts[] = 'WHERE';
-            $parts[] = "(' . join(') AND (', $this->where) . ')";
-        }
-        
-        if(!empty($this->order))
-        {
-            $parts[] = 'ORDER BY';
-            $parts[] = join(', ', $this->order);
-        }
-        if($this->limit)
-        {
-            $parts[] = 'LIMIT' . $this->limit;
-        }
-        return join(' ', $parts);
-    }*/
-
-
-
-    /**
-     * 
-     * @param string $table
-     * @param string $alias
-     * @return \self
-     */
-    /*public function from(string $table, string $alias = null): self
-    {
-        if($alias)
-        {
-            $this->from[$alias] = $table;
-            //print_r($this->from[$alias]);
-        }
-        else
-        {
-            $this->from[] = $table;
-        }
-        print_r($this);
-        return $this;
-    }*/
-
-
-    
-        /**
-     * 
-     * @param int $offset
-     * @return \self
-     */
-    /*public function offset(int $offset): self
-    {
-        if($this->limit === null)
-        {
-            throw new Exception("impossible de définir un offset sans définir de limites");
-        }
-        $this->offset = $offset;
-        return $this;
-    }*/
-    
-    /**
-     * Spécifie l'odre de récupération
-     * @param array $order
-     * @return Query
-     */
-    /*public function order(string $order): self
-    {
-        $this->order[] = $order;
-        return $this;
-    }*/
-
-    /*public function where(string ...$condition): self
-    {
-        $this->where = array_merge($this->where, $condition);
-        return $this;
-    }*/
-
-    /**
-     * 
-     * @param array $params
-     * @return \self
-     */
-    /*public function params(array $params):self
-    {
-        $this->params = $params;
-        return $this;
-    }*/

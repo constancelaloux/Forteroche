@@ -3,7 +3,6 @@
 namespace blog\entity;
 
 use blog\database\Model;
-//use blog\form\Entity;
 
 /**
  * Description of Author
@@ -19,7 +18,6 @@ class Author extends Model
      * Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
      * celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
      */
-    //use \blog\Hydrator;
 
       public $id,
             $password,
@@ -216,13 +214,9 @@ class Author extends Model
      */
     public function setSurname($surname)
     {
-        //On vérifie qu'il s'agit bien d'une chaine de caractéres
-        /*if(is_string($surname) || !empty($surname))
-        {
-            //L'attribut de l'admin manager sera = a $surname. 
-            //Il aura la valeur de la variable $surname
-            $this->surname = $surname;
-        }*/
+        /**
+         * On vérifie qu'il s'agit bien d'une chaine de caractéres
+         */
         if(!is_string($surname) || empty($surname))
         {
             $this->erreurs[] = self::SURNAME_INVALIDE;
@@ -235,10 +229,6 @@ class Author extends Model
      */
     public function setPassword($password)
     {
-        /*if(is_string($password) || !empty($password))
-        {
-            $this->password = $password;
-        }*/
         if (!is_string($password) || empty($password))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
@@ -251,10 +241,6 @@ class Author extends Model
      */
     public function setUsername($username)
     {
-        /*if(is_string($username) || !empty($username))
-        {
-            $this->username = $username;
-        }*/
         if(!is_string($username) || empty($username))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
@@ -267,10 +253,6 @@ class Author extends Model
      */
     public function setImage($image)
     {
-        /*if(is_string($username) || !empty($username))
-        {
-            $this->username = $username;
-        }*/
         if(!is_string($image) || empty($image))
         {
             $this->erreurs[] = self::IMAGE_INVALIDE;
@@ -283,10 +265,6 @@ class Author extends Model
      */
     public function setFirstname($firstname)
     {
-        /*if(is_string($firstname) || !empty($firstname))
-        {
-            $this->firstname = $firstname;
-        }*/
         if(!is_string($firstname) || empty($firstname))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
@@ -299,10 +277,6 @@ class Author extends Model
      */
     public function setStatus($status)
     {
-        /*if(is_string($firstname) || !empty($firstname))
-        {
-            $this->firstname = $firstname;
-        }*/
         if(!is_string($status) || empty($status))
         {
             $this->erreurs[] = self::STATUS_INVALIDE;
