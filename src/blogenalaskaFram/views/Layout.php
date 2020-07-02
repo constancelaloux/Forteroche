@@ -53,7 +53,7 @@
 
 <body>
     <?php 
-        if ($_SESSION['status'] === 'admin')
+        if (isset($_SESSION['status']) &&($_SESSION['status'] === 'admin'))
         {
             require __DIR__.'/../views/AdminHeader.php';
         }

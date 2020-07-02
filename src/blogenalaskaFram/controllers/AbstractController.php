@@ -9,8 +9,8 @@ use blog\form\Form;
 use blog\user\UserSession;
 
 /**
- *Controller général qui évite les répétitions dans les controllers spécifiques.
- * Il instancie nottament page.
+ * General controller to avoid to repeat few things into all controllers
+ * it instanciate the page
  */
 abstract class AbstractController 
 {

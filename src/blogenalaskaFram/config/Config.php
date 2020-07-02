@@ -1,7 +1,7 @@
 <?php
 
 /* 
- * On va mettre la configuration générale de notre projet
+ * We will put the general configuration of our project
  */
 return [
     \blog\HTML\Render::class => [

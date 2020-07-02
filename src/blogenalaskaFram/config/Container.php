@@ -22,9 +22,10 @@ class Container implements ContainerInterface
         $this->serviceStore = [];
     }
 
-    
     /**
-     * {@inheritDoc}
+     * 
+     * @param type $name
+     * @return type
      */
     public function get($name)
     {
@@ -48,7 +49,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * 
+     * @param type $name
+     * @return type
      */
     public function has($name)
     {
@@ -56,7 +59,10 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * 
+     * @param type $name
+     * @return type
+     * @throws ParameterNotFoundException
      */
     public function getParameter($name)
     {
@@ -77,7 +83,9 @@ class Container implements ContainerInterface
     }
 
     /**
-     * {@inheritDoc}
+     * 
+     * @param type $name
+     * @return boolean
      */
     public function hasParameter($name)
     {
@@ -95,12 +103,8 @@ class Container implements ContainerInterface
 
     /**
      * Attempt to create a service.
-     *
-     * @param string $name The service name.
-     *
-     * @return mixed The created service.
-     *
-     * @throws ContainerException On failure.
+     * @param type $name
+     * @return type
      */
     private function createService($name)
     {
@@ -132,12 +136,8 @@ class Container implements ContainerInterface
 
     /**
      * Resolve argument definitions into an array of arguments.
-     *
-     * @param array  $argumentDefinitions The service arguments definition.
-     *
-     * @return array The service constructor arguments.
-     *
-     * @throws ContainerException On failure.
+     * @param array $argumentDefinitions
+     * @return \blog\config\ParameterReference
      */
     private function resolveArguments(array $argumentDefinitions)
     {
@@ -167,13 +167,11 @@ class Container implements ContainerInterface
     }
 
     /**
-     * Initialize a service using the call definitions.
-     *
-     * @param object $service         The service.
-     * @param string $name            The service name.
-     * @param array  $callDefinitions The service calls definition.
-     *
-     * @throws ContainerException On failure.
+     * nitialize a service using the call definitions.
+     * @param type $service
+     * @param type $name
+     * @param array $callDefinitions
+     * @throws ContainerException
      */
     private function initializeService($service, $name, array $callDefinitions)
     {

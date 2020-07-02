@@ -35,7 +35,7 @@ class HTTPResponse implements ResponseInterface
      * un header disant que le document est non trouvé (HTTP/1.0 404 Not Found).
      * On envoie la réponse.
     */
-    public function redirect404()
+    public function redirect404(string $location)
     {
        // $location = __DIR__.'/views/Page404.php';
         header('Location: '.$location);

@@ -44,4 +44,3 @@
         </div>
     </nav>
 <!--</header>-->
-<?php echo $_SESSION['ClientId'] ?>

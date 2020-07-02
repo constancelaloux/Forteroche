@@ -100,3 +100,8 @@ $router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
  * search articles
  */
 $router->post('/searchPosts', "Search#search");
+
+/**
+ * Page 404
+ */
+$router->get('/page404', "Render#renderPage404");

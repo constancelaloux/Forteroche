@@ -5,6 +5,7 @@ namespace blog\HTML;
 use blog\HTML\RendererInterface;
 use blog\error\FlashService;
 use blog\user\UserSession;
+use blog\HTTPResponse;
 
 /**
  * Description of Render
@@ -14,17 +15,22 @@ use blog\user\UserSession;
 class Render  implements RendererInterface 
 {
     private $stack = array();
+    
     const DEFAULT_NAMESPACE = 'blog';
     
     private $tpl;
+    
     private $paths = array();
     
     private $viewpath;
     
-    //variables accessibles sur toutes les vues
+    /**
+     * Can access variables in all views
+     */
     private $globals = [];
     
     private $assignedValues = array();
+    
     private $renderer;
     
     /**
@@ -35,24 +41,24 @@ class Render  implements RendererInterface
         $this->addPath('blog',__DIR__.'/../views');
     }
     
-    /*
-     * Permet de rajouter un chemin pour charger les vues
+    /**
+     * Add a path to load views
      * @param string $namespace
-     * @param null/string $path
-    */
+     * @param string $path
+     */
     public function addPath(string $namespace, string $path = null)
     {
         if(is_null($path))
         /**
-         *Si le nom de chemin et le chemin ne sont pas définis alors il utilise un namespace
-         * comme chemin et cette constante comme namespace par default
+         * If the name of the path is not defined so we use a namespace as a track and a constant as a namespace 
+         * by default
          */
         {
             $this->paths[self::DEFAULT_NAMESPACE] = $namespace;
         }
         else
         /**
-         * si je défini un nom de chemin et un chemin
+         * If i define a name of a path and a path
          */
         {
             $this->paths[$namespace] = $path;      
@@ -60,13 +66,13 @@ class Render  implements RendererInterface
     }
 
     /**
-     * Permet de rendre une vue et ses variables
-     * Le chemin peut etre précisé avec des namespaces rajoutés via le addPath()
+     * It returns a string of characters
+     * Can render a view with all her variables
+     * The path can be specified with the namespaces added via addPath
      * $this->render('@blog/view')
      * $this->render('view')
-    */
-    /**
-     * Elle retourne une chaine de caractéres
+     * @param string $view
+     * @param array $params
      */
     public function render(string $view, array $params = [])
     {
@@ -74,7 +80,6 @@ class Render  implements RendererInterface
         
         if($this->hasNamespace($view))
         {
-            //print_r("je passe dans la fonction render");
             $this->viewpath = $this->replaceNamespace($view).'.php';
         }
         else
@@ -87,18 +92,18 @@ class Render  implements RendererInterface
             if(file_exists($this->viewpath))
             {
                 $session = new FlashService();
-                
+
                 if (session_status() === PHP_SESSION_NONE)
                 {
                     session_start();
                 }   
-                else if ($_SESSION['status'] === 'admin')
+                else if (isset($_SESSION['status']) && $_SESSION['status'] === 'admin')
                 {
                     $usersession = new UserSession();
                     $usersession->timeoutSession();
                 }
                 /**
-                 * Ob_start = tout ce qui sera affiché maintenant, tu le stockes dans une variable
+                 * Ob_start = whatever will be displayed now, you store it in a variable
                  */
                 ob_start();
                 extract($this->globals);
@@ -107,7 +112,10 @@ class Render  implements RendererInterface
             }
             else
             {
-                echo"page 404";
+                $page404 = new HTTPResponse();
+                $page404->redirect404('/page404');
+                //throw new \Exception(require __DIR__.'/../views/Page404.php');
+                //echo"page 404";
             }
         }
         $content = ob_get_clean();
@@ -116,23 +124,25 @@ class Render  implements RendererInterface
     }
 
     /**
-     * Permet de rajouter des variables globales à toutes les vues
+     * Allows you to add global variables to all views
      * @param string $key
-     * @param mixed $value
-    */
-    public function addGlobal(string $key, $value):void
+     * @param type $value
+     */
+    public function addGlobal(string $key, $value): void
     {
         $this->globals[$key] = $value;
     }
-    
+
     /**
-     * Est ce que j'ai un namespace
+     * Do i have a namespace?
+     * @param string $view
+     * @return bool
      */
     private function hasNamespace(string $view): bool
     {
         return $view[0] === '@';
     }
-    
+
     /**
      * 
      * @param string $view
