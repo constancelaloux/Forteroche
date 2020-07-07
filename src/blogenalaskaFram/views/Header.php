@@ -14,20 +14,24 @@
                     <a class="nav-link" href="/">Accueil <span class="sr-only">(current)</span></a>
                 </li>
                 <?php 
-                if (isset($_SESSION['authorId'])|| (isset($_SESSION['client'])))
-                { ?>
-                <div class="navbar-test">Connecté en tant que <?php echo $_SESSION['authorUsername'] ?></div>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profil</a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/updateuser">Modifier son profil</a>
-                        <a class="dropdown-item" href="/deleteuser">Supprimer son profil</a>
-                        <form class="nav-item active pr-1" method="post" action = "/logout">
-                            <button class="btn btn-outline-success my-2 my-sm-0">Se déconnecter</button>
-                        </form>
-                    </div>
-                </li>
-                <?php 
+                if (isset($_SESSION['status']))
+                {
+                    if($_SESSION['status'] === 'client')//|| $_SESSION['status'] === 'admin')
+                    {
+                    ?>
+                    <div class="navbar-test">Connecté en tant que <?php echo $_SESSION['authorUsername'] ?></div>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Profil</a>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/updateuser&id=<?php echo $_SESSION['authorId']?>">Modifier son profil</a>
+                            <a class="dropdown-item" href="/deleteuser&id=<?php echo $_SESSION['authorId']?>">Supprimer son profil</a>
+                            <form class="nav-item active pr-1" method="post" action = "/logout">
+                                <button class="btn btn-outline-success my-2 my-sm-0">Se déconnecter</button>
+                            </form>
+                        </div>
+                    </li>
+                    <?php 
+                    }
                 }
             else
             { ?>

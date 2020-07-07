@@ -17,26 +17,29 @@ class ImageValidator extends Validator
         return $file != '';
     }
 
+    /**
+     * I check if the image is well a jpeg , gif or png
+     */
     public function checkImage()
     {
         switch ($uploadImageType) 
         {
             case IMAGETYPE_JPEG:
                 /**
-                 * La photo est la source
+                 * 
+                 * It returns an image identifier representing an image obtained from the filename file.
                  */
                 $image = ImageCreateFromJpeg($imageFolder .$temp['name']);
 
                 /**
-                 * Je créé la miniature
+                 * I create the miniature
                  */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height );
 
                 /**
-                 * J'upload l'image dans le fichier
-                 * Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
-                 * non seulement de sauvegarder notre nouvelle image dans un fichier, 
-                 * mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                 * I upload the image into the file.
+                 * This last function is not least useful since it will offer us the opportunity not only to 
+                 * save our new image in a file, but also to determine the quality with which we will save it!
                  */
                 ImageJpeg($miniature, $imageFolder . $temp['name'], 100 );
 
@@ -45,41 +48,30 @@ class ImageValidator extends Validator
             break;
 
             case IMAGETYPE_GIF:
-                /**
-                 * La photo est la source
-                 */
                 $image = imagecreatefromgif($imageFolder .$temp['name']);
-
-                /**
-                 * Je créé la miniature
-                 */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
                 imageGif($miniature, $imageFolder . $temp['name'], 100 );
             break;
 
             case IMAGETYPE_PNG:
                 $image = imagecreatefrompng($imageFolder .$temp['name']);
-                /**
-                 * Je créé la miniature
-                 */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-
                 imagePng($miniature, $imageFolder . $temp['name'], 9 );
             break;           
         } 
     }
+    
     /**
-     * Vérifie le format de fichier
+     * Check file format
      * @param string $key
- * @param array $extension
+     * @param array $extensions
      * @return \self
      */
     public function extension(string $key, array $extensions): self
     {
         $file = $this->getValue($key);
         /**
-         * Ca veut dire que l'on a pas eu d'erreur d'upload UPLOAD_ERR_OK
+         * It means there is no upload errors UPLOAD_ERR_OK
          */
         if($file !== NULL && $file->getError() === UPLOAD_ERR_OK)
         {
@@ -87,7 +79,7 @@ class ImageValidator extends Validator
             $extension = mb_strtolower(pathinfo($file->getClientFilename(), PATHINFO_EXTENSION));
             $expectedType = self::MIME_TYPES[$extension] ?? NULL;
             /**
-             * Si cette extension est dans le tableau des extensions
+             * If this extension is in the extensions table
              */
             if(!in_array($extension, $extensions) || $expectedType !== $type )
             {
@@ -98,8 +90,9 @@ class ImageValidator extends Validator
     }
     
     /**
-     * Vérifie que le fichier doit étre nécessairement uploadé
+     * Check that the file must be necessarily uploaded
      * @param string $key
+     * @return \self
      */
     public function uploaded(string $key): self
     {

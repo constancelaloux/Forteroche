@@ -11,15 +11,21 @@ use blog\database\Query;
  */
 class SearchController extends AbstractController
 {
+    protected $post;
+    
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->post = $this->container->get(\blog\entity\Post::class);
+    }
     /**
-     * JE RECHERCHE UN ARTICLE DANS LE BLOG            
+     * I search a post into the blog       
      */
     function search()
     {
             if(!is_null($this->request->postData('userSearch')))
             {
-                $post = new \blog\entity\Post();
-                $mySearchResults = (new Query($post))
+                $mySearchResults = (new Query($this->post))
                         ->from('post')
                         ->select('*')
                         ->where('subject LIKE :subject OR content LIKE :content')

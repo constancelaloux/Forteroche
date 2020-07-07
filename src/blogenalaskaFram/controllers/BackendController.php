@@ -3,10 +3,7 @@
 namespace blog\controllers;
 
 use blog\controllers\AbstractController;
-use blog\database\EntityManager;
-use blog\entity\Post;
 use blog\form\ArticlesForm;
-use blog\entity\Comment;
 
 /**
  * Description of BacOfficeController
@@ -16,6 +13,17 @@ class BackendController extends AbstractController
 {
     protected $image = [];
     
+    protected $post;
+    
+    protected $upload;
+    
+    public function __construct() 
+    {
+        parent::__construct();
+        $this->post = $this->container->get(\blog\entity\Post::class);
+        $this->upload = $this->container->get(\blog\file\PostUpload::class);
+        $this->comment = $this->container->get(\blog\entity\Comment::class);
+    }
     /**
      * Show posts board
      */
@@ -37,8 +45,8 @@ class BackendController extends AbstractController
      */
     public function getListOfArticles()
     {
-        $post = new Post();
-        $model = new EntityManager($post);
+        //$post = new Post();
+        $model = $this->getEntityManager($this->post);
         /**
          * Retrouver tous les articles
          */
@@ -89,12 +97,9 @@ class BackendController extends AbstractController
     {
         if ($this->request->method() == 'POST')
         {  
-            $post = new Post(
-            [
-                'id' =>  $this->request->postData('id'),
-            ]);
-            $model = new EntityManager($post);
-            $model->remove($post);
+            $this->post->setId($this->request->postData('id'));
+            $model = $this->getEntityManager($this->post);
+            $model->remove($this->post);
         }
     }
     
@@ -121,8 +126,7 @@ class BackendController extends AbstractController
      */
     public function uploadImage()
     {
-        $upload = new \blog\file\PostUpload();
-        $this->image = $upload->upload($_FILES);
+        $this->image = $this->upload->upload($_FILES);
         return $this->image;
     }
     
@@ -161,8 +165,7 @@ class BackendController extends AbstractController
          */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
-            $post = new Post();
-            $model = new EntityManager($post);
+            $model = $this->getEntityManager($this->post);
         }
         else
         {
@@ -170,18 +173,14 @@ class BackendController extends AbstractController
              * Si il y a un id en post ou en get
              */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
-            $post = new Post(
-                [
-                    'id' =>  $id
-                    
-                ]);
-            $model = new EntityManager($post);
+            $this->post->setId($id);
+            $model = $this->getEntityManager($this->post);
             
             /**
              * Dans le cas ou il n'y pas l'id en base de données
              * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
              */
-            if(!($post = $model->findById($post->id())))
+            if(!($this->post = $model->findById($this->post->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -189,34 +188,34 @@ class BackendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $post->setSubject($this->request->postData('subject'));
-            $post->setContent($this->request->postData('content'));
-            $post->setImage($this->request->postData('image'));
+            $this->post->setSubject($this->request->postData('subject'));
+            $this->post->setContent($this->request->postData('content'));
+            $this->post->setImage($this->request->postData('image'));
             if($this->request->postData('validate'))
             {
-                $post->setStatus($this->request->postData('validate'));
+                $this->post->setStatus($this->request->postData('validate'));
             }
             else if($this->request->postData('save'))
             {
-                $post->setStatus($this->request->postData('save'));
+                $this->post->setStatus($this->request->postData('save'));
             }
             
             if($id)
             {
-                $post->setUpdatedate(date("Y-m-d H:i:s"));
+                $this->post->setUpdatedate(date("Y-m-d H:i:s"));
             }
             else
             {
-                $post->setCreatedate(date("Y-m-d H:i:s"));
+                $this->post->setCreatedate(date("Y-m-d H:i:s"));
             }
 
             if(!is_null($this->userSession()->user()->id()))
             {
-                $post->setIdauthor($this->userSession()->user()->id());
+                $this->post->setIdauthor($this->userSession()->user()->id());
             }
         }
         
-        $formBuilder = new ArticlesForm($post);
+        $formBuilder = new ArticlesForm($this->post);
         $form = $formBuilder->buildform($formBuilder->form());
         
         if($this->request->method() == 'POST' && $form->isValid())
@@ -224,7 +223,7 @@ class BackendController extends AbstractController
             /**
              * On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
              */
-            $model->persist($post);
+            $model->persist($this->post);
             if($this->userSession()->requireRole('admin'))
             {
                 $this->addFlash()->success('L\'article a bien été envoyé !');
@@ -239,7 +238,7 @@ class BackendController extends AbstractController
         
         if($this->userSession()->requireRole('admin'))
         {
-            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $post->image()]);
+            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $this->post->image()]);
         }
         else 
         {
@@ -269,8 +268,7 @@ class BackendController extends AbstractController
      */
     public function getListOfComments()
     {
-        $comment = new Comment();
-        $model = new EntityManager($comment);
+        $model = $this->getEntityManager($this->comment);
         /**
          * Retrouver tous les articles
          */
@@ -321,12 +319,13 @@ class BackendController extends AbstractController
     {
         if ($this->request->method() == 'POST')
         {  
-            $comment = new Comment(
+            $this->comment->setId($this->request->postData('id'));
+            /*$comment = new Comment(
             [
                 'id' =>  $this->request->postData('id'),
-            ]);
-            $model = new EntityManager($comment);
-            $model->remove($comment);
+            ]);*/
+            $model = $this->getEntityManager($this->comment);
+            $model->remove($this->comment);
         }
     }
     

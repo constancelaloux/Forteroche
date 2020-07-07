@@ -2,15 +2,10 @@
 
 namespace blog\form;
 
-
 use blog\form\StringField;
-use blog\form\TextField;
-use blog\form\SubmitType;
-use blog\form\FormType;
 use blog\form\FormBuilder;
 use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
-use blog\validator\MinLengthValidator;
 use blog\validator\MajValidator;
 use blog\validator\ImageValidator;
 /**
@@ -21,7 +16,7 @@ use blog\validator\ImageValidator;
 class CreateAuthorForm extends FormBuilder
 {
     /**
-     * Fonction dans laquelle on créé le formulaire
+     * Function to create the form
      */
     public function form()
     {

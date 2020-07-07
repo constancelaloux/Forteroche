@@ -9,6 +9,7 @@ use blog\controllers\AbstractController;
  *
  * @author constancelaloux
  */
+
 class RenderController extends AbstractController
 {
     public function renderPage404()

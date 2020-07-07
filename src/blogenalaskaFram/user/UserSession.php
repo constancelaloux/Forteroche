@@ -27,8 +27,7 @@ class UserSession
     private $sessionKey = 'user';
     
     /**
-     * Je fais une connexion à la session
-     * @param string $loginPath
+     * I make a connection to the session
      */
     public function __construct()//(string $loginPath)
     {
@@ -50,7 +49,7 @@ class UserSession
         if($id === null)
         {
             /**
-             * ca signifie que l'utilisateur n'est pas connecté
+             * It means that the user is not connected
              */
             return NULL;
         }
@@ -65,13 +64,10 @@ class UserSession
     }
     
     /**
-     * void signifie on ne récupére rien
-     * ...$roles signifie que l'on accepte plusieurs paramétres
-     */
-    /**
-     * Vérfie si le ou les roles utilisateur en paramétre existent
+     * Check if the user role (s) in parameter exist
+     * ...$roles means that we accept several parameters
      * @param type $roles
-     * @return string
+     * @return type
      */
     public function requireRole(string ...$roles)
     {
@@ -98,6 +94,9 @@ class UserSession
         session_destroy();   
     }
     
+    /**
+     * User session exired
+     */
     public function expiredSession()
     {
         $expireAfter = 60;
@@ -129,6 +128,10 @@ class UserSession
             }
         }
     }
+    
+    /**
+     * User session exired
+     */
     public function timeoutSession()
     {
         $timeout = $_SERVER['REQUEST_TIME'];

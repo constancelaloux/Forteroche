@@ -2,8 +2,11 @@
 
 namespace blog\form;
 
+use blog\database\Model;
+use blog\form\Field;
+
 /**
- * Description of Form3
+ * Description of Form
  *
  * @author constancelaloux
  */
@@ -12,38 +15,40 @@ class Form
     protected $entity;
     protected $fields = [];
 
-    public function __construct(\blog\database\Model $entity)
+    public function __construct(Model $entity)
     {
         $this->setEntity($entity);
     }
 
     /**
-    * On hydrate l'objet Field avec les valeurs données pour créer un formulaire.
-    * Ensuite on assigne la valeur correspondante au champ et on génére un tableau avec les données
+    * We hydrate the Field object with the given values ​​to create a form.
+    * Then we assign the corresponding value to the field and we generate an array with the datas
     */
     public function add(Field $field)
     {
-        $attr = $field->name(); /**
-         * On récupère le nom du champ.
-         */
         /**
-         * On assigne la valeur correspondante au champ.
+         * We get the name of the field.
+         */
+        $attr = $field->name();
+        /**
+         * We assign the corresponding value to the field.
          */
         $field->setValue($this->entity->$attr);
-        $this->fields[] = $field; /**
-         *  On ajoute le champ passé en argument à la liste des champs.
+        /**
+         *  We add the field passed as an argument to the list of fields.
          */
+        $this->fields[] = $field; 
         return $this;
     }
     
     /**
-    * Fonction qui va permettre de générer le formulaire.
+    * Function which will generate the form.
     */
     public function createView()
     {
         $view = '';
         /**
-         * On génère un par un les champs du formulaire.
+         * We generate the form fields one by one.
          */
         foreach ($this->fields as $field)
         {
@@ -53,7 +58,7 @@ class Form
     }
 
     /**
-    * On vérifie que tous les champs sont valides.
+    * We check that all the fields are valid.
     */
     public function isValid()
     {
@@ -75,7 +80,7 @@ class Form
         return $this->entity;
     }
 
-    public function setEntity(\blog\database\Model $entity)
+    public function setEntity(Model $entity)
     {
         $this->entity = $entity;
     }

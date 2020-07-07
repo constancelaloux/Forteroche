@@ -3,7 +3,8 @@
 namespace blog\config;
 use blog\config\ContainerInterface;
 use blog\exceptions\ServiceNotFoundException;
-use Exception;
+use blog\exceptions\ParameterNotFoundException;
+use blog\exceptions\ContainerException;
 
 /**
  * Description of Container
@@ -23,15 +24,17 @@ class Container implements ContainerInterface
     }
 
     /**
-     * 
+     * Method which get the name of the class we want to use
+     * So we put the class name as a parameter
      * @param type $name
      * @return type
+     * @throws ServiceNotFoundException
      */
     public function get($name)
     {
         if (!$this->has($name)) 
         {
-            //throw new ServiceNotFoundException('Service not found: '.$name);
+            throw new ServiceNotFoundException('Service not found: '.$name);
         }
 
         /**
@@ -49,7 +52,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * 
+     * Check if there is well a name as a parameter and if the names matches to the board of class we ve into the config file
      * @param type $name
      * @return type
      */
@@ -59,7 +62,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * 
+     * Get parameter
      * @param type $name
      * @return type
      * @throws ParameterNotFoundException
@@ -83,7 +86,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * 
+     * Check if it has parameter
      * @param type $name
      * @return boolean
      */
@@ -111,15 +114,15 @@ class Container implements ContainerInterface
         $entry = &$this->services[$name];
         if (!is_array($entry) || !isset($entry['class'])) 
         {
-            //throw new ContainerException($name.' service entry must be an array containing a \'class\' key');
+            throw new ContainerException($name.' service entry must be an array containing a \'class\' key');
         } 
         elseif (!class_exists($entry['class'])) 
         {
-            //throw new ContainerException($name.' service class does not exist: '.$entry['class']);
+            throw new ContainerException($name.' service class does not exist: '.$entry['class']);
         } 
         elseif (isset($entry['lock'])) 
         {
-            //throw new ContainerException($name.' contains circular reference');
+            throw new ContainerException($name.' contains circular reference');
         }
 
         $entry['lock'] = true;
@@ -167,7 +170,7 @@ class Container implements ContainerInterface
     }
 
     /**
-     * nitialize a service using the call definitions.
+     * Initialize a service using the call definitions.
      * @param type $service
      * @param type $name
      * @param array $callDefinitions

@@ -9,6 +9,7 @@ use blog\validator\Validator;
  *
  * @author constancelaloux
  */
+
 class NotNullValidator extends Validator
 {
 

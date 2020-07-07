@@ -2,8 +2,8 @@
 
 namespace blog\form;
 
-use blog\form\Entity;
 use blog\form\Form;
+use blog\database\Model;
 
 /**
  * Description of FormBuilder
@@ -14,13 +14,13 @@ abstract class FormBuilder
 {
     protected $form;
 
-    public function __construct(\blog\database\Model $entity)
+    public function __construct(Model $entity)
     {
         $this->setForm(new Form($entity));
     }
 
     /**
-     * référe à la fonction form du formulaire créé en php
+     * Refer to the form function from the form created in php
      */
     abstract public function form();
 
@@ -30,7 +30,7 @@ abstract class FormBuilder
     }
 
     /**
-     * Fonction qui retourne le formulaire que l'on a créé
+     * Function that returns the form that we have created
      */
     public function buildform()
     {

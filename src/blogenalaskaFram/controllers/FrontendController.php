@@ -3,15 +3,12 @@
 namespace blog\controllers;
 
 use blog\controllers\AbstractController;
-use blog\entity\Comment;
-use blog\database\EntityManager;
-use blog\entity\Post;
+use blog\form\CommentsForm;
 use blog\database\Query;
 use blog\Paginate;
-use blog\entity\Author;
+
 /**
  * Description of BlogController
- *
  * @author constancelaloux
  */
 class FrontendController extends AbstractController
@@ -33,9 +30,9 @@ class FrontendController extends AbstractController
     public function __construct() 
     {
         parent::__construct();
-        $this->post = new Post();
-        $this->comment = new Comment();
-        $this->author = new Author();
+        $this->post = $this->container->get(\blog\entity\Post::class);
+        $this->comment = $this->container->get(\blog\entity\Comment::class);
+        $this->author =  $this->container->get(\blog\entity\Author::class);
     }
     
     /*
@@ -58,7 +55,7 @@ class FrontendController extends AbstractController
         /**
          * Pagination
          */
-        $model = new EntityManager($this->post);
+        $model = $this->getEntityManager($this->post);
         $perPage = 9;
         $paginatedQuery = new \blog\Paginate($this->post, $perPage);
         $offset = $paginatedQuery->getItems();
@@ -104,7 +101,7 @@ class FrontendController extends AbstractController
      */
     public function getLastsPosts()
     {
-        $model = new EntityManager($this->post);
+        $model = $this->getEntityManager($this->post);
         $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }
@@ -116,7 +113,7 @@ class FrontendController extends AbstractController
      */
     public function getPost($id)
     {
-        $model = new EntityManager($this->post);
+        $model = $this->getEntityManager($this->post);
         return $postFromId = $model->findById($id);
     }
     
@@ -132,7 +129,7 @@ class FrontendController extends AbstractController
         
         $this->comment->setIdpost($id);
         $this->comment->setStatus('Valider');
-        $model = new EntityManager($this->comment);
+        $model = $this->getEntityManager($this->comment);
         
         if($model->exist(['idpost'=>$this->comment->idpost()]))
         { 
@@ -157,7 +154,7 @@ class FrontendController extends AbstractController
     public function unwantedComment()
     {
         $number = $_POST['number'];
-        $model = new EntityManager($this->comment);
+        $model = $this->getEntityManager($this->comment);
         $comment = $model->findById($_POST['id']);
 
         if (!empty ($comment))
@@ -204,7 +201,7 @@ class FrontendController extends AbstractController
         //Si il n'y a pas d'id en post ni en get, je créé un nouveau commentaire
         if(is_null($this->request->getData('idcomment')) && is_null($this->request->postData('idcomment')))
         {
-            $model = new EntityManager($this->comment);
+            $model = $this->getEntityManager($this->comment);
         }
         else
         {
@@ -213,7 +210,7 @@ class FrontendController extends AbstractController
              */
             $idComment = $this->request->postData('idcomment') ? $this->request->postData('idcomment') : $this->request->getData('idcomment');
             $this->comment->setId($idComment);
-            $model = new EntityManager($this->comment);
+            $model = $this->getEntityManager($this->comment);
             
             /**
              * Dans le cas ou il n'y pas l'id en base de données
@@ -250,12 +247,12 @@ class FrontendController extends AbstractController
             $this->comment->setIdpost($this->request->postData('idpost'));
         }
         
-        $formBuilder = new \blog\form\CommentsForm($this->comment);
+        $formBuilder = new CommentsForm($this->comment);
         $form = $formBuilder->buildform($formBuilder->form());
         
         if ($this->request->method() == 'POST' && $form->isValid())
         {  
-            $model = new EntityManager($this->comment);
+            $model = $this->getEntityManager($this->comment);
             $model->persist($this->comment);
             $this->addFlash()->success('Votre commentaire a bien été ajoutée !');
             $id = $this->request->postData('idpost');
@@ -291,7 +288,7 @@ class FrontendController extends AbstractController
             if($this->userSession()->requireRole('client', 'admin'))
             {
                 $this->comment->setId($this->request->getData('idcomment'));
-                $model = new EntityManager($this->comment);
+                $model = $this->getEntityManager($this->comment);
                 $model->remove($this->comment);
                 $this->addFlash()->error('Votre commentaire a été supprimé!');
                 $postid = $this->request->getData('id');

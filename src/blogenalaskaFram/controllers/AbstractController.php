@@ -2,11 +2,8 @@
 
 namespace blog\controllers;
 
-use blog\HTTPResponse;
 use blog\config\Container;
-use blog\error\FlashService;
 use blog\form\Form;
-use blog\user\UserSession;
 
 /**
  * General controller to avoid to repeat few things into all controllers
@@ -18,24 +15,26 @@ abstract class AbstractController
     protected $httpResponse;
     protected $container;
     protected $flashService;
-    public $request;
-    public $form;
-    
-    public $flash;
-    public $userSession;
+    protected $request;
+    protected $form;   
+    protected $flash;
+    protected $userSession;
+    protected $entityManager;
 
     
     /**
-     * Le constructeur instancie page
+     * The constructor instanciate the class we can use in every controllers
      */
     public function __construct()
     {
-        $this->request = new \blog\HTTPRequest();
         $this->setContainer();
+        $this->request = $this->container->get(\blog\HTTPRequest::class);
         $this->renderer = $this->container->get(\blog\HTML\Render::class);
-        $this->httpResponse = $this->container->get(HTTPResponse::class);
-        $this->flashService = new FlashService();
-        $this->userSession = new UserSession();
+        $this->httpResponse = $this->container->get(\blog\HTTPResponse::class);
+        $this->flashService = $this->container->get(\blog\error\FlashService::class);
+        $this->userSession = $this->container->get(\blog\user\UserSession::class);
+        //$this->form = $this->container->get(\blog\form::class, \blog\database\Model::class);
+        //$this->entityManager = $this->container->get(\blog\database\EntityManager::class);
     }
     
     /**
@@ -83,13 +82,22 @@ abstract class AbstractController
     protected function createForm()
     {
         return new Form();
+        //return $this->form;
     }
     
     /**
-     * return a user session
+     * Return a user session
      */
     protected function userSession()
     {
         return $this->userSession;
+    }
+    
+    /**
+     * Return entityManager
+     */
+    protected function getEntityManager($model)
+    {
+        return $this->entityManager = new \blog\database\EntityManager($model);
     }
 }

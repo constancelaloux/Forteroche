@@ -3,13 +3,13 @@
 namespace blog\session;
 
 /**
- * Manage Flash Messages
+ * Description of SessionInterface
  * @author constancelaloux
  */
 interface SessionInterface 
 {
     /**
-    * Récupére une information en session
+    * Get an information in session
     * @param string $key
     * @param $default
     * @return mixed
@@ -17,14 +17,14 @@ interface SessionInterface
     public function get(string $key, $default = null);
 
     /**
-    * Ajoute une information en session
+    * Add an information in session
     * @param $value
     * @return mixed
     */
     public function set(string $key, $value);
 
     /**
-    * Supprime une clef en session
+    * Delete a key in session
     * @param string $key
     */
     public function delete(string $key);

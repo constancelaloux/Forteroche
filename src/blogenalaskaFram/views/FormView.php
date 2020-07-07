@@ -6,7 +6,7 @@
                 <form action="" method="post">
                     <!--<p>-->
                     <div class="text-center mb-4">
-                        <img class="mb-1" src="/../../public/images/logo.png" alt="photo de montagne">
+                        <img class="mb-1" src="/../../public/images/logo.png" alt="Jean Forteroche">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
                     <?php   if(isset($form))

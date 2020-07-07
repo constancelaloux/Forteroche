@@ -1,7 +1,7 @@
 <?php
 
 /* 
- *Liste de mes routes du Fontend
+ * List of frontend routes
  */
 
 //Route qui récupére les aricles sur la page d'accueil du blog
@@ -29,33 +29,36 @@ $router->post('/deletecomment:id:idcomment', "Frontend#deleteComment");
 $router->post('/unwantedcomments', "Frontend#unwantedComment");
 
 /* 
- *Liste de mes routes administrateur
+ * List of admin routes
  */
 
 //Route qui amméne vers la fn qui créé un formulaire de création d'auteur
-$router->get('/createauthor', "Author#createAuthor");
-$router->post('/createauthor', "Author#createAuthor");
+$router->get('/createuser', "Author#createUser");
+$router->post('/createuser', "Author#createUser");
 
+//Route qui permet de déconnecter un utilisateur
 $router->post('/logout', "Author#logOut");
 
 //Route qui va vers la fonction qui créé un formulaire de connexion
-$router->get('/connectform', "Author#logAuthor");
-$router->post('/connectform', "Author#logAuthor");
+$router->get('/connectform', "Author#logUser");
+$router->post('/connectform', "Author#logUser");
 
 //Routes qui suppriment et met à jour un utilisateur
-$router->get('/updateuser', "Author#updateUser");
-$router->post('/updateuser', "Author#updateUser");
-$router->get('/deleteuser', "Author#deleteUser");
+$router->get('/updateuser:id', "Author#updateUser");
+$router->post('/updateuser:id', "Author#updateUser");
 
-$router->get('/createclient', "Author#createClient");
-$router->post('/createclient', "Author#createClient");
+//Route qui supprime un utilisateur
+$router->get('/deleteuser:id', "Author#deleteUser");
+
+/*$router->get('/createclient', "Author#createClient");
+$router->post('/createclient', "Author#createClient");*/
 
 //Route qui va vers le formulaire de connexion du client
-$router->get('/connectclientform', "Client#logClient");
-$router->post('/connectclientform', "Client#logClient");
+//$router->get('/connectclientform', "Client#logClient");
+//$router->post('/connectclientform', "Client#logClient");
 
 /* 
- *Liste de mes routes du Backend
+ * List of backend routes
  */
 
 //Route qui va vers le backend
@@ -97,7 +100,7 @@ $router->post('/deletecommentfrombackend', "Backend#deleteComments");
 $router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
 
 /**
- * search articles
+ * Search articles
  */
 $router->post('/searchPosts', "Search#search");
 

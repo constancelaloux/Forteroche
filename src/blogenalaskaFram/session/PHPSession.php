@@ -13,8 +13,8 @@ use blog\session\SessionInterface;
 class PHPSession implements SessionInterface
 { 
     /**
-     * Vérifie/Assure que la session est démarrée
-     * Ca ne chargera la session que lorsque l'on en aura besoin
+     * Check/ensure that the session has well started.
+     * It will charge the session when we need if
      */
     private function ensureSarted()
     {   
@@ -25,7 +25,7 @@ class PHPSession implements SessionInterface
     }
     
     /**
-     * Récupére une information en session
+     * Get an information in session
      * @param string $key
      * @param type $default
      * @return type
@@ -41,7 +41,7 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * Ajoute une information en session
+     * Add an information in session
      * @param string $key
      * @param type $value
      */
@@ -52,7 +52,7 @@ class PHPSession implements SessionInterface
     }
 
     /**
-     * Supprime une clef en session
+     * Delete a key in session
      * @param string $key
      */
     public function delete(string $key)

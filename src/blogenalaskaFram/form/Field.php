@@ -5,13 +5,10 @@ namespace blog\form;
 use \blog\validator;
 
 /**
- * permet d'hydrater  l'objet field avec les données que l'on a envoyé pour créer un formulaire
+ * Hydrate the field object with the datas that was sent to create a form
  */
 abstract class Field 
 {
-    /**
-    * On utilise le trait Hydrator afin que nos objets Field puissent être hydratés
-    */
     use \blog\Hydrator;
 
     protected $errorMessage;

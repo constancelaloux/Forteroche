@@ -10,7 +10,10 @@ print_r($_SESSION);
                     <div class="text-center mb-4">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
-                    <?php echo $form ?>
+                    <?php if(isset($form))
+                            {
+                                echo $form;
+                            } ?>
                     <div id="preview">
                         <?php if(isset($image))
                                 {

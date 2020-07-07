@@ -3,13 +3,8 @@
 namespace blog\form;
 
 use blog\form\StringField;
-use blog\form\TextField;
-use blog\form\SubmitType;
-use blog\form\FormType;
 use blog\form\FormBuilder;
-use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
-use blog\validator\MinLengthValidator;
 
 /**
  * Description of ConnectForm

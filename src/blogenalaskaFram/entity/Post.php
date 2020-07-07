@@ -180,7 +180,6 @@ class Post extends Model
      */
     public function setIdauthor($idauthor)
     {
-        //print_r($idauthor);
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
         {

@@ -4,9 +4,9 @@ namespace blog\controllers;
 
 use blog\controllers\AbstractController;
 use blog\form\CreateAuthorForm;
-use blog\entity\Author;
-use blog\database\EntityManager;
 use blog\form\ConnectAuthorForm;
+//use blog\entity\Author;
+//use blog\database\EntityManager;
 
 /**
  * Description of TestFormController
@@ -15,17 +15,23 @@ use blog\form\ConnectAuthorForm;
  */
 class AuthorController extends AbstractController
 { 
+    public $author;
+    public $upload;
+    public $authorForm;
     
     public function __construct() 
     {
         parent::__construct();
-        $this->author = new Author();
+        $this->author = $this->container->get(\blog\entity\Author::class);
+        $this->upload = $this->container->get(\blog\file\PostUpload::class);
+        $this->authorForm = new CreateAuthorForm($this->author);
+        $this->connectForm = new ConnectAuthorForm($this->author);
     }
     
     /**
     * Create Author
     */
-    public function createAuthor()
+    public function createUser()
     {
         $title = 'Créer un compte';
         $url = '/connectform';
@@ -33,30 +39,38 @@ class AuthorController extends AbstractController
         $this->processForm($title,$url,$p);
     }
     
+        
     /**
-     * Je charge une image pour l'uploder
+     * Delete user Method
      */
-    public function uploadImage()
+    public function deleteUser()
     {
-        $upload = new \blog\file\PostUpload();
-        $this->image = $upload->upload($_FILES);
-        return $this->image;
+        if ($this->request->method() == 'GET')
+        {  
+            $this->author->setId($this->request->getData('id'));
+            $model = $this->getEntityManager($this->author);
+            $model->remove($this->author);
+            $this->userSession()->logOut();
+            $this->addFlash()->success('Votre compte a bien été supprimé');
+            return $this->redirect('/connectform');
+        }
     }
     
     /**
-     * J'affiche le formulaire et je fais l'appel à la méthode de la base de données
-     * @param type $title
-     * @return type
-     * @throws NotFoundHttpException
+     * Update user Method
      */
-    public function processForm($title,$url,$p)
+   
+    public function updateUser()
     {
+        $title = 'modifier son profil';
+        $url = '/connectform';
+        $p = 'Connexion';
         /**
          * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
          */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
-            $model = new EntityManager($this->author);
+            $model = $this->getEntityManager($this->author);
         }
         else
         {
@@ -65,7 +79,7 @@ class AuthorController extends AbstractController
              */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
             $this->author->setId($id);
-            $model = new EntityManager($this->author);
+            $model = $this->getEntityManager($this->author);
             
             /**
              * Dans le cas ou il n'y pas l'id en base de données
@@ -101,6 +115,78 @@ class AuthorController extends AbstractController
         {
             $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
             $this->author->setPassword($password);
+                /**
+                 * On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
+                 */
+                $model->persist($this->author);
+                $this->addFlash()->success('Votre compte a bien été modifié !');
+                return $this->redirect('/');
+        }
+        $this->getrender()->render('FormView', ['title' => $title, 'form' => $form->createView(), 'url' => $url, 'p' => $p, 'image' => $this->author->image()]);
+    }
+    
+       
+    /**
+     * i send datas to database even if its a create or an update
+     * @param type $title
+     * @param type $url
+     * @param type $p
+     * @return type
+     * @throws NotFoundHttpException
+     */
+    public function processForm($title,$url,$p)
+    {
+        /**
+         * If there is no id in post or get, i create a new author.
+         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         */
+        if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
+        {
+            $model = $this->getEntityManager($this->author);
+        }
+        else
+        {
+            /**
+             * If there is a post id or a get id
+             */
+            $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
+            $this->author->setId($id);
+            $model = $this->getEntityManager($this->author);
+            
+            /**
+             * In case there is no id in database
+             * I get the object back according to the id
+             */
+            if(!($this->author = $model->findById($this->author->id())))
+            {
+                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
+            }
+        }
+ 
+        if($this->request->method() == 'POST')
+        {
+            $this->author->setUsername($this->request->postData('username'));
+            $this->author->setPassword($this->request->postData('password'));
+            $this->author->setImage($this->request->postData('image'));
+            $this->author->setSurname($this->request->postData('surname'));
+            $this->author->setFirstname($this->request->postData('firstname'));
+            if($this->userSession()->requireRole('admin'))
+            {
+                $this->author->setStatus("admin");
+            }
+            else
+            {
+                $this->author->setStatus("client");
+            }
+        }
+        
+        $formBuilder = $this->authorForm;
+        $form = $formBuilder->buildform($formBuilder->form());
+        
+        if($this->request->method() == 'POST' && $form->isValid())
+        {
+            $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
+            $this->author->setPassword($password);
 
             if($model->exist(['username' => $this->author->username()]))
             {
@@ -119,42 +205,37 @@ class AuthorController extends AbstractController
     }
     
     /**
-    * Méthode pour créer le formulaire d'identification
+    * Login Method
     */
-    public function logAuthor()
+    public function logUser()
     {
         if ($this->request->method() == 'POST')
         {
-            $author = new Author(
-            [
-                'username' => $this->request->postData('username'),
-                'password' => $this->request->postData('password')
-            ]); 
+            $this->author->setUsername($this->request->postData('username'));
+            $this->author->setPassword($this->request->postData('password'));
         }
         else 
         {
-            $author = new Author();
+            $this->author;
         }
         
-        $formBuilder = new ConnectAuthorForm($author);
+        $formBuilder = $this->connectForm;
         $form = $formBuilder->buildform($formBuilder->form());
 
         if ($this->request->method() == 'POST' && $form->isValid())
         {
-            $model = new EntityManager($author);
+            $model = $this->getEntityManager($this->author);
             
-            if($model->exist(['username' => $author->username()]))
-            {   
-                /**
-                 * On trouve l'utilisateur corresppondant au username
+            /**
+            * Retrieve user by his username
+            */
+            if($model->exist(['username' => $this->author->username()]))
+            {   /**
+                 * We check that the user matches
                  */
-                $auth = $model->findOneBy(['username' => $author->username()]);
-
+                $auth = $model->findOneBy(['username' => $this->author->username()]);
                 /**
-                 * On vérifie que l'utilisateur corresponde.
-                 */
-                /**
-                 * On vérifie que les données insérées dans le formulaire sont bien équivalentes aux données de la BDD
+                 * We check that the data inserted in the form is indeed equivalent to the database datas
                  */
                 $authPassword = password_verify($this->request->postData('password'), $auth->password());        
 
@@ -164,7 +245,6 @@ class AuthorController extends AbstractController
                     {
                         session_start();
                     }
-                    
                     $_SESSION['authorUsername'] = $auth->username();
                     $_SESSION['authorId'] = $auth->id();
                     $_SESSION['status'] = $auth->status();
@@ -199,9 +279,9 @@ class AuthorController extends AbstractController
             }
         }
         $title = 'Identifiez vous';
-        $url = '/createauthor';
+        $url = '/createuser';
         $p = 'Pas de compte, s\'enregistrer';
-        $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p, 'url' => $url, 'image' => $author->image()]);     
+        $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p, 'url' => $url, 'image' => $this->author->image()]);     
     }
     
     /*
@@ -223,86 +303,11 @@ class AuthorController extends AbstractController
     }
     
     /**
-     * Method delete user
+     * Je charge une image pour l'uploder
      */
-    public function deleteUser()
+    public function uploadImage()
     {
-        if ($this->request->method() == 'GET')
-        {  
-            $author = new Author(
-            [
-                'id' =>  $this->request->getData('id'),
-            ]);
-            $model = new EntityManager($author);
-            $model->remove($author);
-            $this->addFlash()->success('Votre compte a bien été supprimé');
-            return $this->redirect('/connectform');
-        }
+        $this->image = $this->upload->upload($_FILES);
+        return $this->image;
     }
-    
-    /**
-     * Méthode uodate user
-     */
-   public function updateUser()
-   {
-        $title = 'modifier son profil';
-        $url = 'connectform';
-        $p = 'Connexion';
-
-        /**
-         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
-         */
-        if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
-        {
-            $model = new EntityManager($this->author);
-        }
-        else
-        {
-            /**
-             * Si il y a un id en post ou en get
-             */
-            $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
-            $this->author->setId($id);
-            $model = new EntityManager($this->author);
-            
-            /**
-             * Dans le cas ou il n'y pas l'id en base de données
-             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
-             */
-            if(!($this->author = $model->findById($this->author->id())))
-            {
-                throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
-            }
-        }
- 
-        if($this->request->method() == 'POST')
-        {
-            $this->author->setUsername($this->request->postData('username'));
-            $this->author->setPassword($this->request->postData('password'));
-            $this->author->setImage($this->request->postData('image'));
-            $this->author->setSurname($this->request->postData('surname'));
-            $this->author->setFirstname($this->request->postData('firstname'));
-            if($this->userSession()->requireRole('client'))
-            {
-                $this->author->setStatus("client");
-            }
-            else if($this->userSession()->requireRole('admin'))
-            {
-                $this->author->setStatus("admin");
-            }
-        }
-        
-        $formBuilder = new CreateAuthorForm($this->author);
-        $form = $formBuilder->buildform($formBuilder->form());
-        
-        if($this->request->method() == 'POST' && $form->isValid())
-        {
-            $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
-            $this->author->setPassword($password);
-            $model->persist($this->author);
-            $this->addFlash()->success('Votre compte a bien été créé');
-            return $this->redirect('/connectform');
-        }
-        $this->getrender()->render('FormView',['title' => $title,'form' => $form->createView(), 'url' => $url,  'p' => $p]);
-   }
 }
