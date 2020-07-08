@@ -4,6 +4,11 @@ namespace blog\error;
 
 use blog\session\PHPSession;
 
+/**
+ * Description of FlashService  
+ *
+ * @author constancelaloux
+ */
 class FlashService 
 {
     /**
@@ -24,7 +29,7 @@ class FlashService
     private $sessionKey = 'flash';
     
     /**
-     * Je fais une connexion à la session
+     * I make a connexion to the session
      */
     public function __construct()
     {
@@ -32,8 +37,8 @@ class FlashService
     }
     
     /**
-     * Je stocke les informations en session
-     * set un message de success
+     * I store the information in session
+     * set a success message
      * @param string $message
      */
     public function success(string $message)
@@ -42,9 +47,9 @@ class FlashService
         $flash['success'] = $message;
         $this->session->set($this->sessionKey, $flash);
     }
-    
+
     /**
-     * set un message d'erreur
+     * Set an error message
      * @param string $message
      */
     public function error(string $message)
@@ -55,7 +60,7 @@ class FlashService
     }
     
     /**
-     * Récupére une information en session
+     * Retrieve information in session
      * @param string $type
      * @return type
      */

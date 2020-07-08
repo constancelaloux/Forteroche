@@ -6,8 +6,10 @@ use blog\config\Container;
 use blog\form\Form;
 
 /**
+ * Description of AbstractController  
  * General controller to avoid to repeat few things into all controllers
  * it instanciate the page
+ * @author constancelaloux
  */
 abstract class AbstractController 
 {

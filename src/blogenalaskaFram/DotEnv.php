@@ -18,11 +18,11 @@ class DotEnv
     const STATE_VALUE = 1;
 
     /**
-     * Le chemin de .env
+     * .env path
      */
     private $path;
     /**
-     * Les données récupérées de .env
+     * Data recovered from .env
      */
     private $data;
     
@@ -44,20 +44,15 @@ class DotEnv
     public function load(string $path)
     {
         /**
-         * Si le fichier n'est pas lisible ou si il n'existe pas, et si ce n'est pas un directory
+         * If the file is not readable or if it does not exist, and if it is not a directory
          */
         if (!is_readable($path) || is_dir($path)) 
         {
-            /**
-             * Alors je lance une exception
-             */
             throw new PathException($path);
         }
         
         /**
-         * file_get_contents : Dans le cas contraire je récupére les données provenant du fichier Et ensuite 
-         * j'envoi les données parsées a la fonction populate qui va définir les valeurs en tant que variables 
-         * d'environnement (via putenv, $_ENV, and $_SERVER)
+         * File_get_contents : Otherwise I get the data from the file And then I send the parsed data to the populate function which will define the values as environment variables (via putenv, $ _ENV, and $ _SERVER)
          */
         $this->populate($this->parse(file_get_contents($path), $path));
     }
@@ -65,11 +60,11 @@ class DotEnv
     public function parse(string $data, string $path = '.env'): array
     {
         /**
-         * Le chemin vers src
+         * Path to src
          */
         $this->path = $path;
         /**
-         * Les données de src
+         * Datas from src
          */
         $this->data = $data;
         
@@ -77,7 +72,7 @@ class DotEnv
         $this->cursor = 0;
         
         /**
-         * retourne la taille d'une chaine
+         * Returns the size of a chain
          */
         $this->end = \strlen($this->data);
         
@@ -118,7 +113,7 @@ class DotEnv
     }
     
     /**
-     * Cette fonction va permettre de générer juste les clés sans les valeurs
+     * This function will allow you to generate just the keys without the values
      */
     public function skipEmptyLines()
     {
@@ -130,8 +125,7 @@ class DotEnv
     }
     
     /**
-     * Expliquer cette fonction
-     * $text contient les noms des clés
+     * $text contain the name of the keys
      */
     private function moveCursor(string $text)
     {
@@ -315,7 +309,6 @@ class DotEnv
     {
         if (false === strpos($value, '$')) 
         {
-            //print_r($value);
             return $value;
         }
         
@@ -364,7 +357,6 @@ class DotEnv
             else 
             {
                 $value = (string) getenv($name);
-                //print_r($value);
             }
             
             if ('' === $value && isset($matches['default_value'])) 
@@ -446,7 +438,6 @@ class DotEnv
     }, $value);
 }
     
-    //Cette fonction va 
     public function populate(array $values)
     {
         $updateLoadedVars = false;
@@ -454,7 +445,9 @@ class DotEnv
 
         foreach ($values as $name => $value) 
         {
-            // don't check existence with getenv() because of thread safety issues
+            /**
+             * Don't check existence with getenv() because of thread safety issues
+             */
             if (!isset($loadedVars[$name]) && (isset($_ENV[$name]))) 
             {
                 continue;

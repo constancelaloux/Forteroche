@@ -3,69 +3,65 @@
 namespace blog;
 
 /**
- *
+ *Description of RequestInterface
  * @author constancelaloux
  */
 interface RequestInterface 
 {
     /**
-    * @return string
-    * Obtenir l'URL entrée (utile pour que le routeur connaisse la page souhaitée).
-    */
+     * Get the URL entered (useful for the router to know the desired page)
+     */
     public function requestURI();
-    
+
     /**
-    * @return array
-    * Obtenir un cookie.
-    */
+     * Obtain a cookie.
+     * @param type $key
+     */
     public function cookieData($key);
 
     /**
-    * @return array
-    * Permet de vérifier si la variable cookie existe
-    */
+     * Check if the cookie variable exists
+     * @param type $key
+     */
     public function cookieExists($key);
-    
+
     /**
-    * @return array
-    * Obtenir une variable GET.
-    */
+     * Get a get variable
+     * @param type $key
+     */
     public function getData($key);
        
     /**
-    * @return array
-    * Verifier si il y a une variable get qui existe.
-    */
+     * Check if there is a get variable that exists.
+     * @param type $key
+     */
     public function getExists($key);
-    
+
     /**
-    * @return array
-    * Obtenir la méthode employée pour envoyer la requête (méthode GET ou POST).
-    */
+     * Obtain the method used to send the request (GET or POST method).
+     */
     public function method();
-    
+
     /**
-    * @return array
-    * Obtenir une variable POST.
-    */
+     * Get a POST variabl
+     * @param type $key
+     */
     public function postData($key);
-    
+
     /**
-    * @return array
-    * Verifier si il y a une variable post qui existe.
-    */
+     * Check if there is a post variable that exists.
+     * @param type $key
+     */
     public function postExists($key);
     
-    
     /**
-    * @return array
-    * retourne la variable de session.
-    */
+     * returns the session variable.
+     */
     public function getSession();
-    
+
     /**
-    * @return array
-    * Verifier si il y a une session qui existe.
-    */
+     * Check if there is a session that exists.
+     * @param type $key
+     */
     public function sessionExists($key);
 }

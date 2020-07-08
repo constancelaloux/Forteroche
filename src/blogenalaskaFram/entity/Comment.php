@@ -5,7 +5,7 @@ namespace blog\entity;
 use blog\database\Model;
 
 /**
- * Description of Comments
+ * Description of Comment
  *
  * @author constancelaloux
  */

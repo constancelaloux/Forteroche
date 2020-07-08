@@ -50,13 +50,6 @@ $router->post('/updateuser:id', "Author#updateUser");
 //Route qui supprime un utilisateur
 $router->get('/deleteuser:id', "Author#deleteUser");
 
-/*$router->get('/createclient', "Author#createClient");
-$router->post('/createclient', "Author#createClient");*/
-
-//Route qui va vers le formulaire de connexion du client
-//$router->get('/connectclientform', "Client#logClient");
-//$router->post('/connectclientform', "Client#logClient");
-
 /* 
  * List of backend routes
  */
@@ -108,3 +101,11 @@ $router->post('/searchPosts', "Search#search");
  * Page 404
  */
 $router->get('/page404', "Render#renderPage404");
+
+
+/*$router->get('/createclient', "Author#createClient");
+$router->post('/createclient', "Author#createClient");*/
+
+//Route qui va vers le formulaire de connexion du client
+//$router->get('/connectclientform', "Client#logClient");
+//$router->post('/connectclientform', "Client#logClient");

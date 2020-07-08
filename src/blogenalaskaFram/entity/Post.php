@@ -7,7 +7,7 @@ use blog\database\Model;
 use DateTime;
 
 /**
- * Description of Posts
+ * Description of Post
  *
  * @author constancelaloux
  */
@@ -28,7 +28,7 @@ class Post extends Model
      ;
 
     /**
-     * Architecture de la base de données
+     * Database architecture
      * @return type
      */
     public static function metadata()
@@ -75,14 +75,13 @@ class Post extends Model
     
     /**
      * Getters
-     * //Actuellement, les attributs de nos objets sont inaccessibles. 
-     * //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
-     * Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
-     * un getter est une méthode chargée de renvoyer la valeur d'un attribut
+     * Currently, the attributes of our objects are inaccessible.
+     * We have to create getters to be able to read them, and setters to be able to modify their values.
+     * List of getters. I could reuse the functions later.
+     * A getter is a method responsible for returning the value of an attribute
     */
     
     /**
-     * 
      * @return type
      */
     public function id()
@@ -156,10 +155,9 @@ class Post extends Model
 
     /**
      * Setters
-     * un setter est une méthode chargée d'assigner une valeur à un 
-     * attribut en vérifiant son intégrité (si vous assignez la valeur 
-     * sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le 
-     * principe d'encapsulation).
+     * A setter is a method responsible for assigning a value to an attribute by checking its integrity 
+     * (if you assign the value without any control, you lose all the interest brought by the encapsulation 
+     * principle).
     */
         
     /**

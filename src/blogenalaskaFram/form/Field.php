@@ -7,6 +7,11 @@ use \blog\validator;
 /**
  * Hydrate the field object with the datas that was sent to create a form
  */
+/**
+ * Description of Field 
+ *
+ * @author constancelaloux
+ */
 abstract class Field 
 {
     use \blog\Hydrator;

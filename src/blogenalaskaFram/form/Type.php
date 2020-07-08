@@ -2,6 +2,11 @@
 
 namespace blog\form;
 
+/**
+ * Description of Type 
+ *
+ * @author constancelaloux
+ */
 abstract class Type 
 {
     use \blog\Hydrator;

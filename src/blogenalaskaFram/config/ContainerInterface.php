@@ -3,6 +3,7 @@
 namespace blog\config;
 
 /**
+ * Description of ContainerInterface
  *
  * @author constancelaloux
  */

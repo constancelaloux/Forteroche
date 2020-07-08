@@ -8,6 +8,7 @@ use blog\validator\MaxLengthValidator;
 use blog\validator\NotNullValidator;
 use blog\validator\MajValidator;
 use blog\validator\ImageValidator;
+
 /**
  * Description of TestForm
  *

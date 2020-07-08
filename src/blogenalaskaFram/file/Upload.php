@@ -12,12 +12,12 @@ use blog\file\UploadedFilesInterface;
 class Upload 
 {
     /**
-     * Le chemin vers lequel on veut sauvegarder
+     * The path where we want to save
      */
     protected $path;
     
     /**
-     * Format de l'image
+     * Image format
      */
     protected $formats;
     
@@ -40,7 +40,7 @@ class Upload
     public function __construct(?string $path = null)
     {
         /**
-         * Si le chemin est défini
+         * If the path is defined
          */
         if($path)
         {
@@ -54,7 +54,7 @@ class Upload
     }
     
     /**
-     * Je récupére le nom de l'image
+     * Get the image name
      * @param type $file
      * @return type
      */
@@ -101,7 +101,7 @@ class Upload
     }
     
     /**
-     * On envoi le fichier dans le fichier cible
+     * We send the file to the target file
      * @param type $targetPath
      */
     public function moveTo($targetPath)
@@ -109,7 +109,7 @@ class Upload
         if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         {
         /**
-         * Je génére le format de l'image
+         * I generate the image format
          */
             $this->generateFormats(__DIR__.$targetPath);
         }
@@ -123,31 +123,30 @@ class Upload
     }
     
     /**
-     * Prend en paramétre le fichier que l'on a uploadé
-     * Uploader le fichier dans le bon dossier
-     * retourne une chaine de caractéres qui sera le nom du fichier
-     * Dans le but ensuite de sauvegarder ce fichier
-     * @param \blog\file\UploadedFileInterface $file
+     * Takes in parameter the file that we have uploaded
+     * Upload the file to the correct folderier
+     * Returns a string which will be the name of the file
+     * Then in order to save this file
      */
     public function upload($file, ?string $oldFile = null)//, ?string $oldFile): string//UploadedFileInterface $file, ?string $oldFile = null): string
     {
             /**
-             * On vérifie si le vieux fichier existe
+             * We check if the old file exists
              */
             $this->delete($oldFile);
 
             /**
-             * Je récupére le nom du fichier
+             * I get the name of the file
              */
             $this->filename = $this->getClientFilename($file);
 
             /**
-             * J'ajoute l'image dans le chemin cible et une copie avec l'extension copy si l'image existe déja
+             * I add the image in the target path and a copy with the copy extension if the image already exists
              */
             $targetPath = $this->addCopySuffix($this->path .DIRECTORY_SEPARATOR . $this->filename);
 
             /**
-             * Avant d'uploader il faut que je vérifie si le dossier existe
+             * Vefor to upload, i check if the folder exist
              */
             $dirname = pathinfo($targetPath, PATHINFO_DIRNAME);
             
@@ -157,12 +156,12 @@ class Upload
             }
 
             /**
-             * J'envoi l'image avec son chemin dans le fichier cible
+             * I send the image with its path in the target file
              */
             $this->moveTo($targetPath);
 
             /**
-             * On récupére le nom du fichier + l'extension (ex: test.php)
+             * We recover the name of the file + the extension (ex: test.php)
              */
             $path_parts = pathinfo($targetPath);
 
@@ -177,15 +176,14 @@ class Upload
     }
     
     /**
-     * Vérifie si le fichier existe
-     * @param string $targetPath
+     * Check if the file exists
      */
     private function addCopySuffix(?string $targetPath): ?string
     {
         if(file_exists($targetPath))
         {
             /**
-             * Je construit un nouveau chemin avec copy à la fin car le fichier existe déja dans le dossier
+             * I build a new path with copy at the end because the file already exists in the folder
              */
             return $this->addCopySuffix($this->getPathWithSuffix($targetPath, 'copy'));
         }   
@@ -193,19 +191,18 @@ class Upload
     }
     
     /**
-     * Supprimer un fichier
+     * Delete folder
      */
     public function delete(?string $oldFile): void
     {
         if($oldFile)
         {
-            print_r("je passe la");
             $oldFile = $this->path . DIRECTORY_SEPARATOR . $oldFile;
             if(file_exists($oldFile))
             {
                 print_r("je passe la");
                 /**
-                 * Je supprime le vieux fichier
+                 * Delete old folder
                  */
                 unlink($oldFile);
             }
@@ -218,7 +215,7 @@ class Upload
         if(isset($info['extension']))
         {
             /**
-             * Je construit un nouveau chemin
+             * I buil a new path
              */
             return $info['dirname'] . 
                     DIRECTORY_SEPARATOR . 
@@ -229,31 +226,31 @@ class Upload
     }
     
     /**
-     * On génére les différents formats
+     * We generate the different formats
      */
     private function generateFormats($targetPath)
     {
         /**
-         * Je vais chercher la taille de mon image
+         * Gonna search the size of the image
          */
         $size = getimagesize($targetPath);
 
         $uploadImageType = $size[2];
 
         /**
-         * Je récupére dans les variables la largeur et la hauteur de mon image
+         * I recover in the variables the width and the height of my image
          */
         $width = $size[0];
         $height = $size[1];
 
         /**
-         * Je propose une hauteur et une largeur à ma nouvelle image
+         * I suggest an height and a width for the new image
          */
         $Reduction = ( ($this->newwidth * 100)/$width);
         $newheight= ( ($height * $Reduction)/100 );
 
         /**
-         * Je créé une image miniature vide
+         * I create an empty miniature image
          */
         /**
          * imagecreatetruecolor crée une nouvelle image en couleurs vraies, autrement dit une image noire dont il faudra préciser la largeur et la hauteur.
@@ -263,21 +260,17 @@ class Upload
         switch ($uploadImageType) 
         {
             case IMAGETYPE_JPEG:
-                /**
-                 * La photo est la source
-                 */
                 $image = ImageCreateFromJpeg($targetPath);
 
                 /**
-                 * Je créé la miniature
+                 * I create the miniature
                  */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $this->newwidth, $newheight, $width, $height );
 
                 /**
-                 * J'upload l'image dans le fichier
-                 * Cette dernière fonction n'est pas des moins utiles puisqu'elle va nous offrir l'opportunité 
-                 * non seulement de sauvegarder notre nouvelle image dans un fichier, 
-                 * mais également de déterminer la qualité avec laquelle on va l'enregistrer !
+                 * I upload the image to the file. This last function is not least useful since 
+                 * it will offer us the opportunity not only to save our new image in a file, but also to 
+                 * determine the quality with which we will save it!
                  */
                 ImageJpeg($miniature, $targetPath, 100 );
 
@@ -286,13 +279,10 @@ class Upload
             break;
 
             case IMAGETYPE_GIF:
-                /**
-                 * La photo est la source
-                 */
                 $image = imagecreatefromgif($this->path . $this->tmp['name']);
 
                 /**
-                 * Je créé la miniature
+                 * I create the miniature
                  */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 
@@ -302,7 +292,7 @@ class Upload
             case IMAGETYPE_PNG:
                 $image = imagecreatefrompng($this->path .$this->tmp['name']);
                 /**
-                 * Je créé la miniature
+                 * I create the miniature
                  */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
 

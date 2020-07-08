@@ -2,6 +2,8 @@
 
 namespace blog\database;
 
+use DateTime;
+
 /**
  * Class Model
  * @package App\ORM
@@ -46,10 +48,11 @@ class Model
         }
         return $this;
     }
-    
+
     /**
-     * @param string $column
-     * @param mixed $value
+     * 
+     * @param type $column
+     * @param type $value
      */
     private function hydrateProperty($column, $value): void
     {
@@ -72,10 +75,11 @@ class Model
                 }
         }
     }
-    
+
     /**
-     * @param string $column
-     * @return mixed
+     * 
+     * @param type $column
+     * @return DateTime
      */
     public function getSQLValueByColumn($column)
     {
@@ -86,35 +90,37 @@ class Model
         }
         return $value;
     }
-    
+
     /**
-     * @param mixed $value
-     * j'obtient l'id qui va s'incrémenter en base de données
+     * 
+     * @param type $value
      */
     public function setPrimaryKey($value)
     {
         $this->hydrateProperty($this::metadata()["primaryKey"], $value);
     }
-    
+
     /**
-     * @return mixed
+     * get the id that will increment in the database
+     * @return type
      */
     public function getPrimaryKey()
     {
         /**
-         * Je récupére le nom de la clé primaire 'id
+         * I get the name of the primary key id
          */
         $primaryKeyColumn = $this::metadata()["primaryKey"];
 
         $property = $this::metadata()["columns"][$primaryKeyColumn]["property"];
 
         /**
-         * Je vais retourner le getter de l'id
+         * I'm going to return the id getter
          */
         return $this->{sprintf(ucfirst($property))}();
     }
-    
+
     /**
+     * 
      * @return type
      */
     public function erreurs()

@@ -4,6 +4,7 @@ namespace blog\controllers;
 
 use blog\controllers\AbstractController;
 use blog\database\Query;
+
 /**
  * Description of SearchController
  *

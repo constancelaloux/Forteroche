@@ -3,7 +3,7 @@
 namespace blog;
 
 /**
- *
+ * Description of Hydrator
  * @author constancelaloux
  */
 trait Hydrator 

@@ -6,103 +6,104 @@ use blog\RequestInterface;
 
 /**
 * Description of HTTPRequest
-* La requéte du client.
+* Client request
 * @author constancelaloux
 */
 
 class HTTPRequest implements RequestInterface
 {
     /**
-    * @return array
-    * Obtenir un cookie.
-    */
+     * Obtain a cookie.
+     * @param type $key
+     * @return type
+     */
     public function cookieData($key)
     {
         return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
     }
 
     /**
-    * @return array
-    * Permet de vérifier si la variable cookie existe
-    */
+     * Check if the cookie variable exists
+     * @param type $key
+     * @return type
+     */
     public function cookieExists($key)
     {
         return isset($_COOKIE[$key]);
     }
 
     /**
-    * @return array
-    * Obtenir une variable GET.
-    */
+     * Get a GET variable.
+     * @param type $key
+     * @return type
+     */
     public function getData($key)
     {
         return isset($_GET[$key]) ? $_GET[$key] : null;
     }
 
     /**
-    * @return array
-    * Verifier si il y a une variable get qui existe.
-    */
+     * Check if there is a get variable that exists.
+     * @param type $key
+     * @return type
+     */
     public function getExists($key)
     {
         return isset($_GET[$key]);
     }
 
     /**
-    * @return array
-    * Obtenir la méthode employée pour envoyer la requête (méthode GET ou POST).
-    */
+     * Obtain the method used to send the request (GET or POST method).
+     * @return type
+     */
     public function method()
     {
         return $_SERVER['REQUEST_METHOD'];
     }
 
     /**
-    * @return array
-    * Obtenir une variable POST.
-    */
+     * Get a POST variable.
+     * @param type $key
+     * @return type
+     */
     public function postData($key)
     {
         return isset($_POST[$key]) ? $_POST[$key] : null;
     }
-    /*public function postData($datas)
-    {
-      return isset($_POST[$datas]) ? $_POST[$datas] : null;
-    }*/
 
     /**
-    * @return array
-    * Verifier si il y a une variable post qui existe.
-    */
+     * Check if there is a post variable that exists.
+     * @param type $key
+     * @return type
+     */
     public function postExists($key)
     {
         return isset($_POST[$key]);
     }
 
     /**
-    * @return string
-    * Obtenir l'URL entrée (utile pour que le routeur connaisse la page souhaitée).
-    */
-    public function requestURI()
+     * Get the URL entered (useful for the router to know the desired page).
+     * @return string
+     */
+    public function requestURI():string
     {
-        //print_r($_SERVER['REQUEST_URI']);
         return $_SERVER['REQUEST_URI'];
     }
-        
-        
+
     /**
-    * @return array
-    * retourne la variable de session.
-    */
+     * Returns the session variable.
+     * @return type
+     */
     public function getSession()
     {
         return $_SESSION[$key];
     }
     
     /**
-    * @return array
-    * Verifier si il y a une session qui existe.
-    */
+     * Check if there is a session that exists.
+     * @param type $key
+     * @return type
+     */
     public function sessionExists($key)
     {
         return isset($_SESSION[$key]);

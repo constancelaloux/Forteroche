@@ -8,7 +8,7 @@ use blog\database\Query;
 use blog\Paginate;
 
 /**
- * Description of BlogController
+ * Description of FrontendController
  * @author constancelaloux
  */
 class FrontendController extends AbstractController
@@ -36,7 +36,7 @@ class FrontendController extends AbstractController
     }
     
     /*
-     * Fonction qui permet de rendre la page d'accueil
+     * Function which render the home page
      */
     public function renderhomepage()
     {
@@ -44,16 +44,16 @@ class FrontendController extends AbstractController
     }
     
     /**
-     * pagination et rendre articles
+     * Paginate and render posts
      */
     public function renderPaginatedPosts()
     {
         /**
-         * Je récupére les derniers articles
+         * Get the lasts posts
          */
         $lastsposts = $this->getLastsPosts();
         /**
-         * Pagination
+         * Paginate
          */
         $model = $this->getEntityManager($this->post);
         $perPage = 9;
@@ -66,38 +66,38 @@ class FrontendController extends AbstractController
     }
     
     /*
-     * Fonction qui permet de rendre la page de l'article
+     * Function to the article page
      */
     public function renderPost()
     {
         /**
-         * J'affiche les commentaires
+         * I show the comments
          */
         $comments = $this->renderPaginatedComments($_GET['id']);
         
         /**
-         * Je vais chercher les derniers articles
+         * Get the lasts posts
          */
         $lastsposts = $this->getLastsPosts();
         
         /**
-         * J'affiche le formulaire pour écrire les commentaires
+         * Show the form to write the comments
          */
         $commentform = $this->createComment();
         
         /**
-         * J'affiche l'article en fonction de l'id
+         * Show posts depends of id
          */
         $postFromId = $this->getPost($_GET['id']);
         
         /**
-         * J'affiche la page avec tous les composants
+         * Show the page with all the components
          */
         $this->getrender()->render('ArticleView', ['post' => $postFromId, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $this->previousLink, 'nextlink' => $this->nextLink, /*'posts' => $posts,*/ 'comments' => $comments]);
     }
     
     /**
-     * Je vais chercher les 3 derniers articles
+     * I will get the lasts three posts
      */
     public function getLastsPosts()
     {
@@ -105,9 +105,9 @@ class FrontendController extends AbstractController
         $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }
-    
+
     /**
-     * J'affiche l'article en fonction de l'id et sa pagination
+     * I show the post from the id and its pagination
      * @param type $id
      * @return type
      */
@@ -118,7 +118,7 @@ class FrontendController extends AbstractController
     }
     
     /**
-     * On affiche les commentaires liés à l'article
+     * Show comments from the post id
      */
     public function renderPaginatedComments($id)
     {
@@ -149,7 +149,7 @@ class FrontendController extends AbstractController
     }
     
     /**
-     * J'envoi en base de données les signelements de commentaires et j'incrémente à chaque fois que l'on clique sur le bouton
+     * I send into the database the reports and i increment each time when we click on the picture
      */
     public function unwantedComment()
     {
@@ -167,7 +167,7 @@ class FrontendController extends AbstractController
         $model->persist($this->comment);
     }
     /*
-     * Fonction qui me permet de créer un commentaire
+     * Create comment
      */
     public function createComment()
     {
@@ -175,7 +175,7 @@ class FrontendController extends AbstractController
     }
     
     /*
-     * Fonction qui me permet de modifier un commentaire
+     * Modify comment
      */
     public function updateComment()
     {
@@ -190,15 +190,17 @@ class FrontendController extends AbstractController
             return $this->redirect("/article&id=$id");
         }
     }
-    
+
     /**
-     * J'affiche le formulaire et j'appelle la fonction qui envoi les commentaires en base de données
+     * I show the form and i call the function to send the comments in database
      * @return type
      * @throws NotFoundHttpException
      */
     public function processForm()
     { 
-        //Si il n'y a pas d'id en post ni en get, je créé un nouveau commentaire
+        /**
+         * If there is no post or get id, i create a new comment
+         */
         if(is_null($this->request->getData('idcomment')) && is_null($this->request->postData('idcomment')))
         {
             $model = $this->getEntityManager($this->comment);
@@ -206,15 +208,14 @@ class FrontendController extends AbstractController
         else
         {
             /**
-             * Si il y a un id en post ou en get
+             * If there is a post id or get id
              */
             $idComment = $this->request->postData('idcomment') ? $this->request->postData('idcomment') : $this->request->getData('idcomment');
             $this->comment->setId($idComment);
             $model = $this->getEntityManager($this->comment);
             
             /**
-             * Dans le cas ou il n'y pas l'id en base de données
-             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             * In case i have no id in database, i get the object from the id(call $id)
              */
             if(!($this->comment = $model->findById($this->comment->id())))
             {
@@ -279,7 +280,7 @@ class FrontendController extends AbstractController
     }
     
     /*
-     * Fonction qui me permet de supprimer un commentaire
+     * Delete comment
      */
     public function deleteComment()
     {

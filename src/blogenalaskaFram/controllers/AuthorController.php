@@ -5,11 +5,9 @@ namespace blog\controllers;
 use blog\controllers\AbstractController;
 use blog\form\CreateAuthorForm;
 use blog\form\ConnectAuthorForm;
-//use blog\entity\Author;
-//use blog\database\EntityManager;
 
 /**
- * Description of TestFormController
+ * Description of AuthorController
  *
  * @author constancelaloux
  */
@@ -66,7 +64,7 @@ class AuthorController extends AbstractController
         $url = '/connectform';
         $p = 'Connexion';
         /**
-         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         * If there is no post or get id, I create a new article
          */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
@@ -75,15 +73,15 @@ class AuthorController extends AbstractController
         else
         {
             /**
-             * Si il y a un id en post ou en get
+             * If there is a post id or get id
              */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
             $this->author->setId($id);
             $model = $this->getEntityManager($this->author);
             
             /**
-             * Dans le cas ou il n'y pas l'id en base de données
-             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             * In case i have no id in database
+             * Get object based on Id (usually called $ id)
              */
             if(!($this->author = $model->findById($this->author->id())))
             {
@@ -124,10 +122,9 @@ class AuthorController extends AbstractController
         }
         $this->getrender()->render('FormView', ['title' => $title, 'form' => $form->createView(), 'url' => $url, 'p' => $p, 'image' => $this->author->image()]);
     }
-    
        
     /**
-     * i send datas to database even if its a create or an update
+     * I send datas to database even if its a create or an update
      * @param type $title
      * @param type $url
      * @param type $p
@@ -303,7 +300,7 @@ class AuthorController extends AbstractController
     }
     
     /**
-     * Je charge une image pour l'uploder
+     * I get an image for the upload
      */
     public function uploadImage()
     {

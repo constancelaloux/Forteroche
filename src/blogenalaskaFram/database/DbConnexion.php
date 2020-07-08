@@ -23,7 +23,7 @@ class DbConnexion
             $dotenv->load(__DIR__.'/../../../.env');
             $db = new \PDO('mysql:host='.$_ENV['DB_HOST'].';dbname='.$_ENV['DB_NAME'].';charset=utf8',$_ENV['DB_USER'],$_ENV['DB_PASS']);
             /**
-             * On émet une alerte à chaque fois qu'une requête a échoué.
+             * An alert is issued each time a request has failed.
              */
             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
             return $db;

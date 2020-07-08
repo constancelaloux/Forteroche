@@ -6,6 +6,7 @@ use blog\database\EntityManager;
 use blog\session\PHPSession;
 
 /**
+ * Description of UserSession
  * @author constancelaloux
  */
 class UserSession
@@ -29,7 +30,7 @@ class UserSession
     /**
      * I make a connection to the session
      */
-    public function __construct()//(string $loginPath)
+    public function __construct()
     {
         $this->session = new PHPSession();
     }

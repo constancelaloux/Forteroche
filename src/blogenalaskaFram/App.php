@@ -1,11 +1,7 @@
 <?php
 
-/**
- * namespace, permet de dire "je travaille dans ce dossier".
- */
 namespace blog;
 use blog\provider\Router;
-use blog\provider\Route;
 use blog\HTTPResponse;
 use blog\HTTPRequest;
 
@@ -14,13 +10,11 @@ use blog\HTTPRequest;
  *
  * @author constancelaloux
  */
-class App 
-
-{
-    
+class App
+{ 
     /**
-    * Permet de récupérer L'URI qui a été fourni pour accéder à cette page et ensuite
-    * le router a besoin de l'URI qui sera la requéte et de l'objet reponse pour fonctionner
+    * Allows you to retrieve the URI that was provided to access this page and then
+    * the router needs the URI which will be the request and the response object to function
     * @author constancelaloux
     */
     public function run()
@@ -33,7 +27,7 @@ class App
         $router = new Router($uri, $response);
         require (__DIR__ . '/routes/Routes.php');
         /**
-         * il faut que tu vérifies que l'url passé en paramétre correspond a une des urls
+         * Must verify that the url passed in parameter corresponds to one of the urls
          */
         $router->map($request);
     }

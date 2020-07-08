@@ -45,10 +45,9 @@ class BackendController extends AbstractController
      */
     public function getListOfArticles()
     {
-        //$post = new Post();
         $model = $this->getEntityManager($this->post);
         /**
-         * Retrouver tous les articles
+         * Retrieve all posts
          */
         $posts = $model->findAll();
 
@@ -76,7 +75,7 @@ class BackendController extends AbstractController
             }
                             
             /**
-             * Structure des données à retourner
+             * Structure of the data to be returned
              */
             $json_data = array
             (
@@ -104,7 +103,7 @@ class BackendController extends AbstractController
     }
     
     /**
-     * redirect if post as been well deleted
+     * Redirect if post as been well deleted
      * @return type
      */
     public function confirmDeletedPost()
@@ -122,7 +121,7 @@ class BackendController extends AbstractController
     }
     
     /**
-     * Je charge une image pour l'uploder
+     * I get an image for the upload
      */
     public function uploadImage()
     {
@@ -161,7 +160,7 @@ class BackendController extends AbstractController
     public function processForm($title)
     {
         /**
-         * Si il n'y a pas d'id en post ni en get, je créé un nouvel article
+         * If there is no post or get id, I create a new post
          */
         if(is_null($this->request->getData('id')) && is_null($this->request->postData('id')))
         {
@@ -170,15 +169,15 @@ class BackendController extends AbstractController
         else
         {
             /**
-             * Si il y a un id en post ou en get
+             * If there is an id in post or in get
              */
             $id = $this->request->postData('id') ? $this->request->postData('id') : $this->request->getData('id');
             $this->post->setId($id);
             $model = $this->getEntityManager($this->post);
             
             /**
-             * Dans le cas ou il n'y pas l'id en base de données
-             * Récupère l'objet en fonction de l'@Id (généralement appelé $id)
+             * In case there is no id in database
+             * Get the object based on the Id (usually called $id)
              */
             if(!($this->post = $model->findById($this->post->id())))
             {
@@ -221,7 +220,7 @@ class BackendController extends AbstractController
         if($this->request->method() == 'POST' && $form->isValid())
         {
             /**
-             * On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
+             * We indicate the author. Adapt this to your project, for example if you store the id in the session.
              */
             $model->persist($this->post);
             if($this->userSession()->requireRole('admin'))
@@ -248,7 +247,7 @@ class BackendController extends AbstractController
     }
     
     /**
-     * On va vers la page des commentaires
+     * We go to the comments page
      */
     public function renderCommentsPage()
     {
@@ -264,13 +263,13 @@ class BackendController extends AbstractController
     }
     
     /**
-     * On affiche le datatables des commentaires
+     * We display the comments datatables
      */
     public function getListOfComments()
     {
         $model = $this->getEntityManager($this->comment);
         /**
-         * Retrouver tous les articles
+         * Retrieve all posts
          */
         $comments = $model->findAll();
 
@@ -298,7 +297,7 @@ class BackendController extends AbstractController
             }
                             
             /**
-             * Structure des données à retourner
+             * Structure of the data to be returned
              */
             $json_data = array
             (
@@ -313,24 +312,20 @@ class BackendController extends AbstractController
     }
     
     /**
-     * Je supprime un commentaire du datatables
+     * Delete comments into datatables
      */
     public function deleteComments()
     {
         if ($this->request->method() == 'POST')
         {  
             $this->comment->setId($this->request->postData('id'));
-            /*$comment = new Comment(
-            [
-                'id' =>  $this->request->postData('id'),
-            ]);*/
             $model = $this->getEntityManager($this->comment);
             $model->remove($this->comment);
         }
     }
     
     /**
-     * Je confirme et redirige apres que le commentaire ai été supprimé
+     * I confirm and redirect after the comment has been deleted
      */
     public function confirmDeletedComments()
     {

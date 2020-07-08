@@ -1,6 +1,6 @@
 <?php
 /**
- * namespace, permet de dire "je travaille dans ce dossier"
+ * Namespace means i work on this folder
  */
 namespace blog;
 
@@ -14,49 +14,46 @@ class Autoloader
     /**
      * An associative array where the key is a namespace prefix and the value
      * is an array of base directories for classes in that namespace.
-     *
      * @var array
      */
     protected $prefixes = array();
 
     /**
      * Register loader with SPL autoloader stack.
-     *
      * @return void
      */
-    public function register()
+    public function register():void
     {
         spl_autoload_register(array($this, 'loadClass'));
     }
 
     /**
      * Adds a base directory for a namespace prefix.
-     *
      * @param string $prefix The namespace prefix.
      * @param string $base_dir A base directory for class files in the
      * namespace.
-     * @param bool $prepend If true, prepend the base directory to the stack
+     * @param type $prepend If true, prepend the base directory to the stack
      * instead of appending it; this causes it to be searched first rather
      * than last.
      * @return void
      */
-    public function addNamespace($prefix, $base_dir, $prepend = false)
+    public function addNamespace($prefix, $base_dir, $prepend = false):void
     {
 
         /**
-         * normalize namespace prefix
-         * un / est rajouté au préfix (ex: blog/)
+         * Normalize namespace prefix
+         * A / is add at the end of the path(ex: blog/)
          */
         $prefix = trim($prefix, '\\') . '\\';
 
         /**
-         * normalize the base directory with a trailing separator
-         * un / est rajouté à la fin du chemin
+         * Normalize the base directory with a trailing separator
+         * A / is add at the end of the path
          */
         $base_dir = rtrim($base_dir, DIRECTORY_SEPARATOR) . '/';
 
         /**
-         * initialize the namespace prefix array
+         * Initialize the namespace prefix array
          */
         if (isset($this->prefixes[$prefix]) === false) 
         {
@@ -64,7 +61,7 @@ class Autoloader
         }
 
         /**
-         * retain the base directory for the namespace prefix
+         * Retain the base directory for the namespace prefix
          */
         if ($prepend) 
         {
@@ -78,37 +75,36 @@ class Autoloader
 
     /**
      * Loads the class file for a given class name.
-     *
-     * @param string $class The fully-qualified class name.
-     * @return mixed The mapped file name on success, or boolean false on
+     * @param type $class The fully-qualified class name.
+     * @return boolean The mapped file name on success, or boolean false on
      * failure.
      */
     public function loadClass($class)
     {
         /**
-         * the current namespace prefix
+         * The current namespace prefix
          */
         $prefix = $class;
 
         /**
-         * work backwards through the namespace names of the fully-qualified
+         * Work backwards through the namespace names of the fully-qualified
          * class name to find a mapped file name
          */
         while (false !== $pos = strrpos($prefix, '\\')) 
         {
 
             /**
-             * retain the trailing namespace separator in the prefix
+             * Retain the trailing namespace separator in the prefix
              */
             $prefix = substr($class, 0, $pos + 1);
 
             /**
-             * the rest is the relative class name
+             * The rest is the relative class name
              */
             $relative_class = substr($class, $pos + 1);
 
             /**
-             * try to load a mapped file for the prefix and relative class
+             * Try to load a mapped file for the prefix and relative class
              */
             $mapped_file = $this->loadMappedFile($prefix, $relative_class);
 
@@ -118,29 +114,28 @@ class Autoloader
             }
 
             /**
-             * remove the trailing namespace separator for the next iteration
+             * Remove the trailing namespace separator for the next iteration
              */
             $prefix = rtrim($prefix, '\\');
         }
 
         /**
-         * never found a mapped file
+         * Never found a mapped file
          */
         return false;
     }
 
     /**
      * Load the mapped file for a namespace prefix and relative class.
-     *
-     * @param string $prefix The namespace prefix.
-     * @param string $relative_class The relative class name.
-     * @return mixed Boolean false if no mapped file can be loaded, or the
+     * @param type $prefix The namespace prefix.
+     * @param type $relative_class The relative class name.
+     * @return boolean|string false if no mapped file can be loaded, or the
      * name of the mapped file that was loaded.
      */
     protected function loadMappedFile($prefix, $relative_class)
     {
         /**
-         * are there any base directories for this namespace prefix?
+         * Are there any base directories for this namespace prefix?
          */
         if (isset($this->prefixes[$prefix]) === false) 
         {
@@ -148,14 +143,14 @@ class Autoloader
         }
 
         /**
-         * look through base directories for this namespace prefix
+         * Look through base directories for this namespace prefix
          */
         foreach ($this->prefixes[$prefix] as $base_dir) 
         {
 
             /**
-             * replace the namespace prefix with the base directory,
-             * replace namespace separators with directory separators
+             * Replace the namespace prefix with the base directory,
+             * Replace namespace separators with directory separators
              * in the relative class name, append with .php
              */
             $file = $base_dir
@@ -163,7 +158,7 @@ class Autoloader
                   . '.php';
 
             /**
-             * if the mapped file exists, require it
+             * If the mapped file exists, require it
              */
             if ($this->requireFile($file)) 
             {
@@ -174,18 +169,17 @@ class Autoloader
             }
         }
         /**
-         * never found it
+         * Never found it
          */
         return false;
     }
 
     /**
      * If a file exists, require it from the file system.
-     *
      * @param string $file The file to require.
-     * @return bool True if the file exists, false if not.
+     * @return boolean True if the file exists, false if not.
      */
-    protected function requireFile($file)
+    protected function requireFile(string $file)
     {
         if (file_exists($file)) 
         {

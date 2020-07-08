@@ -33,33 +33,31 @@ class Paginate
         
         return $offset;
     }
-    
+
     /**
-     * Lien suivant
-     * @param string $link
-     * @return string
+     * Next link
+     * @return int
      */
     public function nextlink()
     {
         $nextPage = $this->getCurrentPage() + 1;
         
         /**
-         * Si la page suivante est supérieure au nombre de pages possibles
+         * If the next page is greater than the number of possible pages
          */
         if($nextPage > $this->getPages())
         {
             /**
-             * On revient à la page numéro 1
+             * We return to page number 1
              */
             return $nextPage = 1;
         }
         return $nextPage;
     }
-    
+
     /**
-     * Lien précédent
-     * @param string $link
-     * @return string
+     * Previous link
+     * @return type
      */
     public function previouslink()
     {
@@ -70,10 +68,9 @@ class Paginate
         }
         return $prevPage;
     }
-    
-    
+
     /**
-     * On retourne la page courante
+     * Return to the current page
      * @return int
      * @throws Exception
      */
@@ -86,13 +83,13 @@ class Paginate
         }
             
         /**
-         * Les numéros de pages en paramétre dans l'url
+         * The page numbers as parameters in the url
          */
         return $currentPage = (int)$page; 
     }
-    
+
     /**
-     * On souhaite obtenir un nombre de pages à avoir
+     * We wish to obtain a number of pages to have
      * @return int
      */
     private function getPages(): int
@@ -103,7 +100,7 @@ class Paginate
         }
 
         /**
-         * On obtient le nombre de pages que l'on va avoir
+         * We get the number of pages that we are going to have
          */
         return $pages = ceil($this->count / $this->perPage);
         

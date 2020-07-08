@@ -6,7 +6,9 @@ use blog\database\DbConnexion;
 use blog\database\Model;
 
 /**
- * Class Manager
+ * Description of EntityManager  
+ *
+ * @author constancelaloux
  */
 class EntityManager extends DbConnexion
 {

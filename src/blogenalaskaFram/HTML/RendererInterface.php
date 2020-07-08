@@ -2,6 +2,11 @@
 
 namespace blog\HTML;
 
+/**
+ * Description of RenderInterface
+ *
+ * @author constancelaloux
+ */
 interface RendererInterface 
 {
     
