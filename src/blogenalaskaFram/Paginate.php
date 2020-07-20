@@ -3,6 +3,7 @@
 namespace blog;
 
 use blog\database\EntityManager;
+use Exception;
 
 /**
  * Description of Paginate

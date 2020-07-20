@@ -7,6 +7,7 @@ use blog\form\StringField;
 use blog\form\TextField;
 use blog\validator\NotNullValidator;
 use blog\validator\ImageValidator;
+use blog\config\Container;
 
 /**
  * Description of ArticlesForm
@@ -15,6 +16,19 @@ use blog\validator\ImageValidator;
  */
 class ArticlesForm extends FormBuilder 
 {
+    public $stringField;
+    
+    public $textField;
+    
+    private $container;
+    
+    public function construct()
+    {
+        /*$services   = include __DIR__.'/../config/Config.php';
+        $this->container = new Container($services);
+        $this->stringField = $this->container->get(\blog\form\StringField::class);
+        $this->TextField = $this->container->get(\blog\form\TextField::class);*/
+    }
     public function form()
     {
         $this->form

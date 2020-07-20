@@ -36,8 +36,6 @@
 <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css?family=News+Cycle" rel="stylesheet">
 
-<!--Articles-->
-<script type="text/javascript" src="/../../public/js/Backoffice.js"></script>
 
 <!--Upload-->
 <script type="text/javascript" src="/../../public/js/UploadFile.js"></script>
@@ -50,6 +48,9 @@
 
 <!--Countclicks-->
 <script type="text/javascript" src="/../../public/js/Countclicks.js"></script>
+
+<!--Articles-->
+<script type="text/javascript" src="/../../public/js/BackOffice.js"></script>
 
 <body>
     <?php 

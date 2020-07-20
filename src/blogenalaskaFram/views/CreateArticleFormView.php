@@ -1,6 +1,4 @@
-<?php
-print_r($_SESSION);
-?>
+<p>Réservé à l'admin</p>
 <section class="createAuthorForm">
     <div class="container">
         <div class="row justify-content-center">
@@ -14,13 +12,7 @@ print_r($_SESSION);
                             {
                                 echo $form;
                             } ?>
-                    <div id="preview">
-                        <?php if(isset($image))
-                                {
-                                    echo $image;
-                                }
-                    ?>
-                    </div><br>
+                    <div id="preview"><img src="" /></div><br>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="Sauvegarder"/>
                     <!--</p>-->
@@ -29,34 +21,3 @@ print_r($_SESSION);
         </div>
     </div>
 </section>
-
-
-<!-- The Modal -->
-<div class="modal" id="uploadModal" role="dialog">
-  <div class="modal-dialog">
-    <div class="modal-content">
-
-      <!-- Modal Header -->
-      <div class="modal-header">
-        <h4 class="modal-title">Choisir une image</h4>
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-      </div>
-
-      <!-- Modal body -->
-      <div class="modal-body">
-        <!-- Form -->
-        <form>
-            Select file : <input type='file' name='file' id='file' class='form-control' onchange="fileSelected(this)" ><br>
-            <input type="hidden" id="newFile" name="newFile" value=""/>
-            <button id="upload"  data-dismiss="modal">Upload</button>
-        </form>
-      </div>
-
-      <!-- Modal footer -->
-      <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-      </div>
-
-    </div>
-  </div>
-</div>

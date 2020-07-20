@@ -4,10 +4,10 @@ namespace blog\database;
 
 use blog\database\DbConnexion;
 use blog\database\Model;
+use blog\exceptions\ORMException;
 
 /**
  * Description of Query
- *
  * @author constancelaloux
  */
 class Query extends DbConnexion
@@ -70,12 +70,12 @@ class Query extends DbConnexion
     public function __construct(Model $model)
     {
         /**
-         * Je me connecte à la base de données
+         * I connect to the database
          */
         $this->pdo = $this->connect();
         
         /**
-         * Ensuite je récupére le nom de la class objet
+         * Then I get the name of the object class
          */
             $reflectionClass = new \ReflectionClass($model);
             if($reflectionClass->getParentClass()->getName() == Model::class) 
@@ -83,7 +83,7 @@ class Query extends DbConnexion
                 $this->model = $model;
 
                 /**
-                 * Je récupére si chaque composants de ma class test est un int ou un string, etc
+                 * I recover if each component of my class test is an int or a string, etc.
                  */
                 $this->metadata = $this->model::metadata();
             }
@@ -92,9 +92,9 @@ class Query extends DbConnexion
                 throw new ORMException("Cette classe n'est pas une entité.");
             }
     }
-    
 
     /**
+     * 
      * @param string $table
      * @param string $alias
      * @return \self
@@ -117,7 +117,7 @@ class Query extends DbConnexion
     }
     
     /**
-     * Permet de spécifier la limit
+     * Allows you to specify the limit
      * @param int $length
      * @param int $offset
      * @return Query
@@ -148,7 +148,7 @@ class Query extends DbConnexion
     }
     
     /**
-     * Ajoute une liaison
+     * Add a link
      * @param string $table
      * @param string $condition
      * @param string $type
@@ -161,7 +161,7 @@ class Query extends DbConnexion
     }
     
     /**
-     * Définit la condition de récupération
+     * Defines the recovery condition
      * @param string $where
      * @return \self
      */
@@ -295,7 +295,7 @@ class Query extends DbConnexion
     }
     
     /**
-     * Construit le from a as b ....
+     * Build the from a as b ....
      * @return string
      */
     private function buildFrom(): string

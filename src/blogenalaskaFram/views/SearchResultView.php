@@ -1,7 +1,3 @@
-<?php
-
-print_r($_SESSION);
-?>
 <div class="listOfSearch">
     <?php
         if (empty($mySearchResults))

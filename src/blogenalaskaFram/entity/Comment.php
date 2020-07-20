@@ -23,17 +23,16 @@ class Comment extends Model
       $content,
       $status,
       $countclicks
-      //$image
      ;
 
     /**
-     * Architecture de la base de données
+     * Database architecture
      * @return type
      */
     public static function metadata()
     {
         return [
-            "table"             => "comments",
+            "table"             => "comment",
             "primaryKey"        => "id",
             "columns"           => [
                 "id"            => [
@@ -78,10 +77,6 @@ class Comment extends Model
     
     /**
      * Getters
-     * //Actuellement, les attributs de nos objets sont inaccessibles. 
-     * //Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
-     * Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
-     * un getter est une méthode chargée de renvoyer la valeur d'un attribut
     */
 
     /**
@@ -158,11 +153,8 @@ class Comment extends Model
 
     /**
      * Setters
-     * un setter est une méthode chargée d'assigner une valeur à un 
-     * attribut en vérifiant son intégrité (si vous assignez la valeur 
-     * sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le 
-     * principe d'encapsulation).
     */
+    
     /**
      * @param type $id
      */
@@ -181,12 +173,10 @@ class Comment extends Model
      */
     public function setIdclient($idclient)
     {
-        //print_r($idclient);
         $idclient = (int)$idclient;
         if ($idclient > 0)
         {
             $this->idclient = $idclient;
-            //print_r($this->idclient);
         }
     }
     
@@ -199,7 +189,6 @@ class Comment extends Model
         if ($idpost > 0)
         {
             $this->idpost = $idpost;
-            //print_r($this->idpost);
         }
     }
     
@@ -219,7 +208,6 @@ class Comment extends Model
      */
     public function setCountclicks($countclicks)
     {
-        //print_r($countclicks);
         $countclick = (int)$countclicks;
         $this->countclicks = $countclick;
     }

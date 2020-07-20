@@ -15,12 +15,17 @@ $router->get('/article:id:page', "Frontend#renderPost");
 
 //Route qui va vers un article du frontend et vers le commentaire qui peut etre modifié
 $router->get('/article:id:idcomment', "Frontend#renderPost");
+$router->post('/article:id:idcomment', "Frontend#renderPost");
 
 //Route qui permet de créer un commentaire
 $router->post('/article:id', "Frontend#createComment");
 
+//Route qui envoi un email
+$router->post('/sendEmail', "Frontend#sendEmailToAuthor");
+
 //Route qui permet de modifier un commentaire
 $router->post('/updatecomment:id:idcomment', "Frontend#updateComment");
+$router->get('/updatecomment:id:idcomment', "Frontend#updateComment");
 
 //Route qui permet de supprimer un commentaire
 $router->post('/deletecomment:id:idcomment', "Frontend#deleteComment");
@@ -58,6 +63,7 @@ $router->get('/deleteuser:id', "Author#deleteUser");
 $router->get('/backoffice', "Backend#renderHomepage");
 
 //Route qui va récupére les articles du datatables
+//$router->post('/listofarticles', "Backend#getListOfArticles");
 $router->post('/listofarticles', "Backend#getListOfArticles");
 
 //Route qui créé un article
@@ -87,7 +93,7 @@ $router->get('/rendercommentspage', "Backend#renderCommentsPage");
 $router->post('/listofcomments', "Backend#getListOfComments");
 
 //Route qui supprime un commentaire au sein du datatables
-$router->post('/deletecommentfrombackend', "Backend#deleteComments");
+$router->post('/deletecomment', "Backend#deleteComments");
 
 //Route qui redirige apres avoir supprimé un commentaire du datatables
 $router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
@@ -101,11 +107,3 @@ $router->post('/searchPosts', "Search#search");
  * Page 404
  */
 $router->get('/page404', "Render#renderPage404");
-
-
-/*$router->get('/createclient', "Author#createClient");
-$router->post('/createclient', "Author#createClient");*/
-
-//Route qui va vers le formulaire de connexion du client
-//$router->get('/connectclientform', "Client#logClient");
-//$router->post('/connectclientform', "Client#logClient");

@@ -3,6 +3,7 @@
 namespace blog\validator;
 
 use blog\validator\Validator;
+use RuntimeException;
 
 /**
  * Description of MaxLengthValidator
@@ -50,7 +51,7 @@ class MaxLengthValidator extends Validator
         }
         else
         {
-            throw new \RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
+            throw new RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
         }
     }
 }

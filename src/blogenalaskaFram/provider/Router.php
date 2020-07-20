@@ -27,12 +27,15 @@ class Router
     private $routes = [];
     private $namedRoutes = [];
     
+    private $route;
+    
     const NO_ROUTE = 1;
 
     public function __construct($request, $response)
     {
         $this->request = $request;
         $this->response = $response;
+        //$this->route = new Route($path, $callable);
     }
 
     /**
@@ -100,6 +103,7 @@ class Router
          * I create a route object or I configure the path of the url and the controller data
          */
         $route = new Route($path, $callable);
+        //$route = $this->route;
         
         /**
          * I store the list of my routes in my route object

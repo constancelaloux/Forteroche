@@ -3,6 +3,7 @@
 namespace blog\form;
 
 use blog\form\Field;
+use RuntimeException;
 
 /**
  * Description of StringField
@@ -54,7 +55,7 @@ class StringField extends Field
         }
         else
         {
-            throw new \RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
+            throw new RuntimeException('La longueur maximale doit être un nombre supérieur à 0');
         }
     }
 }

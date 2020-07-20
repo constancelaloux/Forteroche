@@ -4,6 +4,7 @@ namespace blog;
 use blog\exceptions\FormatException;
 use blog\exceptions\FormatExceptionContext;
 use blog\exceptions\PathException;
+use LogicException;
 
 /**
  * Description of Env
@@ -409,12 +410,12 @@ class DotEnv
         }
         if ('\\' === \DIRECTORY_SEPARATOR) 
         {
-            throw new \LogicException('Resolving commands is not supported on Windows.');
+            throw new LogicException('Resolving commands is not supported on Windows.');
         }
         
         if (!class_exists(Process::class)) 
         {
-            throw new \LogicException('Resolving commands requires the Symfony Process component.');
+            throw new LogicException('Resolving commands requires the Symfony Process component.');
         }
         
         $process = method_exists(Process::class, 'fromShellCommandline') ? Process::fromShellCommandline('echo '.$matches[0]) : new Process('echo '.$matches[0]);

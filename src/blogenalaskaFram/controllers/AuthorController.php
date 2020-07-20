@@ -5,6 +5,7 @@ namespace blog\controllers;
 use blog\controllers\AbstractController;
 use blog\form\CreateAuthorForm;
 use blog\form\ConnectAuthorForm;
+use blog\exceptions\NotFoundHttpException;
 
 /**
  * Description of AuthorController
@@ -16,13 +17,14 @@ class AuthorController extends AbstractController
     public $author;
     public $upload;
     public $authorForm;
+    public $connectform;
     
     public function __construct() 
     {
         parent::__construct();
         $this->author = $this->container->get(\blog\entity\Author::class);
-        $this->upload = $this->container->get(\blog\file\PostUpload::class);
-        $this->authorForm = new CreateAuthorForm($this->author);
+        $this->upload = $this->container->get(\blog\file\AuthorUpload::class);
+        //$this->authorForm = new CreateAuthorForm($this->author);
         $this->connectForm = new ConnectAuthorForm($this->author);
     }
     
@@ -106,6 +108,7 @@ class AuthorController extends AbstractController
             }
         }
         
+        //$formBuilder = $this->authorForm;
         $formBuilder = new CreateAuthorForm($this->author);
         $form = $formBuilder->buildform($formBuilder->form());
         
@@ -177,7 +180,8 @@ class AuthorController extends AbstractController
             }
         }
         
-        $formBuilder = $this->authorForm;
+        $formBuilder = new CreateAuthorForm($this->author);
+        //$formBuilder = $this->authorForm;
         $form = $formBuilder->buildform($formBuilder->form());
         
         if($this->request->method() == 'POST' && $form->isValid())
@@ -216,7 +220,9 @@ class AuthorController extends AbstractController
             $this->author;
         }
         
+        //$this->connectForm = new ConnectAuthorForm($this->author);
         $formBuilder = $this->connectForm;
+        //$formBuilder = new ConnectAuthorForm($this->author);
         $form = $formBuilder->buildform($formBuilder->form());
 
         if ($this->request->method() == 'POST' && $form->isValid())

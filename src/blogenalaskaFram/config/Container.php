@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\config;
+
 use blog\config\ContainerInterface;
 use blog\exceptions\ServiceNotFoundException;
 use blog\exceptions\ParameterNotFoundException;

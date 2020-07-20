@@ -120,7 +120,8 @@ class Render  implements RendererInterface
         }
         $content = ob_get_clean();
         ob_start();
-        require __DIR__.'/../views/layout.php';
+        //require __DIR__.'/../views/Layout.php';
+        require __DIR__.'/../views/Layout.php';
     }
 
     /**

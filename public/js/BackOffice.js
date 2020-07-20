@@ -3,7 +3,6 @@ $(document).ready( function ()
     var table = $('#displayarticles').DataTable
     (
     {
-        //console.log("je passe dans le js");
         "order": [[ 1, "desc" ]],   
         processing: true,
         ajax:

@@ -32,15 +32,7 @@ class SearchController extends AbstractController
                         ->where('subject LIKE :subject OR content LIKE :content')
                         ->setParams(array('subject' => '%'.$this->request->postData('userSearch').'%', 'content' => '%'.$this->request->postData('userSearch').'%'))
                         ->fetchAll();
-                if($this->userSession()->requireRole('admin','client'))
-                {
-                    $this->getrender()->render('SearchResultView',['mySearchResults' => $mySearchResults]);
-                }
-                else 
-                {
-                    $this->addFlash()->error('Vous n\avez pas acces à cette page!');
-                    return $this->redirect('/connectform');
-                }
+                $this->getrender()->render('SearchResultView',['mySearchResults' => $mySearchResults]);
             }
             else 
             {

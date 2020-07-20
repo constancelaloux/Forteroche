@@ -4,19 +4,18 @@ namespace blog\provider;
 
 /**
  * Description of Route
- *
- * @objet qui représente une route
+ * @objet which represent a route
  */
 
 class Route 
 {
     /**
-     * Correspond au chemin de l'url
+     * Corresponds to the path of the url
      */
     private $path;
     
     /**
-     * Correspond au nom du controller et de sa fonction que l'on inscrit dans la route
+     * Corresponds to the name of the controller and its function that we write in the route
      */
     private $callable;
     
@@ -27,7 +26,7 @@ class Route
     private $matches = [];
     
     /**
-     * Correspond aux paramétres de l'url que l'on ajoute. Id, etc
+     * Corresponds to the parameters of the url that we add. Id, etc
      */
     private $params = [];
 
@@ -36,51 +35,51 @@ class Route
     {
         $this->path = trim($path, '/'); 
         /**
-         * On retire les / inutiles
+         * We remove the / unnecessary
          */
 
         $this->callable = $callable;
     }
     
     /**
-     * Dans le cas ou mes routes ont des paramétres
+     * In case my routes have parameters
      */
     public function with($param, $regex)
     {
         $this->params[$param] = str_replace('(', '(?:', $regex);
-        return $this; /**
-         * On retourne tjrs l'objet pour enchainer les arguments
+        /**
+         * We always return the object to chain the arguments
          */
+        return $this; 
     }
     
     /**
-     * Je vérifie si dans le tableau des routes il y a une route qui correspond à l'url
+     * I check if in the route table there is a route that corresponds to the url
      */
     public function match($request)
     {
         /**
-         * on enléve les / initiaux et finaux de l'url
-         */
-        /**
-         * Supprime les espaces (ou d'autres caractères) en début et fin de chaîne
+         * We remove the / initials and endings of the url
+         * Remove spaces (or other characters) at the beginning and end of the string
          */
         $request = trim($request, '/');
 
         /**
-         * On remplace le :id par une expression réguliére
-         * attention si j'ai un paramétre il faut le remplacer par une expression réguliére
-         * On veut le remplacer par n'importe quoi qui ne soit pas un slash / et on le remplace dans le path qui soit en paramétre
+         * We replace the: id with a regular expression
+         * Attention if I have a parameter it must be replaced by a regular expression
+         * We want to replace it with anything that is not a slash / and we replace it in the path that is in parameter
          */
         $path = preg_replace_callback('#:([\w]+)#', [$this, 'paramMatch'], $this->path);
+        
         /**
-         * On veut transformer ca en expression réguliére qui vérifiera la chaine
+         * We want to transform this into a regular expression that will check the chain
          * i = case sensitive
-         * Le drapeau i permet de vérifier les maj et les minuscules
+         * The flag i allows you to check the upper and lower case
          */
         $regex = "#^$path$#i";
         
         /**
-         * si l'url ne correspond pas
+         * If url doesnt match
          */
         if(!preg_match($regex, $request, $matches))
         {
@@ -88,26 +87,27 @@ class Route
         }
         
         /**
-         * sinon il détecte l'url
+         * Otherwise it will detect the url
          */
         array_shift($matches);
-        $this->matches = $matches;  /**
-         * On sauvegarde les paramètre dans l'instance pour plus tard
+        $this->matches = $matches;  
+        /**
+         * Save the parameters in the instance for later
          */
         
         /**
-         * Si l'url correspond, je retourne true
+         * If the url matches, I return true
          */
         return true;
     }
     
     /**
-     * Dans la cas ou j'ai un paramétre
+     * In case I have a parameter
      */
     private function paramMatch($match)
     {
         /**
-         * si jamais j'ai dans mes params un param qui correspond à l'id, alors 
+         * If I ever have a param in my params that matches the id, then
          */
         if(isset($this->params[$match[1]]))
         {
@@ -117,31 +117,31 @@ class Route
     }
     
     /**
-     * Ensuite, on va ajouter une méthode permettant d'éxécuter la fonction 
-     * anonyme en lui passant les paramètres récupérés lors du preg_match().
-     * J'ai un tableau avec le controller et sa fonction, et ensuite
-     * Je récupére le controller correspondans et je créé une instance pour appeller sa fonction
+     * Then, we will add a method allowing to execute the anonymous function by passing to it the parameters 
+     * recovered during preg_match ().
+     * I have an array with the controller and its function, and then
+     * I get the correspondans controller and I create an instance to call its function
      */
     public function call()
     {
         /**
-         * Si le nom du controller et sa fonction sont bien des strings
+         * If the name of the controller and its function are indeed strings
          * return call_user_func_array($this->callable, $this->matches);
          */
         if(is_string($this->callable))
         {
             /**
-             * Alors g deux éléments dans mon tableau. Le nom du controller et la fonction
+             * I have two elements in my array. The name of the controller and the function
              */
             $params = explode('#', $this->callable);
 
             /**
-             * Je vais vers le controller correspond au nom du controller qui dans le tableau est param index 0
+             * I go to the controller corresponds to the name of the controller which in the table is param index 0
              */
             $controller = "blog\\controllers\\" . $params[0] . "Controller";
             
             /**
-             * Je créé une instance de controller comme ca je peux faire appel à sa fonction
+             * I create a controller instance so I can call its function
              */
             $controller = new $controller();
             return call_user_func_array([$controller, $params[1]], $this->matches);

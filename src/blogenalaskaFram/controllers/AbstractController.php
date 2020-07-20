@@ -4,6 +4,7 @@ namespace blog\controllers;
 
 use blog\config\Container;
 use blog\form\Form;
+use blog\database\EntityManager;
 
 /**
  * Description of AbstractController  
@@ -35,7 +36,7 @@ abstract class AbstractController
         $this->httpResponse = $this->container->get(\blog\HTTPResponse::class);
         $this->flashService = $this->container->get(\blog\error\FlashService::class);
         $this->userSession = $this->container->get(\blog\user\UserSession::class);
-        //$this->form = $this->container->get(\blog\form::class, \blog\database\Model::class);
+        //$this->form = $this->container->get(\blog\form\Form::class);
         //$this->entityManager = $this->container->get(\blog\database\EntityManager::class);
     }
     
@@ -100,6 +101,6 @@ abstract class AbstractController
      */
     protected function getEntityManager($model)
     {
-        return $this->entityManager = new \blog\database\EntityManager($model);
+        return $this->entityManager = new EntityManager($model);
     }
 }

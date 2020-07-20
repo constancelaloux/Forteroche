@@ -4,6 +4,7 @@ namespace blog\controllers;
 
 use blog\controllers\AbstractController;
 use blog\form\ArticlesForm;
+use blog\exceptions\NotFoundHttpException;
 
 /**
  * Description of BacOfficeController
@@ -17,12 +18,17 @@ class BackendController extends AbstractController
     
     protected $upload;
     
+    protected $comment;
+    
+    protected $articleForm;
+    
     public function __construct() 
     {
         parent::__construct();
         $this->post = $this->container->get(\blog\entity\Post::class);
         $this->upload = $this->container->get(\blog\file\PostUpload::class);
         $this->comment = $this->container->get(\blog\entity\Comment::class);
+        //$this->articleForm = new ArticlesForm($this->post);
     }
     /**
      * Show posts board
@@ -121,12 +127,12 @@ class BackendController extends AbstractController
     }
     
     /**
-     * I get an image for the upload
+     * I get an image for the upload and then i return the image path to the view. The goal is to see the image down to the form
      */
     public function uploadImage()
     {
         $this->image = $this->upload->upload($_FILES);
-        return $this->image;
+        echo "/../../../public/images/upload/posts/$this->image";
     }
     
     /**
@@ -214,6 +220,7 @@ class BackendController extends AbstractController
             }
         }
         
+        //$formBuilder = $this->articleForm;
         $formBuilder = new ArticlesForm($this->post);
         $form = $formBuilder->buildform($formBuilder->form());
         
@@ -332,7 +339,7 @@ class BackendController extends AbstractController
         if($this->userSession()->requireRole('admin'))
         {
             $this->addFlash()->success('La news a bien été supprimée !');
-            return $this->redirect('/listofcomments'); 
+            return $this->redirect('/rendercommentspage'); 
         }
         else 
         {

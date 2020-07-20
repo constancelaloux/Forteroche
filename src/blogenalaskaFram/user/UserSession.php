@@ -4,6 +4,7 @@ namespace blog\user;
 use blog\entity\Author;
 use blog\database\EntityManager;
 use blog\session\PHPSession;
+use blog\config\Container;
 
 /**
  * Description of UserSession
@@ -27,12 +28,21 @@ class UserSession
      */
     private $sessionKey = 'user';
     
+    protected $author;
+    
+    protected $entityManager;
+    
+    protected $container;
     /**
      * I make a connection to the session
      */
     public function __construct()
     {
-        $this->session = new PHPSession();
+        $services   = include __DIR__.'/../config/Config.php';
+        $this->container = new Container($services);
+        $this->session = $this->container->get(\blog\session\PHPSession::class);
+        $this->author = $this->container->get(\blog\entity\Author::class);
+        $this->entityManager =  new EntityManager($this->author);
     }
     
     /**
@@ -55,12 +65,14 @@ class UserSession
             return NULL;
         }
         
-        $author = new Author(
+        $this->author->setId($id);
+        /*$author = new Author(
             [
                 'id' =>  $id,
-            ]);
-        $model = new EntityManager($author);
-        $auth = $model->findById($author->id());
+            ]);*/
+        //$model = new EntityManager($this->author);
+        $model = $this->entityManager;
+        $auth = $model->findById($this->author->id());
         return $auth ?: NULL;
     }
     

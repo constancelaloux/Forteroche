@@ -4,10 +4,10 @@ namespace blog\database;
 
 use blog\database\DbConnexion;
 use blog\database\Model;
+use blog\exceptions\ORMException;
 
 /**
  * Description of EntityManager  
- *
  * @author constancelaloux
  */
 class EntityManager extends DbConnexion
@@ -25,26 +25,17 @@ class EntityManager extends DbConnexion
      */
     private $metadata;
     
-    /**
-     * Je récupére dans le constructeur ce que j'ai fait passer à ma class test
-     */
     public function __construct(Model $model)
     {
-        /**
-         * Je me connecte à la base de données
-         */
         $this->pdo = $this->connect();
-        
-        /**
-         * Ensuite je récupare le nom de la class objet
-         */
+
         $reflectionClass = new \ReflectionClass($model);
         
         if($reflectionClass->getParentClass()->getName() == Model::class) 
         {
             $this->model = $model;
             /**
-             * Je récupére si chaque composants de ma class test est un int ou un string, etc
+             * I recover if each component of my class test is an int or a string, etc.
              */
             $this->metadata = $this->model::metadata();
         }
@@ -169,23 +160,8 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * find prend un unique paramètre et recherche l'argument dans la clé primaire de l'entité.
-     * 
-     * findBy prend 4 paramètres ($criteria, $orderBy, $limit, $offset). 
-     * Cette méthode retourne des résultats correspondant aux valeurs des clés demandées.
-     * 
-     * findAll est un alias de findBy([]). Il retourne par conséquent tous les résultats.
-     * 
-     * findOneBy fonctionne comme la méthode findBy mais retourne un unique résultat et non pas un tableau.
-     * 
-     * La méthode __call étant implémentée dans les EntityRepository, sachez que si vous appelez findByUser, 
-     * que cette méthode n'a pas été définie dans votre repository et que vous disposez d'un champ user dans 
-     * votre entité, vous effectuerez une recherche sur ce même champ uniquement.
-     */
-    
-    /**
-     * Check if the is a line in database which correspond to the id we ve put in args
-     * La méthodefind($id)récupère tout simplement l'entité correspondante à l'id$id
+     * Check if the is a line in database which corresponds to the id we ve put in args
+     * The find ($id) method simply retrieves the entity corresponding to the id $id
      * @param type $id
      * @return type
      */
@@ -195,10 +171,8 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * La méthodefindOneBy(array $criteria, array $orderBy = null)
-     * fonctionne sur le même principe que la méthodefindBy(), 
-     * sauf qu'elle ne retourne qu'une seule entité. 
-     * Les argumentslimitetoffset n'existent donc pas. 
+     * The findOneBy method (array $ criteria, array $ orderBy = null) works on the same principle as thefindBy () method, except that it returns only one entity.
+     * The limitetoffset arguments therefore do not exist.
      * @param type $filters
      * @return type
      */
@@ -221,11 +195,11 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * Requéte que l'on va utiliser pour récupérer nos articles
+     * Request that we will use to retrieve our posts
      * FindAll method goes to fetchAll
-     * La méthode findAll()retourne toutes les entités contenue dans la base de données.
-     *  Le format du retour est un tableau PHP normal (un array), que vous pouvez parcourir 
-     * (avec unforeachpar exemple) pour utiliser les objets qu'il contient
+     * The findAll () method returns all the entities contained in the database.
+     * The return format is a normal PHP array (an array), which you can browse (with unforeach for example) 
+     * to use the objects it contains
      * @return type
      */
     public function findAll()
@@ -234,11 +208,11 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * find a line or many lines with a spécify arg
-     * La méthodefindBy()est un peu plus intéressante. CommefindAll(), elle permet de retourner une liste d'entités, 
-     * sauf qu'elle est capable d'effectuer un filtre pour ne retourner que les entités correspondant à 
-     * un ou plusieurs critère(s). Elle peut aussi trier les entités, et même n'en récupérer 
-     * qu'un certain nombre (pour une pagination).
+     * Find a line or many lines with a spécify arg
+     * The findBy () method is a little more interesting. LikeindAll (), 
+     * it allows you to return a list of entities, except that it is capable of performing a filter to 
+     * return only the entities corresponding to one or more criteria. It can also sort the entities, 
+     * and even retrieve only a certain number (for pagination).
      * @param type $filters
      * @param type $orderBy
      * @param type $length
@@ -266,10 +240,9 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * Vous connaissez le principe des méthodes magiques, 
-     * comme__call()qui émule des méthodes. Ces méthodes émulées 
-     * n'existent pas dans la classe, elle sont prises en charge par__call()qui va exécuter du code en 
-     * fonction du nom de la méthode appelée.
+     * You know the principle of magic methods, like __call () which emulates methods. 
+     * These emulated methods do not exist in the class, they are supported by__call () which will execute 
+     * code according to the name of the method called.
      * @param type $name
      * @param type $arguments
      * @return type
@@ -288,7 +261,7 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * La méthode findAll retourne toutes les catégories de la base de données
+     * The fetchAll method returns all the categories of the database
      * @param type $filters
      * @param type $sorting
      * @param type $length
@@ -330,7 +303,7 @@ class EntityManager extends DbConnexion
     }
     
     /**
-     * Spécifie l'odre de récupération
+     * Specify recovery order
      * @param type $sorting
      * @return string
      */
@@ -383,3 +356,18 @@ class EntityManager extends DbConnexion
         return "";
     }  
 }
+    
+    /**
+     * find prend un unique paramètre et recherche l'argument dans la clé primaire de l'entité.
+     * 
+     * findBy prend 4 paramètres ($criteria, $orderBy, $limit, $offset). 
+     * Cette méthode retourne des résultats correspondant aux valeurs des clés demandées.
+     * 
+     * findAll est un alias de findBy([]). Il retourne par conséquent tous les résultats.
+     * 
+     * findOneBy fonctionne comme la méthode findBy mais retourne un unique résultat et non pas un tableau.
+     * 
+     * La méthode __call étant implémentée dans les EntityRepository, sachez que si vous appelez findByUser, 
+     * que cette méthode n'a pas été définie dans votre repository et que vous disposez d'un champ user dans 
+     * votre entité, vous effectuerez une recherche sur ce même champ uniquement.
+     */

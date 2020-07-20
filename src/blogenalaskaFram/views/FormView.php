@@ -1,4 +1,3 @@
-<?php print_r($_SESSION); ?>
 <section class="createAuthorForm">
     <div class="container">
         <div class="row justify-content-center">
@@ -14,13 +13,8 @@
                                 echo $form;
                             }
                     ?>
-                    <div id="preview">
-                        <?php   if(isset($image))
-                                {
-                                    echo $image;
-                                }
-                        ?>
-                    </div><br>
+                    <div id="preview"><img src="" /></div><br>
+                    <!--<div id="preview"></div><br>-->
                     <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>
                     <!--</p>-->
                 </form>

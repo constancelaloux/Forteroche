@@ -1,6 +1,3 @@
-<?php
-print_r($_SESSION);
-?>
 <div class="section-article">
     <div class="container">
         <div class="row">
@@ -37,7 +34,7 @@ print_r($_SESSION);
                                     if($comment->idclient() == $_SESSION['authorId'])
                                     {
                                 ?>
-                                    <form action="/updatecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
+                                    <form action="/article&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">
                                         <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="modify" value="Modifier"/>
                                     </form>
                                     <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id ?>" method="post">

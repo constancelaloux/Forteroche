@@ -6,6 +6,7 @@ use blog\controllers\AbstractController;
 use blog\form\CommentsForm;
 use blog\database\Query;
 use blog\Paginate;
+use blog\exceptions\NotFoundHttpException;
 
 /**
  * Description of FrontendController
@@ -13,7 +14,7 @@ use blog\Paginate;
  */
 class FrontendController extends AbstractController
 {
-    private $perPage;
+    public $perPage;
     
     public $post;
     
@@ -27,12 +28,22 @@ class FrontendController extends AbstractController
     
     public $nextLink;
     
+    public $commentForm;
+    
+    public $paginatedQueryPost;
+    
+    public $paginateQueryComment;
+    
     public function __construct() 
     {
         parent::__construct();
         $this->post = $this->container->get(\blog\entity\Post::class);
         $this->comment = $this->container->get(\blog\entity\Comment::class);
         $this->author =  $this->container->get(\blog\entity\Author::class);
+        //$this->commentForm = new CommentsForm($this->comment);
+        //$this->paginatedQueryPost = new Paginate($this->post, $this->perPage);
+        //$this->paginateQueryComment = new Paginate($this->comment, $this->perPage);
+        //new Query($this->comment, $this->author)
     }
     
     /*
@@ -56,12 +67,12 @@ class FrontendController extends AbstractController
          * Paginate
          */
         $model = $this->getEntityManager($this->post);
-        $perPage = 9;
-        $paginatedQuery = new \blog\Paginate($this->post, $perPage);
-        $offset = $paginatedQuery->getItems();
-        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $perPage, $offset = $offset);
-        $previouslink = $paginatedQuery->previouslink();
-        $nextlink = $paginatedQuery->nextlink();
+        $this->perPage = 9;
+        $this->paginatedQueryPost = new Paginate($this->post, $this->perPage);
+        $offset = $this->paginatedQueryPost->getItems();
+        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
+        $previouslink = $this->paginatedQueryPost->previouslink();
+        $nextlink = $this->paginatedQueryPost->nextlink();
         $this->getrender()->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $previouslink, 'nextlink' => $nextlink, 'lastsposts' => $lastsposts]);
     }
     
@@ -73,7 +84,7 @@ class FrontendController extends AbstractController
         /**
          * I show the comments
          */
-        $comments = $this->renderPaginatedComments($_GET['id']);
+        $comment = $this->renderPaginatedComments($_GET['id']);
         
         /**
          * Get the lasts posts
@@ -83,7 +94,8 @@ class FrontendController extends AbstractController
         /**
          * Show the form to write the comments
          */
-        $commentform = $this->createComment();
+        //$commentform = $this->createComment();
+        $commentform = $this->processForm();
         
         /**
          * Show posts depends of id
@@ -93,7 +105,7 @@ class FrontendController extends AbstractController
         /**
          * Show the page with all the components
          */
-        $this->getrender()->render('ArticleView', ['post' => $postFromId, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $this->previousLink, 'nextlink' => $this->nextLink, /*'posts' => $posts,*/ 'comments' => $comments]);
+        $this->getrender()->render('ArticleView', ['post' => $postFromId, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $this->previousLink, 'nextlink' => $this->nextLink, /*'posts' => $posts,*/ 'comments' => $comment]);
     }
     
     /**
@@ -123,9 +135,9 @@ class FrontendController extends AbstractController
     public function renderPaginatedComments($id)
     {
         $query = NULL;
-        $perPage = 5;
-        $this->paginateQuery = new Paginate($this->comment, $perPage);
-        $offset = $this->paginateQuery->getItems();
+        $this->perPage = 5;
+        $this->paginateQueryComment = new Paginate($this->comment, $this->perPage);
+        $offset = $this->paginateQueryComment->getItems();
         
         $this->comment->setIdpost($id);
         $this->comment->setStatus('Valider');
@@ -134,16 +146,16 @@ class FrontendController extends AbstractController
         if($model->exist(['idpost'=>$this->comment->idpost()]))
         { 
             $comments = $query = (new Query($this->comment, $this->author))
-                    ->from('comments', 'c')
+                    ->from('comment', 'c')
                     ->select('c.id id','c.subject subject', 'a.image image', 'c.id_client id_client', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
                     ->join('author as a', 'c.id_client = a.id', 'inner')
                     ->where('id_post = :idpost')
                     ->setParams(array('idpost' => $this->comment->idpost()))
                     ->orderBy('create_date', 'ASC')
-                    ->limit($perPage, $offset)
+                    ->limit($this->perPage, $offset)
                     ->fetchAll();
-            $this->previousLink = $this->paginateQuery->previouslink();
-            $this->nextLink = $this->paginateQuery->nextlink();
+            $this->previousLink = $this->paginateQueryComment->previouslink();
+            $this->nextLink = $this->paginateQueryComment->nextlink();
             return $comments;
         }
     }
@@ -185,7 +197,7 @@ class FrontendController extends AbstractController
         }
         else
         {
-            $this->addFlash()->error('Vous ne pouvez pas supprimer ce commentaire!');
+            $this->addFlash()->error('Vous ne pouvez pas modifier ce commentaire!');
             $id = $this->request->postData('idpost');
             return $this->redirect("/article&id=$id");
         }
@@ -229,7 +241,7 @@ class FrontendController extends AbstractController
             $this->comment->setContent($this->request->postData('content'));
             $this->comment->setStatus($this->request->postData('validate'));
             
-            if($idComment)
+            if(isset($idComment))
             {
                 $this->comment->setUpdatedate(date("Y-m-d H:i:s"));
             }
@@ -248,16 +260,17 @@ class FrontendController extends AbstractController
             $this->comment->setIdpost($this->request->postData('idpost'));
         }
         
+        //$formBuilder = $this->commentForm;
         $formBuilder = new CommentsForm($this->comment);
         $form = $formBuilder->buildform($formBuilder->form());
         
         if ($this->request->method() == 'POST' && $form->isValid())
-        {  
+        {
             $model = $this->getEntityManager($this->comment);
             $model->persist($this->comment);
             $this->addFlash()->success('Votre commentaire a bien été ajoutée !');
-            $id = $this->request->postData('idpost');
-            
+            //$id = $this->request->postData('idpost');
+            $id = $this->request->getData('id');
             if(!is_null($this->request->getData('idcomment')))
             {   
                 $id = $this->request->getData('id');
@@ -267,16 +280,39 @@ class FrontendController extends AbstractController
             {
                 return $this->redirect("/article&id=$id");
             }
+            //return $this->redirect("/article&id=$id");
         }
-        
         if($this->userSession()->requireRole('client', 'admin'))
         {
-            return $form->createView();       
+            return $form->createView(); 
         }
         else 
         {
             return $this->addFlash()->error('Veuillez vous inscrire pour ajouter un commentaire!');
         }
+        /*if($this->userSession()->requireRole('client', 'admin'))
+        {*/
+        /*}
+        else 
+        {
+            return $this->addFlash()->error('Veuillez vous inscrire pour ajouter un commentaire!');
+        }*/
+            //die('meurs');
+            //return $formView = $form->createView();
+            //return $this->redirect("/article&id=$id&form=$formView");
+        
+        //}
+        //return $form->createView();
+                        //return $this->redirect("/article&id=$id&idcomment=$idComment");
+            /*if(!is_null($this->request->getData('idcomment')))
+            {   
+                $id = $this->request->getData('id');
+                return $this->redirect("/article&id=$id&idcomment=$idComment");
+            }
+            else
+            {
+                return $this->redirect("/article&id=$id");
+            }*/
     }
     
     /*
@@ -302,5 +338,15 @@ class FrontendController extends AbstractController
                 return $this->redirect("/article&id=$postid");
             }
         }  
-    }  
+    }
+    
+    /**
+     * Redirect to main page with a success message after submit the email form
+     * @return type
+     */
+    public function sendEmailToAuthor()
+    {
+        $this->addFlash()->success('Votre email a bien été envoyé!');
+        return $this->redirect("/articles:page=1");
+    }
 }

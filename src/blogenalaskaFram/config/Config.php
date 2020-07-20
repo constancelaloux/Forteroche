@@ -19,10 +19,11 @@ return [
     \blog\user\UserSession::class => [
         'class' => \blog\user\UserSession::class,
         ],
-    \blog\form\Form::class => [
-        'class' => \blog\form\Form::class,\blog\database\Model::class,
+    /*\blog\form\Form::class => [
+        'class' => \blog\form\Form::class,*/
         //'parameter' =>\blog\database\Model::class,
-        ], 
+        //\blog\database\Model::class,
+       // ], 
     \blog\entity\Author::class => [
         'class' => \blog\entity\Author::class,
         ],
@@ -33,10 +34,28 @@ return [
         'class' => \blog\database\EntityManager::class,
         ],
     \blog\entity\Comment::class => [
-    'class' => \blog\entity\Comment::class,
+        'class' => \blog\entity\Comment::class,
     ],
     \blog\entity\Post::class => [
-    'class' => \blog\entity\Post::class,
+        'class' => \blog\entity\Post::class,
+    ],
+    \blog\form\ArticlesForm::class => [
+        'class' => \blog\form\ArticlesForm::class,
+    ],
+    \blog\form\StringField::class => [
+        'class' => \blog\form\StringField::class,
+    ],
+    \blog\form\TextField::class => [
+        'class' => \blog\form\TextField::class,
+    ],
+    \blog\DotEnv::class => [
+        'class' => \blog\DotEnv::class,
+    ],
+    \blog\session\PHPSession::class => [
+        'class' => \blog\session\PHPSession::class, 
+    ],
+    \blog\file\AuthorUpload::class => [
+        'class' => \blog\file\AuthorUpload::class, 
     ],
     /*'renderer' => function()
     {

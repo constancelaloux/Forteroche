@@ -1,6 +1,3 @@
-<?php 
-print_r($_SESSION);
-?>
 <p>Réservé à l'admin</p>
 <section class="articles">
     <div class="container">

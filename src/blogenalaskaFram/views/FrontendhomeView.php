@@ -1,6 +1,3 @@
-<?php
-print_r($_SESSION);
-?>
 <header class="head" id="head">
     <div class="container-fluid">   
         <div class="row">
@@ -157,7 +154,7 @@ print_r($_SESSION);
     <div class="container rounded mb-4 ">
         <div class="row justify-content-center">
             <div class="col-lg-6 pb-4">
-                <form>
+                <form action="/sendEmail" method="post" enctype="multipart/form-data">
                     <h2 class="display-4 font-italic">Contactez nous</h2>
                     <div class="form-group">
                         <label for="inputSubject">Sujet</label>

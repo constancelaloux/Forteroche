@@ -4,12 +4,14 @@ namespace blog\file;
 
 use blog\file\UploadedFilesInterface;
 
+use blog\HTTPResponse;
+
 /**
  * Description of Upload
  *
  * @author constancelaloux
  */
-class Upload 
+class Upload implements UploadedFilesInterface
 {
     /**
      * The path where we want to save
@@ -24,8 +26,8 @@ class Upload
     /**
      * Allowed origins to upload images
      */
-    protected $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888");
-
+    //protected $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888",  "http://www.jeanforteroche.ozoisans.com");
+protected $accepted_origins = array("http://www.jeanforteroche.ozoisans.com");
     /**
      * Images upload path
      */
@@ -37,8 +39,11 @@ class Upload
     
     protected $filename;
     
+    protected $HTTPResponse;
+    
     public function __construct(?string $path = null)
     {
+        $this->HTTPResponse = new HTTPResponse();
         /**
          * If the path is defined
          */
@@ -61,19 +66,25 @@ class Upload
     private function getClientFilename(array $file)
     {
         $this->tmp = current($file);
+        
+        //print_r($this->tmp);
         if(is_uploaded_file($this->tmp['tmp_name']))
         {
             if(isset($_SERVER['HTTP_ORIGIN']))
             {
+                //print_r($_SERVER['HTTP_ORIGIN']);
+                //print_r($this->accepted_origins);
                 /**
                  * Same-origin requests won't set an origin. If the origin is set, it must be valid.
                  */
                 if(in_array($_SERVER['HTTP_ORIGIN'], $this->accepted_origins))
                 {
+                    //die("meurs");
                     header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
                 }
                 else
                 {
+                    //die('meurs denied');
                     header("HTTP/1.1 403 Origin Denied");
                     return;
                 }
@@ -106,6 +117,11 @@ class Upload
      */
     public function moveTo($targetPath)
     {
+        //print_r($this->tmp['tmp_name']);
+        //print_r(__DIR__.$targetPath);
+        //die('meurs');
+        
+        //if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         {
         /**
@@ -139,6 +155,8 @@ class Upload
              * I get the name of the file
              */
             $this->filename = $this->getClientFilename($file);
+            //print_r($this->filename);
+            //die('meurs');
 
             /**
              * I add the image in the target path and a copy with the copy extension if the image already exists
@@ -170,7 +188,8 @@ class Upload
             if(!empty($this->filename))
             {
                 $showImage = $this->path.DIRECTORY_SEPARATOR.$image;
-                echo "<img src='$showImage' />";
+                //echo "<img src='$showImage' />";
+                //return $showImage;
                 return $path_parts['basename'];
             }
     }

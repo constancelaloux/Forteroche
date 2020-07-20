@@ -4,9 +4,10 @@
         <span class="navbar-toggler-icon"></span>
     </button>
     <a class="navbar-brand" href="#">
-        <img src="/../../public/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+        <img src="/../../../public/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
         Jean Forteroche
     </a>
+    <!---<img class="img-responsive w-100" src="/../../../public/images/upload/posts/test.jpg" alt="logo">-->
 
     <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">

@@ -34,11 +34,10 @@ $(document).ready( function ()
             {
                 data: null,
                 className: "center",
-                defaultContent: '<button type="button" class="btn btn-danger" id="btn-delete">Supprimer</button>'
+                defaultContent: '<td><button type="button" class="btn btn-danger" id="btn-delete">Supprimer</button></td>'
             }
         ]
-    }
-    );
+    });
     
     // La liste des articles dans le tableau est numéroté
     //  create index for table at columns zero
@@ -50,12 +49,12 @@ $(document).ready( function ()
         });
     }).draw();
 
-        //Boutons
-        if($("#listofpost").click(function() 
-            {
-                $.fn.dataTable.ext.search.pop();
-                table.draw();
-            }));
+    //Boutons
+    if($("#listofcomments").click(function() 
+    {
+        $.fn.dataTable.ext.search.pop();
+        table.draw();
+    }));
 
     //Supprimer des articles
     $('#displaycomments').on( 'click', '#btn-delete', function () 
@@ -67,9 +66,10 @@ $(document).ready( function ()
 
         if(confirm("Voulez vous supprimer ce commentaire?"))
         {
+            console.log(id);
             $.ajax
             ({
-                url:"/deletecommentfrombackend",
+                url:"/deletecomment",
                 method:"POST",
                 data:{id:id},
                 dataType: 'html',
@@ -77,7 +77,9 @@ $(document).ready( function ()
                 {
                     //table.ajax.reload();
                     //var url = "/blogenalaska/index.php?action=updateArticles&id="+id;
-                    var url = '/rendercommentspage';
+                    //var url = '/rendercommentspage';
+                    //window.location.href = url;
+                    var url = '/confirmdeletecomment';
                     window.location.href = url;
                 },
                 error:function(response)

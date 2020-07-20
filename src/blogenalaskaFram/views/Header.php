@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="/../../public/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
+            <img src="/../../../public/images/logo.png" width="30" height="30" class="d-inline-block align-top" alt="logo">
             Jean Forteroche
         </a>
 

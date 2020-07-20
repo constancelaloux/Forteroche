@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\exceptions;
+
 use Exception;
 
 /**

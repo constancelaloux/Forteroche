@@ -3,6 +3,7 @@
 namespace blog\database;
 
 use DateTime;
+use blog\exceptions\ORMException;
 
 /**
  * Class Model
@@ -38,7 +39,7 @@ class Model
     {
         if(empty($result)) 
         {
-            //throw new ORMException("Aucun résultat n'a été trouvé !");
+            throw new ORMException("Aucun résultat n'a été trouvé !");
         }
         $this->originalData = $result;
 

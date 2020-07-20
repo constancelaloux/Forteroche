@@ -6,17 +6,16 @@ use blog\database\Model;
 
 /**
  * Description of Author
- *  La class auteur a pour rôle de représenter un auteur
- * présent en BDD. Elle n'a en aucun cas pour rôle de les gérer.
+ * The role of the author class is to represent an author present in BDD. It has no role to manage them.
  */
 class Author extends Model
 {
     
     /**
-     * On utilise le trait Hydrator afin que notre objet Author puisse être hydraté
-     * Hydratation = assigner des valeurs aux attributs passées en paramétres. 
-     * Un tableau de données doit etre passé à la fonction(d'ou le préfixe "array")
-     * celle-ci doit permettre d'assigner aux attributs de l'objet les valeurs correspondantes, passées en paramètre dans un tableau
+     * We use the Hydrator trait so that our Author object can be hydrated
+     * Hydration = assign values ​​to attributes passed in parameters.
+     * An array of data must be passed to the function (hence the prefix "array")
+     * this must make it possible to assign the attributes of the object the corresponding values, passed in parameter in an array
      */
 
       public $id,
@@ -27,6 +26,7 @@ class Author extends Model
             $status,
             $image,
             $slugimage;
+      
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
@@ -66,10 +66,10 @@ class Author extends Model
     const IMAGE_INVALIDE = 6;
     
     /**
-     *Ici, le constructeur demande la force et les dégâts initiaux du personnage que l'on vient de créer. 
-     * Il faudra donc lui spécifier en paramétre dans pdoConnection.
-     * Il ne manque plus qu'à implémenter le constructeur pour qu'on puisse directement hydrater notre objet lors de l'instanciation de la classe.
-     * Pour cela, ajoutez un paramètre :$donnees. Appelez ensuite directement la méthodehydrate().
+     * Here, the builder requests the initial strength and damage for the character you just created.
+     * It will therefore be necessary to specify it as a parameter in pdoConnection.
+     * It only remains to implement the constructor so that we can directly hydrate our object when instantiating the class.
+     * To do this, add a parameter: $ data. Then call the hydrate () method directly.
     */
 
     public function isValid()
@@ -117,10 +117,10 @@ class Author extends Model
 
     /**
      * Getters
-     * Actuellement, les attributs de nos objets sont inaccessibles. 
-     * Il faut créer des getters pour pouvoir les lire, et des setters pour pouvoir modifier leurs valeurs.
-     * Liste des getters. Je pourrais réutiliser les fonctions par la suite. 
-     * un getter est une méthode chargée de renvoyer la valeur d'un attribut
+     * Currently, the attributes of our objects are inaccessible.
+     * You have to create getters to be able to read them, and setters to be able to modify their values.
+     * List of getters. I could reuse the functions later. a getter is a method responsible for returning 
+     * the value of an attribute
     */
     
     /**
@@ -190,10 +190,6 @@ class Author extends Model
     }
     /**
      * Setters
-     * un setter est une méthode chargée d'assigner une valeur à un 
-     * attribut en vérifiant son intégrité (si vous assignez la valeur 
-     * sans aucun contrôle, vous perdez tout l'intérêt qu'apporte le 
-     * principe d'encapsulation).
     */
     
     /**
@@ -248,7 +244,7 @@ class Author extends Model
         $this->username = $username;
     }
     
-        /**
+    /**
      * @param type $username
      */
     public function setImage($image)

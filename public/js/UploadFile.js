@@ -12,8 +12,8 @@ $(document).ready(function() {
             processData:false,
             success: function(data)
             {
-                //$("#preview").html(data).fadeIn();
-                $('#preview').html(data);
+                //$('#preview').html(data);
+                $('#preview img').attr('src',data);
                 $('.image').attr("value",data);
             },
             error: function(xhr, ajaxOptions, thrownError) 
