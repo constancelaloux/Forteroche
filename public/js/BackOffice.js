@@ -83,10 +83,8 @@ $(document).ready( function ()
     //Supprimer des articles
     $('#displayarticles').on( 'click', '#btn-delete', function () 
     {
-        //var id = $(this).attr("id");
         var datas = table.row( $(this).parents('tr') ).data();
         var id = datas[ 0 ];
-        //alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
 
         if(confirm("Voulez vous supprimer cet article?"))
         {
@@ -98,8 +96,6 @@ $(document).ready( function ()
                 dataType: 'html',
                 success:function(data)
                 {
-                    //table.ajax.reload();
-                    //var url = "/blogenalaska/index.php?action=updateArticles&id="+id;
                     var url = '/confirmdeletepost';
                     window.location.href = url;
                 },
@@ -114,10 +110,8 @@ $(document).ready( function ()
     //Modifier des articles
     $('#displayarticles').on( 'click', '#btn-update', function (e) 
     {
-        //e.preventDefault();
         var datas = table.row( $(this).parents('tr') ).data();
         var id = datas[ 0 ];
-        //alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
 
         //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row

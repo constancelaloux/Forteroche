@@ -3,7 +3,6 @@ $(document).ready( function ()
     var table = $('#displaycomments').DataTable
     (
     {
-        //console.log("je passe dans le js");
         "order": [[ 1, "desc" ]],   
         processing: true,
         ajax:
@@ -59,10 +58,8 @@ $(document).ready( function ()
     //Supprimer des articles
     $('#displaycomments').on( 'click', '#btn-delete', function () 
     {
-        //var id = $(this).attr("id");
         var datas = table.row( $(this).parents('tr') ).data();
         var id = datas[ 0 ];
-        //alert(datas[0] +"'s salary is: "+ datas[ 0 ] );
 
         if(confirm("Voulez vous supprimer ce commentaire?"))
         {
@@ -75,10 +72,6 @@ $(document).ready( function ()
                 dataType: 'html',
                 success:function(data)
                 {
-                    //table.ajax.reload();
-                    //var url = "/blogenalaska/index.php?action=updateArticles&id="+id;
-                    //var url = '/rendercommentspage';
-                    //window.location.href = url;
                     var url = '/confirmdeletecomment';
                     window.location.href = url;
                 },

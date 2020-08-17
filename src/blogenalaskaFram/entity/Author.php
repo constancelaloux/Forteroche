@@ -18,7 +18,7 @@ class Author extends Model
      * this must make it possible to assign the attributes of the object the corresponding values, passed in parameter in an array
      */
 
-      public $id,
+      protected $id,
             $password,
             $username,
             $firstname,

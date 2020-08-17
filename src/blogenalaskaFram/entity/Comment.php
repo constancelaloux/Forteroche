@@ -14,7 +14,7 @@ class Comment extends Model
     /**
      * @var array
      */
-    public $id,
+    protected $id,
       $idclient,
       $idpost,
       $createdate,

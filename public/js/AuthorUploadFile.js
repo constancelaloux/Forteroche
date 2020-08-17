@@ -4,7 +4,7 @@ $(document).ready(function() {
         var form_data = new FormData();                  
         form_data.append('file', file_data);
         $.ajax({
-            url: "/uploadimage",
+            url: "/authoruploadimage",
             type: "POST",
             data: form_data,
             contentType: false,
@@ -23,5 +23,3 @@ $(document).ready(function() {
         });
     });
 });
-
-

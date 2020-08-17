@@ -8,11 +8,9 @@
                         <img class="mb-1" src="/../../public/images/logo.png" alt="Jean Forteroche">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
-                    <?php   if(isset($form))
-                            {
+                    <?php   if(isset($form)):
                                 echo $form;
-                            }
-                    ?>
+                    endif; ?>
                     <div id="preview"><img src="" /></div><br>
                     <!--<div id="preview"></div><br>-->
                     <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>

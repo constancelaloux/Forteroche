@@ -33,7 +33,7 @@ class Form
         /**
          * We assign the corresponding value to the field.
          */
-        $field->setValue($this->entity->$attr);
+        $field->setValue($this->entity->$attr());
         /**
          *  We add the field passed as an argument to the list of fields.
          */
@@ -83,5 +83,10 @@ class Form
     public function setEntity(Model $entity)
     {
         $this->entity = $entity;
+    }
+    
+    public function emptyFields()
+    {   
+        
     }
 }

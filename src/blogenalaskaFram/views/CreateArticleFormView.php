@@ -8,11 +8,10 @@
                     <div class="text-center mb-4">
                         <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                     </div>
-                    <?php if(isset($form))
-                            {
+                    <?php if(isset($form)):
                                 echo $form;
-                            } ?>
-                    <div id="preview"><img src="" /></div><br>
+                    endif; ?>
+                    <div id="preview"><img src="<?php echo $image ?>" /></div><br>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
                     <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="save" value="Sauvegarder"/>
                     <!--</p>-->

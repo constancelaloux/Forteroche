@@ -26,8 +26,11 @@ class Upload implements UploadedFilesInterface
     /**
      * Allowed origins to upload images
      */
-    //protected $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888",  "http://www.jeanforteroche.ozoisans.com");
-protected $accepted_origins = array("http://www.jeanforteroche.ozoisans.com");
+    // /!\ LOCALHOST
+    protected $accepted_origins = array("http://localhost:8888", "http://127.0.0.1:8888",  "http://www.jeanforteroche.ozoisans.com");
+    
+    // /!\ ONLINE
+    //protected $accepted_origins = array("http://www.jeanforteroche.ozoisans.com");
     /**
      * Images upload path
      */
@@ -118,7 +121,7 @@ protected $accepted_origins = array("http://www.jeanforteroche.ozoisans.com");
     public function moveTo($targetPath)
     {
         //print_r($this->tmp['tmp_name']);
-        //print_r(__DIR__.$targetPath);
+        //print_r($targetPath);
         //die('meurs');
         
         //if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))

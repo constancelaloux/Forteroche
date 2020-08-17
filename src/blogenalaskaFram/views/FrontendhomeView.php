@@ -10,33 +10,28 @@
     <div class="container">
         <div class="row mb-4">
             <?php
-            foreach ($lastsposts as $post) 
-            {
-            ?>
+            foreach ($lastsposts as $post): ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="<?= $post->image() ?>" alt="Card image cap">
+                    <!--<div class="d-flex border w-100" style="height:200px">-->
+                        <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
+                    <!--</div>-->
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
-                    <h3><?= $post->subject() ?></h3>
-                    <p><?php if (strlen($post->content()) <= 400)
-                        {
-                            echo $post->content();
-                        }
-                    else
-                        {
+                    <h3><?= htmlspecialchars($post->subject())?></h3>
+                    <p><?php if(strlen(htmlspecialchars($post->content())) <= 400):
+                                echo $post->content();
+                        else:
                             //Returns the portion of string specified by the start and length parameters.
                             $debut = substr($post->content(), 0, 400);
                             $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
 
                             echo $debut;
-                        }?>
+                        endif;?>
                         
-                    <a href="/article&id=<?=$post->id()?>" class="text-danger">Lire la suite</a></p>
+                    <a href="/article&id=<?=$post->id() ?>&page=1" class="text-danger">Lire la suite</a></p>
                 </div>
             </div>
-            <?php
-            }
-            ?>
+            <?php endforeach; ?>
         </div>
     </div>
 </section>
@@ -51,54 +46,39 @@
             </div>
 
             <div class="row mb-4">
-                <?php          
-                if(empty($posts))
-                {
-                ?>
-                    <p>Aucun article n'a encore été posté. Soyez le premier à en laisser un !</p>
-                <?php
-                }
-                else 
-                {
-                ?>           
-                    <?php
-                    foreach($posts as $post) 
-                    {
-                     ?>
+                <?php if(empty($posts)): ?>
+                    <p>Il n'y a pas d'article sur cette page, allez à la page précédente</p>
+                <?php else:          
+                    foreach($posts as $post): ?>
                     <div class="col-lg-4">
                         <div class="cards h-100">
                             <div class="overlay-image">
-                                <img class="card-img-top img-responsive w-100" src="<?= $post->image() ?>" alt="Card image cap">
+                                <!--<div class="d-flex border w-100" style="height:200px">-->
+                                <img class="card-img-top img-responsive w-100" src="<?=htmlspecialchars($post->image())?>" alt="Card image cap">
+                               <!-- </div>-->
                                 <div class="overlay-item-caption smoothie"></div>
                                 <div class="hover-item-caption smoothie">
-                                    <h3 class="text"><a href="/article&id=<?=$post->id()?>" class="stretched-link" title="view article">View</a></h3>
+                                    <h3 class="text"><a href="/article&id=<?= $post->id() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-danger"><?= $post->subject() ?></strong>
+                                <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->subject())?></strong>
                                 <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
-                                <div class="mb-1 text-muted"><?=$post->createdate()->format('Y-m-d')?> Posté par Jean Forteroche</div>
+                                <div class="mb-1 text-muted"><?=htmlspecialchars($post->createdate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
                             </div>
                         </div>  
                     </div>
-                    <?php
-                    }
-                }
-                ?>
+                    <?php endforeach;
+                endif; ?>
             </div>
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $previouslink ?>">Prévious</a></li>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($previouslink)?>">Prévious</a></li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=1">1</a></li>
-                        <li class="page-item active" aria-current="page">
-                            <a class="page-link text-danger" href="/articles&page=2">
-                                2
-                                <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
+                        <li class="page-item" aria-current="page"><a class="page-link text-danger" href="/articles&page=2">2</a></li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=3">3</a></li>
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo $nextlink ?>">Next</a></li>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($nextlink)?>">Next</a></li>
                     </ul>
                 </nav>
             </div>
@@ -140,7 +120,7 @@
                         <img class="card-img-top img-responsive w-100" src="/../../public/images/livre3.jpg" alt="Card image cap">
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
-                            <h3 class="card-title"><strong>Conseils photo pour les voyageurs</strong></h3>
+                            <h3 class="card-title"><strong>Conseils photo pour voyageurs</strong></h3>
                             <a href="/article" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
@@ -186,7 +166,3 @@
         </div>
     </div>
 </section>
-
-<script>
-$('#spy').scrollspy({ target: '#navbar' });
-</script>

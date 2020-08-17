@@ -9,7 +9,7 @@ use blog\file\Upload;
  *
  * @author constancelaloux
  */
-class AuthorUpload 
+class AuthorUpload extends Upload
 {
     protected $path = '/../../../public/images/upload/user';
     protected $newwidth = 150;

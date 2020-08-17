@@ -219,10 +219,9 @@ class AuthorController extends AbstractController
         {
             $this->author;
         }
-        
-        //$this->connectForm = new ConnectAuthorForm($this->author);
+
         $formBuilder = $this->connectForm;
-        //$formBuilder = new ConnectAuthorForm($this->author);
+        
         $form = $formBuilder->buildform($formBuilder->form());
 
         if ($this->request->method() == 'POST' && $form->isValid())
@@ -311,6 +310,6 @@ class AuthorController extends AbstractController
     public function uploadImage()
     {
         $this->image = $this->upload->upload($_FILES);
-        return $this->image;
+        echo "/../../../public/images/upload/user/$this->image";
     }
 }

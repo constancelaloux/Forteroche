@@ -22,3 +22,4 @@ $loader->addNamespace('blog\entity', __DIR__ . '../../src/blogenalaskaFram/entit
 $loader->addNamespace('blog\file', __DIR__ . '../../src/blogenalaskaFram/file');
 $loader->addNamespace('blog\error', __DIR__ . '../../src/blogenalaskaFram/error');
 $loader->addNamespace('blog\user', __DIR__ . '../../src/blogenalaskaFram/user');
+$loader->addNamespace('blog\service', __DIR__ . '../../src/blogenalaskaFram/service');

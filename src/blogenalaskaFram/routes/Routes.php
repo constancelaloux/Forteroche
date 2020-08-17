@@ -12,20 +12,14 @@ $router->get('/articles:page', "Frontend#renderPaginatedposts");
 
 //Route qui va vers un article du frontend
 $router->get('/article:id:page', "Frontend#renderPost");
+$router->post('/article:id:page', "Frontend#renderPost");
 
 //Route qui va vers un article du frontend et vers le commentaire qui peut etre modifié
-$router->get('/article:id:idcomment', "Frontend#renderPost");
+//$router->get('/article:id:idcomment', "Frontend#renderPost");
 $router->post('/article:id:idcomment', "Frontend#renderPost");
-
-//Route qui permet de créer un commentaire
-$router->post('/article:id', "Frontend#createComment");
 
 //Route qui envoi un email
 $router->post('/sendEmail', "Frontend#sendEmailToAuthor");
-
-//Route qui permet de modifier un commentaire
-$router->post('/updatecomment:id:idcomment', "Frontend#updateComment");
-$router->get('/updatecomment:id:idcomment', "Frontend#updateComment");
 
 //Route qui permet de supprimer un commentaire
 $router->post('/deletecomment:id:idcomment', "Frontend#deleteComment");
@@ -55,6 +49,8 @@ $router->post('/updateuser:id', "Author#updateUser");
 //Route qui supprime un utilisateur
 $router->get('/deleteuser:id', "Author#deleteUser");
 
+// Route qui upload une image utilsateur
+$router->post('/authoruploadimage', "Author#uploadImage");
 /* 
  * List of backend routes
  */
@@ -63,7 +59,6 @@ $router->get('/deleteuser:id', "Author#deleteUser");
 $router->get('/backoffice', "Backend#renderHomepage");
 
 //Route qui va récupére les articles du datatables
-//$router->post('/listofarticles', "Backend#getListOfArticles");
 $router->post('/listofarticles', "Backend#getListOfArticles");
 
 //Route qui créé un article

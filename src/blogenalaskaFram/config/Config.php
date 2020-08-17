@@ -19,16 +19,14 @@ return [
     \blog\user\UserSession::class => [
         'class' => \blog\user\UserSession::class,
         ],
-    /*\blog\form\Form::class => [
-        'class' => \blog\form\Form::class,*/
-        //'parameter' =>\blog\database\Model::class,
-        //\blog\database\Model::class,
-       // ], 
     \blog\entity\Author::class => [
         'class' => \blog\entity\Author::class,
         ],
     \blog\file\PostUpload::class => [
         'class' => \blog\file\PostUpload::class,
+        ],
+    \blog\file\AuthorUpload::class => [
+        'class' => \blog\file\AuthorUpload::class,
         ],
     \blog\database\EntityManager::class => [
         'class' => \blog\database\EntityManager::class,
@@ -57,11 +55,4 @@ return [
     \blog\file\AuthorUpload::class => [
         'class' => \blog\file\AuthorUpload::class, 
     ],
-    /*'renderer' => function()
-    {
-        return new blog\HTML\Renderer(dirname(__DIR__).'/../views');
-    },
-    "myInstance"=>function(ContainerInterface $container) {
-    return new MyInstance();
-    },*/
 ];

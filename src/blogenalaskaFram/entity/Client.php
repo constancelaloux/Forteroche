@@ -11,7 +11,7 @@ use blog\database\Model;
  */
 class Client extends Model
 {
-      public $id,
+      protected $id,
             $password,
             $username,
             $firstname,

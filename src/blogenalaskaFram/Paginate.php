@@ -16,10 +16,11 @@ class Paginate
     
     private $count;
     
-    public function __construct($entity, int $perPage)
+    public function __construct($entity, int $perPage, $countItems)
     {
         $this->perPage = $perPage;
         $this->model = new EntityManager($entity);
+        $this->count = $countItems;
     }
     
     /**
@@ -46,6 +47,7 @@ class Paginate
         /**
          * If the next page is greater than the number of possible pages
          */
+        //print_r($this->getPages());
         if($nextPage > $this->getPages())
         {
             /**
@@ -95,10 +97,10 @@ class Paginate
      */
     private function getPages(): int
     {
-        if ($this->count === NULL)
+        /*if ($this->count === NULL)
         {
             $this->count = $this->model->exist();
-        }
+        }*/
 
         /**
          * We get the number of pages that we are going to have

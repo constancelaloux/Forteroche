@@ -11,6 +11,7 @@ use blog\file\Upload;
  */
 class PostUpload extends Upload
 {
-    protected $path = '/../../../public/images/upload/posts';
-    protected $newwidth = 150;
+    protected $path = '/../../../public/images/upload/posts'; 
+    protected $newwidth = 200;
+    //protected $newheight = 200;
 }

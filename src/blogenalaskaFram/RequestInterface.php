@@ -30,6 +30,7 @@ interface RequestInterface
      * @param type $key
      */
     public function getData($key);
+    //public function getData();
        
     /**
      * Check if there is a get variable that exists.
@@ -47,6 +48,7 @@ interface RequestInterface
      * @param type $key
      */
     public function postData($key);
+    //public function postData();
 
     /**
      * Check if there is a post variable that exists.

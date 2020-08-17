@@ -70,24 +70,15 @@
         <div id="spy" data-spy="scroll" data-target="#navbar" data-offset="0">
         <div class="container-fluid" id="main-container">
             <!-- ce qui doit etre fait normalement pour le message flash -->
-            <?php
-            if($session->get('success'))
-            {
-            ?>
+            <?php if($session->get('success')): ?>
                 <div class="alert alert-success mt-5" role="alert">
-            <?php
-                echo $session->get('success');
-            ?>
+                    <?php echo $session->get('success'); ?>
                 </div>   
             <?php
-            }
-            else if($session->get('error'))
-            {
-            ?>
+            elseif($session->get('error')): ?>
                 <div id='#myAlert' class="alert alert-danger mt-5">
-            <?php
-                echo $session->get('error');
-            }
+                <?php echo $session->get('error');
+            endif;
             ?>
                 </div>
             <?= $content ?> 

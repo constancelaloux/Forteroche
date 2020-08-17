@@ -63,7 +63,7 @@ class BackendController extends AbstractController
             {
                 $row = array();
                 $row[] = $articles->id();
-                $row[] = $articles->subject();
+                $row[] = htmlspecialchars($articles->subject());
                 $row[] = $articles->createdate()->format('Y-m-d');
                 $updateArticleDate = $articles->updatedate();
 
@@ -287,7 +287,7 @@ class BackendController extends AbstractController
                 $row = array();
                 $row[] = $comment->id();
                 $row[] = $comment->idpost();
-                $row[] = $comment->subject();
+                $row[] = htmlspecialchars($comment->subject());
                 $row[] = $comment->createdate()->format('Y-m-d');
 
                 if (is_null($comment->updatedate()))

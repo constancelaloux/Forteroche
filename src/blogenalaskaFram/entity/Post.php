@@ -17,7 +17,7 @@ class Post extends Model
     /**
      * @var type 
      */
-    public $id,
+    protected $id,
       $idauthor,
       $subject,
       $image,

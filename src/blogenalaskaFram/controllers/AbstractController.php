@@ -103,4 +103,12 @@ abstract class AbstractController
     {
         return $this->entityManager = new EntityManager($model);
     }
+    
+    /**
+     * Check if isset $_POST or isset $_GET
+     */
+    public function getMethod()
+    {
+        return !is_null($this->request->getData() && !is_null($this->request->postData()));
+    }
 }

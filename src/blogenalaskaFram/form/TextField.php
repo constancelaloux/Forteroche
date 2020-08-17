@@ -37,9 +37,9 @@ class TextField extends Field
 
         if (!empty($this->value))
         {
-            $widget .= '<value>'.htmlspecialchars($this->value).'';
+            $widget .= htmlspecialchars($this->value);
         }
-        return $widget .= ' </textarea></div>';
+        return $widget .= '</textarea></div>';
     }
 
     public function setCols($cols)
