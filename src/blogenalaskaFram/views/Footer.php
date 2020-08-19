@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-<div class="footer">
-    <a class="dropdown-item" href="/public/index.php?action=getTheFormAdminConnexionBackend">Connexion au backend</a>
-    <p>
-        Mentions légales
-    </p>
-</div>
-=======
 <footer class="blog-footer bg-dark">
     <div class="container-fluid text-white rounded p-4">
         <div class="row mb-2 justify-content-center">
@@ -41,6 +33,3 @@
         </div>
     </div>
 </footer>
->>>>>>> NewForterocheApp
-
-
