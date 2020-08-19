@@ -8,7 +8,7 @@
                 <h2 class="blog-post-title"><?= htmlspecialchars($post->subject())?></h2>
                 <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche</p>
                 <img class="card-img" src="<?= htmlspecialchars($post->image())?>" alt="image article">
-                <p><?= htmlspecialchars($post->content()) ?></p>
+                <p><?= $post->content() ?></p>
                 
 <!--J'affiche les commantaires liés à l'article -->
                 <div class="comments">
