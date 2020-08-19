@@ -306,7 +306,7 @@ class Upload implements UploadedFilesInterface
                  */
                 ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $this->newwidth, $newheight, $width, $height);
 
-                imagePng($miniature, $targetPath, 100 );
+                imagePng($miniature, $targetPath, 9);
                 
                 imagedestroy($miniature);
                 imagedestroy($image);

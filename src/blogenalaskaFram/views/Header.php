@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <a class="navbar-brand" href="#">
-            <img src="/../../../public/images/logo-alaska.png" width="100" height="100" class="d-inline-block .align-middle " alt="logo">
+            <img src="/../../../public/images/logo.png" width="100" height="100" class="d-inline-block .align-middle " alt="logo">
             Jean Forteroche
         </a>
 

@@ -9,8 +9,7 @@
 <section class="services-section pb-4" id="lastnews">
     <div class="container">
         <div class="row mb-4">
-            <?php
-            foreach ($lastsposts as $post): ?>
+            <?php foreach ($lastsposts as $post): ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
                     <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
