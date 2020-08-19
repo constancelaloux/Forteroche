@@ -38,8 +38,8 @@ $(document).ready( function ()
         ]
     });
     
-    // La liste des articles dans le tableau est numéroté
-    //  create index for table at columns zero
+    //List of posts whith numbers into the board
+    //create index for table at columns zero
     table.on('order.dt search.dt', function () 
     {
         table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) 
@@ -48,14 +48,14 @@ $(document).ready( function ()
         });
     }).draw();
 
-    //Boutons
+    //Buttons
     if($("#listofcomments").click(function() 
     {
         $.fn.dataTable.ext.search.pop();
         table.draw();
     }));
 
-    //Supprimer des articles
+    //delete Posts
     $('#displaycomments').on( 'click', '#btn-delete', function () 
     {
         var datas = table.row( $(this).parents('tr') ).data();
@@ -77,7 +77,7 @@ $(document).ready( function ()
                 },
                 error:function(response)
                 {
-                    console.log('ca ne fonctionne pas');
+                    alert(response);
                 }
             });
         };            

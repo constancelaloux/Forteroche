@@ -25,38 +25,7 @@ class Author extends Model
             $surname,
             $status,
             $image,
-            $slugimage;
-      
-    /**
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-    */
-    //protected $id;
-    
-    /**
-     * @ORM\Column(name="password", type="string", length=255)
-    */
-    //private $password;
-    //protected $password;
-    
-    /**
-     * @ORM\Column(name="username", type="string", length=255)
-    */
-    //private $username;
-    //protected $username;
-    
-    /**
-     * @ORM\Column(name="surname", type="string", length=255)
-    */
-    //private $surname;
-    //protected $surname;
-    
-    /**
-     * @ORM\Column(name="firstname", type="string", length=255)
-    */
-    //private $firstname;
-    //protected $firstname;
+            $slugimag;
 
     const PASSWORD_INVALIDE = 1;
     const USERNAME_INVALIDE = 2;
@@ -184,9 +153,9 @@ class Author extends Model
     /**
      * @return type
      */
-    public function slugimage()
+    public function slugimag()
     {
-        return $this->slugimage;
+        return $this->slugimag;
     }
     /**
      * Setters
@@ -281,13 +250,13 @@ class Author extends Model
     }
     
     /**
-     * @param type $slugimage
+     * @param type $slugimag
      */
-    public function setSlugimage($slugimage)
+    public function setSlugimag($slugimag)
     {
-        if(is_string($slugimage))
+        if(is_string($slugimag))
         {
-            $this->slugimage = $slugimage;
+            $this->slugimag = $slugimag;
         }
     }
 }

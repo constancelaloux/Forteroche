@@ -55,4 +55,10 @@ return [
     \blog\file\AuthorUpload::class => [
         'class' => \blog\file\AuthorUpload::class, 
     ],
+    \blog\service\PostService::class => [
+        'class' => \blog\service\PostService::class, 
+    ],
+    \blog\service\CommentService::class => [
+    'class' => \blog\service\CommentService::class, 
+],
 ];

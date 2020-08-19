@@ -29,7 +29,7 @@ class CommentsForm extends FormBuilder
         ]))
         ->add(new TextField([
         'label' => 'Contenu du commentaire',
-        'name' => 'content',
+        'name' => 'commentContent',
         'validators' => [
             new NotNullValidator('Veuillez insérer votre texte'),
         ],

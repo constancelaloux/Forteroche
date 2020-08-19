@@ -25,9 +25,9 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'text',
         'label' => 'Prenom',
         'name' => 'firstname',
-        'maxLength' => 5,
+        'maxLength' => 10,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long', 2),
+            new MaxLengthValidator('Identifiant trop long', 10),
             new NotNullValidator('Veuillez insérer votre prénom'),
         ],
         ]))
@@ -35,9 +35,9 @@ class CreateAuthorForm extends FormBuilder
         'type' => 'text',
         'label' => 'Nom',
         'name' => 'surname',
-        'maxLength' => 2,
+        'maxLength' => 10,
         'validators' => [
-            new MaxLengthValidator('Identifiant trop long)', 2),
+            new MaxLengthValidator('Identifiant trop long)', 10),
             new NotNullValidator('Veuillez insérer votre nom'),
         ],
         ]))
@@ -75,7 +75,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'file',
         'label' => 'Ajouter une image',
-        'name' => 'slugimage',
+        'name' => 'slugimag',
         ]));
     }  
 }

@@ -1,9 +1,7 @@
 <?php
 namespace blog\user;
 
-use blog\entity\Author;
 use blog\database\EntityManager;
-use blog\session\PHPSession;
 use blog\config\Container;
 
 /**
@@ -33,6 +31,7 @@ class UserSession
     protected $entityManager;
     
     protected $container;
+    
     /**
      * I make a connection to the session
      */
@@ -66,11 +65,6 @@ class UserSession
         }
         
         $this->author->setId($id);
-        /*$author = new Author(
-            [
-                'id' =>  $id,
-            ]);*/
-        //$model = new EntityManager($this->author);
         $model = $this->entityManager;
         $auth = $model->findById($this->author->id());
         return $auth ?: NULL;

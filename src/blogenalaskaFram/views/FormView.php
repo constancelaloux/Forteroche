@@ -11,8 +11,9 @@
                     <?php   if(isset($form)):
                                 echo $form;
                     endif; ?>
-                    <div id="preview"><img src="" /></div><br>
-                    <!--<div id="preview"></div><br>-->
+                    <?php //if(isset($image)): ?>
+                    <div id="preview"><img src="<?php if(isset($image)):echo $image; endif;?>" /></div><br>
+                    <?php //endif;?>
                     <button type= "submit" class="btn btn-primary btn-round btn-lg btn-block">Valider</button>
                     <!--</p>-->
                 </form>

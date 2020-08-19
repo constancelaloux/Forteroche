@@ -114,13 +114,10 @@ class Render  implements RendererInterface
             {
                 $page404 = new HTTPResponse();
                 $page404->redirect404('/page404');
-                //throw new \Exception(require __DIR__.'/../views/Page404.php');
-                //echo"page 404";
             }
         }
         $content = ob_get_clean();
         ob_start();
-        //require __DIR__.'/../views/Layout.php';
         require __DIR__.'/../views/Layout.php';
     }
 

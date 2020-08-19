@@ -41,10 +41,6 @@ class HTTPRequest implements RequestInterface
     {
         return isset($_GET[$key]) ? $_GET[$key] : null;
     }
-    /*public function getData()
-    {
-        return isset($_GET) ? $_GET : null;
-    }*/
 
     /**
      * Check if there is a get variable that exists.

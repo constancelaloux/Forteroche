@@ -3,14 +3,6 @@
 namespace blog\controllers;
 
 use blog\controllers\AbstractController;
-use blog\form\CommentsForm;
-use blog\database\Query;
-use blog\Paginate;
-use blog\exceptions\NotFoundHttpException;
-use blog\service\PostService;
-use blog\service\CommentService;
-use blog\entity\Author;
-use blog\database\EntityManager;
 
 /**
  * Description of FrontendController
@@ -18,25 +10,8 @@ use blog\database\EntityManager;
  */
 class FrontendController extends AbstractController
 {
-    protected $perPage;
-    
-    protected $post;
     
     protected $comment;
-    
-    protected $author;
-    
-    protected $paginateQuery;
-    
-    protected $previousLink;
-    
-    protected $nextLink;
-    
-    protected $commentForm;
-    
-    protected $paginatedQueryPost;
-    
-    protected $paginateQueryComment;
     
     protected $postService;
     
@@ -45,15 +20,9 @@ class FrontendController extends AbstractController
     public function __construct() 
     {
         parent::__construct();
-        $this->post = $this->container->get(\blog\entity\Post::class);
+        $this->postService = $this->container->get(\blog\service\PostService::class);
+        $this->commentService = $this->container->get(\blog\service\CommentService::class);
         $this->comment = $this->container->get(\blog\entity\Comment::class);
-        $this->author =  $this->container->get(\blog\entity\Author::class);
-        $this->postService = new PostService();
-        $this->commentService = new CommentService();
-        //$this->commentForm = new CommentsForm($this->comment);
-        //$this->paginatedQueryPost = new Paginate($this->post, $this->perPage);
-        //$this->paginateQueryComment = new Paginate($this->comment, $this->perPage);
-        //new Query($this->comment, $this->author)
     }
     
     /*
@@ -71,32 +40,7 @@ class FrontendController extends AbstractController
     
     public function renderPaginatedComments($id)
     {
-        $comment = new \blog\entity\Comment();
-        $author = new Author();
-        $this->perPage = 5;
-        $comment->setIdpost($id);
-        $comment->setStatus('Valider');
-        $commentEntityManager = new EntityManager($comment);
-        $countItems = $commentEntityManager->exist(['idpost'=>$comment->idpost()]);
-        $paginateQueryComment = new Paginate($comment, $this->perPage, $countItems);
-        $offset = $paginateQueryComment->getItems();
-        
-        if($commentEntityManager->exist(['idpost'=>$comment->idpost()]))
-        { 
-            $comments = $query = (new Query($comment, $author))
-                    ->from('comment', 'c')
-                    ->select('c.id id','c.subject subject', 'a.image image', 'c.id_client id_client', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
-                    ->join('author as a', 'c.id_client = a.id', 'inner')
-                    ->where('id_post = :idpost')
-                    ->setParams(array('idpost' => $comment->idpost()))
-                    ->orderBy('create_date', 'ASC')
-                    ->limit($this->perPage, $offset)
-                    ->fetchAll();
-            $this->previousLink = $paginateQueryComment->previouslink();
-            $this->nextLink = $paginateQueryComment->nextlink();
-            $array = [$comments, $this->nextLink, $this->previousLink];
-            return $array;
-        }
+        return $this->commentService->renderPaginatedComments($id);
     }
     
     /*
@@ -126,11 +70,12 @@ class FrontendController extends AbstractController
          * Get the lasts posts
          */
         $lastsposts = $this->postService->getLastsPosts();
-
-        //Si je suis en session j'affiche le formulaire sinon j'affiche un message flach à la place
+        
+        /**
+         * If i have a session, i show the form else i show a flash message 
+         */
         if($this->userSession()->requireRole('client', 'admin'))
         {
-            print_r('j affiche le formulaire');
             /**
              * Show the form to write the comments
              */
@@ -198,5 +143,21 @@ class FrontendController extends AbstractController
                 return $this->redirect("/article&id=$postid");
             }
         }  
+    }
+    
+    public function unwantedComment()
+    {
+        (!is_null($_POST['number']) && ($_POST['id']));
+        $number = $_POST['number'];
+        $id = $_POST['id'];
+        return $this->commentService->unwantedComment($number, $id);
+    }
+    
+    /**
+     * Render legal notices
+     */
+    public function renderLegalNotices()
+    {
+        $this->getrender()->render('LegalNotices');
     }
 }

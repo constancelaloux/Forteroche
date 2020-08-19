@@ -69,25 +69,20 @@ class Upload implements UploadedFilesInterface
     private function getClientFilename(array $file)
     {
         $this->tmp = current($file);
-        
-        //print_r($this->tmp);
+
         if(is_uploaded_file($this->tmp['tmp_name']))
         {
             if(isset($_SERVER['HTTP_ORIGIN']))
             {
-                //print_r($_SERVER['HTTP_ORIGIN']);
-                //print_r($this->accepted_origins);
                 /**
                  * Same-origin requests won't set an origin. If the origin is set, it must be valid.
                  */
                 if(in_array($_SERVER['HTTP_ORIGIN'], $this->accepted_origins))
                 {
-                    //die("meurs");
                     header('Access-Control-Allow-Origin: ' . $_SERVER['HTTP_ORIGIN']);
                 }
                 else
                 {
-                    //die('meurs denied');
                     header("HTTP/1.1 403 Origin Denied");
                     return;
                 }
@@ -120,11 +115,6 @@ class Upload implements UploadedFilesInterface
      */
     public function moveTo($targetPath)
     {
-        //print_r($this->tmp['tmp_name']);
-        //print_r($targetPath);
-        //die('meurs');
-        
-        //if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         {
         /**
@@ -158,8 +148,6 @@ class Upload implements UploadedFilesInterface
              * I get the name of the file
              */
             $this->filename = $this->getClientFilename($file);
-            //print_r($this->filename);
-            //die('meurs');
 
             /**
              * I add the image in the target path and a copy with the copy extension if the image already exists
@@ -191,8 +179,6 @@ class Upload implements UploadedFilesInterface
             if(!empty($this->filename))
             {
                 $showImage = $this->path.DIRECTORY_SEPARATOR.$image;
-                //echo "<img src='$showImage' />";
-                //return $showImage;
                 return $path_parts['basename'];
             }
     }
@@ -222,7 +208,6 @@ class Upload implements UploadedFilesInterface
             $oldFile = $this->path . DIRECTORY_SEPARATOR . $oldFile;
             if(file_exists($oldFile))
             {
-                print_r("je passe la");
                 /**
                  * Delete old folder
                  */
@@ -301,24 +286,30 @@ class Upload implements UploadedFilesInterface
             break;
 
             case IMAGETYPE_GIF:
-                $image = imagecreatefromgif($this->path . $this->tmp['name']);
+                $image = imagecreatefromgif($targetPath);
 
                 /**
                  * I create the miniature
                  */
-                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $this->newwidth, $newheight, $width, $height);
 
-                imageGif($miniature, $this->path .$this->tmp['name'], 100 );
+                imageGif($miniature, $targetPath, 100 );
+
+                imagedestroy($miniature);
+                imagedestroy($image);
             break;
 
             case IMAGETYPE_PNG:
-                $image = imagecreatefrompng($this->path .$this->tmp['name']);
+                $image = imagecreatefrompng($targetPath);
                 /**
                  * I create the miniature
                  */
-                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
+                ImageCopyResampled($miniature, $image, 0, 0, 0, 0, $this->newwidth, $newheight, $width, $height);
 
-                imagePng($miniature, $this->path .$this->tmp['name'], 9 );
+                imagePng($miniature, $targetPath, 100 );
+                
+                imagedestroy($miniature);
+                imagedestroy($image);
             break; 
         }
     }

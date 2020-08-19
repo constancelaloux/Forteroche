@@ -4,97 +4,154 @@
  * List of frontend routes
  */
 
-//Route qui récupére les aricles sur la page d'accueil du blog
+/**
+ * Route which get the posts from the main page of the blog
+ */
 $router->get('/', "Frontend#renderHomepage");
 
-//Route qui renvoi les articles de la pagination
+/**
+ * Paginate posts
+ */
 $router->get('/articles:page', "Frontend#renderPaginatedposts");
 
-//Route qui va vers un article du frontend
+/**
+ * Frontend post
+ */
 $router->get('/article:id:page', "Frontend#renderPost");
 $router->post('/article:id:page', "Frontend#renderPost");
 
-//Route qui va vers un article du frontend et vers le commentaire qui peut etre modifié
-//$router->get('/article:id:idcomment', "Frontend#renderPost");
+/**
+ * Route which goes to the post and to the comment which can be modify into the form
+ */
 $router->post('/article:id:idcomment', "Frontend#renderPost");
 
-//Route qui envoi un email
+/**
+ * Send email
+ */
 $router->post('/sendEmail', "Frontend#sendEmailToAuthor");
 
-//Route qui permet de supprimer un commentaire
+/**
+ * Delete comment
+ */
 $router->post('/deletecomment:id:idcomment', "Frontend#deleteComment");
 
-//Route qui va gérer les clicks pour les commentaires indésirables
+/**
+ * Manage clicks for the unwanted comments
+ */
 $router->post('/unwantedcomments', "Frontend#unwantedComment");
+
+/**
+ * Get legal notices
+ */
+$router->get('/getlegalnotices', "Frontend#renderLegalNotices");
+
 
 /* 
  * List of admin routes
  */
 
-//Route qui amméne vers la fn qui créé un formulaire de création d'auteur
+/**
+ * Create author form
+ */
 $router->get('/createuser', "Author#createUser");
 $router->post('/createuser', "Author#createUser");
 
-//Route qui permet de déconnecter un utilisateur
+/**
+ * Disconnect user
+ */
 $router->post('/logout', "Author#logOut");
 
-//Route qui va vers la fonction qui créé un formulaire de connexion
+/**
+ * Connect form user
+ */
 $router->get('/connectform', "Author#logUser");
 $router->post('/connectform', "Author#logUser");
 
-//Routes qui suppriment et met à jour un utilisateur
+/**
+ * Update user
+ */
 $router->get('/updateuser:id', "Author#updateUser");
 $router->post('/updateuser:id', "Author#updateUser");
 
-//Route qui supprime un utilisateur
+/**
+ * Delete user
+ */
 $router->get('/deleteuser:id', "Author#deleteUser");
 
-// Route qui upload une image utilsateur
+/**
+ * upload user image
+ */
 $router->post('/authoruploadimage', "Author#uploadImage");
+
+
 /* 
  * List of backend routes
  */
 
-//Route qui va vers le backend
+/**
+ * Route which goes to the backend
+ */
 $router->get('/backoffice', "Backend#renderHomepage");
 
-//Route qui va récupére les articles du datatables
+/**
+ * Get posts into datables
+ */
 $router->post('/listofarticles', "Backend#getListOfArticles");
 
-//Route qui créé un article
+/**
+ * Create posts
+ */
 $router->get('/createpost', "Backend#createPost");
 $router->post('/createpost', "Backend#createPost");
 
-//Route qui permet d'uploader une image
+/**
+ * Upload image
+ */
 $router->post('/uploadimage', "Backend#uploadImage");
 
-//Route qui permet d'insérer le chemin du fichier
+/**
+ * Insert folder path
+ */
 $router->get('/iGetImageIntoFormFromUploadPath&data', "Backend#getImagePath");
 
-//Route qui permet de mettre à jour un article
+/**
+ * Update post
+ */
 $router->get('/updatepost:id', "Backend#updatePost");
 $router->post('/updatepost:id', "Backend#updatePost");
 
-//Route qui permet de supprimer un article
+/**
+ * Delete post
+ */
 $router->post('/deletepost', "Backend#deletePost");
 
-//Route qui redirige si le post a bien été supprimé
+/**
+ * Redirect user if the post has been well deleted
+ */
 $router->get('/confirmdeletepost', "Backend#confirmDeletedPost");
 
-//Route qui rend la page avec les commentaires
+/**
+ * Render page with comments
+ */
 $router->get('/rendercommentspage', "Backend#renderCommentsPage");
 
-//Route qui récupére les commentaires au sein du tableau datatables
+/**
+ * Get comments into datatables
+ */
 $router->post('/listofcomments', "Backend#getListOfComments");
 
-//Route qui supprime un commentaire au sein du datatables
+/**
+ * Delete a comment into datatables
+ */
 $router->post('/deletecomment', "Backend#deleteComments");
 
-//Route qui redirige apres avoir supprimé un commentaire du datatables
+/**
+ * Redirect user after delete a comment into datatables
+ */
 $router->get('/confirmdeletecomment', "Backend#confirmDeletedComments");
 
 /**
- * Search articles
+ * Search posts
  */
 $router->post('/searchPosts', "Search#search");
 

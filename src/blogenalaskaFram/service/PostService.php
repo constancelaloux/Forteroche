@@ -10,8 +10,6 @@ use blog\HTML\Render;
 
 use blog\config\Container;
 
-use blog\entity\Post;
-
 /**
  * Description of PostService
  *
@@ -27,8 +25,6 @@ class PostService
     
     protected $perPage;
     
-    protected $paginatedQueryPost;
-    
     protected $previouslink;
     
     protected $nextlink;
@@ -37,11 +33,10 @@ class PostService
     
     public function __construct()
     {
-        /*$services   = include __DIR__.'/../config/Config.php';
-        $this->container = new Container($services);*/
-        //$this->post = $this->container->get(\blog\entity\Post::class);
-        //$this->postEntityManager = new EntityManager($this->post);
-        //$this->paginatedQueryPost = new Paginate($this->post, $this->perPage);
+        $services   = include __DIR__.'/../config/Config.php';
+        $this->container = new Container($services);
+        $this->post = $this->container->get(\blog\entity\Post::class);
+        $this->postEntityManager = new EntityManager($this->post);
         $this->render = new Render();
     }
         
@@ -58,13 +53,10 @@ class PostService
         /**
          * Paginate
          */
-        //$model = $this->getEntityManager($this->post);
-        $post = new Post();
-        $model = new EntityManager($post);
+        $model = $this->postEntityManager;
         $this->perPage = 9;
-        //$this->paginatedQueryPost = new Paginate($this->post, $this->perPage);
         $countItems = $model->exist();
-        $paginatedQueryPost = new Paginate($post, $this->perPage, $countItems);
+        $paginatedQueryPost = new Paginate($this->post, $this->perPage, $countItems);
         $offset = $paginatedQueryPost->getItems();
         $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
         $this->previouslink = $paginatedQueryPost->previouslink();
@@ -77,9 +69,7 @@ class PostService
      */
     public function getLastsPosts()
     {
-        $post = new Post();
-        $model = new EntityManager($post);
-        //$model = $this->getEntityManager($this->post);
+        $model = $this->postEntityManager;
         $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }
@@ -91,9 +81,7 @@ class PostService
      */
     public function getPost($id)
     {
-        $post = new Post();
-        $model = new EntityManager($post);
-        //$model = $this->getEntityManager($this->post);
+        $model = $this->postEntityManager;
         return $postFromId = $model->findById($id);
     }
 }

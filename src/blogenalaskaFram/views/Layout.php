@@ -18,7 +18,8 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
 
 <!--Tinymce-->
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="https://cdn.tiny.cloud/1/iltjhgipkk1yfx5qzzja1x5xo3g1cibyidyrg3hw1f4f1ob7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<!--<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>-->
 <script type="text/javascript" src="/../../public/js/Tinymce.js"></script>
 <script type="text/javascript" src="/../../public/js/fr_FR.js"></script>
 <!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
@@ -39,6 +40,7 @@
 
 <!--Upload-->
 <script type="text/javascript" src="/../../public/js/UploadFile.js"></script>
+<script type="text/javascript" src="/../../public/js/AuthorUploadFile.js"></script>
 
 <!--Scroll nav-->
 <script type="text/javascript" src="/../../public/js/scrollnav.js"></script>

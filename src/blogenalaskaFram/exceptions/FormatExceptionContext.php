@@ -1,6 +1,7 @@
 <?php
 
 namespace blog\exceptions;
+
 /**
  * Description of FormatExceptionContext
  *

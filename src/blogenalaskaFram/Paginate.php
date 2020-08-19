@@ -47,7 +47,6 @@ class Paginate
         /**
          * If the next page is greater than the number of possible pages
          */
-        //print_r($this->getPages());
         if($nextPage > $this->getPages())
         {
             /**
@@ -97,11 +96,6 @@ class Paginate
      */
     private function getPages(): int
     {
-        /*if ($this->count === NULL)
-        {
-            $this->count = $this->model->exist();
-        }*/
-
         /**
          * We get the number of pages that we are going to have
          */

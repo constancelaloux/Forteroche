@@ -1,6 +1,7 @@
 <?php
 
 namespace blog;
+
 use blog\exceptions\FormatException;
 use blog\exceptions\FormatExceptionContext;
 use blog\exceptions\PathException;

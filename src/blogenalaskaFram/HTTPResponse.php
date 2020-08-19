@@ -28,7 +28,6 @@ class HTTPResponse implements ResponseInterface
     */
     public function redirect404(string $location)
     {
-       // $location = __DIR__.'/views/Page404.php';
         header('Location: '.$location);
         exit("");
     }

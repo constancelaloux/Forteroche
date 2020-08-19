@@ -21,10 +21,10 @@
                                 <button class="reportComment" id=<?php echo $comment->id() ?>>Signaler à l'administrateur</button>
                                 <h5 class="mt-0"><?php echo htmlspecialchars($comment->subject()) ?></h5>
                                 <p><?php echo $comment->createdate()->format('Y-m-d') ?></p>
-                                <p><?php echo htmlspecialchars($comment->content()) ?></p>
+                                <p><?php echo htmlspecialchars($comment->commentContent()) ?></p>
 
                                 <?php if(isset($_SESSION['authorId'])):
-                                        if($comment->idclient() == $_SESSION['authorId']): ?>
+                                        if($comment->idauthor() == $_SESSION['authorId']): ?>
                                             <a href="/article&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id() ?>" class="btn btn-primary btn-round btn-lg btn-block" role="button">Modifier</a>
                                             <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id() ?>" method="post">
                                                 <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
@@ -147,3 +147,4 @@
         </div>
     </div>
 </div>
+

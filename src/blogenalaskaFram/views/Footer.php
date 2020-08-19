@@ -6,7 +6,7 @@
                 <a href="#" class="text-white">Back to top</a>
             </p>
             <p>
-                Mentions légales
+                <a href="/getlegalnotices" class="text-white">Mentions légales</a>
             </p>
             <div class="col-md-6 col-lg-7 text-center text-md-right">
                 <!--Facebook-->

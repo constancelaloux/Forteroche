@@ -28,7 +28,6 @@ class BackendController extends AbstractController
         $this->post = $this->container->get(\blog\entity\Post::class);
         $this->upload = $this->container->get(\blog\file\PostUpload::class);
         $this->comment = $this->container->get(\blog\entity\Comment::class);
-        //$this->articleForm = new ArticlesForm($this->post);
     }
     /**
      * Show posts board
@@ -205,7 +204,7 @@ class BackendController extends AbstractController
                 $this->post->setStatus($this->request->postData('save'));
             }
             
-            if($id)
+            if(isset($id))
             {
                 $this->post->setUpdatedate(date("Y-m-d H:i:s"));
             }
@@ -220,7 +219,6 @@ class BackendController extends AbstractController
             }
         }
         
-        //$formBuilder = $this->articleForm;
         $formBuilder = new ArticlesForm($this->post);
         $form = $formBuilder->buildform($formBuilder->form());
         

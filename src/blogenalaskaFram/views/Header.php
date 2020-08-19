@@ -5,7 +5,6 @@
         </button>
         <a class="navbar-brand" href="#">
             <img src="/../../../public/images/logo-alaska.png" width="100" height="100" class="d-inline-block .align-middle " alt="logo">
-            <!--width="70" height="70" -->
             Jean Forteroche
         </a>
 

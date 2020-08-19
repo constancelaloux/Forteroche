@@ -12,7 +12,5 @@ interface UploadedFilesInterface
     
     public function upload($file, ?string $oldFile = null);
     
-    public function delete(?string $oldFile);
-    
-    
+    public function delete(?string $oldFile);  
 }

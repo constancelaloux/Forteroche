@@ -12,54 +12,25 @@ use blog\exceptions\ORMException;
  */
 class Query extends DbConnexion
 {
-    /**
-     * @var \PDO
-     */
+
     protected $pdo;
-    
-    /**
-     * @var type 
-     */
+
     private $select;
-    
-    /**
-     * @var type 
-     */
+
     private $from;
-    
-    /**
-     * @var type 
-     */
+
     private $where = [];
-    
-    /**
-     * @var type 
-     */
+
     private $group;
-    
-    /**
-     * @var type 
-     */
+
     private $order;
-    
-    /**
-     * @var type 
-     */
+
     private $limit;
-    
-    /**
-     * @var type 
-     */
+
     private $joins;
-    
-    /**
-     * @var type 
-     */
+
     private $params = [];
     
-    /**
-     * @var type 
-     */
     private $model = [];
     
     /**

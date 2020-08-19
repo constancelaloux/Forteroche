@@ -38,8 +38,8 @@ $(document).ready( function ()
     }
     );
     
-    // La liste des articles dans le tableau est numéroté
-    //  create index for table at columns zero
+    //List of posts whith numbers into the board
+    //Create index for table at columns zero
     table.on('order.dt search.dt', function () 
     {
         table.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) 
@@ -48,7 +48,7 @@ $(document).ready( function ()
         });
     }).draw();
 
-        //Boutons
+        //Buttons
         if($("#hideSaveDatas").click(function()
             {
                 $.fn.dataTable.ext.search.push(
@@ -80,7 +80,7 @@ $(document).ready( function ()
                 $.fn.dataTable.ext.search.pop();
             }));
 
-    //Supprimer des articles
+    //Delete posts
     $('#displayarticles').on( 'click', '#btn-delete', function () 
     {
         var datas = table.row( $(this).parents('tr') ).data();
@@ -101,19 +101,19 @@ $(document).ready( function ()
                 },
                 error:function(response)
                 {
-                    console.log('ca ne fonctionne pas');
+                    alert(response);
                 }
             });
         };            
     } );
 
-    //Modifier des articles
+    //Update posts
     $('#displayarticles').on( 'click', '#btn-update', function (e) 
     {
         var datas = table.row( $(this).parents('tr') ).data();
         var id = datas[ 0 ];
 
-        //Ici la variable"tr" référence un objet jQuery qui sélectionne toutes les balisesdiv du document.
+        //Here the var 'tr' make a reference to the object JQuery which select all the div into the document.
         var $tr = $(this).closest('tr');//here we hold a reference to the clicked tr which will be later used to delete the row
         if(confirm("Voulez vous modifier cet article?"))
         {

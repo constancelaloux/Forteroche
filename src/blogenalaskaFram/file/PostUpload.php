@@ -13,5 +13,4 @@ class PostUpload extends Upload
 {
     protected $path = '/../../../public/images/upload/posts'; 
     protected $newwidth = 200;
-    //protected $newheight = 200;
 }

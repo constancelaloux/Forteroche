@@ -7,8 +7,6 @@ namespace blog\exceptions;
  *
  * @author constancelaloux
  */
-
-
 class ORMException extends \Exception
 {
 }

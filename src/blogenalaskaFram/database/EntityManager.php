@@ -356,18 +356,3 @@ class EntityManager extends DbConnexion
         return "";
     }  
 }
-    
-    /**
-     * find prend un unique paramètre et recherche l'argument dans la clé primaire de l'entité.
-     * 
-     * findBy prend 4 paramètres ($criteria, $orderBy, $limit, $offset). 
-     * Cette méthode retourne des résultats correspondant aux valeurs des clés demandées.
-     * 
-     * findAll est un alias de findBy([]). Il retourne par conséquent tous les résultats.
-     * 
-     * findOneBy fonctionne comme la méthode findBy mais retourne un unique résultat et non pas un tableau.
-     * 
-     * La méthode __call étant implémentée dans les EntityRepository, sachez que si vous appelez findByUser, 
-     * que cette méthode n'a pas été définie dans votre repository et que vous disposez d'un champ user dans 
-     * votre entité, vous effectuerez une recherche sur ce même champ uniquement.
-     */

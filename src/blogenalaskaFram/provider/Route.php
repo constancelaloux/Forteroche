@@ -37,7 +37,6 @@ class Route
         /**
          * We remove the / unnecessary
          */
-
         $this->callable = $callable;
     }
     

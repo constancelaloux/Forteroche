@@ -6,23 +6,13 @@ use blog\Paginate;
 
 use blog\config\Container;
 
-use blog\database\EntityManager;
-
 use blog\database\Query;
 
 use blog\exceptions\NotFoundHttpException;
 
 use blog\form\CommentsForm;
 
-use blog\HTTPRequest;
-
-use blog\entity\Author;
-
-use blog\user\UserSession;
-
-use blog\error\FlashService;
-
-use blog\HTTPResponse;
+use blog\database\EntityManager;
 
 /**
  * Description of CommentService
@@ -37,7 +27,7 @@ class CommentService
     
     protected $commentEntityManager;
     
-    protected $perPage; // = 5;
+    protected $perPage;
     
     protected $previousLink;
     
@@ -58,54 +48,51 @@ class CommentService
         $services   = include __DIR__.'/../config/Config.php';
         $this->container = new Container($services);
         $this->comment = $this->container->get(\blog\entity\Comment::class);
-        $this->author = new Author();
         $this->commentEntityManager = new EntityManager($this->comment);
-        //$this->paginateQueryComment = new Paginate($this->comment, $this->perPage);
-        $this->request = new HTTPRequest();
-        $this->response = new HTTPResponse();
-        $this->userSession = new UserSession();
-        $this->addFlash = new FlashService();
+        $this->author = $this->container->get(\blog\entity\Author::class);
+        $this->request = $this->container->get(\blog\HTTPRequest::class);
+        $this->response = $this->container->get(\blog\HTTPResponse::class);
+        $this->userSession = $this->container->get(\blog\user\UserSession::class);
+        $this->addFlash = $this->container->get(\blog\error\FlashService::class);
     }
     /**
      * Show comments from the post id
      */
     public function renderPaginatedComments($id)
     {
-        $comment = new \blog\entity\Comment();
-        $author = new Author();
         $this->perPage = 5;
-        $paginateQueryComment = new Paginate($comment, $this->perPage);
+        $this->comment->setIdpost($id);
+        $this->comment->setStatus('Valider');
+        $commentEntityManager = $this->commentEntityManager;
+        $countItems = $commentEntityManager->exist(['idpost'=>$this->comment->idpost()]);
+        $paginateQueryComment = new Paginate($this->comment, $this->perPage, $countItems);
         $offset = $paginateQueryComment->getItems();
         
-        $comment->setIdpost($id);
-        $comment->setStatus('Valider');
-        $commentEntityManager = new EntityManager($comment);
-        
-        if($commentEntityManager->exist(['idpost'=>$comment->idpost()]))
+        if($commentEntityManager->exist(['idpost'=>$this->comment->idpost()]))
         { 
-            $comments = $query = (new Query($comment, $author))
+            $comments = $query = (new Query($this->comment, $this->author))
                     ->from('comment', 'c')
-                    ->select('c.id id','c.subject subject', 'a.image image', 'c.id_client id_client', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
-                    ->join('author as a', 'c.id_client = a.id', 'inner')
+                    ->select('c.id id','c.subject subject', 'a.image image', 'c.id_author id_author', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
+                    ->join('author as a', 'c.id_author = a.id', 'inner')
                     ->where('id_post = :idpost')
-                    ->setParams(array('idpost' => $comment->idpost()))
+                    ->setParams(array('idpost' => $this->comment->idpost()))
                     ->orderBy('create_date', 'ASC')
                     ->limit($this->perPage, $offset)
                     ->fetchAll();
             $this->previousLink = $paginateQueryComment->previouslink();
             $this->nextLink = $paginateQueryComment->nextlink();
-            return $comments;
+            $array = [$comments, $this->nextLink, $this->previousLink];
+            return $array;
         }
     }
          
     /**
      * I send into the database the reports and i increment each time when we click on the picture
      */
-    public function unwantedComment()
+    public function unwantedComment($number, $id)
     {
-        $number = $_POST['number'];
-        $model = $this->getEntityManager($this->comment);
-        $comment = $model->findById($_POST['id']);
+        $model = $this->commentEntityManager;
+        $comment = $model->findById($id);
 
         if (!empty ($comment))
         {
@@ -121,9 +108,9 @@ class CommentService
     /*
      * Create comment
      */
-    public function createComment()//$idcomment = null)
+    public function createComment()
     {
-        return $this->processForm();//$idcomment = null);
+        return $this->processForm();
     }
     
     /*
@@ -141,11 +128,9 @@ class CommentService
      */
     public function processForm(int $idComment = null)
     {
-        //print_r($idComment);
         if(!$idComment)
         {
-            //$model = $this->commentEntityManager;
-            $model = new EntityManager($this->comment);
+            $model = $this->commentEntityManager;
             
         }
         else
@@ -154,12 +139,10 @@ class CommentService
              * If there is a post id or get id
              */
             /**
-             * Je set l'id de commentaire pour ensuite l'avoir en getter et pouvoir
-             * rechercher en base de données en fonction de l'id et ainsi remplir l'objet
+             * I set the comment id in order to fill the getter and then i can search in database with the id to fill the object
              */
             $this->comment->setId($idComment);
-            //$model = $this->commentEntityManager;
-            $model = new EntityManager($this->comment);
+            $model = $this->commentEntityManager;
             if(!($this->comment = $model->findById($this->comment->id())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
@@ -169,7 +152,7 @@ class CommentService
         if($this->request->method() == 'POST')
         {
             $this->comment->setSubject($this->request->postData('subject'));
-            $this->comment->setContent($this->request->postData('content'));
+            $this->comment->setCommentContent($this->request->postData('commentContent'));
             $this->comment->setStatus($this->request->postData('validate'));
             
             if(isset($idComment))
@@ -185,35 +168,26 @@ class CommentService
 
             if(!is_null($this->userSession->user()->id()))
             {
-                $this->comment->setIdclient($this->userSession->user()->id());
+                $this->comment->setIdauthor($this->userSession->user()->id());
             }
             
             $this->comment->setIdpost($this->request->postData('idpost'));
             
         }
 
-        // Création du formulaire
+        /**
+         * Create Form
+         */
         $formBuilder = new CommentsForm($this->comment);
         $form = $formBuilder->buildform($formBuilder->form());
         
-        
         if ($this->request->method() == 'POST' && $form->isValid())
-                //&& $this->comment->subject() != ""
-                //&& $this->comment->content() != "")
         {
-            //$model = new EntityManager($this->comment);
             $model->persist($this->comment);
             $this->addFlash->success('Votre commentaire a bien été ajoutée !');
             
-            return true;
-            //return $this->response->redirectResponse('/');    
+            return true;   
         }
-        
-        /*echo '<pre>';
-        print_r($form->createView());
-        echo '</pre>';
-        die("FIN"); */
         return $form->createView();
-        //return $form->createView();
     }
 }

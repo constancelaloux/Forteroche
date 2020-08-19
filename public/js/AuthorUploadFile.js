@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#slugimage').change(function(){
-        var file_data = $('#slugimage').prop('files')[0];   
+    $('#slugimag').change(function(){
+        var file_data = $('#slugimag').prop('files')[0];   
         var form_data = new FormData();                  
         form_data.append('file', file_data);
         $.ajax({
@@ -17,8 +17,7 @@ $(document).ready(function() {
             },
             error: function(xhr, ajaxOptions, thrownError) 
             {
-                //alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                console.log(xhr.statusText);
+                alert(xhr.statusText);
             }
         });
     });

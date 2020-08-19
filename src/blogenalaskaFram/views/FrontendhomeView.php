@@ -13,9 +13,7 @@
             foreach ($lastsposts as $post): ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <!--<div class="d-flex border w-100" style="height:200px">-->
-                        <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
-                    <!--</div>-->
+                    <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
                     <h3><?= htmlspecialchars($post->subject())?></h3>
                     <p><?php if(strlen(htmlspecialchars($post->content())) <= 400):
@@ -53,9 +51,7 @@
                     <div class="col-lg-4">
                         <div class="cards h-100">
                             <div class="overlay-image">
-                                <!--<div class="d-flex border w-100" style="height:200px">-->
                                 <img class="card-img-top img-responsive w-100" src="<?=htmlspecialchars($post->image())?>" alt="Card image cap">
-                               <!-- </div>-->
                                 <div class="overlay-item-caption smoothie"></div>
                                 <div class="hover-item-caption smoothie">
                                     <h3 class="text"><a href="/article&id=<?= $post->id() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
@@ -89,7 +85,7 @@
 <section class="librairie pb-4">
     <div class="jumbotron jumbotron-fluid mb-4 " id="jumbotron">
         <div class="container">
-            <div class="row mb-4"> <!-- justify-content-center">-->
+            <div class="row mb-4">
                 <div class="col-lg-12">
                     <h2 class="display-4 font-italic text-white bg-danger">Vous aimerez aussi</h2>
                 </div>

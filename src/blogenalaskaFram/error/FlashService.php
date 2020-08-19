@@ -3,7 +3,6 @@
 namespace blog\error;
 
 use blog\session\PHPSession;
-use blog\config\Container;
 
 /**
  * Description of FlashService  
@@ -37,9 +36,6 @@ class FlashService
     public function __construct()
     {
         $this->session = new PHPSession();
-        /*$services   = include __DIR__.'/../config/Config.php';
-        $this->container = new Container($services);
-        $this->session = $this->container->get(blog\session\PHPSession::class);*/
     }
     
     /**

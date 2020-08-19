@@ -15,12 +15,12 @@ class Comment extends Model
      * @var array
      */
     protected $id,
-      $idclient,
+      $idauthor,
       $idpost,
       $createdate,
       $updatedate,
       $subject,
-      $content,
+      $commentContent,
       $status,
       $countclicks
      ;
@@ -39,9 +39,9 @@ class Comment extends Model
                     "type"      => "integer",
                     "property"  => "id"
                 ],
-                "id_client"     => [
+                "id_author"     => [
                     "type"      => "integer",
-                    "property"  => "idclient"
+                    "property"  => "idauthor"
                 ],
                 "id_post"     => [
                     "type"      => "integer",
@@ -61,7 +61,7 @@ class Comment extends Model
                 ],
                 "content"    => [
                     "type"      => "string",
-                    "property"  => "content"
+                    "property"  => "commentContent"
                 ],
                 "status"    => [
                     "type"      => "string",
@@ -90,9 +90,9 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function idclient()
+    public function idauthor()
     {
-        return $this->idclient;
+        return $this->idauthor;
     }
 
     /**
@@ -114,9 +114,9 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function content()
+    public function commentContent()
     {
-        return $this->content;
+        return $this->commentContent;
     }
     /**
      * @return type
@@ -147,7 +147,6 @@ class Comment extends Model
      */
     public function countclicks()
     {
-        //print_r($this->countclicks);
         return $this->countclicks;
     }
 
@@ -171,12 +170,12 @@ class Comment extends Model
     /**
      * @param type $idclient
      */
-    public function setIdclient($idclient)
+    public function setIdauthor($idauthor)
     {
-        $idclient = (int)$idclient;
-        if ($idclient > 0)
+        $idauthor = (int)$idauthor;
+        if ($idauthor > 0)
         {
-            $this->idclient = $idclient;
+            $this->idauthor = $idauthor;
         }
     }
     
@@ -215,11 +214,11 @@ class Comment extends Model
     /**
      * @param type $content
      */
-    public function setContent($content)
+    public function setCommentContent($commentContent)
     {
-        if(is_string($content))
+        if(is_string($commentContent))
         {
-            $this->content = $content;
+            $this->commentContent = $commentContent;
         }
     }
 
