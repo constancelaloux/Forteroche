@@ -15,7 +15,7 @@
                     <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
                     <h3><?= htmlspecialchars($post->subject())?></h3>
-                    <p><?php if(strlen(htmlspecialchars($post->content())) <= 400):
+                    <p><?php if(strlen($post->content()) <= 400):
                                 echo $post->content();
                         else:
                             //Returns the portion of string specified by the start and length parameters.
@@ -58,7 +58,20 @@
                             </div>
                             <div class="card-body">
                                 <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->subject())?></strong>
-                                <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
+
+                                    <?php if(strlen($post->content()) <= 150): ?>
+                                        <h3 class="card-title"><strong> 
+                                            <?php echo $post->content(); ?>
+                                        </strong></h3>
+                                    <?php else:
+                                        //Returns the portion of string specified by the start and length parameters.
+                                        $debut = substr($post->content(), 0, 150);
+                                        $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';?>
+
+                                        <h3 class="card-title"><strong> 
+                                            <?php echo $debut; ?>
+                                        </strong></h3>
+                                    <?php endif;?>
                                 <div class="mb-1 text-muted"><?=htmlspecialchars($post->createdate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
                             </div>
                         </div>  
