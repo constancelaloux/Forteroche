@@ -58,20 +58,7 @@
                             </div>
                             <div class="card-body">
                                 <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->subject())?></strong>
-
-                                    <?php if(strlen($post->content()) <= 150): ?>
-                                        <h3 class="card-title"><strong> 
-                                            <?php echo $post->content(); ?>
-                                        </strong></h3>
-                                    <?php else:
-                                        //Returns the portion of string specified by the start and length parameters.
-                                        $debut = substr($post->content(), 0, 150);
-                                        $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';?>
-
-                                        <h3 class="card-title"><strong> 
-                                            <?php echo $debut; ?>
-                                        </strong></h3>
-                                    <?php endif;?>
+                                <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
                                 <div class="mb-1 text-muted"><?=htmlspecialchars($post->createdate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
                             </div>
                         </div>  
@@ -109,7 +96,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Conseils camping pour la montagne</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
@@ -119,7 +106,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Voyage au coeur de la montagne</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
@@ -129,7 +116,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Conseils photo pour voyageurs</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
