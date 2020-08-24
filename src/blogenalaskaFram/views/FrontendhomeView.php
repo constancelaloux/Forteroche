@@ -96,7 +96,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Conseils camping pour la montagne</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
@@ -106,7 +106,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Voyage au coeur de la montagne</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
@@ -116,7 +116,7 @@
                         <div class="card-body bg-white">
                             <div class="mb-1 text-muted">Tourisme littéraire</div>
                             <h3 class="card-title"><strong>Conseils photo pour voyageurs</strong></h3>
-                            <a href="/article" class="stretched-link">Acheter</a>
+                            <a href="" class="stretched-link">Acheter</a>
                         </div>
                     </div> 
                 </div>
