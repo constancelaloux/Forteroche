@@ -3,7 +3,7 @@
 
 <div class="text-center text-secondary">
     <a class="404_icon" href="#">
-        <img src="/blogenalaska/public/images/404img.png" alt="logo">
+        <img src="/public/images/404img.png" alt="logo">
     </a>
     <h1 class="display-1 text-danger font-title font-weight-bold">404</h1>
     <h3 class="display-4  text-danger font-title">Ahhhhhh !</h3>
@@ -15,3 +15,12 @@
     Vous pouvez revenir à <a href="javascript:history.back()">la page précédente</a> ou aller à 
     <a href="/">la page d'accueil</a>.
 </div>
+<<<<<<< HEAD:src/blogenalaskaFram/views/Page404.php
+
+
+
+<?php $content = ob_get_clean(); ?>
+
+<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');?>
+=======
+>>>>>>> NewForterocheApp:blogenalaska/Error/Page404.php

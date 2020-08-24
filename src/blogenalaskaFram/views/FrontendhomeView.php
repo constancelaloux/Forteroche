@@ -15,7 +15,7 @@
                     <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
                     <h3><?= htmlspecialchars($post->subject())?></h3>
-                    <p><?php if(strlen(htmlspecialchars($post->content())) <= 400):
+                    <p><?php if(strlen($post->content()) <= 400):
                                 echo $post->content();
                         else:
                             //Returns the portion of string specified by the start and length parameters.
