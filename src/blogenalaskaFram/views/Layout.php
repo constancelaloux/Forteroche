@@ -5,7 +5,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+<<<<<<< HEAD
 <link rel="icon" type="image/png" href="/public/images/logo.png" />
+=======
+<link rel="icon" type="image/png" href="images/logo.png" />
+>>>>>>> NewForterocheApp
 
 <!--CSS-->
 <link href="/public/css/style.css" rel="stylesheet" />

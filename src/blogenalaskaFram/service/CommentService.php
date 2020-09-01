@@ -185,8 +185,8 @@ class CommentService
         {
             $model->persist($this->comment);
             $this->addFlash->success('Votre commentaire a bien été ajoutée !');
-            
-            return true;   
+            $array = [$this->comment->idpost(), true];
+            return $array;
         }
         return $form->createView();
     }
