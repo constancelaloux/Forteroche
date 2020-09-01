@@ -48,7 +48,7 @@ class FrontendController extends AbstractController
      */
     public function renderPost()
     {
-        //Tester les deux dans une methode de abstract controller
+        //Test both methods in abstract controller
         /**
          * Test if post and get method are not null
          */
@@ -101,11 +101,10 @@ class FrontendController extends AbstractController
         /**
          * Show the page with all the components
          */
-        if($commentform === true )
+        if($commentform[1] === true)
         {
-            return $this->redirect("/");
+            return $this->redirect("/article&id=$commentform[0]&page=1");
         }
-
         $title = 'Ecrire un commentaire';
         $this->getrender()->render('ArticleView', ['post' => $postFromId, 'lastsposts' => $lastsposts, 'form' => $commentform, 'previouslink' => $comment[2], 'nextlink' => $comment[1], /*'posts' => $posts,*/ 'comments' => $comment[0], 'title' => $title]);
     }
