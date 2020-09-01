@@ -82,7 +82,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
@@ -90,7 +90,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function idauthor()
+    public function getIdAuthor()
     {
         return $this->idauthor;
     }
@@ -98,7 +98,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function subject()
+    public function getSubject()
     {
         return $this->subject;
     }
@@ -106,7 +106,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function image()
+    public function getImage()
     {
         return $this->image;
     }
@@ -114,7 +114,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function slugimage()
+    public function getSlugImage()
     {
         return $this->slugimage;
     }
@@ -122,7 +122,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function content()
+    public function getContent()
     {
         return $this->content;
     }
@@ -130,7 +130,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function createdate()
+    public function getCreateDate()
     {
         return $this->createdate;
     }
@@ -138,7 +138,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function updatedate()
+    public function getUpdateDate()
     {
         return $this->updatedate;
     }
@@ -146,7 +146,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function status()
+    public function getStatus()
     {
         return $this->status;
     }
@@ -174,7 +174,7 @@ class Post extends Model
     /**
      * @param type $idauthor
      */
-    public function setIdauthor($idauthor)
+    public function setIdAuthor($idauthor)
     {
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
@@ -209,7 +209,7 @@ class Post extends Model
     /**
      * @param type $slugimage
      */
-    public function setSlugimage($slugimage)
+    public function setSlugImage($slugimage)
     {
         if(is_string($slugimage))
         {
@@ -231,7 +231,7 @@ class Post extends Model
     /**
      * @param type $createdate
      */
-    public function setCreatedate($createdate)
+    public function setCreateDate($createdate)
     {   
         if(is_string($createdate))
         {
@@ -242,7 +242,7 @@ class Post extends Model
     /**
      * @param type $updatedate
      */
-    public function setUpdatedate($updatedate)
+    public function setUpdateDate($updatedate)
     {
         if(is_string($updatedate))
         {

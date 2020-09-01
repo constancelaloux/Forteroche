@@ -19,7 +19,7 @@ class ConnectAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Identifiant',
-        'name' => 'username',
+        'name' => 'getUsername',
         'maxLength' => 20,
         'minLength' => 5,
         'validators' => [
@@ -29,7 +29,7 @@ class ConnectAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'password',
         'label' => 'Mot de passe',
-        'name' => 'password',
+        'name' => 'getPassword',
         'maxLength' => 8,
         'minLength' => 6,
         'validators' => [

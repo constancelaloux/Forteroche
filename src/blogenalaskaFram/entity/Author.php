@@ -95,7 +95,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
@@ -103,7 +103,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function password()
+    public function getPassword()
     {
         return $this->password;
 
@@ -112,7 +112,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function username()
+    public function getUsername()
     {
         return $this->username;
     }
@@ -120,7 +120,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function surname()
+    public function getSurname()
     {
         return $this->surname;
     }
@@ -128,7 +128,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function firstname()
+    public function getFirstname()
     {
         return $this->firstname;
     }
@@ -136,7 +136,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function status()
+    public function getStatus()
     {
         return $this->status;
     }
@@ -145,7 +145,7 @@ class Author extends Model
      * 
      * @return type
      */
-    public function image()
+    public function getImage()
     {
         return $this->image;
     }
@@ -153,7 +153,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function slugimag()
+    public function getSlugImag()
     {
         return $this->slugimag;
     }
@@ -212,9 +212,10 @@ class Author extends Model
         }
         $this->username = $username;
     }
-    
+
     /**
-     * @param type $username
+     * 
+     * @param type $image
      */
     public function setImage($image)
     {
@@ -252,7 +253,7 @@ class Author extends Model
     /**
      * @param type $slugimag
      */
-    public function setSlugimag($slugimag)
+    public function setSlugImag($slugimag)
     {
         if(is_string($slugimag))
         {

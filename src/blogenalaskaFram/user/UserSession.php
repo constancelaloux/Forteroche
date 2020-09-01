@@ -66,7 +66,7 @@ class UserSession
         
         $this->author->setId($id);
         $model = $this->entityManager;
-        $auth = $model->findById($this->author->id());
+        $auth = $model->findById($this->author->getId());
         return $auth ?: NULL;
     }
     
@@ -80,13 +80,13 @@ class UserSession
     {
         $user = $this->user();
         
-        if($user === NULL || !in_array($user->status(), $roles))
+        if($user === NULL || !in_array($user->getStatus(), $roles))
         {
             return NULL;
         }
         else
         {
-            return $user->status();
+            return $user->getStatus();
         }
     }
     

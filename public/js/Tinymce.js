@@ -1,6 +1,6 @@
 tinymce.init
 ({ 
-        selector:'textarea#content',
+        selector:'textarea#getContent',
         // language
         language_url: '/../../public/js/fr_FR.js',
         font_formats: 'Arial=arial',

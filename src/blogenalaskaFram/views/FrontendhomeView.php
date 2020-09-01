@@ -12,20 +12,20 @@
             <?php foreach ($lastsposts as $post): ?>
             <div class="col-lg-4">
                 <div class="services-item p-2">
-                    <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->image())?>" alt="Card image cap">
+                    <img class="card-img-top img-responsive w-100" src="<?= htmlspecialchars($post->getImage())?>" alt="Card image cap">
                     <strong class="d-inline-block mb-2 text-danger">Derniers chapitres</strong>
-                    <h3><?= htmlspecialchars($post->subject())?></h3>
-                    <p><?php if(strlen($post->content()) <= 400):
-                                echo $post->content();
+                    <h3><?= htmlspecialchars($post->getSubject())?></h3>
+                    <p><?php if(strlen($post->getContent()) <= 400):
+                                echo $post->getContent();
                         else:
                             //Returns the portion of string specified by the start and length parameters.
-                            $debut = substr($post->content(), 0, 400);
+                            $debut = substr($post->getContent(), 0, 400);
                             $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
 
                             echo $debut;
                         endif;?>
                         
-                    <a href="/article&id=<?=$post->id() ?>&page=1" class="text-danger">Lire la suite</a></p>
+                    <a href="/article&id=<?=$post->getId() ?>&page=1" class="text-danger">Lire la suite</a></p>
                 </div>
             </div>
             <?php endforeach; ?>
@@ -50,16 +50,16 @@
                     <div class="col-lg-4">
                         <div class="cards h-100">
                             <div class="overlay-image">
-                                <img class="card-img-top img-responsive w-100" src="<?=htmlspecialchars($post->image())?>" alt="Card image cap">
+                                <img class="card-img-top img-responsive w-100" src="<?=htmlspecialchars($post->getImage())?>" alt="Card image cap">
                                 <div class="overlay-item-caption smoothie"></div>
                                 <div class="hover-item-caption smoothie">
-                                    <h3 class="text"><a href="/article&id=<?= $post->id() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
+                                    <h3 class="text"><a href="/article&id=<?= $post->getId() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->subject())?></strong>
+                                <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->getSubject())?></strong>
                                 <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
-                                <div class="mb-1 text-muted"><?=htmlspecialchars($post->createdate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
+                                <div class="mb-1 text-muted"><?=htmlspecialchars($post->getCreateDate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
                             </div>
                         </div>  
                     </div>

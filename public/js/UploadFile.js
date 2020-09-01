@@ -1,6 +1,6 @@
 $(document).ready(function() {
-    $('#slugimage').change(function(){
-        var file_data = $('#slugimage').prop('files')[0];   
+    $('#getSlugImage').change(function(){
+        var file_data = $('#getSlugImage').prop('files')[0];   
         var form_data = new FormData();                  
         form_data.append('file', file_data);
         $.ajax({

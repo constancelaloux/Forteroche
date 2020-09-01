@@ -22,7 +22,7 @@ class ArticlesForm extends FormBuilder
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Titre de l\'article',
-        'name' => 'subject',
+        'name' => 'getSubject',
         'maxLength' => 50,
         'minLength' => 5,
         'validators' => [
@@ -31,7 +31,7 @@ class ArticlesForm extends FormBuilder
         ]))
         ->add(new TextField([
         'label' => 'Contenu de l\'article',
-        'name' => 'content',
+        'name' => 'getContent',
         'validators' => [
             new NotNullValidator('Veuillez insérer votre texte'),
         ],
@@ -39,7 +39,7 @@ class ArticlesForm extends FormBuilder
         ->add(new StringField([
         'type' => 'hidden',
         'label' => 'nom de l\'image',
-        'name' => 'image',
+        'name' => 'getImage',
         'validators' => [
             new ImageValidator('Veuillez insérer votre image'),
         ],
@@ -47,7 +47,7 @@ class ArticlesForm extends FormBuilder
         ->add(new StringField([
         'type' => 'file',
         'label' => 'Ajouter une image',
-        'name' => 'slugimage',
+        'name' => 'getSlugImage',
         ]))
         ;
     }

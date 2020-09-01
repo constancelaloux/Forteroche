@@ -5,10 +5,10 @@
 <!-- Start blog post and comments-->
 <!--J'affiche l'article-->
             <div class="blog-post col-lg-9">
-                <h2 class="blog-post-title"><?= htmlspecialchars($post->subject())?></h2>
-                <p class="blog-post-meta"><?= $post->createdate()->format('Y-m-d') ?> par Jean Forteroche</p>
-                <img class="card-img" src="<?= htmlspecialchars($post->image())?>" alt="image article">
-                <p><?= $post->content() ?></p>
+                <h2 class="blog-post-title"><?= htmlspecialchars($post->getSubject())?></h2>
+                <p class="blog-post-meta"><?= $post->getCreateDate()->format('Y-m-d') ?> par Jean Forteroche</p>
+                <img class="card-img" src="<?= htmlspecialchars($post->getImage())?>" alt="image article">
+                <p><?= $post->getContent() ?></p>
                 
 <!--J'affiche les commantaires liés à l'article -->
                 <div class="comments">
@@ -18,15 +18,15 @@
                         <div class="media mt-3">
                             <img src="<?php echo htmlspecialchars($comment->originalData->image) ?>" class="align-self-start mr-3 img-thumbnail" alt="image 1" width="100" height="50">
                             <div class="media-body">
-                                <button class="reportComment" id=<?php echo $comment->id() ?>>Signaler à l'administrateur</button>
-                                <h5 class="mt-0"><?php echo htmlspecialchars($comment->subject()) ?></h5>
-                                <p><?php echo $comment->createdate()->format('Y-m-d') ?></p>
-                                <p><?php echo htmlspecialchars($comment->commentContent()) ?></p>
+                                <button class="reportComment" id=<?php echo $comment->getId() ?>>Signaler à l'administrateur</button>
+                                <h5 class="mt-0"><?php echo htmlspecialchars($comment->getSubject()) ?> par <?php echo htmlspecialchars($comment->originalData->firstname) ?> <?php echo htmlspecialchars($comment->originalData->surname) ?></h5>
+                                <p><?php echo $comment->getCreateDate()->format('Y-m-d') ?></p>
+                                <p><?php echo htmlspecialchars($comment->getCommentContent()) ?></p>
 
                                 <?php if(isset($_SESSION['authorId'])):
-                                        if($comment->idauthor() == $_SESSION['authorId']): ?>
-                                            <a href="/article&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id() ?>" class="btn btn-primary btn-round btn-lg btn-block" role="button">Modifier</a>
-                                            <form action="/deletecomment&id=<?php echo $post->id() ?>&idcomment=<?php echo $comment->id() ?>" method="post">
+                                        if($comment->getIdAuthor() == $_SESSION['authorId']): ?>
+                                            <a href="/article&id=<?php echo $post->getId() ?>&idcomment=<?php echo $comment->getId() ?>" class="btn btn-primary btn-round btn-lg btn-block" role="button">Modifier</a>
+                                            <form action="/deletecomment&id=<?php echo $post->getId() ?>&idcomment=<?php echo $comment->getId() ?>" method="post">
                                                 <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="delete" value="Supprimer"/>
                                             </form>
                                         <?php endif; ?>
@@ -44,19 +44,19 @@
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->id() ?>&page=<?php echo $previouslink ?>" tabindex="-1">Previous</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $previouslink ?>" tabindex="-1">Previous</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->id() ?>&page=1">1</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=1">1</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->id() ?>&page=2">2</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=2">2</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->id() ?>&page=3">3</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=3">3</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->id() ?>&page=<?php echo $nextlink ?>">Next</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $nextlink ?>">Next</a>
                         </li>
                     </ul>
                 </nav>
@@ -72,7 +72,7 @@
                                     <h1 class="h2 mb-3 font-weight-normal border-left border-info text-warning"><?php echo $title ?></h1>
                                 </div>
                                     <?php echo $form ?>
-                                <input type="hidden" id="newFile" name="idpost" value="<?php echo $post->id()?>"/>
+                                <input type="hidden" id="newFile" name="idpost" value="<?php echo $post->getId() ?>"/>
                                 <input type = "submit" class="btn btn-primary btn-round btn-lg btn-block" name="validate" value="Valider"/>
                                 <!--</p>-->
                             </form>
@@ -91,14 +91,14 @@
                     <?php foreach ($lastsposts as $post): ?>
                         <div class="card mb-4">
                             <div class="overlay-image">
-                                <img src="<?= $post->image()?>" class="card-img-top" alt="image 1">
+                                <img src="<?= $post->getImage()?>" class="card-img-top" alt="image 1">
                                 <div class="overlay-item-caption smoothie"></div>
                                 <div class="hover-item-caption smoothie">
-                                    <h3 class="text"><a href="/article&id=<?= $post->id() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
+                                    <h3 class="text"><a href="/article&id=<?= $post->getId() ?>&page=1" class="stretched-link" title="view article">View</a></h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <h5 class="card-title"><?= htmlspecialchars($post->subject())?></h5>
+                                <h5 class="card-title"><?= htmlspecialchars($post->getSubject())?></h5>
                             </div>
                         </div>
                     <?php endforeach;?>         

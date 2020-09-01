@@ -101,7 +101,7 @@ class FrontendController extends AbstractController
         /**
          * Show the page with all the components
          */
-        if($commentform[1] === true)
+        if(isset($commentform[1]) && $commentform[1] === true)
         {
             return $this->redirect("/article&id=$commentform[0]&page=1");
         }

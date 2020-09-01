@@ -61,10 +61,10 @@ class BackendController extends AbstractController
             foreach ($posts as $articles) 
             {
                 $row = array();
-                $row[] = $articles->id();
-                $row[] = htmlspecialchars($articles->subject());
-                $row[] = $articles->createdate()->format('Y-m-d');
-                $updateArticleDate = $articles->updatedate();
+                $row[] = $articles->getId();
+                $row[] = htmlspecialchars($articles->getSubject());
+                $row[] = $articles->getCreateDate()->format('Y-m-d');
+                $updateArticleDate = $articles->getUpdateDate();
 
                 if (is_null($updateArticleDate))
                 {
@@ -75,7 +75,7 @@ class BackendController extends AbstractController
                     $row[] = $updateArticleDate->format('Y-m-d');
                 }
 
-                $row[] = $articles->status();
+                $row[] = $articles->getStatus();
                 $data[] = $row;
             }
                             
@@ -184,7 +184,7 @@ class BackendController extends AbstractController
              * In case there is no id in database
              * Get the object based on the Id (usually called $id)
              */
-            if(!($this->post = $model->findById($this->post->id())))
+            if(!($this->post = $model->findById($this->post->getId())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -192,9 +192,9 @@ class BackendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $this->post->setSubject($this->request->postData('subject'));
-            $this->post->setContent($this->request->postData('content'));
-            $this->post->setImage($this->request->postData('image'));
+            $this->post->setSubject($this->request->postData('getSubject'));
+            $this->post->setContent($this->request->postData('getContent'));
+            $this->post->setImage($this->request->postData('getImage'));
             if($this->request->postData('validate'))
             {
                 $this->post->setStatus($this->request->postData('validate'));
@@ -206,16 +206,16 @@ class BackendController extends AbstractController
             
             if(isset($id))
             {
-                $this->post->setUpdatedate(date("Y-m-d H:i:s"));
+                $this->post->setUpdateDate(date("Y-m-d H:i:s"));
             }
             else
             {
-                $this->post->setCreatedate(date("Y-m-d H:i:s"));
+                $this->post->setCreateDate(date("Y-m-d H:i:s"));
             }
 
-            if(!is_null($this->userSession()->user()->id()))
+            if(!is_null($this->userSession()->user()->getId()))
             {
-                $this->post->setIdauthor($this->userSession()->user()->id());
+                $this->post->setIdAuthor($this->userSession()->user()->getId());
             }
         }
         
@@ -242,7 +242,7 @@ class BackendController extends AbstractController
         
         if($this->userSession()->requireRole('admin'))
         {
-            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $this->post->image()]);
+            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $this->post->getImage()]);
         }
         else 
         {
@@ -283,21 +283,21 @@ class BackendController extends AbstractController
             foreach ($comments as $comment) 
             {
                 $row = array();
-                $row[] = $comment->id();
-                $row[] = $comment->idpost();
-                $row[] = htmlspecialchars($comment->subject());
-                $row[] = $comment->createdate()->format('Y-m-d');
+                $row[] = $comment->getId();
+                $row[] = $comment->getIdPost();
+                $row[] = htmlspecialchars($comment->getSubject());
+                $row[] = $comment->getCreateDate()->format('Y-m-d');
 
-                if (is_null($comment->updatedate()))
+                if (is_null($comment->getUpdateDate()))
                 {
                     $row[] = "Pas de modifications sur ce commentaire pour l'instant";
                 }
                 else 
                 {
-                    $row[] = $comment->updatedate()->format('Y-m-d');
+                    $row[] = $comment->getUpdateDate()->format('Y-m-d');
                 }
 
-                $row[] = $comment->countclicks();
+                $row[] = $comment->getCountClicks();
                 $data[] = $row;
             }
                             

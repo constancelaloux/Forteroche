@@ -84,7 +84,7 @@ class Model
      */
     public function getSQLValueByColumn($column)
     {
-        $value = $this->{sprintf(ucfirst($this::metadata()["columns"][$column]["property"]))}();
+        $value = $this->{sprintf("get%s",ucfirst($this::metadata()["columns"][$column]["property"]))}();
         if($value instanceof \DateTime)
         {
             return $value->format("Y-m-d H:i:s");
@@ -117,7 +117,7 @@ class Model
         /**
          * I'm going to return the id getter
          */
-        return $this->{sprintf(ucfirst($property))}();
+        return $this->{sprintf("get%s",ucfirst($property))}();
     }
 
     /**

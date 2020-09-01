@@ -58,7 +58,7 @@ class PostService
         $countItems = $model->exist();
         $paginatedQueryPost = new Paginate($this->post, $this->perPage, $countItems);
         $offset = $paginatedQueryPost->getItems();
-        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
+        $posts = $model->findBy(['status' => 'Valider'], [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
         $this->previouslink = $paginatedQueryPost->previouslink();
         $this->nextlink = $paginatedQueryPost->nextlink();
         $this->render->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $this->previouslink, 'nextlink' => $this->nextlink, 'lastsposts' => $lastsposts]);
@@ -70,7 +70,8 @@ class PostService
     public function getLastsPosts()
     {
         $model = $this->postEntityManager;
-        $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
+        //$lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
+        $lastsposts = $model->findBy(['status' => 'Valider'], [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }
     

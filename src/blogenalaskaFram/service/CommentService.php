@@ -61,21 +61,21 @@ class CommentService
     public function renderPaginatedComments($id)
     {
         $this->perPage = 5;
-        $this->comment->setIdpost($id);
+        $this->comment->setIdPost($id);
         $this->comment->setStatus('Valider');
         $commentEntityManager = $this->commentEntityManager;
-        $countItems = $commentEntityManager->exist(['idpost'=>$this->comment->idpost()]);
+        $countItems = $commentEntityManager->exist(['idpost'=>$this->comment->getIdPost()]);
         $paginateQueryComment = new Paginate($this->comment, $this->perPage, $countItems);
         $offset = $paginateQueryComment->getItems();
         
-        if($commentEntityManager->exist(['idpost'=>$this->comment->idpost()]))
+        if($commentEntityManager->exist(['idpost'=>$this->comment->getIdPost()]))
         { 
             $comments = $query = (new Query($this->comment, $this->author))
                     ->from('comment', 'c')
-                    ->select('c.id id','c.subject subject', 'a.image image', 'c.id_author id_author', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
+                    ->select('c.id id','c.subject subject', 'a.firstname firstname', 'a.surname surname','a.image image', 'c.id_author id_author', 'a.username username','c.create_date create_date','c.update_date update_date', 'c.content content', 'c.countclicks countclicks')
                     ->join('author as a', 'c.id_author = a.id', 'inner')
                     ->where('id_post = :idpost')
-                    ->setParams(array('idpost' => $this->comment->idpost()))
+                    ->setParams(array('idpost' => $this->comment->getIdPost()))
                     ->orderBy('create_date', 'ASC')
                     ->limit($this->perPage, $offset)
                     ->fetchAll();
@@ -96,12 +96,12 @@ class CommentService
 
         if (!empty ($comment))
         {
-            $clicks = $comment->countclicks();
+            $clicks = $comment->getCountClicks();
         }
         
         $clicksIncremented = $clicks + $number;
-        $this->comment->setCountclicks($clicksIncremented);
-        $this->comment->setId($comment->id());
+        $this->comment->setCountClicks($clicksIncremented);
+        $this->comment->setId($comment->getId());
         $model->persist($this->comment);
     }
     
@@ -143,7 +143,7 @@ class CommentService
              */
             $this->comment->setId($idComment);
             $model = $this->commentEntityManager;
-            if(!($this->comment = $model->findById($this->comment->id())))
+            if(!($this->comment = $model->findById($this->comment->getId())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -151,27 +151,27 @@ class CommentService
  
         if($this->request->method() == 'POST')
         {
-            $this->comment->setSubject($this->request->postData('subject'));
-            $this->comment->setCommentContent($this->request->postData('commentContent'));
+            $this->comment->setSubject($this->request->postData('getSubject'));
+            $this->comment->setCommentContent($this->request->postData('getCommentContent'));
             $this->comment->setStatus($this->request->postData('validate'));
             
             if(isset($idComment))
             {
-                $this->comment->setUpdatedate(date("Y-m-d H:i:s"));
+                $this->comment->setUpdateDate(date("Y-m-d H:i:s"));
             }
             else
             {
-                $this->comment->setCreatedate(date("Y-m-d H:i:s"));
+                $this->comment->setCreateDate(date("Y-m-d H:i:s"));
             }
             
-            $this->comment->setCountclicks(NULL);
+            $this->comment->setCountClicks(NULL);
 
-            if(!is_null($this->userSession->user()->id()))
+            if(!is_null($this->userSession->user()->getId()))
             {
-                $this->comment->setIdauthor($this->userSession->user()->id());
+                $this->comment->setIdAuthor($this->userSession->user()->getId());
             }
             
-            $this->comment->setIdpost($this->request->postData('idpost'));
+            $this->comment->setIdPost($this->request->postData('getIdPost'));
             
         }
 
@@ -185,7 +185,7 @@ class CommentService
         {
             $model->persist($this->comment);
             $this->addFlash->success('Votre commentaire a bien été ajoutée !');
-            $array = [$this->comment->idpost(), true];
+            $array = [$this->comment->getIdPost(), true];
             return $array;
         }
         return $form->createView();

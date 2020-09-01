@@ -82,7 +82,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function id()
+    public function getId()
     {
         return $this->id;
     }
@@ -90,7 +90,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function idauthor()
+    public function getIdAuthor()
     {
         return $this->idauthor;
     }
@@ -98,7 +98,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function subject()
+    public function getSubject()
     {
         return $this->subject;
     }
@@ -106,7 +106,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function idpost()
+    public function getIdPost()
     {
         return $this->idpost;
     }
@@ -114,14 +114,14 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function commentContent()
+    public function getCommentContent()
     {
         return $this->commentContent;
     }
     /**
      * @return type
      */
-    public function createdate()
+    public function getCreateDate()
     {
         return $this->createdate;
     }
@@ -129,7 +129,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function updatedate()
+    public function getUpdateDate()
     {
         return $this->updatedate;
     }
@@ -137,7 +137,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function status()
+    public function getStatus()
     {
         return $this->status;
     }
@@ -145,7 +145,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function countclicks()
+    public function getCountclicks()
     {
         return $this->countclicks;
     }
@@ -170,7 +170,7 @@ class Comment extends Model
     /**
      * @param type $idclient
      */
-    public function setIdauthor($idauthor)
+    public function setIdAuthor($idauthor)
     {
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
@@ -205,7 +205,7 @@ class Comment extends Model
     /**
      * @param type $countclicks
      */
-    public function setCountclicks($countclicks)
+    public function setCountClicks($countclicks)
     {
         $countclick = (int)$countclicks;
         $this->countclicks = $countclick;
@@ -225,7 +225,7 @@ class Comment extends Model
     /**
      * @param type $createdate
      */
-    public function setCreatedate($createdate)
+    public function setCreateDate($createdate)
     {   
         if(is_string($createdate))
         {
@@ -236,7 +236,7 @@ class Comment extends Model
     /**
      * @param type $updatedate
      */
-    public function setUpdatedate($updatedate)
+    public function setUpdateDate($updatedate)
     {
         if(is_string($updatedate))
         {

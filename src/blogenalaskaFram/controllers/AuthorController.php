@@ -84,7 +84,7 @@ class AuthorController extends AbstractController
              * In case i have no id in database
              * Get object based on Id (usually called $ id)
              */
-            if(!($this->author = $model->findById($this->author->id())))
+            if(!($this->author = $model->findById($this->author->getId())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -92,11 +92,11 @@ class AuthorController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $this->author->setUsername($this->request->postData('username'));
-            $this->author->setPassword($this->request->postData('password'));
-            $this->author->setImage($this->request->postData('image'));
-            $this->author->setSurname($this->request->postData('surname'));
-            $this->author->setFirstname($this->request->postData('firstname'));
+            $this->author->setUsername($this->request->postData('getUsername'));
+            $this->author->setPassword($this->request->postData('getPassword'));
+            $this->author->setImage($this->request->postData('getImage'));
+            $this->author->setSurname($this->request->postData('getSurname'));
+            $this->author->setFirstname($this->request->postData('getFirstname'));
             if($this->userSession()->requireRole('client'))
             {
                 $this->author->setStatus("client");
@@ -121,7 +121,7 @@ class AuthorController extends AbstractController
                 $this->addFlash()->success('Votre compte a bien été modifié !');
                 return $this->redirect('/');
         }
-        $this->getrender()->render('FormView', ['title' => $title, 'form' => $form->createView(), 'url' => $url, 'p' => $p, 'image' => $this->author->image()]);
+        $this->getrender()->render('FormView', ['title' => $title, 'form' => $form->createView(), 'url' => $url, 'p' => $p, 'image' => $this->author->getImage()]);
     }
        
     /**
@@ -163,11 +163,11 @@ class AuthorController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $this->author->setUsername($this->request->postData('username'));
-            $this->author->setPassword($this->request->postData('password'));
-            $this->author->setImage($this->request->postData('image'));
-            $this->author->setSurname($this->request->postData('surname'));
-            $this->author->setFirstname($this->request->postData('firstname'));
+            $this->author->setUsername($this->request->postData('getUsername'));
+            $this->author->setPassword($this->request->postData('getPassword'));
+            $this->author->setImage($this->request->postData('getImage'));
+            $this->author->setSurname($this->request->postData('getSurname'));
+            $this->author->setFirstname($this->request->postData('getFirstname'));
             if($this->userSession()->requireRole('admin'))
             {
                 $this->author->setStatus("admin");
@@ -184,10 +184,10 @@ class AuthorController extends AbstractController
         
         if($this->request->method() == 'POST' && $form->isValid())
         {
-            $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
+            $password = password_hash($this->request->postData('getPassword'), PASSWORD_DEFAULT);
             $this->author->setPassword($password);
 
-            if($model->exist(['username' => $this->author->username()]))
+            if($model->exist(['username' => $this->author->getUsername()]))
             {
                 unset($model);
                 $this->addFlash()->error('Cet identifiant existe déja');
@@ -210,8 +210,8 @@ class AuthorController extends AbstractController
     {
         if ($this->request->method() == 'POST')
         {
-            $this->author->setUsername($this->request->postData('username'));
-            $this->author->setPassword($this->request->postData('password'));
+            $this->author->setUsername($this->request->postData('getUsername'));
+            $this->author->setPassword($this->request->postData('getPassword'));
         }
         else 
         {
@@ -229,15 +229,18 @@ class AuthorController extends AbstractController
             /**
             * Retrieve user by his username
             */
-            if($model->exist(['username' => $this->author->username()]))
+            if($model->exist(['username' => $this->author->getUsername()]))
             {   /**
                  * We check that the user matches
                  */
-                $auth = $model->findOneBy(['username' => $this->author->username()]);
+                $auth = $model->findOneBy(['username' => $this->author->getUsername()]);
                 /**
                  * We check that the data inserted in the form is indeed equivalent to the database datas
                  */
-                $authPassword = password_verify($this->request->postData('password'), $auth->password());        
+                //print_r(password_hash($this->request->postData('getPassword'), PASSWORD_DEFAULT));
+                //print_r($auth->getPassword());
+                $authPassword = password_verify($this->request->postData('getPassword'), $auth->getPassword());  
+                //print_r($authPassword);
 
                 if ($authPassword)
                 {
@@ -245,9 +248,9 @@ class AuthorController extends AbstractController
                     {
                         session_start();
                     }
-                    $_SESSION['authorUsername'] = $auth->username();
-                    $_SESSION['authorId'] = $auth->id();
-                    $_SESSION['status'] = $auth->status();
+                    $_SESSION['authorUsername'] = $auth->getUsername();
+                    $_SESSION['authorId'] = $auth->getId();
+                    $_SESSION['status'] = $auth->getStatus();
                     
                     if($this->userSession()->requireRole('admin'))
                     {
@@ -281,7 +284,7 @@ class AuthorController extends AbstractController
         $title = 'Identifiez vous';
         $url = '/createuser';
         $p = 'Pas de compte, s\'enregistrer';
-        $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p, 'url' => $url, 'image' => $this->author->image()]);     
+        $this->getrender()->render('FormView', ['title' => $title,'form' => $form->createView(), 'p' => $p, 'url' => $url, 'image' => $this->author->getImage()]);     
     }
     
     /*
