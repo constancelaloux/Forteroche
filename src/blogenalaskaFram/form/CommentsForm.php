@@ -14,7 +14,7 @@ use blog\validator\NotNullValidator;
  */
 class CommentsForm extends FormBuilder 
 {
-    public function form()
+    public function form(): void
     {
         $this->form
         ->add(new StringField([

@@ -16,7 +16,7 @@ class HTTPResponse implements ResponseInterface
     * @return string
      * Redirect user
     */
-    public function redirectResponse(string $location)
+    public function redirectResponse(string $location): void
     {
         header('Location: '.$location);
         exit;
@@ -26,7 +26,7 @@ class HTTPResponse implements ResponseInterface
     * @return string
      * Redirect to error 404
     */
-    public function redirect404(string $location)
+    public function redirect404(string $location): void
     {
         header('Location: '.$location);
         exit("");

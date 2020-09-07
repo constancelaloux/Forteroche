@@ -8,7 +8,7 @@ namespace blog;
  */
 trait Hydrator 
 {
-    public function hydrate($data)
+    public function hydrate(array $data): void
     {
         foreach ($data as $key => $value)
         {

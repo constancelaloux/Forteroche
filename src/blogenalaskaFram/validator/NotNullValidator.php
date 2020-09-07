@@ -12,7 +12,7 @@ use blog\validator\Validator;
 class NotNullValidator extends Validator
 {
 
-    public function isValid($value)
+    public function isValid(string $value): string
     {
         return $value != '';
     }

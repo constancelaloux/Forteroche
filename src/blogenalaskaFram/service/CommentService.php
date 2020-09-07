@@ -58,7 +58,7 @@ class CommentService
     /**
      * Show comments from the post id
      */
-    public function renderPaginatedComments($id)
+    public function renderPaginatedComments(int $id): ?array
     {
         $this->perPage = 5;
         $this->comment->setIdPost($id);
@@ -89,7 +89,7 @@ class CommentService
     /**
      * I send into the database the reports and i increment each time when we click on the picture
      */
-    public function unwantedComment($number, $id)
+    public function unwantedComment(int $number, int $id): void
     {
         $model = $this->commentEntityManager;
         $comment = $model->findById($id);
@@ -116,7 +116,7 @@ class CommentService
     /*
      * Modify comment
      */
-    public function updateComment($idcomment)
+    public function updateComment(int $idcomment)
     {
         return $this->processForm($idcomment);
     }

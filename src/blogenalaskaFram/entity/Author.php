@@ -27,12 +27,12 @@ class Author extends Model
             $image,
             $slugimag;
 
-    const PASSWORD_INVALIDE = 1;
+    /*const PASSWORD_INVALIDE = 1;
     const USERNAME_INVALIDE = 2;
     const FIRSTNAME_INVALIDE = 3;
     const SURNAME_INVALIDE = 4;
     const STATUS_INVALIDE = 5;
-    const IMAGE_INVALIDE = 6;
+    const IMAGE_INVALIDE = 6;*/
     
     /**
      * Here, the builder requests the initial strength and damage for the character you just created.
@@ -95,7 +95,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -103,7 +103,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getPassword()
+    public function getPassword(): ?string
     {
         return $this->password;
 
@@ -112,7 +112,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getUsername()
+    public function getUsername(): ?string
     {
         return $this->username;
     }
@@ -120,7 +120,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getSurname()
+    public function getSurname(): ?string
     {
         return $this->surname;
     }
@@ -128,7 +128,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getFirstname()
+    public function getFirstname(): ?string
     {
         return $this->firstname;
     }
@@ -136,7 +136,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -145,7 +145,7 @@ class Author extends Model
      * 
      * @return type
      */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -153,7 +153,7 @@ class Author extends Model
     /**
      * @return type
      */
-    public function getSlugImag()
+    public function getSlugImag(): ?string
     {
         return $this->slugimag;
     }
@@ -164,7 +164,7 @@ class Author extends Model
     /**
      * @param type $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $id = (int) $id;
 
@@ -177,83 +177,101 @@ class Author extends Model
     /**
      * @param type $surname
      */
-    public function setSurname($surname)
+    public function setSurname(string $surname): void
     {
         /**
          * On vérifie qu'il s'agit bien d'une chaine de caractéres
          */
-        if(!is_string($surname) || empty($surname))
+        /*if(!is_string($surname) || empty($surname))
         {
             $this->erreurs[] = self::SURNAME_INVALIDE;
+        }*/
+        if(is_string($surname) || !empty($surname))
+        {
+            $this->surname = $surname;
         }
-        $this->surname = $surname;
     }
 
     /**
      * @param type $password
      */
-    public function setPassword($password)
+    public function setPassword(string $password): void
     {
-        if (!is_string($password) || empty($password))
+        /*if (!is_string($password) || empty($password))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
+        }*/
+        if (is_string($password) || !empty($password))
+        {
+            $this->password = $password;
         }
-        $this->password = $password;
     }
 
     /**
      * @param type $username
      */
-    public function setUsername($username)
+    public function setUsername(string $username): void
     {
-        if(!is_string($username) || empty($username))
+        /*if(!is_string($username) || empty($username))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
+        }*/
+        if(is_string($username) || !empty($username))
+        {
+            $this->username = $username;
         }
-        $this->username = $username;
     }
 
     /**
      * 
      * @param type $image
      */
-    public function setImage($image)
+    public function setImage(string $image): void
     {
-        if(!is_string($image) || empty($image))
+        /*if(!is_string($image) || empty($image))
         {
             $this->erreurs[] = self::IMAGE_INVALIDE;
+        }*/
+        if(is_string($image) || !empty($image))
+        {
+            $this->image = $image;
         }
-        $this->image = $image;
     }
 
     /**
      * @param type $firstname
      */
-    public function setFirstname($firstname)
+    public function setFirstname(string $firstname): void
     {
-        if(!is_string($firstname) || empty($firstname))
+        /*if(!is_string($firstname) || empty($firstname))
         {
             $this->erreurs[] = self::PASSWORD_INVALIDE;
+        }*/
+        if(is_string($firstname) || !empty($firstname))
+        {
+            $this->firstname = $firstname;
         }
-        $this->firstname = $firstname;
     }
     
     /**
      * @param type $status
      */
-    public function setStatus($status)
+    public function setStatus(string $status): void
     {
-        if(!is_string($status) || empty($status))
+        /*if(!is_string($status) || empty($status))
         {
             $this->erreurs[] = self::STATUS_INVALIDE;
+        }*/
+        if(is_string($status) || !empty($status))
+        {
+            $this->status = $status;
         }
-        $this->status = $status;
     }
     
     /**
      * @param type $slugimag
      */
-    public function setSlugImag($slugimag)
+    public function setSlugImag(string $slugimag): void
     {
         if(is_string($slugimag))
         {

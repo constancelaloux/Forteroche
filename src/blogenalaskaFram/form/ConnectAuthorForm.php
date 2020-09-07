@@ -13,7 +13,7 @@ use blog\validator\NotNullValidator;
  */
 class ConnectAuthorForm extends FormBuilder
 {
-    public function form()
+    public function form(): void
     {
         $this->form
         ->add(new StringField([

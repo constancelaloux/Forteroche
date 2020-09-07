@@ -28,17 +28,17 @@ class FrontendController extends AbstractController
     /*
      * Function which render the home page
      */
-    public function renderhomepage()
+    public function renderhomepage(): string
     {
         return $this->redirect("/articles:page=1");
     }
     
-    public function renderPaginatedPosts()
+    public function renderPaginatedPosts(): ?array
     {
          return $this->postService->renderPaginatedPosts();
     }
     
-    public function renderPaginatedComments($id)
+    public function renderPaginatedComments(int $id): array
     {
         return $this->commentService->renderPaginatedComments($id);
     }
@@ -113,7 +113,7 @@ class FrontendController extends AbstractController
      * Redirect to main page with a success message after submit the email form
      * @return type
      */
-    public function sendEmailToAuthor()
+    public function sendEmailToAuthor(): string
     {
         $this->addFlash()->success('Votre email a bien été envoyé!');
         return $this->redirect("/articles:page=1");
@@ -122,7 +122,7 @@ class FrontendController extends AbstractController
     /*
      * Delete comment
      */
-    public function deleteComment()
+    public function deleteComment(): string
     {
         if ($this->request->method() == 'POST')
         {
@@ -144,7 +144,7 @@ class FrontendController extends AbstractController
         }  
     }
     
-    public function unwantedComment()
+    public function unwantedComment(): object
     {
         (!is_null($_POST['number']) && ($_POST['id']));
         $number = $_POST['number'];
@@ -155,7 +155,7 @@ class FrontendController extends AbstractController
     /**
      * Render legal notices
      */
-    public function renderLegalNotices()
+    public function renderLegalNotices(): void
     {
         $this->getrender()->render('LegalNotices');
     }

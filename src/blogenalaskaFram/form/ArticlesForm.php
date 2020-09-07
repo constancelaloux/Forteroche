@@ -16,7 +16,7 @@ use blog\validator\ImageValidator;
 class ArticlesForm extends FormBuilder 
 {
 
-    public function form()
+    public function form(): void
     {
         $this->form
         ->add(new StringField([

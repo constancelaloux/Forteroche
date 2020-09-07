@@ -82,7 +82,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -90,7 +90,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getIdAuthor()
+    public function getIdAuthor(): int
     {
         return $this->idauthor;
     }
@@ -98,7 +98,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getSubject()
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
@@ -106,7 +106,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getIdPost()
+    public function getIdPost(): int
     {
         return $this->idpost;
     }
@@ -114,14 +114,14 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getCommentContent()
+    public function getCommentContent(): ?string
     {
         return $this->commentContent;
     }
     /**
      * @return type
      */
-    public function getCreateDate()
+    public function getCreateDate(): \DateTime
     {
         return $this->createdate;
     }
@@ -129,7 +129,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getUpdateDate()
+    public function getUpdateDate(): ?\DateTime
     {
         return $this->updatedate;
     }
@@ -137,7 +137,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -145,7 +145,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getCountclicks()
+    public function getCountclicks(): int
     {
         return $this->countclicks;
     }
@@ -157,7 +157,7 @@ class Comment extends Model
     /**
      * @param type $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $id = (int) $id;
 
@@ -170,7 +170,7 @@ class Comment extends Model
     /**
      * @param type $idclient
      */
-    public function setIdAuthor($idauthor)
+    public function setIdAuthor(int $idauthor): void
     {
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
@@ -182,7 +182,7 @@ class Comment extends Model
     /**
      * @param type $idpost
      */
-    public function setIdpost($idpost)
+    public function setIdpost(?int $idpost): void
     {
         $idpost = (int)$idpost;
         if ($idpost > 0)
@@ -194,7 +194,7 @@ class Comment extends Model
     /**
      * @param type $subject
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject): void
     {
         if(is_string($subject))
         {
@@ -205,7 +205,7 @@ class Comment extends Model
     /**
      * @param type $countclicks
      */
-    public function setCountClicks($countclicks)
+    public function setCountClicks(?int $countclicks): void
     {
         $countclick = (int)$countclicks;
         $this->countclicks = $countclick;
@@ -214,7 +214,7 @@ class Comment extends Model
     /**
      * @param type $content
      */
-    public function setCommentContent($commentContent)
+    public function setCommentContent(string $commentContent): void
     {
         if(is_string($commentContent))
         {
@@ -225,7 +225,7 @@ class Comment extends Model
     /**
      * @param type $createdate
      */
-    public function setCreateDate($createdate)
+    public function setCreateDate(string $createdate): void
     {   
         if(is_string($createdate))
         {
@@ -236,7 +236,7 @@ class Comment extends Model
     /**
      * @param type $updatedate
      */
-    public function setUpdateDate($updatedate)
+    public function setUpdateDate(?string $updatedate): void
     {
         if(is_string($updatedate))
         {
@@ -247,7 +247,7 @@ class Comment extends Model
     /**
      * @param type $status
      */
-    public function setStatus($status)
+    public function setStatus(string $status): void
     {
         if(is_string($status))
         {

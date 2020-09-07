@@ -14,7 +14,7 @@ class TextField extends Field
     protected $cols;
     protected $rows;
 
-    public function buildWidget()
+    public function buildWidget(): string
     {
         $widget = '';
 
@@ -42,7 +42,7 @@ class TextField extends Field
         return $widget .= '</textarea></div>';
     }
 
-    public function setCols($cols)
+    public function setCols(int $cols): void
     {
         $cols = (int) $cols;
 
@@ -52,7 +52,7 @@ class TextField extends Field
         }
     }
 
-    public function setRows($rows)
+    public function setRows(int $rows): void
     {
         $rows = (int) $rows;
 

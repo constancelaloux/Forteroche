@@ -12,7 +12,7 @@ use blog\validator\Validator;
 class ImageValidator extends Validator
 {
 
-    public function isValid($file)
+    public function isValid(string $file): string
     {
         return $file != '';
     }
@@ -20,7 +20,7 @@ class ImageValidator extends Validator
     /**
      * I check if the image is well a jpeg , gif or png
      */
-    public function checkImage()
+    public function checkImage(): void
     {
         switch ($uploadImageType) 
         {

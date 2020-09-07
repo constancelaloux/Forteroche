@@ -19,7 +19,7 @@ class CreateAuthorForm extends FormBuilder
     /**
      * Function to create the form
      */
-    public function form()
+    public function form(): void
     {
         $this->form->add(new StringField([
         'type' => 'text',

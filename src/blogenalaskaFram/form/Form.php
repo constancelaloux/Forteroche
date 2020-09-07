@@ -24,7 +24,7 @@ class Form
     * We hydrate the Field object with the given values ​​to create a form.
     * Then we assign the corresponding value to the field and we generate an array with the datas
     */
-    public function add(Field $field)
+    public function add(Field $field): self
     {
         /**
          * We get the name of the field.
@@ -44,7 +44,7 @@ class Form
     /**
     * Function which will generate the form.
     */
-    public function createView()
+    public function createView(): string
     {
         $view = '';
         /**
@@ -60,7 +60,7 @@ class Form
     /**
     * We check that all the fields are valid.
     */
-    public function isValid()
+    public function isValid(): bool
     {
         $valid = true;
 
@@ -75,17 +75,17 @@ class Form
         return $valid;
     }
 
-    public function entity()
+    public function entity(): object
     {
         return $this->entity;
     }
 
-    public function setEntity(Model $entity)
+    public function setEntity(Model $entity): void
     {
         $this->entity = $entity;
     }
     
-    public function emptyFields()
+    public function emptyFields(): void
     {   
         
     }

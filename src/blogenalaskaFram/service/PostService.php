@@ -43,7 +43,7 @@ class PostService
     /**
      * Paginate and render posts
      */
-    public function renderPaginatedPosts()
+    public function renderPaginatedPosts(): void
     {
         /**
          * Get the lasts posts
@@ -67,7 +67,7 @@ class PostService
     /**
      * I will get the lasts three posts
      */
-    public function getLastsPosts()
+    public function getLastsPosts(): array
     {
         $model = $this->postEntityManager;
         //$lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
@@ -80,7 +80,7 @@ class PostService
      * @param type $id
      * @return type
      */
-    public function getPost($id)
+    public function getPost(int $id): object
     {
         $model = $this->postEntityManager;
         return $postFromId = $model->findById($id);

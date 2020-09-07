@@ -82,7 +82,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -90,7 +90,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getIdAuthor()
+    public function getIdAuthor(): int
     {
         return $this->idauthor;
     }
@@ -98,7 +98,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getSubject()
+    public function getSubject(): ?string
     {
         return $this->subject;
     }
@@ -106,7 +106,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getImage()
+    public function getImage(): ?string
     {
         return $this->image;
     }
@@ -114,7 +114,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getSlugImage()
+    public function getSlugImage(): ?string
     {
         return $this->slugimage;
     }
@@ -122,7 +122,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getContent()
+    public function getContent(): ?string
     {
         return $this->content;
     }
@@ -130,7 +130,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getCreateDate()
+    public function getCreateDate(): \DateTime
     {
         return $this->createdate;
     }
@@ -138,7 +138,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getUpdateDate()
+    public function getUpdateDate(): ?\DateTime
     {
         return $this->updatedate;
     }
@@ -146,7 +146,7 @@ class Post extends Model
     /**
      * @return type
      */
-    public function getStatus()
+    public function getStatus(): string
     {
         return $this->status;
     }
@@ -161,7 +161,7 @@ class Post extends Model
     /**
      * @param type $id
      */
-    public function setId($id)
+    public function setId(int $id): void
     {
         $id = (int) $id;
 
@@ -174,7 +174,7 @@ class Post extends Model
     /**
      * @param type $idauthor
      */
-    public function setIdAuthor($idauthor)
+    public function setIdAuthor(int $idauthor): void
     {
         $idauthor = (int)$idauthor;
         if ($idauthor > 0)
@@ -186,7 +186,7 @@ class Post extends Model
     /**
      * @param type $subject
      */
-    public function setSubject($subject)
+    public function setSubject(string $subject): void
     {
         if(is_string($subject))
         {
@@ -197,7 +197,7 @@ class Post extends Model
     /**
      * @param type $image
      */
-    public function setImage($image)
+    public function setImage(string $image): void
     {
         if(is_string($image))
         {
@@ -209,7 +209,7 @@ class Post extends Model
     /**
      * @param type $slugimage
      */
-    public function setSlugImage($slugimage)
+    public function setSlugImage(string $slugimage): void
     {
         if(is_string($slugimage))
         {
@@ -220,7 +220,7 @@ class Post extends Model
     /**
      * @param type $content
      */
-    public function setContent($content)
+    public function setContent(string $content): void
     {
         if(is_string($content))
         {
@@ -231,7 +231,7 @@ class Post extends Model
     /**
      * @param type $createdate
      */
-    public function setCreateDate($createdate)
+    public function setCreateDate(string $createdate): void
     {   
         if(is_string($createdate))
         {
@@ -242,7 +242,7 @@ class Post extends Model
     /**
      * @param type $updatedate
      */
-    public function setUpdateDate($updatedate)
+    public function setUpdateDate(?string $updatedate): void
     {
         if(is_string($updatedate))
         {
@@ -253,7 +253,7 @@ class Post extends Model
     /**
      * @param type $status
      */
-    public function setStatus($status)
+    public function setStatus(string $status): void
     {
         if(is_string($status))
         {

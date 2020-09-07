@@ -56,7 +56,7 @@ class EntityManager extends DbConnexion
      * It goes to update or insert if there is a primary key or not
      * @param Model $model
      */
-    public function persist(Model $model)
+    public function persist(Model $model): void
     {
         if($model->getPrimaryKey()) 
         {
@@ -72,7 +72,7 @@ class EntityManager extends DbConnexion
      * Update datas in database
      * @param Model $model
      */
-    private function update(Model &$model)
+    private function update(Model &$model): void
     {
         $set = [];
         $parameters = [];
@@ -105,7 +105,7 @@ class EntityManager extends DbConnexion
      * Insert datas in database
      * @param Model $model
      */
-    private function insert(Model &$model)
+    private function insert(Model &$model): void
     {
         $set = [];
         $parameters = [];
@@ -139,7 +139,7 @@ class EntityManager extends DbConnexion
      * Remove datas in database
      * @param Model $model
      */
-    public function remove(Model $model)
+    public function remove(Model $model): void
     {
         $sqlQuery = sprintf("DELETE FROM %s WHERE %s = :id", $this->metadata["table"], $this->metadata["primaryKey"]);
         $statement = $this->pdo->prepare($sqlQuery);
@@ -151,7 +151,7 @@ class EntityManager extends DbConnexion
      * @param type $filters
      * @return type
      */
-    public function exist($filters = [])
+    public function exist($filters = []): int
     {
         $sqlQuery = sprintf("SELECT COUNT(*) FROM %s %s ", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
@@ -165,7 +165,7 @@ class EntityManager extends DbConnexion
      * @param type $id
      * @return type
      */
-    public function findById($id)
+    public function findById(int $id): Model
     {
         return $this->fetch([$this->metadata["primaryKey"] => $id]);
     }
@@ -176,7 +176,7 @@ class EntityManager extends DbConnexion
      * @param type $filters
      * @return type
      */
-    public function findOneBy($filters = [])
+    public function findOneBy($filters = []): Model
     {
         return $this->fetch($filters);
     }
@@ -185,7 +185,7 @@ class EntityManager extends DbConnexion
      * @param type $filters
      * @return type
      */
-    public function fetch($filters = [])
+    public function fetch($filters = []): Model
     {
         $sqlQuery = sprintf("SELECT * FROM %s %s LIMIT 0,1", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
@@ -202,7 +202,7 @@ class EntityManager extends DbConnexion
      * to use the objects it contains
      * @return type
      */
-    public function findAll()
+    public function findAll(): ?array
     {
         return $this->fetchAll();
     }
@@ -219,12 +219,12 @@ class EntityManager extends DbConnexion
      * @param type $start
      * @return type
      */
-    public function findBy($filters = [], $orderBy = [], $desc = null, $length = null, $start = null)
+    public function findBy($filters = [], $orderBy = [], $desc = null, $length = null, $start = null): array
     {
         return $this->fetchAll($filters, $orderBy, $desc, $length, $start);
     }
     
-    public function get($filters)
+    public function get(array $filters): array
     {
         $sqlQuery = sprintf("SELECT * FROM %s %s", $this->metadata["table"], $this->where($filters));
         $statement = $this->pdo->prepare($sqlQuery);
@@ -247,7 +247,7 @@ class EntityManager extends DbConnexion
      * @param type $arguments
      * @return type
      */
-    public function __call($name, $arguments)
+    public function __call(string $name, string $arguments): array
     {
         if(preg_match("/^findOneBy([A-Za-z]+)$/", $name, $matches)) {
             return $this->findOneBy([$matches[1] => $arguments[0]]);
@@ -268,7 +268,7 @@ class EntityManager extends DbConnexion
      * @param type $start
      * @return type
      */
-    private function fetchAll($filters = [], $sorting = [], $length = null, $start = null)
+    private function fetchAll($filters = [], $sorting = [], $length = null, $start = null): array
     {   
         $sqlQuery = sprintf("SELECT * FROM %s %s %s %s", $this->metadata["table"], $this->where($filters), $this->orderBy($sorting), $this->limit($length, $start));
         $statement = $this->pdo->prepare($sqlQuery);
@@ -288,7 +288,7 @@ class EntityManager extends DbConnexion
      * @param type $filters
      * @return string
      */
-    private function where($filters = [])
+    private function where($filters = []): ?string
     {
         if(!empty($filters))
         {
@@ -307,7 +307,7 @@ class EntityManager extends DbConnexion
      * @param type $sorting
      * @return string
      */
-    private function orderBy($sorting = [])
+    private function orderBy($sorting = []): ?string
     {
         if(!empty($sorting)) 
         {
@@ -326,7 +326,7 @@ class EntityManager extends DbConnexion
      * @param type $property
      * @return type
      */
-    public function getColumnByProperty($property)
+    public function getColumnByProperty(string $property): ?string
     {
         $property = lcfirst($property);
         $columns = array_keys(array_filter($this->metadata["columns"], function($column) use ($property) 
@@ -343,7 +343,7 @@ class EntityManager extends DbConnexion
      * @param type $start
      * @return string
      */
-    public function limit($length, $start)
+    public function limit(?int $length, ?int $start): ?string
     {
         if($length !== null) 
         {

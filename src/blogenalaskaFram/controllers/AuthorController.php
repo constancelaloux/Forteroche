@@ -29,7 +29,7 @@ class AuthorController extends AbstractController
     /**
     * Create Author
     */
-    public function createUser()
+    public function createUser(): void
     {
         $title = 'Créer un compte';
         $url = '/connectform';
@@ -41,7 +41,7 @@ class AuthorController extends AbstractController
     /**
      * Delete user Method
      */
-    public function deleteUser()
+    public function deleteUser(): string
     {
         if ($this->request->method() == 'GET')
         {  
@@ -57,8 +57,7 @@ class AuthorController extends AbstractController
     /**
      * Update user Method
      */
-   
-    public function updateUser()
+    public function updateUser(): object
     {
         $title = 'modifier son profil';
         $url = '/connectform';
@@ -132,7 +131,7 @@ class AuthorController extends AbstractController
      * @return type
      * @throws NotFoundHttpException
      */
-    public function processForm($title,$url,$p)
+    public function processForm(string $title,string $url, string $p)
     {
         /**
          * If there is no id in post or get, i create a new author.
@@ -237,10 +236,7 @@ class AuthorController extends AbstractController
                 /**
                  * We check that the data inserted in the form is indeed equivalent to the database datas
                  */
-                //print_r(password_hash($this->request->postData('getPassword'), PASSWORD_DEFAULT));
-                //print_r($auth->getPassword());
                 $authPassword = password_verify($this->request->postData('getPassword'), $auth->getPassword());  
-                //print_r($authPassword);
 
                 if ($authPassword)
                 {
@@ -308,7 +304,7 @@ class AuthorController extends AbstractController
     /**
      * I get an image for the upload
      */
-    public function uploadImage()
+    public function uploadImage(): void
     {
         $this->image = $this->upload->upload($_FILES);
         echo "/../../../public/images/upload/user/$this->image";

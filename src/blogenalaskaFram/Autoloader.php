@@ -179,7 +179,7 @@ class Autoloader
      * @param string $file The file to require.
      * @return boolean True if the file exists, false if not.
      */
-    protected function requireFile(string $file)
+    protected function requireFile(string $file): bool
     {
         if (file_exists($file)) 
         {

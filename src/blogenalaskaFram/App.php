@@ -17,7 +17,7 @@ class App
     * the router needs the URI which will be the request and the response object to function
     * @author constancelaloux
     */
-    public function run()
+    public function run(): void
     {
         $request = new HTTPRequest();
         $response = new HTTPResponse();

@@ -48,7 +48,7 @@ class BackendController extends AbstractController
     /**
      * get Post to show in datatables
      */
-    public function getListOfArticles()
+    public function getListOfArticles(): void
     {
         $model = $this->getEntityManager($this->post);
         /**
@@ -97,7 +97,7 @@ class BackendController extends AbstractController
     /**
      * Delete post
      */
-    public function deletePost()
+    public function deletePost(): void
     {
         if ($this->request->method() == 'POST')
         {  
@@ -128,7 +128,7 @@ class BackendController extends AbstractController
     /**
      * I get an image for the upload and then i return the image path to the view. The goal is to see the image down to the form
      */
-    public function uploadImage()
+    public function uploadImage(): void
     {
         $this->image = $this->upload->upload($_FILES);
         echo "/../../../public/images/upload/posts/$this->image";
@@ -137,7 +137,7 @@ class BackendController extends AbstractController
     /**
      * Create post
      */
-    public function createPost()
+    public function createPost(): void
     {
         $title = "Ecrire un article";
         $this->processForm($title);
@@ -146,7 +146,7 @@ class BackendController extends AbstractController
     /**
      * Save post
      */
-    public function savePost()
+    public function savePost(): void
     {
         $title = "Ecrire un article";
         $this->processForm($title);
@@ -155,14 +155,14 @@ class BackendController extends AbstractController
     /**
      * Update post
      */
-    public function updatePost()
+    public function updatePost(): void
     {
         $title = "Ecrire un article";
         
         $this->processForm($title);
     }
 
-    public function processForm($title)
+    public function processForm(string $title)
     {
         /**
          * If there is no post or get id, I create a new post
@@ -270,7 +270,7 @@ class BackendController extends AbstractController
     /**
      * We display the comments datatables
      */
-    public function getListOfComments()
+    public function getListOfComments(): void
     {
         $model = $this->getEntityManager($this->comment);
         /**
@@ -319,7 +319,7 @@ class BackendController extends AbstractController
     /**
      * Delete comments into datatables
      */
-    public function deleteComments()
+    public function deleteComments(): void
     {
         if ($this->request->method() == 'POST')
         {  
@@ -332,7 +332,7 @@ class BackendController extends AbstractController
     /**
      * I confirm and redirect after the comment has been deleted
      */
-    public function confirmDeletedComments()
+    public function confirmDeletedComments(): string
     {
         if($this->userSession()->requireRole('admin'))
         {
