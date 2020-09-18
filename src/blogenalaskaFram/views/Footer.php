@@ -1,9 +1,9 @@
 <footer class="blog-footer bg-dark">
     <div class="container-fluid text-white rounded p-4">
         <div class="row mb-2 justify-content-center">
-            <p>Blog template built with <a href="https://getbootstrap.com/" class="text-warning">Bootstrap</a> by <a href="/connectform" class="text-warning">@Jean Forteroche</a>.</p>
+            <p>Blog créé avec <a href="https://getbootstrap.com/" class="text-warning">Bootstrap</a> par <a href="/connectform" class="text-warning">@Jean Forteroche</a>.</p>
             <p>
-                <a href="#" class="text-white">Back to top</a>
+                <a href="#" class="text-white">Haut de la page</a>
             </p>
             <p>
                 <a href="/getlegalnotices" class="text-white">Mentions légales</a>

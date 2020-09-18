@@ -19,10 +19,7 @@
 
 <!--Tinymce-->
 <script src="https://cdn.tiny.cloud/1/iltjhgipkk1yfx5qzzja1x5xo3g1cibyidyrg3hw1f4f1ob7/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<!--<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>-->
 <script type="text/javascript" src="/../../public/js/Tinymce.js"></script>
-<script type="text/javascript" src="/../../public/js/fr_FR.js"></script>
-<!--<script src="https://cloud.tinymce.com/stable/tinymce.min.js?apiKey=your_API_key"></script> -->
 
 <!--Bootstrap-->
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

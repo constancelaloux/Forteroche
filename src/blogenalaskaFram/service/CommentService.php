@@ -84,6 +84,10 @@ class CommentService
             $array = [$comments, $this->nextLink, $this->previousLink];
             return $array;
         }
+        else
+        {
+            return NULL;
+        }
     }
          
     /**

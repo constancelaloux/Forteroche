@@ -63,7 +63,7 @@ class BackendController extends AbstractController
                 $row = array();
                 $row[] = $articles->getId();
                 $row[] = htmlspecialchars($articles->getSubject());
-                $row[] = $articles->getCreateDate()->format('Y-m-d');
+                $row[] = $articles->getCreateDate()->format('d-m-Y');
                 $updateArticleDate = $articles->getUpdateDate();
 
                 if (is_null($updateArticleDate))
@@ -72,7 +72,7 @@ class BackendController extends AbstractController
                 }
                 else 
                 {
-                    $row[] = $updateArticleDate->format('Y-m-d');
+                    $row[] = $updateArticleDate->format('d-m-Y');
                 }
 
                 $row[] = $articles->getStatus();
@@ -286,7 +286,7 @@ class BackendController extends AbstractController
                 $row[] = $comment->getId();
                 $row[] = $comment->getIdPost();
                 $row[] = htmlspecialchars($comment->getSubject());
-                $row[] = $comment->getCreateDate()->format('Y-m-d');
+                $row[] = $comment->getCreateDate()->format('d-m-Y');
 
                 if (is_null($comment->getUpdateDate()))
                 {
@@ -294,7 +294,7 @@ class BackendController extends AbstractController
                 }
                 else 
                 {
-                    $row[] = $comment->getUpdateDate()->format('Y-m-d');
+                    $row[] = $comment->getUpdateDate()->format('d-m-Y');
                 }
 
                 $row[] = $comment->getCountClicks();

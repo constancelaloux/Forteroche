@@ -58,8 +58,18 @@
                             </div>
                             <div class="card-body">
                                 <strong class="d-inline-block mb-2 text-danger"><?= htmlspecialchars($post->getSubject())?></strong>
-                                <h3 class="card-title"><strong>Card title that wraps to a new line</strong></h3>
-                                <div class="mb-1 text-muted"><?=htmlspecialchars($post->getCreateDate()->format('Y-m-d'))?> Posté par Jean Forteroche</div>
+                                <h3 class="card-title">
+                                    <strong><?php if(strlen($post->getContent()) <= 350):
+                                                    echo $post->getContent();
+                                                else:
+                                                    //Returns the portion of string specified by the start and length parameters.
+                                                    $debut = substr($post->getContent(), 0, 350);
+                                                    $debut = substr($debut, 0, strrpos($debut, ' ')) . '...';
+
+                                                    echo $debut;
+                                                endif;?>
+                                    </strong></h3>
+                                <div class="mb-1 text-muted"><?=htmlspecialchars($post->getCreateDate()->format('d-m-Y'))?> Posté par Jean Forteroche</div>
                             </div>
                         </div>  
                     </div>
@@ -69,11 +79,11 @@
             <div class="row justify-content-center">
                 <nav aria-label="...">
                     <ul class="pagination">
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($previouslink)?>">Prévious</a></li>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($previouslink)?>">Précédent</a></li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=1">1</a></li>
                         <li class="page-item" aria-current="page"><a class="page-link text-danger" href="/articles&page=2">2</a></li>
                         <li class="page-item"><a class="page-link text-danger" href="/articles&page=3">3</a></li>
-                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($nextlink)?>">Next</a></li>
+                        <li class="page-item"><a class="page-link text-danger" href="/articles&page=<?php echo htmlspecialchars($nextlink)?>">Suivant</a></li>
                     </ul>
                 </nav>
             </div>

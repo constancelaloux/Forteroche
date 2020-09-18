@@ -30,7 +30,7 @@ class ConnectAuthorForm extends FormBuilder
         'type' => 'password',
         'label' => 'Mot de passe',
         'name' => 'getPassword',
-        'maxLength' => 8,
+        'maxLength' => 20,
         'minLength' => 6,
         'validators' => [
             new NotNullValidator('Merci de spécifier un mot de passe'),

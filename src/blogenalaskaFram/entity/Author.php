@@ -26,13 +26,6 @@ class Author extends Model
             $status,
             $image,
             $slugimag;
-
-    /*const PASSWORD_INVALIDE = 1;
-    const USERNAME_INVALIDE = 2;
-    const FIRSTNAME_INVALIDE = 3;
-    const SURNAME_INVALIDE = 4;
-    const STATUS_INVALIDE = 5;
-    const IMAGE_INVALIDE = 6;*/
     
     /**
      * Here, the builder requests the initial strength and damage for the character you just created.
@@ -179,13 +172,6 @@ class Author extends Model
      */
     public function setSurname(string $surname): void
     {
-        /**
-         * On vérifie qu'il s'agit bien d'une chaine de caractéres
-         */
-        /*if(!is_string($surname) || empty($surname))
-        {
-            $this->erreurs[] = self::SURNAME_INVALIDE;
-        }*/
         if(is_string($surname) || !empty($surname))
         {
             $this->surname = $surname;
@@ -195,12 +181,8 @@ class Author extends Model
     /**
      * @param type $password
      */
-    public function setPassword(string $password): void
+    public function setPassword(?string $password): void
     {
-        /*if (!is_string($password) || empty($password))
-        {
-            $this->erreurs[] = self::PASSWORD_INVALIDE;
-        }*/
         if (is_string($password) || !empty($password))
         {
             $this->password = $password;
@@ -212,10 +194,6 @@ class Author extends Model
      */
     public function setUsername(string $username): void
     {
-        /*if(!is_string($username) || empty($username))
-        {
-            $this->erreurs[] = self::PASSWORD_INVALIDE;
-        }*/
         if(is_string($username) || !empty($username))
         {
             $this->username = $username;
@@ -228,10 +206,6 @@ class Author extends Model
      */
     public function setImage(string $image): void
     {
-        /*if(!is_string($image) || empty($image))
-        {
-            $this->erreurs[] = self::IMAGE_INVALIDE;
-        }*/
         if(is_string($image) || !empty($image))
         {
             $this->image = $image;
@@ -243,10 +217,6 @@ class Author extends Model
      */
     public function setFirstname(string $firstname): void
     {
-        /*if(!is_string($firstname) || empty($firstname))
-        {
-            $this->erreurs[] = self::PASSWORD_INVALIDE;
-        }*/
         if(is_string($firstname) || !empty($firstname))
         {
             $this->firstname = $firstname;
@@ -258,10 +228,6 @@ class Author extends Model
      */
     public function setStatus(string $status): void
     {
-        /*if(!is_string($status) || empty($status))
-        {
-            $this->erreurs[] = self::STATUS_INVALIDE;
-        }*/
         if(is_string($status) || !empty($status))
         {
             $this->status = $status;

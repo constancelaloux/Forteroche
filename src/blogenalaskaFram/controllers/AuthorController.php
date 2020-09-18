@@ -14,9 +14,9 @@ use blog\exceptions\NotFoundHttpException;
  */
 class AuthorController extends AbstractController
 { 
-    public $author;
-    public $upload;
-    public $connectform;
+    protected $author;
+    protected $upload;
+    protected $connectform;
     
     public function __construct() 
     {
@@ -57,7 +57,7 @@ class AuthorController extends AbstractController
     /**
      * Update user Method
      */
-    public function updateUser(): object
+    public function updateUser()
     {
         $title = 'modifier son profil';
         $url = '/connectform';
@@ -111,7 +111,7 @@ class AuthorController extends AbstractController
         
         if($this->request->method() == 'POST' && $form->isValid())
         {
-            $password = password_hash($this->request->postData('password'), PASSWORD_DEFAULT);
+            $password = password_hash($this->request->postData('getPassword'), PASSWORD_DEFAULT);
             $this->author->setPassword($password);
                 /**
                  * On indique l'auteur. Adaptez cela à votre projet, par exemple si vous stockez l'id dans la session.
@@ -185,7 +185,7 @@ class AuthorController extends AbstractController
         {
             $password = password_hash($this->request->postData('getPassword'), PASSWORD_DEFAULT);
             $this->author->setPassword($password);
-
+            
             if($model->exist(['username' => $this->author->getUsername()]))
             {
                 unset($model);
@@ -233,6 +233,7 @@ class AuthorController extends AbstractController
                  * We check that the user matches
                  */
                 $auth = $model->findOneBy(['username' => $this->author->getUsername()]);
+
                 /**
                  * We check that the data inserted in the form is indeed equivalent to the database datas
                  */

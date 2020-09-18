@@ -21,7 +21,7 @@ class Query extends DbConnexion
 
     private $where = [];
 
-    private $group;
+    //private $group;
 
     private $order;
 

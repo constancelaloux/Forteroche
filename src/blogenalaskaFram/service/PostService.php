@@ -70,7 +70,6 @@ class PostService
     public function getLastsPosts(): array
     {
         $model = $this->postEntityManager;
-        //$lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         $lastsposts = $model->findBy(['status' => 'Valider'], [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }

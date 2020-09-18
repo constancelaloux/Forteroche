@@ -38,7 +38,7 @@ class FrontendController extends AbstractController
          return $this->postService->renderPaginatedPosts();
     }
     
-    public function renderPaginatedComments(int $id): array
+    public function renderPaginatedComments(int $id): ?array
     {
         return $this->commentService->renderPaginatedComments($id);
     }

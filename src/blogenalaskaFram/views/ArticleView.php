@@ -6,7 +6,7 @@
 <!--J'affiche l'article-->
             <div class="blog-post col-lg-9">
                 <h2 class="blog-post-title"><?= htmlspecialchars($post->getSubject())?></h2>
-                <p class="blog-post-meta"><?= $post->getCreateDate()->format('Y-m-d') ?> par Jean Forteroche</p>
+                <p class="blog-post-meta"><?= $post->getCreateDate()->format('d-m-Y') ?> par Jean Forteroche</p>
                 <img class="card-img" src="<?= htmlspecialchars($post->getImage())?>" alt="image article">
                 <p><?= $post->getContent() ?></p>
                 
@@ -20,7 +20,7 @@
                             <div class="media-body">
                                 <button class="reportComment" id=<?php echo $comment->getId() ?>>Signaler à l'administrateur</button>
                                 <h5 class="mt-0"><?php echo htmlspecialchars($comment->getSubject()) ?> par <?php echo htmlspecialchars($comment->originalData->firstname) ?> <?php echo htmlspecialchars($comment->originalData->surname) ?></h5>
-                                <p><?php echo $comment->getCreateDate()->format('Y-m-d') ?></p>
+                                <p><?php echo $comment->getCreateDate()->format('d-m-Y') ?></p>
                                 <p><?php echo htmlspecialchars($comment->getCommentContent()) ?></p>
 
                                 <?php if(isset($_SESSION['authorId'])):
@@ -44,7 +44,7 @@
                 <nav aria-label="...">
                     <ul class="pagination">
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $previouslink ?>" tabindex="-1">Previous</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $previouslink ?>" tabindex="-1">Précédent</a>
                         </li>
                         <li class="page-item">
                             <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=1">1</a>
@@ -56,7 +56,7 @@
                             <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=3">3</a>
                         </li>
                         <li class="page-item">
-                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $nextlink ?>">Next</a>
+                            <a class="page-link" href="/article&id=<?= $post->getId() ?>&page=<?php echo $nextlink ?>">Suivant</a>
                         </li>
                     </ul>
                 </nav>
