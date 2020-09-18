@@ -14,7 +14,7 @@ class StringField extends Field
 {
     protected $maxLength;
 
-    public function buildWidget()
+    public function buildWidget(): string
     {
         $widget = '';
 
@@ -45,7 +45,7 @@ class StringField extends Field
         return $widget .= ' /><br/></div>';
     }
 
-    public function setMaxLength($maxLength)
+    public function setMaxLength(?int $maxLength): void
     {
         $maxLength = (int) $maxLength;
 

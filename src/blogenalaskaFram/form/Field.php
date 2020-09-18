@@ -31,9 +31,9 @@ abstract class Field
         }
     }
 
-    abstract public function buildWidget();
+    abstract public function buildWidget(): string;
 
-    public function isValid()
+    public function isValid(): bool
     {
         foreach ($this->validators as $validator)
         {
@@ -50,32 +50,32 @@ abstract class Field
     /**
      * Getters
      */
-    public function label()
+    public function label(): string
     {
         return $this->label;
     }
 
-    public function name()
+    public function name(): string
     {
         return $this->name;
     }
 
-    public function value()
+    public function value(): string
     {
         return $this->value;
     }
 
-    public function type()
+    public function type(): string
     {
         return $this->type;
     }   
 
-    public function length()
+    public function length(): int
     {
         return $this->length;
     }
     
-    public function validators()
+    public function validators(): string
     {
         return $this->validators;
     }
@@ -83,7 +83,7 @@ abstract class Field
     /**
      * Setters
      */
-    public function setLabel($label)
+    public function setLabel(string $label): void
     {
         if (is_string($label))
         {
@@ -91,7 +91,7 @@ abstract class Field
         }
     }
 
-    public function setName($name)
+    public function setName(string $name): void
     {
         if (is_string($name))
         {
@@ -99,7 +99,7 @@ abstract class Field
         }
     }
 
-    public function setValue($value)
+    public function setValue(?string $value): void
     {
         if (is_string($value))
         {
@@ -107,7 +107,7 @@ abstract class Field
         }
     }
 
-    public function setType($type)
+    public function setType(string $type): void
     {
         if (is_string($type))
         {
@@ -115,7 +115,7 @@ abstract class Field
         }
     }
     
-    public function setLength($length)
+    public function setLength(int $length): void
     {
         $length = (int) $length;
 
@@ -125,7 +125,7 @@ abstract class Field
         }
     }
     
-    public function setValidators(array $validators)
+    public function setValidators(array $validators): void
     {
         foreach ($validators as $validator)
         {

@@ -43,7 +43,7 @@ class PostService
     /**
      * Paginate and render posts
      */
-    public function renderPaginatedPosts()
+    public function renderPaginatedPosts(): void
     {
         /**
          * Get the lasts posts
@@ -58,7 +58,7 @@ class PostService
         $countItems = $model->exist();
         $paginatedQueryPost = new Paginate($this->post, $this->perPage, $countItems);
         $offset = $paginatedQueryPost->getItems();
-        $posts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
+        $posts = $model->findBy(['status' => 'Valider'], [$orderBy = 'create_date'], $limit = $this->perPage, $offset = $offset);
         $this->previouslink = $paginatedQueryPost->previouslink();
         $this->nextlink = $paginatedQueryPost->nextlink();
         $this->render->render('FrontendhomeView',['posts' => $posts, 'previouslink' => $this->previouslink, 'nextlink' => $this->nextlink, 'lastsposts' => $lastsposts]);
@@ -67,10 +67,10 @@ class PostService
     /**
      * I will get the lasts three posts
      */
-    public function getLastsPosts()
+    public function getLastsPosts(): array
     {
         $model = $this->postEntityManager;
-        $lastsposts = $model->findBy($filters = NULL, [$orderBy = 'create_date'], $limit = 3, $offset = 0);
+        $lastsposts = $model->findBy(['status' => 'Valider'], [$orderBy = 'create_date'], $limit = 3, $offset = 0);
         return $lastsposts;
     }
     
@@ -79,7 +79,7 @@ class PostService
      * @param type $id
      * @return type
      */
-    public function getPost($id)
+    public function getPost(int $id): object
     {
         $model = $this->postEntityManager;
         return $postFromId = $model->findById($id);

@@ -15,12 +15,3 @@
     Vous pouvez revenir à <a href="javascript:history.back()">la page précédente</a> ou aller à 
     <a href="/">la page d'accueil</a>.
 </div>
-<<<<<<< HEAD:src/blogenalaskaFram/views/Page404.php
-
-
-
-<?php $content = ob_get_clean(); ?>
-
-<?php require('/Applications/MAMP/htdocs/Forteroche/src/blogenalaskaFram/views/Template.php');?>
-=======
->>>>>>> NewForterocheApp:blogenalaska/Error/Page404.php

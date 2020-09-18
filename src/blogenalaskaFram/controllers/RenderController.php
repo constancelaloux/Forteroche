@@ -9,10 +9,9 @@ use blog\controllers\AbstractController;
  *
  * @author constancelaloux
  */
-
 class RenderController extends AbstractController
 {
-    public function renderPage404()
+    public function renderPage404(): void
     {
         $this->getRender()->render('Page404');
     }

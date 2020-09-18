@@ -14,13 +14,13 @@ use blog\validator\NotNullValidator;
  */
 class CommentsForm extends FormBuilder 
 {
-    public function form()
+    public function form(): void
     {
         $this->form
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Titre du commentaire',
-        'name' => 'subject',
+        'name' => 'getSubject',
         'maxLength' => 50,
         'minLength' => 5,
         'validators' => [
@@ -29,7 +29,7 @@ class CommentsForm extends FormBuilder
         ]))
         ->add(new TextField([
         'label' => 'Contenu du commentaire',
-        'name' => 'commentContent',
+        'name' => 'getCommentContent',
         'validators' => [
             new NotNullValidator('Veuillez insérer votre texte'),
         ],

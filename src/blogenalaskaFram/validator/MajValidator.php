@@ -12,7 +12,7 @@ use blog\validator\Validator;
 class MajValidator extends Validator
 {
 
-    public function isValid($value)
+    public function isValid(string $value): string
     {
         /**
          * https://openclassrooms.com/fr/courses/2091901-protegez-vous-efficacement-contre-les-failles-web/2917331-controlez-les-mots-de-passe

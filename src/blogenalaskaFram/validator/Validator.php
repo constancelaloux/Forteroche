@@ -14,7 +14,7 @@ abstract class Validator
      * 
      * @param type $errorMessage
      */
-    public function __construct($errorMessage)
+    public function __construct(string $errorMessage)
     {
         $this->setErrorMessage($errorMessage);
     }
@@ -22,13 +22,13 @@ abstract class Validator
     /**
      * 
      */
-    abstract public function isValid($value);
+    abstract public function isValid(string $value): string;
   
     /**
      * 
      * @param type $errorMessage
      */
-    public function setErrorMessage($errorMessage)
+    public function setErrorMessage(string $errorMessage): void
     {
         if (is_string($errorMessage))
         {
@@ -40,7 +40,7 @@ abstract class Validator
      * 
      * @return type
      */
-    public function errorMessage()
+    public function errorMessage(): string
     {
         return $this->errorMessage;
     }  

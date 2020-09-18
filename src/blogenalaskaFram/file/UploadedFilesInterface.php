@@ -8,9 +8,9 @@ namespace blog\file;
  */
 interface UploadedFilesInterface 
 {
-    public function moveTo($targetPath);
+    public function moveTo(string $targetPath): void;
     
-    public function upload($file, ?string $oldFile = null);
+    public function upload(array $file, ?string $oldFile = null): string;
     
-    public function delete(?string $oldFile);  
+    public function delete(?string $oldFile): void;  
 }

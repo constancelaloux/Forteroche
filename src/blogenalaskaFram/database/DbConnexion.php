@@ -20,7 +20,7 @@ class DbConnexion
     
     protected $dotEnv;
 
-    protected function connect()
+    protected function connect(): PDO
     {
         try 
         {

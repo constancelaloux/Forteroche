@@ -13,13 +13,13 @@ use blog\validator\NotNullValidator;
  */
 class ConnectAuthorForm extends FormBuilder
 {
-    public function form()
+    public function form(): void
     {
         $this->form
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Identifiant',
-        'name' => 'username',
+        'name' => 'getUsername',
         'maxLength' => 20,
         'minLength' => 5,
         'validators' => [
@@ -29,8 +29,8 @@ class ConnectAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'password',
         'label' => 'Mot de passe',
-        'name' => 'password',
-        'maxLength' => 8,
+        'name' => 'getPassword',
+        'maxLength' => 20,
         'minLength' => 6,
         'validators' => [
             new NotNullValidator('Merci de spécifier un mot de passe'),

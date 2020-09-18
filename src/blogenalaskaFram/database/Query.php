@@ -21,7 +21,7 @@ class Query extends DbConnexion
 
     private $where = [];
 
-    private $group;
+    //private $group;
 
     private $order;
 
@@ -170,7 +170,7 @@ class Query extends DbConnexion
      * @param type $value
      * @return \self
      */
-    public function setParams(array ...$params)
+    public function setParams(array ...$params): self
     {
         $this->params = $params;
         return $this;

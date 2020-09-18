@@ -43,7 +43,7 @@ class DotEnv
         $this->usePutenv = $usePutenv;
     }
   
-    public function load(string $path)
+    public function load(string $path): void
     {
         /**
          * If the file is not readable or if it does not exist, and if it is not a directory
@@ -117,7 +117,7 @@ class DotEnv
     /**
      * This function will allow you to generate just the keys without the values
      */
-    public function skipEmptyLines()
+    public function skipEmptyLines(): void
     {
         if (preg_match('/(?:\s*+(?:#[^\n]*+)?+)++/A', $this->data, $match, 0, $this->cursor)) 
             {
@@ -129,7 +129,7 @@ class DotEnv
     /**
      * $text contain the name of the keys
      */
-    private function moveCursor(string $text)
+    private function moveCursor(string $text): void
     {
         $this->cursor += \strlen($text);
         $this->lineno += substr_count($text, "\n");
@@ -440,7 +440,7 @@ class DotEnv
     }, $value);
 }
     
-    public function populate(array $values)
+    public function populate(array $values): void
     {
         $updateLoadedVars = false;
         $loadedVars = array_flip(explode(',', $_SERVER['SYMFONY_DOTENV_VARS'] ?? $_ENV['SYMFONY_DOTENV_VARS'] ?? ''));

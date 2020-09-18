@@ -48,7 +48,7 @@ class BackendController extends AbstractController
     /**
      * get Post to show in datatables
      */
-    public function getListOfArticles()
+    public function getListOfArticles(): void
     {
         $model = $this->getEntityManager($this->post);
         /**
@@ -61,10 +61,10 @@ class BackendController extends AbstractController
             foreach ($posts as $articles) 
             {
                 $row = array();
-                $row[] = $articles->id();
-                $row[] = htmlspecialchars($articles->subject());
-                $row[] = $articles->createdate()->format('Y-m-d');
-                $updateArticleDate = $articles->updatedate();
+                $row[] = $articles->getId();
+                $row[] = htmlspecialchars($articles->getSubject());
+                $row[] = $articles->getCreateDate()->format('d-m-Y');
+                $updateArticleDate = $articles->getUpdateDate();
 
                 if (is_null($updateArticleDate))
                 {
@@ -72,10 +72,10 @@ class BackendController extends AbstractController
                 }
                 else 
                 {
-                    $row[] = $updateArticleDate->format('Y-m-d');
+                    $row[] = $updateArticleDate->format('d-m-Y');
                 }
 
-                $row[] = $articles->status();
+                $row[] = $articles->getStatus();
                 $data[] = $row;
             }
                             
@@ -97,7 +97,7 @@ class BackendController extends AbstractController
     /**
      * Delete post
      */
-    public function deletePost()
+    public function deletePost(): void
     {
         if ($this->request->method() == 'POST')
         {  
@@ -128,7 +128,7 @@ class BackendController extends AbstractController
     /**
      * I get an image for the upload and then i return the image path to the view. The goal is to see the image down to the form
      */
-    public function uploadImage()
+    public function uploadImage(): void
     {
         $this->image = $this->upload->upload($_FILES);
         echo "/../../../public/images/upload/posts/$this->image";
@@ -137,7 +137,7 @@ class BackendController extends AbstractController
     /**
      * Create post
      */
-    public function createPost()
+    public function createPost(): void
     {
         $title = "Ecrire un article";
         $this->processForm($title);
@@ -146,7 +146,7 @@ class BackendController extends AbstractController
     /**
      * Save post
      */
-    public function savePost()
+    public function savePost(): void
     {
         $title = "Ecrire un article";
         $this->processForm($title);
@@ -155,14 +155,14 @@ class BackendController extends AbstractController
     /**
      * Update post
      */
-    public function updatePost()
+    public function updatePost(): void
     {
         $title = "Ecrire un article";
         
         $this->processForm($title);
     }
 
-    public function processForm($title)
+    public function processForm(string $title)
     {
         /**
          * If there is no post or get id, I create a new post
@@ -184,7 +184,7 @@ class BackendController extends AbstractController
              * In case there is no id in database
              * Get the object based on the Id (usually called $id)
              */
-            if(!($this->post = $model->findById($this->post->id())))
+            if(!($this->post = $model->findById($this->post->getId())))
             {
                 throw new NotFoundHttpException("L'annonce d'id ".$id." n'existe pas.");
             }
@@ -192,9 +192,9 @@ class BackendController extends AbstractController
  
         if($this->request->method() == 'POST')
         {
-            $this->post->setSubject($this->request->postData('subject'));
-            $this->post->setContent($this->request->postData('content'));
-            $this->post->setImage($this->request->postData('image'));
+            $this->post->setSubject($this->request->postData('getSubject'));
+            $this->post->setContent($this->request->postData('getContent'));
+            $this->post->setImage($this->request->postData('getImage'));
             if($this->request->postData('validate'))
             {
                 $this->post->setStatus($this->request->postData('validate'));
@@ -206,16 +206,16 @@ class BackendController extends AbstractController
             
             if(isset($id))
             {
-                $this->post->setUpdatedate(date("Y-m-d H:i:s"));
+                $this->post->setUpdateDate(date("Y-m-d H:i:s"));
             }
             else
             {
-                $this->post->setCreatedate(date("Y-m-d H:i:s"));
+                $this->post->setCreateDate(date("Y-m-d H:i:s"));
             }
 
-            if(!is_null($this->userSession()->user()->id()))
+            if(!is_null($this->userSession()->user()->getId()))
             {
-                $this->post->setIdauthor($this->userSession()->user()->id());
+                $this->post->setIdAuthor($this->userSession()->user()->getId());
             }
         }
         
@@ -242,7 +242,7 @@ class BackendController extends AbstractController
         
         if($this->userSession()->requireRole('admin'))
         {
-            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $this->post->image()]);
+            $this->getrender()->render('CreateArticleFormView', ['title' => $title, 'form' => $form->createView(), 'image' => $this->post->getImage()]);
         }
         else 
         {
@@ -270,7 +270,7 @@ class BackendController extends AbstractController
     /**
      * We display the comments datatables
      */
-    public function getListOfComments()
+    public function getListOfComments(): void
     {
         $model = $this->getEntityManager($this->comment);
         /**
@@ -283,21 +283,21 @@ class BackendController extends AbstractController
             foreach ($comments as $comment) 
             {
                 $row = array();
-                $row[] = $comment->id();
-                $row[] = $comment->idpost();
-                $row[] = htmlspecialchars($comment->subject());
-                $row[] = $comment->createdate()->format('Y-m-d');
+                $row[] = $comment->getId();
+                $row[] = $comment->getIdPost();
+                $row[] = htmlspecialchars($comment->getSubject());
+                $row[] = $comment->getCreateDate()->format('d-m-Y');
 
-                if (is_null($comment->updatedate()))
+                if (is_null($comment->getUpdateDate()))
                 {
                     $row[] = "Pas de modifications sur ce commentaire pour l'instant";
                 }
                 else 
                 {
-                    $row[] = $comment->updatedate()->format('Y-m-d');
+                    $row[] = $comment->getUpdateDate()->format('d-m-Y');
                 }
 
-                $row[] = $comment->countclicks();
+                $row[] = $comment->getCountClicks();
                 $data[] = $row;
             }
                             
@@ -319,7 +319,7 @@ class BackendController extends AbstractController
     /**
      * Delete comments into datatables
      */
-    public function deleteComments()
+    public function deleteComments(): void
     {
         if ($this->request->method() == 'POST')
         {  
@@ -332,7 +332,7 @@ class BackendController extends AbstractController
     /**
      * I confirm and redirect after the comment has been deleted
      */
-    public function confirmDeletedComments()
+    public function confirmDeletedComments(): string
     {
         if($this->userSession()->requireRole('admin'))
         {

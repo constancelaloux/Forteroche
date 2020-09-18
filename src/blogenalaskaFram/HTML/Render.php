@@ -29,9 +29,9 @@ class Render  implements RendererInterface
      */
     private $globals = [];
     
-    private $assignedValues = array();
+    //private $assignedValues = array();
     
-    private $renderer;
+    //private $renderer;
     
     /**
      * I give the view path into the construct
@@ -46,7 +46,7 @@ class Render  implements RendererInterface
      * @param string $namespace
      * @param string $path
      */
-    public function addPath(string $namespace, string $path = null)
+    public function addPath(string $namespace, string $path = null): void
     {
         if(is_null($path))
         /**
@@ -74,7 +74,7 @@ class Render  implements RendererInterface
      * @param string $view
      * @param array $params
      */
-    public function render(string $view, array $params = [])
+    public function render(string $view, array $params = []): void
     {
         $this->view = $view;
         
@@ -126,7 +126,7 @@ class Render  implements RendererInterface
      * @param string $key
      * @param type $value
      */
-    public function addGlobal(string $key, $value): void
+    public function addGlobal(string $key, string $value): void
     {
         $this->globals[$key] = $value;
     }

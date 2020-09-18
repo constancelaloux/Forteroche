@@ -31,7 +31,7 @@ class Route
     private $params = [];
 
     
-    public function __construct($path, $callable)
+    public function __construct(string $path, string $callable)
     {
         $this->path = trim($path, '/'); 
         /**
@@ -43,7 +43,7 @@ class Route
     /**
      * In case my routes have parameters
      */
-    public function with($param, $regex)
+    public function with(string $param, string $regex): self
     {
         $this->params[$param] = str_replace('(', '(?:', $regex);
         /**
@@ -55,7 +55,7 @@ class Route
     /**
      * I check if in the route table there is a route that corresponds to the url
      */
-    public function match($request)
+    public function match(string $request): bool
     {
         /**
          * We remove the / initials and endings of the url
@@ -103,7 +103,7 @@ class Route
     /**
      * In case I have a parameter
      */
-    private function paramMatch($match)
+    private function paramMatch(array $match): string
     {
         /**
          * If I ever have a param in my params that matches the id, then
@@ -121,7 +121,7 @@ class Route
      * I have an array with the controller and its function, and then
      * I get the correspondans controller and I create an instance to call its function
      */
-    public function call()
+    public function call(): ?string
     {
         /**
          * If the name of the controller and its function are indeed strings
@@ -156,7 +156,7 @@ class Route
      * @param type $params
      * @return type
      */
-    public function getUrl($params)
+    public function getUrl(array $params): string
     {
         $path = $this->path;
         foreach($params as $k => $v)

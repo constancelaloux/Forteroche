@@ -43,7 +43,7 @@ class FlashService
      * set a success message
      * @param string $message
      */
-    public function success(string $message)
+    public function success(string $message): void
     {
         $flash = $this->session->get($this->sessionKey, []);
         $flash['success'] = $message;
@@ -54,7 +54,7 @@ class FlashService
      * Set an error message
      * @param string $message
      */
-    public function error(string $message)
+    public function error(string $message): void
     {
         $flash = $this->session->get($this->sessionKey, []);
         $flash['error'] = $message;
@@ -66,7 +66,7 @@ class FlashService
      * @param string $type
      * @return type
      */
-    public function get(string $type)
+    public function get(string $type): ?string
     {
         if(is_null($this->messages))
         {

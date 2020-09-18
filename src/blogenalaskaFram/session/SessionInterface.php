@@ -14,18 +14,18 @@ interface SessionInterface
     * @param $default
     * @return mixed
     */
-    public function get(string $key, $default = null);
+    public function get(string $key, $default = null): array;
 
     /**
     * Add an information in session
     * @param $value
     * @return mixed
     */
-    public function set(string $key, $value);
+    public function set(string $key, array $value): void;
 
     /**
     * Delete a key in session
     * @param string $key
     */
-    public function delete(string $key);
+    public function delete(string $key): void;
 }

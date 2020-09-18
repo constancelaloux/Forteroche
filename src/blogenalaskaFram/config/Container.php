@@ -27,11 +27,11 @@ class Container implements ContainerInterface
     /**
      * Method which get the name of the class we want to use
      * So we put the class name as a parameter
-     * @param type $name
+     * @param string $name
      * @return type
      * @throws ServiceNotFoundException
      */
-    public function get($name)
+    public function get(?string $name): object
     {
         if (!$this->has($name)) 
         {
@@ -54,10 +54,10 @@ class Container implements ContainerInterface
 
     /**
      * Check if there is well a name as a parameter and if the names matches to the board of class we ve into the config file
-     * @param type $name
-     * @return type
+     * @param string $name
+     * @return bool
      */
-    public function has($name)
+    public function has(string $name):  bool
     {
         return isset($this->services[$name]);
     }
@@ -68,7 +68,7 @@ class Container implements ContainerInterface
      * @return type
      * @throws ParameterNotFoundException
      */
-    public function getParameter($name)
+    public function getParameter(string $name): array
     {
         $tokens  = explode('.', $name);
         $context = $this->parameters;
@@ -91,7 +91,7 @@ class Container implements ContainerInterface
      * @param type $name
      * @return boolean
      */
-    public function hasParameter($name)
+    public function hasParameter(string $name): bool
     {
         try 
         {
@@ -110,7 +110,7 @@ class Container implements ContainerInterface
      * @param type $name
      * @return type
      */
-    private function createService($name)
+    private function createService(?string $name): object
     {
         $entry = &$this->services[$name];
         if (!is_array($entry) || !isset($entry['class'])) 
@@ -131,6 +131,7 @@ class Container implements ContainerInterface
         $arguments = isset($entry['arguments']) ? $this->resolveArguments($entry['arguments']) : [];
         $reflector = new \ReflectionClass($entry['class']);
         $service = $reflector->newInstanceArgs($arguments);
+        
         if (isset($entry['calls'])) 
         {
             $this->initializeService($service, $name, $entry['calls']);
@@ -143,7 +144,7 @@ class Container implements ContainerInterface
      * @param array $argumentDefinitions
      * @return \blog\config\ParameterReference
      */
-    private function resolveArguments(array $argumentDefinitions)
+    private function resolveArguments(array $argumentDefinitions): array
     {
         $arguments = [];
 
@@ -177,7 +178,7 @@ class Container implements ContainerInterface
      * @param array $callDefinitions
      * @throws ContainerException
      */
-    private function initializeService($service, $name, array $callDefinitions)
+    private function initializeService($service, $name, array $callDefinitions): void
     {
         foreach ($callDefinitions as $callDefinition) 
         {

@@ -4,7 +4,7 @@ namespace blog;
 
 use blog\database\EntityManager;
 use Exception;
-
+use blog\database\Model;
 /**
  * Description of Paginate
  *
@@ -16,7 +16,7 @@ class Paginate
     
     private $count;
     
-    public function __construct($entity, int $perPage, $countItems)
+    public function __construct(Model $entity, int $perPage, int $countItems)
     {
         $this->perPage = $perPage;
         $this->model = new EntityManager($entity);
@@ -40,7 +40,7 @@ class Paginate
      * Next link
      * @return int
      */
-    public function nextlink()
+    public function nextlink(): int
     {
         $nextPage = $this->getCurrentPage() + 1;
         
@@ -61,7 +61,7 @@ class Paginate
      * Previous link
      * @return type
      */
-    public function previouslink()
+    public function previouslink(): int
     {
         $prevPage = $this->getCurrentPage() - 1;
         if($prevPage < 1)

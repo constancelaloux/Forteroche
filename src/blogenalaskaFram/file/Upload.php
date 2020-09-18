@@ -113,7 +113,7 @@ class Upload implements UploadedFilesInterface
      * We send the file to the target file
      * @param type $targetPath
      */
-    public function moveTo($targetPath)
+    public function moveTo(string $targetPath): void
     {
         if(move_uploaded_file($this->tmp['tmp_name'], __DIR__.$targetPath))
         {
@@ -137,7 +137,7 @@ class Upload implements UploadedFilesInterface
      * Returns a string which will be the name of the file
      * Then in order to save this file
      */
-    public function upload($file, ?string $oldFile = null)//, ?string $oldFile): string//UploadedFileInterface $file, ?string $oldFile = null): string
+    public function upload(array $file, ?string $oldFile = null): string
     {
             /**
              * We check if the old file exists
@@ -216,7 +216,7 @@ class Upload implements UploadedFilesInterface
         }
     }
     
-    private function getPathWithSuffix(?string $path, ?string $suffix)//: ?string
+    private function getPathWithSuffix(?string $path, ?string $suffix): ?string
     {
         $info = pathinfo($path);
         if(isset($info['extension']))
@@ -235,7 +235,7 @@ class Upload implements UploadedFilesInterface
     /**
      * We generate the different formats
      */
-    private function generateFormats($targetPath)
+    private function generateFormats(string $targetPath): void
     {
         /**
          * Gonna search the size of the image

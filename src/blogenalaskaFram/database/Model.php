@@ -4,6 +4,7 @@ namespace blog\database;
 
 use DateTime;
 use blog\exceptions\ORMException;
+use stdClass;
 
 /**
  * Class Model
@@ -31,11 +32,13 @@ class Model
     }
     
     /**
+     * 
      * @param array $result
-     * @return Model
+     * @param array $model
+     * @return $this
      * @throws ORMException
      */
-    public function hydrate($result, ?array $model = null)
+    public function hydrate($result, ?array $model = null): self
     {
         if(empty($result)) 
         {
@@ -52,10 +55,11 @@ class Model
 
     /**
      * 
-     * @param type $column
-     * @param type $value
+     * @param type string $column
+     * @param type string/null $value
+     * @return void
      */
-    private function hydrateProperty($column, $value): void
+    private function hydrateProperty(string $column, ?string $value): void
     {
         if(isset($this::metadata()["table"]))
         {
@@ -82,9 +86,9 @@ class Model
      * @param type $column
      * @return DateTime
      */
-    public function getSQLValueByColumn($column)
+    public function getSQLValueByColumn(string $column): ?string
     {
-        $value = $this->{sprintf(ucfirst($this::metadata()["columns"][$column]["property"]))}();
+        $value = $this->{sprintf("get%s",ucfirst($this::metadata()["columns"][$column]["property"]))}();
         if($value instanceof \DateTime)
         {
             return $value->format("Y-m-d H:i:s");
@@ -96,7 +100,7 @@ class Model
      * 
      * @param type $value
      */
-    public function setPrimaryKey($value)
+    public function setPrimaryKey(int $value): void
     {
         $this->hydrateProperty($this::metadata()["primaryKey"], $value);
     }
@@ -105,7 +109,7 @@ class Model
      * get the id that will increment in the database
      * @return type
      */
-    public function getPrimaryKey()
+    public function getPrimaryKey(): ?int
     {
         /**
          * I get the name of the primary key id
@@ -117,15 +121,15 @@ class Model
         /**
          * I'm going to return the id getter
          */
-        return $this->{sprintf(ucfirst($property))}();
+        return $this->{sprintf("get%s",ucfirst($property))}();
     }
 
     /**
      * 
      * @return type
      */
-    public function erreurs()
+    /*public function erreurs()
     {
         return $this->erreurs;
-    }
+    }*/
 }

@@ -17,7 +17,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function cookieData($key)
+    public function cookieData(string $key): string
     {
         return isset($_COOKIE[$key]) ? $_COOKIE[$key] : null;
     }
@@ -27,7 +27,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function cookieExists($key)
+    public function cookieExists(string $key): string
     {
         return isset($_COOKIE[$key]);
     }
@@ -37,7 +37,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function getData($key)
+    public function getData($key): ?string
     {
         return isset($_GET[$key]) ? $_GET[$key] : null;
     }
@@ -47,7 +47,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function getExists($key)
+    public function getExists(string $key): string
     {
         return isset($_GET[$key]);
     }
@@ -56,7 +56,7 @@ class HTTPRequest implements RequestInterface
      * Obtain the method used to send the request (GET or POST method).
      * @return type
      */
-    public function method()
+    public function method(): string
     {
         return $_SERVER['REQUEST_METHOD'];
     }
@@ -66,7 +66,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function postData($key)
+    public function postData(string $key): ?string
     {
         return isset($_POST[$key]) ? $_POST[$key] : null;
     }
@@ -80,7 +80,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function postExists($key)
+    public function postExists(string $key): string
     {
         return isset($_POST[$key]);
     }
@@ -89,7 +89,7 @@ class HTTPRequest implements RequestInterface
      * Get the URL entered (useful for the router to know the desired page).
      * @return string
      */
-    public function requestURI():string
+    public function requestURI(): string
     {
         return $_SERVER['REQUEST_URI'];
     }
@@ -98,7 +98,7 @@ class HTTPRequest implements RequestInterface
      * Returns the session variable.
      * @return type
      */
-    public function getSession()
+    public function getSession(): string
     {
         return $_SESSION[$key];
     }
@@ -108,7 +108,7 @@ class HTTPRequest implements RequestInterface
      * @param type $key
      * @return type
      */
-    public function sessionExists($key)
+    public function sessionExists(string $key): string
     {
         return isset($_SESSION[$key]);
     }

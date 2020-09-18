@@ -22,9 +22,9 @@ abstract class FormBuilder
     /**
      * Refer to the form function from the form created in php
      */
-    abstract public function form();
+    abstract public function form(): void;
 
-    public function setForm(form $form)
+    public function setForm(form $form): void
     {
         $this->form = $form;
     }
@@ -32,7 +32,7 @@ abstract class FormBuilder
     /**
      * Function that returns the form that we have created
      */
-    public function buildform()
+    public function buildform(): object
     {
         return $this->form;
     }

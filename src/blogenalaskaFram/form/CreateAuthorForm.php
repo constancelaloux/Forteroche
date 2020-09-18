@@ -19,12 +19,12 @@ class CreateAuthorForm extends FormBuilder
     /**
      * Function to create the form
      */
-    public function form()
+    public function form(): void
     {
         $this->form->add(new StringField([
         'type' => 'text',
         'label' => 'Prenom',
-        'name' => 'firstname',
+        'name' => 'getFirstname',
         'maxLength' => 10,
         'validators' => [
             new MaxLengthValidator('Identifiant trop long', 10),
@@ -34,7 +34,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Nom',
-        'name' => 'surname',
+        'name' => 'getSurname',
         'maxLength' => 10,
         'validators' => [
             new MaxLengthValidator('Identifiant trop long)', 10),
@@ -44,7 +44,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'text',
         'label' => 'Identifiant',
-        'name' => 'username',
+        'name' => 'getUsername',
         'maxLength' => 15,
         'validators' => [
             new MaxLengthValidator('Identifiant trop long)', 15),
@@ -54,7 +54,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'password',
         'label' => 'Mot de passe',
-        'name' => 'password',
+        'name' => 'getPassword',
         'maxLength' => 12,
         'validators' => [
             new MaxLengthValidator('Mot de passe pas conforme! Votre mot de passe doit '
@@ -67,7 +67,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'hidden',
         'label' => 'nom de l\'image',
-        'name' => 'image',
+        'name' => 'getImage',
         'validators' => [
             new ImageValidator('Veuillez insérer votre image'),
         ],
@@ -75,7 +75,7 @@ class CreateAuthorForm extends FormBuilder
         ->add(new StringField([
         'type' => 'file',
         'label' => 'Ajouter une image',
-        'name' => 'slugimag',
+        'name' => 'getSlugImag',
         ]));
     }  
 }

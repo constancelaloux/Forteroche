@@ -30,7 +30,7 @@ class PHPSession implements SessionInterface
      * @param type $default
      * @return type
      */
-    public function get(string $key, $default = null)
+    public function get(string $key, $default = null): array
     {
         $this->ensureSarted();
         if(array_key_exists($key, $_SESSION))
@@ -45,7 +45,7 @@ class PHPSession implements SessionInterface
      * @param string $key
      * @param type $value
      */
-    public function set(string $key, $value)
+    public function set(string $key, array $value): void
     {
         $this->ensureSarted();
         $_SESSION[$key] = $value;
@@ -55,7 +55,7 @@ class PHPSession implements SessionInterface
      * Delete a key in session
      * @param string $key
      */
-    public function delete(string $key)
+    public function delete(string $key): void
     {
         $this->ensureSarted();
         unset($_SESSION[$key]);

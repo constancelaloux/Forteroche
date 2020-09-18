@@ -22,7 +22,7 @@ class SearchController extends AbstractController
     /**
      * I search a post into the blog       
      */
-    function search()
+    function search(): void
     {
             if(!is_null($this->request->postData('userSearch')))
             {

@@ -48,7 +48,7 @@ class UserSession
      * Pick up the user into database
      * @return type
      */
-    public function user()
+    public function user(): ?object
     {
         if(session_status() === PHP_SESSION_NONE)
             {
@@ -66,7 +66,7 @@ class UserSession
         
         $this->author->setId($id);
         $model = $this->entityManager;
-        $auth = $model->findById($this->author->id());
+        $auth = $model->findById($this->author->getId());
         return $auth ?: NULL;
     }
     
@@ -76,24 +76,24 @@ class UserSession
      * @param type $roles
      * @return type
      */
-    public function requireRole(string ...$roles)
+    public function requireRole(string ...$roles): ?string
     {
         $user = $this->user();
         
-        if($user === NULL || !in_array($user->status(), $roles))
+        if($user === NULL || !in_array($user->getStatus(), $roles))
         {
             return NULL;
         }
         else
         {
-            return $user->status();
+            return $user->getStatus();
         }
     }
     
     /**
      * Function to log out the user
      */
-    public function logOut()
+    public function logOut(): void
     {
         session_start();
         session_unset();
@@ -104,7 +104,7 @@ class UserSession
     /**
      * User session exired
      */
-    public function expiredSession()
+    public function expiredSession(): void
     {
         $expireAfter = 60;
         if(isset($_SESSION['last_action']))
@@ -139,7 +139,7 @@ class UserSession
     /**
      * User session exired
      */
-    public function timeoutSession()
+    public function timeoutSession(): void
     {
         $timeout = $_SERVER['REQUEST_TIME'];
         /**

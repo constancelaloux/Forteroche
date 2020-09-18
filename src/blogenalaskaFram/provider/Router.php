@@ -3,6 +3,8 @@
 namespace blog\provider;
 use blog\provider\Route;
 use blog\exceptions\RouterException;
+use blog\HTTPResponse;
+use blog\HTTPRequest;
 
 /**
  * Description of Router
@@ -31,7 +33,7 @@ class Router
     
     const NO_ROUTE = 1;
 
-    public function __construct($request, $response)
+    public function __construct(string $request, HTTPResponse $response)
     {
         $this->request = $request;
         $this->response = $response;
@@ -50,7 +52,7 @@ class Router
      * @param type $name
      * @return type
      */
-    public function get($path, $callable, $name = null)
+    public function get(string $path, string $callable, $name = null): object
     {
         /**
          * I add to the add function of my class router, the path of the url, the name of the controller 
@@ -67,7 +69,7 @@ class Router
      * @param type $name
      * @return type
      */
-    public function post($path, $callable, $name = null)
+    public function post(string $path, string $callable, $name = null): object
     {
         /**
          * I add to the add function of my class router, the path of the url, the name of the controller 
@@ -83,7 +85,7 @@ class Router
      * @param type $name
      * @return type
      */
-    public function match($path, $callable, $name = null)
+    public function match(string $path, string $callable, $name = null): string
     {
         return $this->add($path, $callable, $name, 'GET|POST');
     }
@@ -97,7 +99,7 @@ class Router
      * @param type $method
      * @return Route
      */
-    private function add($path, $callable, $name, $method)
+    private function add(string $path, string $callable, ?string $name, string $method): object 
     {
         /**
          * I create a route object or I configure the path of the url and the controller data
@@ -145,7 +147,7 @@ class Router
      * @return type
      * @throws RouterException
      */
-    public function map($request)
+    public function map(HTTPRequest $request): ?string
     {
         /**
          * Does one of the url match?
@@ -191,7 +193,7 @@ class Router
      * @return type
      * @throws RouterException
      */
-    public function url($name, $params=[])
+    public function url(string $name, $params=[]): string
     {
         /**
          * Does the url match and then i run it

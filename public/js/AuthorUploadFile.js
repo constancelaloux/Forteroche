@@ -1,7 +1,7 @@
 $(document).ready(function() {
-    $('#slugimag').change(function(){
-        var file_data = $('#slugimag').prop('files')[0];   
-        var form_data = new FormData();                  
+    $('#getSlugImag').change(function(){
+        var file_data = $('#getSlugImag').prop('files')[0];   
+        var form_data = new FormData();  
         form_data.append('file', file_data);
         $.ajax({
             url: "/authoruploadimage",
