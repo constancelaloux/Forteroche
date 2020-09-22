@@ -14,7 +14,7 @@ $(document).ready( function ()
                     data: {number:number, id:id}, // An object with the key 'submit' and value 'true;
                     success: function (result) 
                         {
-                            console.log("test");
+                            alert('Le commentaire a été signalé');
                         }
                 });  
         });

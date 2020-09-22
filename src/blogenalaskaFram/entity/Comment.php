@@ -90,7 +90,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getIdAuthor(): int
+    public function getIdAuthor(): ?int
     {
         return $this->idauthor;
     }
@@ -106,7 +106,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getIdPost(): int
+    public function getIdPost(): ?int
     {
         return $this->idpost;
     }
@@ -121,7 +121,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getCreateDate(): \DateTime
+    public function getCreateDate(): ?\DateTime
     {
         return $this->createdate;
     }
@@ -137,7 +137,7 @@ class Comment extends Model
     /**
      * @return type
      */
-    public function getStatus(): string
+    public function getStatus(): ?string
     {
         return $this->status;
     }

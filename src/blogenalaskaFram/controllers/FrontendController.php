@@ -144,12 +144,12 @@ class FrontendController extends AbstractController
         }  
     }
     
-    public function unwantedComment(): object
+    public function unwantedComment(): void
     {
         (!is_null($_POST['number']) && ($_POST['id']));
         $number = $_POST['number'];
         $id = $_POST['id'];
-        return $this->commentService->unwantedComment($number, $id);
+        $this->commentService->unwantedComment($number, $id);
     }
     
     /**

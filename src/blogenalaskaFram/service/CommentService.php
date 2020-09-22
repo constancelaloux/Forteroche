@@ -97,12 +97,10 @@ class CommentService
     {
         $model = $this->commentEntityManager;
         $comment = $model->findById($id);
-
         if (!empty ($comment))
         {
             $clicks = $comment->getCountClicks();
         }
-        
         $clicksIncremented = $clicks + $number;
         $this->comment->setCountClicks($clicksIncremented);
         $this->comment->setId($comment->getId());
