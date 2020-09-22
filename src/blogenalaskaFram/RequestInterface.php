@@ -48,7 +48,6 @@ interface RequestInterface
      * @param type $key
      */
     public function postData(string $key): ?string;
-    //public function postData();
 
     /**
      * Check if there is a post variable that exists.

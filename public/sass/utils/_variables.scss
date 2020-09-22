@@ -6,3 +6,14 @@ $warning: #e83e36;
 $secondary-color: #e83e36c9;
 $transparent-color: transparent;
 $dark:#1d1a19;
+
+$spacer: 1rem !default;
+$spacers: () !default;
+
+$spacers: map-merge(
+  (
+  6: ($spacer * 3.5),
+  7: ($spacer * 7)
+  ),
+  $spacers
+);

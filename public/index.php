@@ -1,12 +1,11 @@
 <?php
 
 /**
- * Le role de index.php se limite à un point d'entrée avec le reste de l'application.
- * En aucun cas, il comporte de la logique
+ * index.php has a entry point with the rest of the app
  */
 
 /**
- * Repporter les erreurs php
+ * Report errors php
  */
 error_reporting(E_ALL);
 ini_set('display_errors', 'on');
@@ -23,13 +22,17 @@ sleep(2);
 require(__DIR__ . '/../src/blogenalaskaFram/Autoload.php');
 
 
-//je récupére l'application à charger
+/**
+ * Get app to charge
+ */
 /**
  * instance class
- * use, permet d'importer une class d'un autre "dossier"
+ * use, can import a class from another folder"
  */
 
 use blog\App;
 $app =(new App());
-//Je passe la requéte à mon application et cette application va me retourner une réponse
+/**
+ * i give the request to app and then this app can return a response
+ */
 $app->run();

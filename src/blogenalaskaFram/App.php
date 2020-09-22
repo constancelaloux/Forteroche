@@ -4,7 +4,6 @@ namespace blog;
 use blog\provider\Router;
 use blog\HTTPResponse;
 use blog\HTTPRequest;
-
 /**
  * Description of App
  *

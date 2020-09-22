@@ -123,13 +123,4 @@ class Model
          */
         return $this->{sprintf("get%s",ucfirst($property))}();
     }
-
-    /**
-     * 
-     * @return type
-     */
-    /*public function erreurs()
-    {
-        return $this->erreurs;
-    }*/
 }

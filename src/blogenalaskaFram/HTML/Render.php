@@ -29,10 +29,6 @@ class Render  implements RendererInterface
      */
     private $globals = [];
     
-    //private $assignedValues = array();
-    
-    //private $renderer;
-    
     /**
      * I give the view path into the construct
      */

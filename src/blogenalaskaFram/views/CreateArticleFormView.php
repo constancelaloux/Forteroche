@@ -1,7 +1,7 @@
 <p>Réservé à l'admin</p>
 <section class="createAuthorForm">
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mt-7">
             <div class="col-lg-8 col-md-8 col-sm-12">
                 <form action="" method="post" enctype="multipart/form-data">
                     <!--<p>-->

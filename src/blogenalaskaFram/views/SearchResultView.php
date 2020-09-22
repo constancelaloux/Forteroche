@@ -1,4 +1,4 @@
-<div class="listOfSearch">
+<div class="listOfSearch pt-7">
     <p>Le résultat de la racherche donne les articles suivants: </p>
     <?php if (!empty($mySearchResults)): ?>
             <?php foreach ($mySearchResults as $mySearchResult): ?>    
